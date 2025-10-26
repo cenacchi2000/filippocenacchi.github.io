@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Filippo Cenacchi — PhD Candidate · Humanoid AI & Mental Health</title>
+  <meta name="description" content="Filippo Cenacchi — PhD candidate at Macquarie University. Research: humanoid robots, multimodal AI for mental health diagnostics, VR ethics, simulation-based training.">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Filippo Cenacchi — Humanoid AI & Mental Health"/>
+  <meta property="og:description" content="PhD candidate at Macquarie University. Humanoid robots · Multimodal AI · Mental health diagnostics · VR ethics."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="headshot.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <!-- Minimal, embedded CSS for a clean, modern aesthetic (no build step) -->
+  <style>
+    :root{
+      --bg: #0b0c10;          /* dark background */
+      --panel: #111318;       /* card bg */
+      --text: #e8ebf0;        /* primary text */
+      --subtle: #b3b9c6;      /* secondary text */
+      --brand: #7dd3fc;       /* accent (sky-300) */
+      --brand-ink: #0ea5e9;   /* accent ink (sky-500) */
+      --muted: #1a1d24;       /* muted panel */
+      --border: #222632;      /* borders */
+      --ok: #34d399;          /* green */
+      --warn: #f59e0b;        /* amber */
+      --bad: #f43f5e;         /* rose */
+      --shadow: 0 8px 30px rgba(0,0,0,0.35);
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Apple Color Emoji','Segoe UI Emoji';}
+    a{color:var(--brand-ink);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1100px;margin:0 auto;padding:28px}
+    .grid{display:grid;gap:18px}
+    .hero{display:grid;grid-template-columns:140px 1fr;gap:22px;align-items:center}
+    .avatar{width:140px;height:140px;border-radius:18px;background:#111;background-size:cover;background-position:center;box-shadow:var(--shadow);border:1px solid var(--border)}
+    .title{font-size:34px;line-height:1.1;margin:0 0 6px}
+    .subtitle{margin:0;color:var(--subtle)}
+    .pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--border);background:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--subtle)}
+    .nav{position:sticky;top:0;z-index:20;background:linear-gradient(180deg, rgba(11,12,16,0.96), rgba(11,12,16,0.86));backdrop-filter: blur(10px);border-bottom:1px solid var(--border)}
+    .nav .inner{display:flex;align-items:center;gap:16px;justify-content:space-between}
+    .nav a.link{padding:12px 10px;border-radius:10px;color:var(--subtle)}
+    .nav a.link:hover{background:var(--muted);color:var(--text)}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--panel);color:var(--text);box-shadow:var(--shadow)}
+    .btn:hover{transform:translateY(-1px)}
+    .section{padding:32px 0}
+    .section h2{font-size:22px;margin:0 0 14px}
+    .card{border:1px solid var(--border);background:var(--panel);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .kvs{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{display:inline-block;font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--border);background:var(--muted);color:var(--subtle)}
+    .pub{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--brand)}
+    .pub h3{font-size:16px;margin:0}
+    .meta{font-size:13px;color:var(--subtle)}
+    .list{display:grid;gap:12px}
+    .timeline{display:grid;gap:10px}
+    .timeline .item{display:grid;grid-template-columns:120px 1fr;gap:16px}
+    .footer{padding:30px 0;color:var(--subtle);text-align:center;border-top:1px solid var(--border)}
+    .icon{display:inline-block;vertical-align:middle}
+    .news time{font-variant-numeric:tabular-nums;color:var(--subtle)}
+    blockquote{margin:0;padding:14px 16px;border-left:3px solid var(--brand-ink);background:var(--muted);border-radius:6px}
+    .nowrap{white-space:nowrap}
+
+    /* responsive */
+    @media (max-width: 860px){
+      .hero{grid-template-columns:1fr;text-align:center}
+      .avatar{margin:0 auto}
+      .row, .row-3{grid-template-columns:1fr}
+      .timeline .item{grid-template-columns:1fr}
+      .nav .hide-sm{display:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Nav -->
+  <nav class="nav">
+    <div class="container inner">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="pill" aria-label="Site identity">FC</span>
+        <strong>Filippo&nbsp;Cenacchi</strong>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <a class="link" href="#about">About</a>
+        <a class="link" href="#research">Research</a>
+        <a class="link" href="#publications">Publications</a>
+        <a class="link hide-sm" href="#projects">Projects</a>
+        <a class="link hide-sm" href="#service">Service</a>
+        <a class="link hide-sm" href="#education">Education</a>
+        <a class="link" href="#news">News</a>
+        <a class="link" href="#contact">Contact</a>
+        <a class="btn" href="cv_filippo_cenacchi.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container grid">
+    <!-- Hero / About -->
+    <section id="about" class="section">
+      <div class="hero">
+        <div class="avatar" style="background-image:url('headshot.jpg')" role="img" aria-label="Portrait of Filippo Cenacchi"></div>
+        <div>
+          <h1 class="title">Filippo Cenacchi</h1>
+          <p class="subtitle">PhD Candidate, Computer Science (Frontier AI Research Centre) — Macquarie University, Sydney</p>
+          <p>My research is at the intersection of <strong>humanoid robots</strong>, <strong>multimodal AI</strong>, and <strong>mental‑health diagnostics</strong>. I design simulation‑first pipelines, trust‑calibrated interaction policies, and privacy‑preserving <em>avatarization</em> to make early assessment more reliable and equitable. I collaborate across computing, psychology, and clinical partners.</p>
+          <div class="kvs" aria-label="Quick links">
+            <a class="pill" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+            <a class="pill" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+            <a class="pill" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="pill" href="#contact">Email</a>
+            <span class="pill">Sydney, Australia</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research Focus -->
+    <section id="research" class="section">
+      <h2>Research Focus</h2>
+      <div class="row">
+        <div class="card">
+          <h3 style="margin-top:0">Humanoid‑AI Diagnostic Agents</h3>
+          <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician‑style pacing.</p>
+          <div class="kvs">
+            <span class="badge">Ameca</span>
+            <span class="badge">Multimodal Fusion</span>
+            <span class="badge">Trust &amp; Uncertainty</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">Simulation‑First Training</h3>
+          <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ‑8 / PCL‑C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty‑aware turn management, reducing hardware wear and accelerating iteration.</p>
+          <div class="kvs">
+            <span class="badge">Unreal Engine 5</span>
+            <span class="badge">MetaHuman</span>
+            <span class="badge">Counterfactual Replay</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="card">
+          <h3 style="margin-top:0">Privacy‑Preserving Avatarization</h3>
+          <p>Transforming raw sessions into re‑playable 3D <strong>avatars</strong> that encode behavioral/affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking and AI‑assisted querying without storing voices or faces.</p>
+          <div class="kvs">
+            <span class="badge">3D Avatars</span>
+            <span class="badge">Longitudinal Analysis</span>
+            <span class="badge">Ethics by Design</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">Decision Support &amp; Triage</h3>
+          <p>Interactive <strong>triage wizards</strong> and <strong>RL‑inspired probing</strong> layered over static datasets (E‑DAIC, DAIC‑WOZ) to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong> to clinicians.</p>
+          <div class="kvs">
+            <span class="badge">E‑DAIC / DAIC‑WOZ</span>
+            <span class="badge">RL Probing</span>
+            <span class="badge">Explainability</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publications -->
+    <section id="publications" class="section">
+      <h2>Selected Publications</h2>
+      <div class="list">
+        <div class="card pub">
+          <span class="dot" title="highlight"></span>
+          <div>
+            <h3>Adaptive Multimodal Fusion for Emotion Recognition under Incomplete Input Conditions</h3>
+            <div class="meta">F. Cenacchi. <span class="nowrap">AAMAS 2026</span> (accepted).</div>
+            <div class="kvs"><span class="badge">A* CORE</span><a class="badge" href="#">PDF</a><a class="badge" href="#">Code</a></div>
+          </div>
+        </div>
+        <div class="card pub">
+          <span class="dot"></span>
+          <div>
+            <h3>Humanoid Robots in Early Disease Detection: Scoping Review of Challenges, Techniques &amp; Opportunities</h3>
+            <div class="meta">F. Cenacchi. <span class="nowrap">Scoping review</span>, 32 studies synthesized. (Manuscript.)</div>
+            <div class="kvs"><a class="badge" href="#">PDF</a><span class="badge">Survey</span></div>
+          </div>
+        </div>
+        <div class="card pub">
+          <span class="dot"></span>
+          <div>
+            <h3>Nonverbal Behavioral Cues in Humanoid Interaction: A Trust Calibration Approach</h3>
+            <div class="meta">F. Cenacchi. <span class="nowrap">Preprint</span>, simulation‑only scripted interactions on Ameca; proposes Trust Violation Index (TVI).</div>
+            <div class="kvs"><a class="badge" href="#">PDF</a><span class="badge">Preprint</span></div>
+          </div>
+        </div>
+        <div class="card pub">
+          <span class="dot"></span>
+          <div>
+            <h3>SimClinician: A Simulation Testbed for Reliable Psychologist–AI Collaboration</h3>
+            <div class="meta">F. Cenacchi, collaborators. <span class="nowrap">In revision</span>; MetaHuman patient bank, uncertainty‑aware turn manager.</div>
+            <div class="kvs"><a class="badge" href="#">PDF</a><a class="badge" href="#">Project</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <strong>Thesis‑adjacent projects:</strong>
+        <ul style="margin:8px 0 0 18px">
+          <li>Avatar‑Differential Diagnostics · privacy‑preserving replay for clinical audit.</li>
+          <li>RL‑Probing Triage · policy that asks uncertainty‑reducing questions.</li>
+          <li>Tri‑modal Severity‑Aware Fusion · depression and PTSD detection with drop‑out robustness.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <h2>Selected Projects</h2>
+      <div class="row-3">
+        <div class="card">
+          <h3 style="margin-top:0">Ameca Triage Wizard</h3>
+          <p>Clinician‑style UI for case review: participant‑level predictions, modality‑specific evidence, and exportable summaries.</p>
+          <div class="kvs"><span class="badge">Streamlit</span><span class="badge">Plotly</span><span class="badge">Explainability</span></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">Avatarization Pipeline</h3>
+          <p>Transforms sessions into identifier‑free 3D avatars for longitudinal tracking and cross‑patient comparison.</p>
+          <div class="kvs"><span class="badge">UE5</span><span class="badge">OpenFace</span><span class="badge">OpenPose</span></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">SimClinician</h3>
+          <p>276 MetaHuman patients with synchronized voice, face/gaze, and head–torso poses; supports counterfactual nonverbal perturbations.</p>
+          <div class="kvs"><span class="badge">MetaHuman</span><span class="badge">RL</span><span class="badge">Safety shield</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service / Leadership -->
+    <section id="service" class="section">
+      <h2>Service &amp; Leadership</h2>
+      <div class="row">
+        <div class="card">
+          <h3 style="margin-top:0">Graduate Research Representative</h3>
+          <p>Faculty of Science &amp; Engineering Research Training Committee, Macquarie University — advocating for HDR training quality and practical internship integration within thesis pathways.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">Participant Recruitment &amp; Ethics</h3>
+          <p>Led VR job‑interview studies at MQ Games User Research Lab; progressing ethics for humanoid‑AI diagnostic research with privacy‑preserving data handling.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="section">
+      <h2>Education</h2>
+      <div class="card timeline">
+        <div class="item">
+          <div>2024–</div>
+          <div><strong>PhD in Computer Science</strong>, Macquarie University (Frontier AI Research Centre), Sydney — Humanoid‑AI diagnostics, simulation‑first training, VR ethics.</div>
+        </div>
+        <div class="item">
+          <div>2025–2026</div>
+          <div><strong>Research Exchange</strong>, TU Delft — VR education project (phase 1) transitioning to healthcare application (phase 2).</div>
+        </div>
+        <div class="item">
+          <div>2021–2023</div>
+          <div><strong>MSc</strong>, Human‑Computer Interaction — KTH Royal Institute of Technology.</div>
+        </div>
+        <div class="item">
+          <div>2020–2022</div>
+          <div><strong>MSc</strong>, Situated Interactions — Université Paris‑Saclay.</div>
+        </div>
+        <div class="item">
+          <div>2016–2019</div>
+          <div><strong>B.Eng</strong>, Computer Science — Free University of Bozen‑Bolzano; Erasmus exchange at University of Helsinki.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- News -->
+    <section id="news" class="section">
+      <h2>News</h2>
+      <div class="card list news">
+        <div><time>Oct 2025</time> — Approved for extended exchange at TU Delft (VR education → healthcare pivot).</div>
+        <div><time>Aug 2025</time> — 
+          <span>Trust‑calibration manuscript (Ameca, scripted interactions) ready as preprint.</span>
+        </div>
+        <div><time>Jul 2025</time> — AAMAS’26 paper on <em>Adaptive Multimodal Fusion</em> accepted.</div>
+        <div><time>Jun 2025</time> — SimClinician simulator adds uncertainty‑aware turn manager &amp; counterfactual replay.</div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <div class="card">
+        <p><strong>Email:</strong> <a href="mailto:replace-with-your-email@mq.edu.au">replace-with-your-email@mq.edu.au</a> &nbsp; <span class="badge">Replace with your MQ email</span></p>
+        <p><strong>Links:</strong> <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></p>
+        <blockquote>
+          I welcome collaboration on simulation‑based training for humanoid diagnostic agents, privacy‑preserving avatarization, and clinician‑centered AI triage.
+        </blockquote>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      © <span id="year"></span> Filippo Cenacchi • Last updated <span id="lu"></span> • Inspired by the clean one‑page layout of modern academic profiles.
+    </div>
+  </footer>
+
+  <script>
+    // Set year & last-updated
+    const y = document.getElementById('year'); y.textContent = new Date().getFullYear();
+    const lu = document.getElementById('lu'); lu.textContent = new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+    // Smooth scroll for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});
+    });
+  </script>
+
+  <!-- JSON-LD for richer search / sharing -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Filippo Cenacchi",
+    "jobTitle":"PhD Candidate, Computer Science",
+    "affiliation":{"@type":"CollegeOrUniversity","name":"Macquarie University"},
+    "address":{"@type":"PostalAddress","addressLocality":"Sydney","addressCountry":"AU"},
+    "url":"https://example.com/",
+    "sameAs":["https://scholar.google.com/","https://github.com/","https://www.linkedin.com/"],
+    "knowsAbout":["humanoid robots","multimodal AI","mental health diagnostics","VR ethics","simulation"],
+    "image":"headshot.jpg"
+  }
+  </script>
+</body>
+</html>
