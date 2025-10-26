@@ -13,33 +13,37 @@
   <meta property="og:image" content="headshot.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
 
-  <!-- Minimal, embedded CSS for a clean, modern aesthetic (no build step) -->
+  <!-- Light theme with a subtle, advanced gradient background -->
   <style>
     :root{
-      --bg: #0b0c10;          /* dark background */
-      --panel: #111318;       /* card bg */
-      --text: #e8ebf0;        /* primary text */
-      --subtle: #b3b9c6;      /* secondary text */
-      --brand: #7dd3fc;       /* accent (sky-300) */
-      --brand-ink: #0ea5e9;   /* accent ink (sky-500) */
-      --muted: #1a1d24;       /* muted panel */
-      --border: #222632;      /* borders */
-      --ok: #34d399;          /* green */
-      --warn: #f59e0b;        /* amber */
-      --bad: #f43f5e;         /* rose */
-      --shadow: 0 8px 30px rgba(0,0,0,0.35);
+      --bg: #f7f9fc;          /* light background */
+      --panel: #ffffff;       /* card bg */
+      --text: #0b1220;        /* primary text */
+      --subtle: #475569;      /* secondary text */
+      --brand: #2563eb;       /* accent (indigo-600) */
+      --brand-ink: #1d4ed8;   /* accent ink (indigo-700) */
+      --muted: #f1f5f9;       /* muted panel (slate-100) */
+      --border: #e5e7eb;      /* borders */
+      --ok: #059669;          /* green-600 */
+      --warn: #d97706;        /* amber-700 */
+      --bad: #e11d48;         /* rose-600 */
+      --shadow: 0 8px 30px rgba(2,6,23,0.08);
     }
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Apple Color Emoji','Segoe UI Emoji';}
+    html,body{margin:0;padding:0;background:
+      radial-gradient(1200px 700px at 12% -10%, rgba(37,99,235,.12), transparent 50%),
+      radial-gradient(900px 600px at 100% 0%, rgba(99,102,241,.10), transparent 50%),
+      linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
+      color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Apple Color Emoji','Segoe UI Emoji');}
     a{color:var(--brand-ink);text-decoration:none}
     a:hover{text-decoration:underline}
     .container{max-width:1100px;margin:0 auto;padding:28px}
     .grid{display:grid;gap:18px}
-    .hero{display:grid;grid-template-columns:140px 1fr;gap:22px;align-items:center}
-    .avatar{width:140px;height:140px;border-radius:18px;background:#111;background-size:cover;background-position:center;box-shadow:var(--shadow);border:1px solid var(--border)}
-    .title{font-size:34px;line-height:1.1;margin:0 0 6px}
+    .hero{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center}
+    .avatar{width:260px;height:260px;border-radius:22px;background:#ddd center/cover;border:1px solid var(--border);box-shadow:var(--shadow)}
+    .title{font-size:38px;line-height:1.1;margin:0 0 6px}
     .subtitle{margin:0;color:var(--subtle)}
     .pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--border);background:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--subtle)}
-    .nav{position:sticky;top:0;z-index:20;background:linear-gradient(180deg, rgba(11,12,16,0.96), rgba(11,12,16,0.86));backdrop-filter: blur(10px);border-bottom:1px solid var(--border)}
+    .nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.85);backdrop-filter: blur(10px);border-bottom:1px solid var(--border)}
     .nav .inner{display:flex;align-items:center;gap:16px;justify-content:space-between}
     .nav a.link{padding:12px 10px;border-radius:10px;color:var(--subtle)}
     .nav a.link:hover{background:var(--muted);color:var(--text)}
@@ -66,9 +70,9 @@
     .nowrap{white-space:nowrap}
 
     /* responsive */
-    @media (max-width: 860px){
+    @media (max-width: 940px){
       .hero{grid-template-columns:1fr;text-align:center}
-      .avatar{margin:0 auto}
+      .avatar{margin:0 auto;width:78vw;max-width:420px;height:78vw;max-height:420px}
       .row, .row-3{grid-template-columns:1fr}
       .timeline .item{grid-template-columns:1fr}
       .nav .hide-sm{display:none}
@@ -91,8 +95,8 @@
         <a class="link hide-sm" href="#service">Service</a>
         <a class="link hide-sm" href="#education">Education</a>
         <a class="link" href="#news">News</a>
-        <a class="link" href="#contact">Contact</a>
-        <a class="btn" href="cv_filippo_cenacchi.pdf" download>Download CV</a>
+        <a class="link" href="#visitors">Visitors</a>
+        <a class="btn" href="#cv">View CV</a>
       </div>
     </div>
   </nav>
@@ -226,7 +230,7 @@
         </div>
         <div class="card">
           <h3 style="margin-top:0">SimClinician</h3>
-          <p>276 MetaHuman patients with synchronized voice, face/gaze, and head–torso poses; supports counterfactual nonverbal perturbations.</p>
+          <p>MetaHuman patients with synchronized voice, face/gaze, and head–torso poses; supports counterfactual nonverbal perturbations.</p>
           <div class="kvs"><span class="badge">MetaHuman</span><span class="badge">RL</span><span class="badge">Safety shield</span></div>
         </div>
       </div>
@@ -247,17 +251,13 @@
       </div>
     </section>
 
-    <!-- Education -->
+    <!-- Education (TU Delft removed) -->
     <section id="education" class="section">
       <h2>Education</h2>
       <div class="card timeline">
         <div class="item">
           <div>2024–</div>
           <div><strong>PhD in Computer Science</strong>, Macquarie University (Frontier AI Research Centre), Sydney — Humanoid‑AI diagnostics, simulation‑first training, VR ethics.</div>
-        </div>
-        <div class="item">
-          <div>2025–2026</div>
-          <div><strong>Research Exchange</strong>, TU Delft — VR education project (phase 1) transitioning to healthcare application (phase 2).</div>
         </div>
         <div class="item">
           <div>2021–2023</div>
@@ -274,16 +274,44 @@
       </div>
     </section>
 
-    <!-- News -->
+    <!-- News (TU Delft entry removed) -->
     <section id="news" class="section">
       <h2>News</h2>
       <div class="card list news">
-        <div><time>Oct 2025</time> — Approved for extended exchange at TU Delft (VR education → healthcare pivot).</div>
-        <div><time>Aug 2025</time> — 
-          <span>Trust‑calibration manuscript (Ameca, scripted interactions) ready as preprint.</span>
-        </div>
+        <div><time>Aug 2025</time> — Trust‑calibration manuscript (Ameca, scripted interactions) posted as preprint.</div>
         <div><time>Jul 2025</time> — AAMAS’26 paper on <em>Adaptive Multimodal Fusion</em> accepted.</div>
-        <div><time>Jun 2025</time> — SimClinician simulator adds uncertainty‑aware turn manager &amp; counterfactual replay.</div>
+        <div><time>Jun 2025</time> — SimClinician adds uncertainty‑aware turn manager &amp; counterfactual replay.</div>
+      </div>
+    </section>
+
+    <!-- Live Visitors -->
+    <section id="visitors" class="section">
+      <h2>Live Visitors</h2>
+      <div class="card">
+        <div id="visitors-map" style="max-width:520px;margin:0 auto">
+          <!-- ✅ ClustrMaps embed: replace YOUR_CODE with your site code from clustrmaps.com -->
+          <script id="clustrmaps" type="text/javascript" src="//clustrmaps.com/map_v2.js?d=YOUR_CODE&cl=ffffff&w=a"></script>
+          <noscript><a href="https://clustrmaps.com" target="_blank" rel="noopener">Viewers map</a></noscript>
+        </div>
+        <p class="meta" style="text-align:center;margin-top:8px">Updates in real time. Get your code at <em>clustrmaps.com</em> → Dashboard → <strong>Embed</strong> and paste it here.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <details>
+          <summary>Alternative: RevolverMaps (3D globe)</summary>
+          <div style="margin-top:8px;text-align:center">
+            <!-- Optional alternative. Replace YOUR_ID with your widget id from revolvermaps.com -->
+            <script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=YOUR_ID&m=0&c=ff0000&cr1=ffffff&f=arial&l=0"></script>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- CV (inline PDF viewer, not a forced download) -->
+    <section id="cv" class="section">
+      <h2>Curriculum Vitae</h2>
+      <div class="card">
+        <iframe src="cv_filippo_cenacchi.pdf#view=FitH" width="100%" height="920" style="border:1px solid var(--border);border-radius:14px"></iframe>
+        <p class="meta">If the PDF does not display, <a href="cv_filippo_cenacchi.pdf" target="_blank" rel="noopener">open it in a new tab</a>.</p>
       </div>
     </section>
 
@@ -291,7 +319,7 @@
     <section id="contact" class="section">
       <h2>Contact</h2>
       <div class="card">
-        <p><strong>Email:</strong> <a href="mailto:replace-with-your-email@mq.edu.au">replace-with-your-email@mq.edu.au</a> &nbsp; <span class="badge">Replace with your MQ email</span></p>
+        <p><strong>Email:</strong> <a href="mailto:replace-with-your-email@mq.edu.au">replace-with-your-email@mq.edu.au</a></p>
         <p><strong>Links:</strong> <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></p>
         <blockquote>
           I welcome collaboration on simulation‑based training for humanoid diagnostic agents, privacy‑preserving avatarization, and clinician‑centered AI triage.
@@ -302,7 +330,7 @@
 
   <footer class="footer">
     <div class="container">
-      © <span id="year"></span> Filippo Cenacchi • Last updated <span id="lu"></span> • Inspired by the clean one‑page layout of modern academic profiles.
+      © <span id="year"></span> Filippo Cenacchi • Last updated <span id="lu"></span>
     </div>
   </footer>
 
