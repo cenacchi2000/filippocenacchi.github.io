@@ -276,6 +276,20 @@
   display: block;
   padding-top: 56.25%; /* 16:9 height */
 }
+/* Standard thumbnail sizing for all publications */
+.card.pub {
+  grid-template-columns: minmax(160px, 200px) 1fr; /* keep all cards consistent */
+}
+
+.card.pub a.thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;        /* consistent visual height */
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
 
 /* Absolutely position children over the ratio shim */
 .card-media > img,
@@ -657,7 +671,8 @@
 </div>
 
 
- <!-- JSIS journal paper with Fig. 1 & Fig. 2 -->
+
+<!-- JSIS journal paper with Fig. 1 & Fig. 2 -->
 <div class="card pub" style="grid-template-columns:minmax(180px, 220px) 1fr;">
   <div class="pub-figs">
     <a href="jsis_fig1.png" class="fig" data-full="fig1.png">
@@ -676,6 +691,7 @@
     </div>
   </div>
 </div>
+
 
 
 
