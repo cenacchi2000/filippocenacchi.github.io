@@ -486,49 +486,86 @@
     </section>
 
     <!-- Research Focus -->
-    <section id="research" class="section">
-      <h2>Research Focus</h2>
-      <div class="row">
-        <div class="card">
-          <h3 style="margin-top:0">Humanoid-AI Diagnostic Agents</h3>
-          <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
-          <div class="kvs">
-            <span class="badge">Ameca</span>
-            <span class="badge">Multimodal Fusion</span>
-            <span class="badge">Trust &amp; Uncertainty</span>
-          </div>
-        </div>
-        <div class="card">
-          <h3 style="margin-top:0">Simulation-First Training</h3>
-          <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
-          <div class="kvs">
-            <span class="badge">Unreal Engine 5</span>
-            <span class="badge">MetaHuman</span>
-            <span class="badge">Counterfactual Replay</span>
-          </div>
-        </div>
+<section id="research" class="section">
+  <h2>Research Focus</h2>
+
+  <div class="research-grid">
+    <!-- 1. Humanoid-AI Diagnostic Agents -->
+    <article class="card-focus">
+      <button class="card-media" data-full="ameca.png" aria-label="Open image: Ameca">
+        <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
+        <span class="media-gradient"></span>
+        <span class="media-chips">
+          <span class="badge">Ameca</span>
+          <span class="badge">Multimodal Fusion</span>
+          <span class="badge">Trust &amp; Uncertainty</span>
+        </span>
+      </button>
+      <div class="card-body">
+        <h3>Humanoid-AI Diagnostic Agents</h3>
+        <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
       </div>
-      <div class="row">
-        <div class="card">
-          <h3 style="margin-top:0">Privacy-Preserving Avatarization</h3>
-          <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
-          <div class="kvs">
-            <span class="badge">3D Avatars</span>
-            <span class="badge">Longitudinal Analysis</span>
-            <span class="badge">Ethics by Design</span>
-          </div>
-        </div>
-        <div class="card">
-          <h3 style="margin-top:0">Decision Support &amp; Triage</h3>
-          <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
-          <div class="kvs">
-            <span class="badge">E-DAIC / DAIC-WOZ</span>
-            <span class="badge">RL Probing</span>
-            <span class="badge">Explainability</span>
-          </div>
-        </div>
+    </article>
+
+    <!-- 2. Simulation-First Training -->
+    <article class="card-focus">
+      <button class="card-media" data-full="Scene%20(1).png" aria-label="Open image: Simulation frame">
+        <img src="Scene%20(1).png" alt="MetaHuman simulation scene from SimClinician">
+        <span class="media-gradient"></span>
+        <span class="media-chips">
+          <span class="badge">Unreal Engine 5</span>
+          <span class="badge">MetaHuman</span>
+          <span class="badge">Counterfactual Replay</span>
+        </span>
+      </button>
+      <div class="card-body">
+        <h3>Simulation-First Training</h3>
+        <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
       </div>
-    </section>
+    </article>
+
+    <!-- 3. Privacy-Preserving Avatarization -->
+    <article class="card-focus">
+      <button class="card-media" data-full="facegaze_top_female%20(1).png" aria-label="Open image: Avatarized face & gaze">
+        <img src="facegaze_top_female%20(1).png" alt="Animated 3D avatar with AU heatmap for privacy-preserving replay">
+        <span class="media-gradient"></span>
+        <span class="media-chips">
+          <span class="badge">3D Avatars</span>
+          <span class="badge">Longitudinal Analysis</span>
+          <span class="badge">Ethics by Design</span>
+        </span>
+      </button>
+      <div class="card-body">
+        <h3>Privacy-Preserving Avatarization</h3>
+        <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
+      </div>
+    </article>
+
+    <!-- 4. Decision Support & Triage -->
+    <article class="card-focus">
+      <button class="card-media" data-full="20250901_165725.jpg" aria-label="Open image: Decision support">
+        <img src="20250901_165725.jpg" alt="Robot and screen-based triage tools used with clinicians">
+        <span class="media-gradient"></span>
+        <span class="media-chips">
+          <span class="badge">E-DAIC / DAIC-WOZ</span>
+          <span class="badge">RL Probing</span>
+          <span class="badge">Explainability</span>
+        </span>
+      </button>
+      <div class="card-body">
+        <h3>Decision Support &amp; Triage</h3>
+        <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
+      </div>
+    </article>
+  </div>
+
+  <!-- Lightbox (needed by your JS at the bottom) -->
+  <dialog id="lightbox" class="lightbox">
+    <img alt="" id="lightbox-img">
+    <button id="lightbox-close" aria-label="Close">×</button>
+  </dialog>
+</section>
+
 
     <!-- Publications -->
     <section id="publications" class="section">
