@@ -25,73 +25,306 @@
       --border: #e5e7eb;
       --shadow: 0 8px 30px rgba(2,6,23,0.08);
     }
-    html,body{margin:0;padding:0;background:
-      radial-gradient(1200px 700px at 12% -10%, rgba(37,99,235,.12), transparent 50%),
-      radial-gradient(900px 600px at 100% 0%, rgba(99,102,241,.10), transparent 50%),
-      linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
-      color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial}
+    html,body{
+      margin:0;
+      padding:0;
+      background:
+        radial-gradient(1200px 700px at 12% -10%, rgba(37,99,235,.12), transparent 50%),
+        radial-gradient(900px 600px at 100% 0%, rgba(99,102,241,.10), transparent 50%),
+        linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
+      color:var(--text);
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial;
+      min-height:100vh;
+    }
     a{color:var(--brand-ink);text-decoration:none}
     a:hover{text-decoration:underline}
-    .container{max-width:1100px;margin:0 auto;padding:28px}
+    .container{
+      max-width:1200px;
+      margin:0 auto;
+      padding:20px;
+      width:100%;
+      box-sizing:border-box;
+    }
     .grid{display:grid;gap:18px}
 
-    .nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.85);backdrop-filter: blur(10px);border-bottom:1px solid var(--border)}
-    .nav .inner{display:flex;align-items:center;gap:16px;justify-content:space-between}
-    .nav a.link{padding:12px 10px;border-radius:10px;color:var(--subtle)}
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(255,255,255,0.85);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav .inner{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .nav a.link{
+      padding:12px 10px;
+      border-radius:10px;
+      color:var(--subtle);
+      white-space:nowrap;
+    }
     .nav a.link:hover{background:var(--muted);color:var(--text)}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--panel);color:var(--text);box-shadow:var(--shadow)}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      color:var(--text);
+      box-shadow:var(--shadow);
+      white-space:nowrap;
+    }
 
     .section{padding:32px 0}
     .section h2{font-size:22px;margin:0 0 14px}
-    .card{border:1px solid var(--border);background:var(--panel);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+    .card{
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius:18px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
     .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .kvs{display:flex;flex-wrap:wrap;gap:8px}
-    .badge{display:inline-block;font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--border);background:var(--muted);color:var(--subtle)}
+    .badge{
+      display:inline-block;
+      font-size:12px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--muted);
+      color:var(--subtle);
+    }
     .pub{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
     .dot{width:10px;height:10px;border-radius:999px;background:var(--brand)}
     .pub h3{font-size:16px;margin:0}
     .meta{font-size:13px;color:var(--subtle)}
-    .timeline{display:grid;gap:10px}
-    .timeline .item{display:grid;grid-template-columns:140px 1fr;gap:16px}
-    .footer{padding:30px 0;color:var(--subtle);text-align:center;border-top:1px solid var(--border)}
-    blockquote{margin:0;padding:14px 16px;border-left:3px solid var(--brand-ink);background:var(--muted);border-radius:6px}
-
-    /* hero */
-    .hero{display:grid;grid-template-columns:260px 1fr 300px;gap:28px;align-items:center}
-    .avatar{width:260px;height:260px;border-radius:22px;background:#ddd center/cover;border:1px solid var(--border);box-shadow:var(--shadow)}
-    .title{font-size:56px;line-height:1.08;margin:0 0 6px}
-    .subtitle{margin:0;color:var(--subtle)}
-    .pill{display:inline-flex;gap:10px;align-items:center;border:1px solid var(--border);background:var(--muted);padding:8px 12px;border-radius:999px;font-size:14px;color:var(--subtle)}
-    .inline-icon{width:18px;height:18px;vertical-align:-3px}
-    .inline-icon.mq{width:28px;height:28px;vertical-align:-6px} /* MQ logo larger */
-    #globeWrap{display:flex;justify-content:center}
-    #globeWrap .globe-card{border-radius:24px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;background:transparent}
-    #globeWrap .globe-card > div{background:transparent}
-
-    /* prizes carousel */
-    .prizes{position:relative;overflow:hidden}
-    .prize-track{display:flex;gap:16px;transition:transform .6s ease}
-    .prize-item{min-width:100%;display:grid;grid-template-columns:340px 1fr;gap:18px;align-items:center}
-    .prize-item img{width:100%;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow)}
-    @media (max-width: 940px){
-      .hero{grid-template-columns:1fr;grid-auto-rows:auto;text-align:center}
-      .avatar{margin:0 auto;width:78vw;max-width:420px;height:78vw;max-height:420px}
-      #globeWrap{order:3}
-      .row, .row-3{grid-template-columns:1fr}
-      .timeline .item{grid-template-columns:1fr}
-      .prize-item{grid-template-columns:1fr}
-      .nav .hide-sm{display:none}
+    .list{display:grid;gap:12px}
+    .footer{
+      padding:30px 0;
+      color:var(--subtle);
+      text-align:center;
+      border-top:1px solid var(--border);
+      margin-top:40px;
+    }
+    blockquote{
+      margin:0;
+      padding:14px 16px;
+      border-left:3px solid var(--brand-ink);
+      background:var(--muted);
+      border-radius:6px;
     }
 
-    /* brand icons (SVG) */
+    /* hero */
+    .hero{
+      display:grid;
+      grid-template-columns:minmax(200px, 260px) 1fr minmax(250px, 300px);
+      gap:28px;
+      align-items:start;
+    }
+    .avatar{
+      width:100%;
+      aspect-ratio:1;
+      border-radius:22px;
+      background:#ddd center/cover;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    .title{font-size:clamp(32px, 5vw, 56px);line-height:1.08;margin:0 0 6px}
+    .subtitle{margin:0;color:var(--subtle);font-size:clamp(14px, 2vw, 16px)}
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border:1px solid var(--border);
+      background:var(--muted);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:14px;
+      color:var(--subtle);
+    }
+    .inline-icon{width:18px;height:18px;vertical-align:-3px}
+    .inline-icon.mq{width:36px;height:36px;vertical-align:-8px} /* MQ logo bigger */
+    #globeWrap{
+      display:flex;
+      justify-content:center;
+      align-items:start;
+      position:sticky;
+      top:100px;
+    }
+    #globeWrap #globeMount{
+      width:100%;
+      max-width:280px;
+      aspect-ratio:1;
+      background:transparent;
+    }
+
+    /* events carousel */
+    .events{position:relative;overflow:hidden}
+    .event-track{display:flex;gap:16px;transition:transform .6s ease}
+    .event-item{
+      min-width:100%;
+      display:grid;
+      grid-template-columns:minmax(250px, 340px) 1fr;
+      gap:18px;
+      align-items:center;
+    }
+    .event-item img{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    
+    /* prizes list */
+    .prize-list{display:grid;gap:12px}
+    .prize-card{
+      display:grid;
+      grid-template-columns:minmax(150px, 200px) 1fr;
+      gap:16px;
+      align-items:center;
+    }
+    .prize-card img{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+
+    /* timeline improvements */
+    .timeline{display:grid;gap:16px}
+    .timeline .item{
+      display:grid;
+      grid-template-columns:minmax(120px, 160px) 1fr;
+      gap:20px;
+      padding:16px;
+      border-left:3px solid var(--brand);
+      background:linear-gradient(to right, var(--muted) 0%, transparent 100%);
+      border-radius:8px;
+      transition:all 0.3s ease;
+    }
+    .timeline .item:hover{
+      background:linear-gradient(to right, var(--muted) 0%, var(--muted) 50%, transparent 100%);
+      transform:translateX(4px);
+    }
+    .timeline .date{
+      font-weight:600;
+      color:var(--brand-ink);
+      font-size:14px;
+      white-space:nowrap;
+    }
+    .timeline .content strong{
+      color:var(--text);
+      display:block;
+      margin-bottom:4px;
+      font-size:16px;
+    }
+
+    /* leadership section */
+    .leadership-grid{display:grid;gap:16px}
+    .leadership-item{
+      padding:20px;
+      border-left:4px solid var(--brand);
+      background:var(--muted);
+      border-radius:8px;
+    }
+    .leadership-item h3{margin:0 0 8px;font-size:18px}
+    .leadership-item .period{
+      color:var(--brand-ink);
+      font-weight:600;
+      font-size:14px;
+      margin-bottom:8px;
+    }
+    
+    /* Google Scholar icon */
+    .scholar-icon{
+      width:18px;
+      height:18px;
+      display:inline-block;
+      vertical-align:-3px;
+    }
+
+    @media (max-width: 1024px){
+      .hero{
+        grid-template-columns:minmax(180px, 220px) 1fr;
+        gap:20px;
+      }
+      #globeWrap{
+        grid-column:1 / -1;
+        position:static;
+        margin-top:20px;
+      }
+      .title{font-size:clamp(28px, 6vw, 42px)}
+    }
+
+    @media (max-width: 768px){
+      .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+      .avatar{
+        margin:0 auto;
+        max-width:300px;
+      }
+      #globeWrap{
+        justify-content:center;
+      }
+      .row, .row-3{grid-template-columns:1fr}
+      .timeline .item{
+        grid-template-columns:1fr;
+        gap:8px;
+      }
+      .event-item{grid-template-columns:1fr}
+      .prize-card{grid-template-columns:1fr}
+      .nav .hide-sm{display:none}
+      .nav .inner{
+        flex-direction:column;
+        align-items:stretch;
+      }
+      .nav .inner > div:last-child{
+        display:flex;
+        gap:6px;
+        flex-wrap:wrap;
+        justify-content:center;
+      }
+    }
+
+    @media (max-width: 480px){
+      .container{padding:12px}
+      .section{padding:20px 0}
+      .card{padding:16px}
+      .timeline .item{padding:12px}
+    }
+
+    /* brand icons */
     .iconify{display:inline-block;width:18px;height:18px}
-    .li-icon{background:#0A66C2;border-radius:3px;position:relative}
-    .li-icon:before{content:'in';position:absolute;left:3px;top:-1px;color:#fff;font-weight:700;font-family:Arial,Helvetica,system-ui}
-    .cap{width:18px;height:18px;display:inline-block;position:relative}
-    .cap:before,.cap:after{content:'';position:absolute;background:#334155}
-    .cap:before{width:18px;height:6px;top:3px;left:0;border-radius:2px 2px 0 0}
-    .cap:after{width:6px;height:6px;top:9px;left:6px;border-radius:0 0 1px 1px}
+    .li-icon{
+      background:#0A66C2;
+      border-radius:3px;
+      position:relative;
+      width:18px;
+      height:18px;
+      display:inline-block;
+      vertical-align:-3px;
+    }
+    .li-icon:before{
+      content:'in';
+      position:absolute;
+      left:3px;
+      top:-1px;
+      color:#fff;
+      font-weight:700;
+      font-family:Arial,Helvetica,system-ui;
+      font-size:12px;
+    }
   </style>
 </head>
 <body>
@@ -106,10 +339,11 @@
         <a class="link" href="#about">About</a>
         <a class="link" href="#research">Research</a>
         <a class="link" href="#publications">Publications</a>
+        <a class="link" href="#events">Events</a>
         <a class="link" href="#awards">Prizes</a>
-        <a class="link hide-sm" href="#service">Service</a>
-        <a class="link" href="#education">Education</a>
-        <a class="link" href="#experience">Experience</a>
+        <a class="link" href="#leadership">Leadership</a>
+        <a class="link hide-sm" href="#education">Education</a>
+        <a class="link hide-sm" href="#experience">Experience</a>
         <a class="link" href="#visitors">Visitors</a>
         <a class="btn" href="#cv">View CV</a>
       </div>
@@ -135,15 +369,25 @@
 
           <div class="kvs" aria-label="Quick links">
             <a class="pill" href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
-              <span class="cap" aria-hidden="true"></span> Google Scholar
+              <svg class="scholar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L3 9L12 13L21 9L12 2Z" fill="#4285F4"/>
+                <path d="M12 13L3 9V15.5C3 17.5 7 20 12 22C17 20 21 17.5 21 15.5V9L12 13Z" fill="#4285F4" opacity="0.7"/>
+              </svg>
+              Google Scholar
             </a>
             <a class="pill" href="https://github.com/cenacchi2000" target="_blank" rel="noopener" title="GitHub">
               <img class="inline-icon" alt="" src="https://github.githubassets.com/favicons/favicon.svg"> GitHub
             </a>
             <a class="pill" href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener" title="LinkedIn">
-              <span class="iconify li-icon" aria-hidden="true"></span> LinkedIn
+              <span class="li-icon" aria-hidden="true"></span> LinkedIn
             </a>
-            <a class="pill" href="#contact"><img class="inline-icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23334555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 4h16v16H4z'/><polyline points='22,6 12,13 2,6'/></svg>" alt=""> Email</a>
+            <a class="pill" href="#contact">
+              <svg class="inline-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#334555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Email
+            </a>
             <span class="pill" id="sydneyPill">
               <img src="house.png" class="inline-icon" alt="Sydney Opera House"> <span id="sydTime">Sydney --:--</span> · <span id="sydTemp">--°C</span> <span id="sydIcon"></span>
             </span>
@@ -152,9 +396,7 @@
 
         <!-- Globe, right column, transparent background -->
         <div id="globeWrap">
-          <div class="globe-card">
-            <div id="globeMount" style="width:280px; height:280px; background:transparent"></div>
-          </div>
+          <div id="globeMount"></div>
         </div>
       </div>
     </section>
@@ -243,12 +485,12 @@
       </div>
     </section>
 
-    <!-- Prizes (carousel) -->
-    <section id="awards" class="section">
-      <h2>Prizes</h2>
-      <div class="card prizes">
-        <div class="prize-track" id="prizeTrack">
-          <div class="prize-item">
+    <!-- Events (carousel) -->
+    <section id="events" class="section">
+      <h2>Events</h2>
+      <div class="card events">
+        <div class="event-track" id="eventTrack">
+          <div class="event-item">
             <img src="3MT SoC.jpg" alt="Winner - School of Computing 3MT">
             <div>
               <h3 style="margin:0 0 6px">Winner — School of Computing 3MT</h3>
@@ -256,7 +498,7 @@
               <p>First place at the School of Computing 3 Minute Thesis competition.</p>
             </div>
           </div>
-          <div class="prize-item">
+          <div class="event-item">
             <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
             <div>
               <h3 style="margin:0 0 6px">Runner-up — Faculty of Science & Engineering 3MT</h3>
@@ -264,7 +506,7 @@
               <p>Runner-up at the Faculty final following the School-level win.</p>
             </div>
           </div>
-          <div class="prize-item">
+          <div class="event-item">
             <img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT">
             <div>
               <h3 style="margin:0 0 6px">Finalist — University 3MT</h3>
@@ -276,19 +518,53 @@
       </div>
     </section>
 
-    <!-- Experience -->
-    <section id="experience" class="section">
-      <h2>Experience</h2>
-      <div class="card timeline">
-        <div class="item"><div>Feb 2025 - present</div><div><strong>Doctoral Researcher</strong>, Macquarie University — humanoid robots in healthcare; multimodal analysis; human-centered, ethical interactions.</div></div>
-        <div class="item"><div>Jul 2025 - present</div><div><strong>Casual Teaching Academic</strong>, Macquarie University — COMP8851 (Major Project for Master of Data Science), COMP3850 (Computing Industry Project).</div></div>
-        <div class="item"><div>Jul 2025 - present</div><div><strong>Graduate Student Representative</strong>, Macquarie University — Faculty Research Training Committee.</div></div>
-        <div class="item"><div>Mar 2024 - Jan 2025</div><div><strong>Research Assistant</strong> — managed logistics and analysis with Construction Training Centre of Queensland; usability evaluations and industry collaboration.</div></div>
-        <div class="item"><div>Feb 2024 - Jan 2025</div><div><strong>Researcher (Contract)</strong>, Meta — ethical VR research with Macquarie partnership; user-to-user communication studies.</div></div>
-        <div class="item"><div>Oct 2022 - Jan 2024</div><div><strong>Product Manager</strong>, Genvalues.com (Stockholm · Hybrid) — product strategy; requirements; cross-functional delivery.</div></div>
-        <div class="item"><div>Mar 2022 - Sep 2022</div><div><strong>Associate Product Manager</strong>, IamIP (Stockholm) — MVPs; requirements; sprint delivery; client pilots.</div></div>
-        <div class="item"><div>Jun 2021 - Mar 2022</div><div><strong>Project Manager</strong>, Würth Phoenix (Bolzano) — low-code platforms; Dynamics 365 solutions.</div></div>
-        <div class="item"><div>Mar 2020 - Jun 2021</div><div><strong>VR Developer / Project Manager</strong>, Smart VR Lab (Amsterdam) — VR content & platform APIs; CRM rollout; medical training product.</div></div>
+    <!-- Prizes (list) -->
+    <section id="awards" class="section">
+      <h2>Prizes</h2>
+      <div class="prize-list">
+        <div class="card prize-card">
+          <img src="3MT SoC.jpg" alt="Winner - School of Computing 3MT">
+          <div>
+            <h3 style="margin:0 0 6px">Winner — School of Computing 3MT</h3>
+            <div class="meta">Macquarie University · 2025</div>
+            <p>First place at the School of Computing 3 Minute Thesis competition.</p>
+          </div>
+        </div>
+        <div class="card prize-card">
+          <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
+          <div>
+            <h3 style="margin:0 0 6px">Runner-up — Faculty of Science & Engineering 3MT</h3>
+            <div class="meta">Macquarie University · 2025</div>
+            <p>Runner-up at the Faculty final following the School-level win.</p>
+          </div>
+        </div>
+        <div class="card prize-card">
+          <img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT">
+          <div>
+            <h3 style="margin:0 0 6px">Finalist — University 3MT</h3>
+            <div class="meta">Macquarie University · 2025</div>
+            <p>Represented the Faculty in the University-level showcase.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership & Supervision -->
+    <section id="leadership" class="section">
+      <h2>Leadership & Supervision</h2>
+      <div class="card leadership-grid">
+        <div class="leadership-item">
+          <h3>Graduate Research Student Representative</h3>
+          <div class="period">July 2025 - Present</div>
+          <p><strong>Faculty Research Training Committee</strong>, Macquarie University</p>
+          <p>Representing doctoral and master's research students in faculty-level discussions on training quality, policy development, and student support initiatives. Advocating for improved research infrastructure and professional development opportunities.</p>
+        </div>
+        <div class="leadership-item">
+          <h3>Summer Internship Supervisor</h3>
+          <div class="period">October 2025 - Present</div>
+          <p><strong>Macquarie University</strong></p>
+          <p>Supervising undergraduate and master's students in summer research internships focused on humanoid AI, multimodal fusion, and simulation-based training projects. Mentoring students in research methodology, technical skills development, and academic writing.</p>
+        </div>
       </div>
     </section>
 
@@ -296,60 +572,156 @@
     <section id="education" class="section">
       <h2>Education</h2>
       <div class="card timeline">
-        <div class="item"><div>2025 - 2028</div><div><strong>Doctorate in Computer Science</strong>, Macquarie University (Frontier AI Research Centre) — humanoid-driven early disease detection research.</div></div>
-        <div class="item"><div>2023 - 2025</div><div><strong>MSc</strong>, Situated Interactions — Université Paris-Saclay (Excellent with Honors).</div></div>
-        <div class="item"><div>2022 - 2024</div><div><strong>MSc</strong>, Human-Computer Interactions — KTH Royal Institute of Technology (Excellent).</div></div>
-        <div class="item"><div>2019 - 2022</div><div><strong>Bachelor of Engineering</strong>, Computer Science — Free University of Bozen-Bolzano; Erasmus at University of Helsinki.</div></div>
-      </div>
-    </section>
-
-    <!-- Licenses & certifications -->
-    <section id="certs" class="section">
-      <h2>Licenses & Certifications</h2>
-      <div class="card list">
-        <div><strong>Reviewer of IJCAI 2025</strong> — IJCAI International Joint Conferences on Artificial Intelligence Organization. <span class="meta">Issued Sep 2025</span></div>
-      </div>
-    </section>
-
-    <!-- Visitors -->
-    <section id="visitors" class="section">
-      <h2>Live Visitors</h2>
-      <div class="card" style="padding:0">
-        <div id="visitors-map" style="max-width:520px;margin:18px auto">
-          <!-- Your ClustrMaps embed code goes here -->
-          <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
+        <div class="item">
+          <div class="date">2025 - 2028</div>
+          <div class="content">
+            <strong>Doctorate in Computer Science</strong>
+            <div>Macquarie University (Frontier AI Research Centre)</div>
+            <div class="meta">Humanoid-driven early disease detection research</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">2023 - 2025</div>
+          <div class="content">
+            <strong>MSc, Situated Interactions</strong>
+            <div>Université Paris-Saclay</div>
+            <div class="meta">Excellent with Honors</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">2022 - 2024</div>
+          <div class="content">
+            <strong>MSc, Human-Computer Interactions</strong>
+            <div>KTH Royal Institute of Technology</div>
+            <div class="meta">Excellent</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">2019 - 2022</div>
+          <div class="content">
+            <strong>Bachelor of Engineering, Computer Science</strong>
+            <div>Free University of Bozen-Bolzano</div>
+            <div class="meta">Erasmus at University of Helsinki</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CV (inline PDF viewer) -->
-    <section id="cv" class="section">
-      <h2>Curriculum Vitae</h2>
-      <div class="card">
-        <iframe src="cv_filippo_cenacchi.pdf#view=FitH" width="100%" height="920" style="border:1px solid var(--border);border-radius:14px"></iframe>
-        <p class="meta">If the PDF does not display, <a href="cv_filippo_cenacchi.pdf" target="_blank" rel="noopener">open it in a new tab</a>.</p>
-      </div>
-    </section>
+    <!-- Experience -->
+    <section id="experience" class="section">
+      <h2>Experience</h2>
+      <div class="card timeline">
+        <div class="item">
+          <div class="date">Feb 2025 - present</div>
+          <div class="content">
+            <strong>Doctoral Researcher</strong>
+            <div>Macquarie University</div>
+            <div class="meta">Humanoid robots in healthcare; multimodal analysis; human-centered, ethical interactions</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">Jul 2025 - present</div>
+          <div class="content">
+            <strong>Casual Teaching Academic</strong>
+            <div>Macquarie University</div>
+            <div class="meta">COMP8851 (Major Project for Master of Data Science), COMP3850 (Computing Industry Project)</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">Mar 2024 - Jan 2025</div>
+          <div class="content">
+            <strong>Research Assistant</strong>
+            <div>Macquarie University</div>
+            <div class="meta">Managed logistics and analysis with Construction Training Centre of Queensland; usability evaluations and industry collaboration</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">Feb 2024 - Jan 2025</div>
+          <div class="content">
+            <strong>Researcher (Contract)</strong>
+            <div>Meta</div>
+            <div class="meta">Ethical VR research with Macquarie partnership; user-to-user communication studies</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">Oct 2022 - Jan 2024</div>
+          <div class="content">
+            <strong>Product Manager</strong>
+            <div>Genvalues.com (Stockholm · Hybrid)</div>
+            <div class="meta">Product strategy; requirements; cross-functional delivery</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">Mar 2022 - Sep 2022</div>
+          <div class="content">
+            <strong>Associate Product Manager</strong>
+            <div>IamIP (Stockholm)</div>
+            <div class="meta">MVPs; requirements; sprint delivery; client pilots</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="date">Jun 2021 - Mar 2022</div>
+          <div class="content">
+            <strong>Project Manager</strong>
+            <div>Würth Phoenix (Bolzano)</div>
+            <div class="meta">Low-code platforms; Dynamics 365 solutions</div>
+         </div>
+        </div>
+        <div class="item">
+          <div class="date">Mar 2020 - Jun 2021</div>
+          <div class="content">
+            <strong>VR Developer / Project Manager</strong>
+            <div>Smart VR Lab (Amsterdam)</div>
+            <div class="meta">VR content & platform APIs; CRM rollout; medical training product</div>
+          </div>
+          </div>
+        </div>
+     </section>
+    <!-- Licenses & certifications -->
+<section id="certs" class="section">
+  <h2>Licenses & Certifications</h2>
+  <div class="card list">
+    <div><strong>Reviewer of IJCAI 2025</strong> — IJCAI International Joint Conferences on Artificial Intelligence Organization. <span class="meta">Issued Sep 2025</span></div>
+  </div>
+</section>
 
-    <!-- Contact -->
-    <section id="contact" class="section">
-      <h2>Contact</h2>
-      <div class="card">
-        <p><strong>Email:</strong> <a href="mailto:filippo.cenacchi@hdr.mq.edu.au">filippo.cenacchi@hdr.mq.edu.au</a></p>
-        <p><strong>Links:</strong> <a href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/cenacchi2000" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener">LinkedIn</a></p>
-        <blockquote>
-          I welcome collaboration on simulation-based training for humanoid diagnostic agents, privacy-preserving avatarization, and clinician-centered AI triage.
-        </blockquote>
-      </div>
-    </section>
-  </main>
+<!-- Visitors -->
+<section id="visitors" class="section">
+  <h2>Live Visitors</h2>
+  <div class="card" style="padding:0">
+    <div id="visitors-map" style="max-width:520px;margin:18px auto">
+      <!-- Your ClustrMaps embed code goes here -->
+      <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
+    </div>
+  </div>
+</section>
 
+<!-- CV (inline PDF viewer) -->
+<section id="cv" class="section">
+  <h2>Curriculum Vitae</h2>
+  <div class="card">
+    <iframe src="cv_filippo_cenacchi.pdf#view=FitH" width="100%" height="920" style="border:1px solid var(--border);border-radius:14px"></iframe>
+    <p class="meta">If the PDF does not display, <a href="cv_filippo_cenacchi.pdf" target="_blank" rel="noopener">open it in a new tab</a>.</p>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section">
+  <h2>Contact</h2>
+  <div class="card">
+    <p><strong>Email:</strong> <a href="mailto:filippo.cenacchi@hdr.mq.edu.au">filippo.cenacchi@hdr.mq.edu.au</a></p>
+    <p><strong>Links:</strong> <a href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/cenacchi2000" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener">LinkedIn</a></p>
+    <blockquote>
+      I welcome collaboration on simulation-based training for humanoid diagnostic agents, privacy-preserving avatarization, and clinician-centered AI triage.
+    </blockquote>
+  </div>
+</section>
+    </main>
   <footer class="footer">
     <div class="container">
       © <span id="year"></span> Filippo Cenacchi • Last updated <span id="lu"></span>
     </div>
   </footer>
-
   <script>
     // year + last updated
     year.textContent = new Date().getFullYear();
@@ -364,8 +736,8 @@
       });
     });
 
-    // prizes carousel
-    (function(){ const track=document.getElementById('prizeTrack'); if(!track) return;
+    // events carousel
+    (function(){ const track=document.getElementById('eventTrack'); if(!track) return;
       let i=0; const N=track.children.length;
       setInterval(()=>{ i=(i+1)%N; track.style.transform=`translateX(-${i*100}%)`; }, 5000);
     })();
@@ -397,17 +769,7 @@
       }catch(e){/* silent */}
     }
     loadSydney(); setInterval(loadSydney, 60*1000);
-
-    // ClustrMaps globe mount (transparent)
-    (function(){
-      const mount = document.getElementById('globeMount');
-      const script = document.getElementById('clstr_globe');
-      if (mount && script) {
-        // the script auto-inserts the globe; container has transparent bg
-      }
-    })();
   </script>
-
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
@@ -429,3 +791,5 @@
   </script>
 </body>
 </html>
+```
+
