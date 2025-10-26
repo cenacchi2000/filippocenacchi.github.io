@@ -167,6 +167,91 @@
       background:transparent;
     }
 
+    /* Grid */
+.research-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:24px;
+}
+@media (max-width:900px){
+  .research-grid{ grid-template-columns:1fr; }
+}
+
+/* Card */
+.card-focus{
+  background:var(--panel,#fff);
+  border-radius:18px;
+  box-shadow:0 6px 24px rgba(20,40,80,.08);
+  overflow:hidden;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.card-focus:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 36px rgba(20,40,80,.12);
+}
+
+/* Media header with overlayed chips */
+.card-media{
+  position:relative;
+  display:block;
+  width:100%;
+  aspect-ratio: 16/9;
+  padding:0;
+  border:0;
+  background:transparent;
+  cursor:zoom-in;
+}
+.card-media img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  transform:scale(1.01);
+  transition:transform .25s ease;
+}
+.card-focus:hover .card-media img{ transform:scale(1.05); }
+
+.media-gradient{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.45) 100%);
+}
+.media-chips{
+  position:absolute; left:12px; right:12px; bottom:12px;
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  font-size:12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:saturate(120%) blur(6px);
+  border:1px solid rgba(0,0,0,.06);
+}
+
+/* Body */
+.card-body{ padding:18px 18px 20px; }
+.card-body h3{ margin:0 0 8px; font-weight:800; }
+.card-body p{ margin:0; line-height:1.55; }
+
+/* Lightbox */
+.lightbox{
+  width:min(1200px,92vw);
+  border:none; padding:0; margin:auto;
+  background:transparent;
+}
+.lightbox::backdrop{ background:rgba(0,0,0,.65); }
+   .lightbox img{
+    display:block; width:100%; height:auto; border-radius:14px;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+   }
+   #lightbox-close{
+     position:absolute; top:-14px; right:-14px;
+     width:36px; height:36px; border-radius:50%;
+     border:none; background:#fff; font-size:22px; line-height:1; cursor:pointer;
+     box-shadow:0 8px 24px rgba(0,0,0,.22);
+   }
+
+
     /* events carousel */
     .events{position:relative;overflow:hidden}
     .event-track{display:flex;gap:16px;transition:transform .6s ease}
@@ -357,11 +442,12 @@
         <div>
           <h1 class="title">Filippo Cenacchi</h1>
           <p class="subtitle">
-            PhD Candidate, Computer Science (Frontier AI Research Centre) 
-            <a href="https://www.mq.edu.au/" target="_blank" rel="noopener" class="inline-link" title="Macquarie University">
-              <img src="logo.png" class="inline-icon mq" alt="Macquarie University logo"> Macquarie University
-            </a>
+            PhD Candidate, Computer Science (Frontier AI Research Centre) at
+           <a href="https://www.mq.edu.au/" target="_blank" rel="noopener" class="inline-link" title="Macquarie University">
+            <img src="logo.png" class="inline-icon mq" alt="Macquarie University logo"> Macquarie University
+           </a>
           </p>
+
 
           <p>My research is at the intersection of <strong>humanoid robots</strong>, <strong>multimodal AI</strong>, and <strong>mental-health diagnostics</strong>. I design simulation-first pipelines, trust-calibrated interaction policies, and privacy-preserving <em>avatarization</em> to make early assessment more reliable and equitable. I am supervised by Distinguished Chair Professor <a href="https://scholar.google.com.au/citations?user=cDs3DM8AAAAJ&hl=en" target="_blank">Longbing Cao</a> and Professor <a href="https://scholar.google.com.au/citations?user=p0BxAfAAAAAJ&hl=en" target="_blank">Deborah Richards</a>, collaborating across computing, psychology, and clinical partners.</p>
 
@@ -446,7 +532,7 @@
 
     <!-- Publications -->
     <section id="publications" class="section">
-      <h2>Selected Publications</h2>
+      <h2>Publications</h2>
       <div class="list">
         <div class="card pub">
           <span class="dot" title="highlight"></span>
@@ -485,31 +571,31 @@
 
     <!-- Events (carousel) -->
     <section id="events" class="section">
-      <h2>Events</h2>
+      <h2> Recent Events</h2>
       <div class="card events">
         <div class="event-track" id="eventTrack">
           <div class="event-item">
             <img src="3MT SoC.jpg" alt="Winner - School of Computing 3MT">
             <div>
-              <h3 style="margin:0 0 6px">Winner — School of Computing 3MT</h3>
+              <h3 style="margin:0 0 6px">Winner of the School of Computing 3MT (2nd Place & People's choice)</h3>
               <div class="meta">Macquarie University · 2025</div>
-              <p>First place at the School of Computing 3 Minute Thesis competition.</p>
+              <p>Grant of 300$ for research funding.</p>
             </div>
           </div>
           <div class="event-item">
             <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
             <div>
-              <h3 style="margin:0 0 6px">Runner-up — Faculty of Science & Engineering 3MT</h3>
+              <h3 style="margin:0 0 6px">Winner of the Faculty of Science & Engineering 3MT (2nd Runner Upper)</h3>
               <div class="meta">Macquarie University · 2025</div>
-              <p>Runner-up at the Faculty final following the School-level win.</p>
+              <p>Grant of 250$ for research funding.</p>
             </div>
           </div>
           <div class="event-item">
             <img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT">
             <div>
-              <h3 style="margin:0 0 6px">Finalist — University 3MT</h3>
+              <h3 style="margin:0 0 6px">Finalist of the Macquarie University 3MT (2nd Runner Upper)</h3>
               <div class="meta">Macquarie University · 2025</div>
-              <p>Represented the Faculty in the University-level showcase.</p>
+              <p>Grant of 350$ for research funding.</p>
             </div>
           </div>
         </div>
@@ -523,25 +609,25 @@
         <div class="card prize-card">
           <img src="3MT SoC.jpg" alt="Winner - School of Computing 3MT">
           <div>
-            <h3 style="margin:0 0 6px">Winner — School of Computing 3MT</h3>
+            <h3 style="margin:0 0 6px">Winner of the School of Computing 3MT (2nd Place & People's choice)</h3>
             <div class="meta">Macquarie University · 2025</div>
-            <p>First place at the School of Computing 3 Minute Thesis competition.</p>
+            <p>Grant of 300$ for research funding.</p>
           </div>
         </div>
         <div class="card prize-card">
           <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
           <div>
-            <h3 style="margin:0 0 6px">Runner-up — Faculty of Science & Engineering 3MT</h3>
+            <h3 style="margin:0 0 6px">Winner of the Faculty of Science & Engineering 3MT (2nd Runner Upper)</h3>
             <div class="meta">Macquarie University · 2025</div>
-            <p>Runner-up at the Faculty final following the School-level win.</p>
+            <p>Grant of 250$ for research funding.</p>
           </div>
         </div>
         <div class="card prize-card">
           <img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT">
           <div>
-            <h3 style="margin:0 0 6px">Finalist — University 3MT</h3>
+            <h3 style="margin:0 0 6px">Finalist of the Macquarie University 3MT (2nd Runner Upper)</h3>
             <div class="meta">Macquarie University · 2025</div>
-            <p>Represented the Faculty in the University-level showcase.</p>
+            <p>Grant of 350$ for research funding.</p>
           </div>
         </div>
       </div>
@@ -683,17 +769,6 @@
   </div>
 </section>
 
-<!-- Visitors -->
-<section id="visitors" class="section">
-  <h2>Live Visitors</h2>
-  <div class="card" style="padding:0">
-    <div id="visitors-map" style="max-width:520px;margin:18px auto">
-      <!-- Your ClustrMaps embed code goes here -->
-      <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
-    </div>
-  </div>
-</section>
-
 <!-- CV (inline PDF viewer) -->
 <section id="cv" class="section">
   <h2>Curriculum Vitae</h2>
@@ -787,6 +862,22 @@
     "image":"headshot.jpg"
   }
   </script>
+  <script>
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  const closeBtn = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.card-media').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      img.src = el.getAttribute('data-full');
+      img.alt = el.querySelector('img').alt || '';
+      lb.showModal();
+    });
+  });
+  closeBtn.addEventListener('click', ()=> lb.close());
+  lb.addEventListener('click', (e)=>{ if(e.target === lb) lb.close(); });
+</script>
+
 </body>
 </html>
 ```
