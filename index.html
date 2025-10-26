@@ -43,7 +43,7 @@
     .globe-float{position:absolute;right:0;top:18px;width:200px;height:200px;border-radius:22px;background:transparent;border:none;box-shadow:none;display:flex;align-items:center;justify-content:center;overflow:visible}
     .title{font-size:38px;line-height:1.1;margin:0 0 6px}
     .subtitle{margin:0;color:var(--subtle)}
-    .inline-icon{width:16px;height:16px;vertical-align:-3px;margin-right:6px}
+    .inline-icon{width:16px;height:16px;vertical-align:-3px;margin-right:6px} .inline-icon.mq{width:24px;height:24px;vertical-align:-5px}
     .pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--border);background:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--subtle)}
     .pill svg{width:16px;height:16px;margin-right:6px;opacity:.95}
     .nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.85);backdrop-filter: blur(10px);border-bottom:1px solid var(--border)}
@@ -113,7 +113,7 @@
         <div class="avatar" style="background-image:url('headshot.jpg')" role="img" aria-label="Portrait of Filippo Cenacchi"></div>
         <div class="copy">
           <h1 class="title">Filippo Cenacchi</h1>
-          <p class="subtitle">PhD Candidate, Computer Science (Frontier AI Research Centre) - <a href="https://www.mq.edu.au/" target="_blank" rel="noopener" class="inline-link" title="Macquarie University"><img src="logo.png" class="inline-icon" alt="Macquarie University logo"> Macquarie University</a>, Sydney</p>
+          <p class="subtitle">PhD Candidate, Computer Science (Frontier AI Research Centre) - <a href="https://www.mq.edu.au/" target="_blank" rel="noopener" class="inline-link" title="Macquarie University"><img src="logo.png" class="inline-icon mq" alt="Macquarie University logo"> Macquarie University</a></p>
           <p>My research is at the intersection of <strong>humanoid robots</strong>, <strong>multimodal AI</strong>, and <strong>mental-health diagnostics</strong>. I design simulation-first pipelines, trust-calibrated interaction policies, and privacy-preserving <em>avatarization</em> to make early assessment more reliable and equitable. I collaborate across computing, psychology, and clinical partners.</p>
           <div class="kvs" aria-label="Quick links">
             <a class="pill" href="https://scholar.google.com/" target="_blank" rel="noopener" title="Google Scholar"><img src="https://scholar.google.com/favicon.ico" class="inline-icon" alt=""> Google Scholar</a>
@@ -183,6 +183,30 @@
     </section>
 
     <!-- Education -->
+    <section id="awards" class="section">
+      <h2>Prizes</h2>
+      <div class="awards">
+        <div class="card award">
+          <img src="3MT%20SoC.jpg" alt="Winner - School of Computing 3MT"/>
+          <h3 style="margin:12px 0 6px">Winner - School of Computing 3MT</h3>
+          <div class="meta">Macquarie University School of Computing - 2025</div>
+          <p style="margin:8px 0 0">First place at the School of Computing 3 Minute Thesis competition.</p>
+        </div>
+        <div class="card award">
+          <img src="3MT%20FSE%20Faculty%20Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT"/>
+          <h3 style="margin:12px 0 6px">Runner-up - Faculty of Science and Engineering 3MT</h3>
+          <div class="meta">Macquarie University - 2025</div>
+          <p style="margin:8px 0 0">Runner-up at the Faculty final following the School-level win.</p>
+        </div>
+        <div class="card award">
+          <img src="2025.09.04_3%20Minute%20Thesis_TASK1289859_Kyisoe%20Han_30.jpg" alt="Finalist - University 3MT"/>
+          <h3 style="margin:12px 0 6px">Finalist - University 3MT</h3>
+          <div class="meta">Macquarie University - 2025</div>
+          <p style="margin:8px 0 0">Represented the Faculty in the University-level showcase.</p>
+        </div>
+      </div>
+    </section>
+
     <section id="education" class="section">
       <h2>Education</h2>
       <div class="card timeline">
