@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Filippo Cenacchi · PhD Candidate · Humanoid AI & Mental Health</title>
-  <meta name="description" content="Filippo Cenacchi · PhD candidate at Macquarie University. Research: humanoid robots, multimodal AI for mental health diagnostics, VR ethics, simulation-based training.">
+  <title>Filippo Cenacchi — Humanoid AI & Mental Health</title>
+  <meta name="description" content="Filippo Cenacchi — PhD candidate at Macquarie University. Research: humanoid robots, multimodal AI for mental health diagnostics, VR ethics, simulation-based training.">
 
   <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="Filippo Cenacchi · Humanoid AI & Mental Health"/>
+  <meta property="og:title" content="Filippo Cenacchi — Humanoid AI & Mental Health"/>
   <meta property="og:description" content="PhD candidate at Macquarie University. Humanoid robots · Multimodal AI · Mental health diagnostics · VR ethics."/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="headshot.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
 
-  <!-- Light theme with a subtle, advanced gradient background -->
   <style>
     :root{
       --bg: #f7f9fc;
@@ -30,28 +29,18 @@
       radial-gradient(1200px 700px at 12% -10%, rgba(37,99,235,.12), transparent 50%),
       radial-gradient(900px 600px at 100% 0%, rgba(99,102,241,.10), transparent 50%),
       linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
-      color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Apple Color Emoji','Segoe UI Emoji')}
+      color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial}
     a{color:var(--brand-ink);text-decoration:none}
     a:hover{text-decoration:underline}
     .container{max-width:1100px;margin:0 auto;padding:28px}
     .grid{display:grid;gap:18px}
 
-    /* Hero: photo · copy; floating globe to the right with reserved space */
-    .hero{position:relative;display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center}
-    .avatar{width:260px;height:260px;border-radius:22px;background:#ddd center/cover;border:1px solid var(--border);box-shadow:var(--shadow)}
-    .copy{position:relative;margin-right:220px}
-    .globe-float{position:absolute;right:0;top:18px;width:200px;height:200px;border-radius:22px;background:transparent;border:none;box-shadow:none;display:flex;align-items:center;justify-content:center;overflow:visible}
-    .title{font-size:38px;line-height:1.1;margin:0 0 6px}
-    .subtitle{margin:0;color:var(--subtle)}
-    .inline-icon{width:16px;height:16px;vertical-align:-3px;margin-right:6px} .inline-icon.mq{width:24px;height:24px;vertical-align:-5px}
-    .pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--border);background:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--subtle)}
-    .pill svg{width:16px;height:16px;margin-right:6px;opacity:.95}
     .nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.85);backdrop-filter: blur(10px);border-bottom:1px solid var(--border)}
     .nav .inner{display:flex;align-items:center;gap:16px;justify-content:space-between}
     .nav a.link{padding:12px 10px;border-radius:10px;color:var(--subtle)}
     .nav a.link:hover{background:var(--muted);color:var(--text)}
     .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--panel);color:var(--text);box-shadow:var(--shadow)}
-    .btn:hover{transform:translateY(-1px)}
+
     .section{padding:32px 0}
     .section h2{font-size:22px;margin:0 0 14px}
     .card{border:1px solid var(--border);background:var(--panel);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
@@ -63,27 +52,46 @@
     .dot{width:10px;height:10px;border-radius:999px;background:var(--brand)}
     .pub h3{font-size:16px;margin:0}
     .meta{font-size:13px;color:var(--subtle)}
-    .list{display:grid;gap:12px}
     .timeline{display:grid;gap:10px}
-    .timeline .item{display:grid;grid-template-columns:120px 1fr;gap:16px}
-    .awards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-    .award img{width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
+    .timeline .item{display:grid;grid-template-columns:140px 1fr;gap:16px}
     .footer{padding:30px 0;color:var(--subtle);text-align:center;border-top:1px solid var(--border)}
     blockquote{margin:0;padding:14px 16px;border-left:3px solid var(--brand-ink);background:var(--muted);border-radius:6px}
-    .nowrap{white-space:nowrap}
 
-    /* responsive */
-    @media (max-width: 1200px){ .globe-float{width:180px;height:180px} .copy{margin-right:200px} }
-    @media (max-width: 1040px){ .globe-float{width:160px;height:160px} .copy{margin-right:180px} }
+    /* hero */
+    .hero{display:grid;grid-template-columns:260px 1fr 300px;gap:28px;align-items:center}
+    .avatar{width:260px;height:260px;border-radius:22px;background:#ddd center/cover;border:1px solid var(--border);box-shadow:var(--shadow)}
+    .title{font-size:56px;line-height:1.08;margin:0 0 6px}
+    .subtitle{margin:0;color:var(--subtle)}
+    .pill{display:inline-flex;gap:10px;align-items:center;border:1px solid var(--border);background:var(--muted);padding:8px 12px;border-radius:999px;font-size:14px;color:var(--subtle)}
+    .inline-icon{width:18px;height:18px;vertical-align:-3px}
+    .inline-icon.mq{width:28px;height:28px;vertical-align:-6px} /* MQ logo larger */
+    #globeWrap{display:flex;justify-content:center}
+    #globeWrap .globe-card{border-radius:24px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;background:transparent}
+    #globeWrap .globe-card > div{background:transparent}
+
+    /* prizes carousel */
+    .prizes{position:relative;overflow:hidden}
+    .prize-track{display:flex;gap:16px;transition:transform .6s ease}
+    .prize-item{min-width:100%;display:grid;grid-template-columns:340px 1fr;gap:18px;align-items:center}
+    .prize-item img{width:100%;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow)}
     @media (max-width: 940px){
-      .hero{grid-template-columns:1fr;text-align:center}
+      .hero{grid-template-columns:1fr;grid-auto-rows:auto;text-align:center}
       .avatar{margin:0 auto;width:78vw;max-width:420px;height:78vw;max-height:420px}
-      .copy{margin-right:0}
-      .globe-float{position:static;margin:12px auto;width:220px;height:220px}
-      .row, .row-3, .awards{grid-template-columns:1fr}
+      #globeWrap{order:3}
+      .row, .row-3{grid-template-columns:1fr}
       .timeline .item{grid-template-columns:1fr}
+      .prize-item{grid-template-columns:1fr}
       .nav .hide-sm{display:none}
     }
+
+    /* brand icons (SVG) */
+    .iconify{display:inline-block;width:18px;height:18px}
+    .li-icon{background:#0A66C2;border-radius:3px;position:relative}
+    .li-icon:before{content:'in';position:absolute;left:3px;top:-1px;color:#fff;font-weight:700;font-family:Arial,Helvetica,system-ui}
+    .cap{width:18px;height:18px;display:inline-block;position:relative}
+    .cap:before,.cap:after{content:'';position:absolute;background:#334155}
+    .cap:before{width:18px;height:6px;top:3px;left:0;border-radius:2px 2px 0 0}
+    .cap:after{width:6px;height:6px;top:9px;left:6px;border-radius:0 0 1px 1px}
   </style>
 </head>
 <body>
@@ -92,15 +100,17 @@
     <div class="container inner">
       <div style="display:flex;align-items:center;gap:10px">
         <span class="pill" aria-label="Site identity">FC</span>
-        <strong>Filippo Cenacchi</strong>
+        <strong>Filippo&nbsp;Cenacchi</strong>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <a class="link" href="#about">About</a>
         <a class="link" href="#research">Research</a>
         <a class="link" href="#publications">Publications</a>
-        <a class="link hide-sm" href="#service">Service</a>
-        <a class="link hide-sm" href="#education">Education</a>
         <a class="link" href="#awards">Prizes</a>
+        <a class="link hide-sm" href="#service">Service</a>
+        <a class="link" href="#education">Education</a>
+        <a class="link" href="#experience">Experience</a>
+        <a class="link" href="#visitors">Visitors</a>
         <a class="btn" href="#cv">View CV</a>
       </div>
     </div>
@@ -111,28 +121,40 @@
     <section id="about" class="section">
       <div class="hero">
         <div class="avatar" style="background-image:url('headshot.jpg')" role="img" aria-label="Portrait of Filippo Cenacchi"></div>
-        <div class="copy">
+
+        <div>
           <h1 class="title">Filippo Cenacchi</h1>
-          <p class="subtitle">PhD Candidate, Computer Science (Frontier AI Research Centre) - <a href="https://www.mq.edu.au/" target="_blank" rel="noopener" class="inline-link" title="Macquarie University"><img src="logo.png" class="inline-icon mq" alt="Macquarie University logo"> Macquarie University</a></p>
-          <p>My research is at the intersection of <strong>humanoid robots</strong>, <strong>multimodal AI</strong>, and <strong>mental-health diagnostics</strong>. I design simulation-first pipelines, trust-calibrated interaction policies, and privacy-preserving <em>avatarization</em> to make early assessment more reliable and equitable. I collaborate across computing, psychology, and clinical partners.</p>
-          <div class="kvs" aria-label="Quick links">
-            <a class="pill" href="https://scholar.google.com/" target="_blank" rel="noopener" title="Google Scholar"><img src="https://scholar.google.com/favicon.ico" class="inline-icon" alt=""> Google Scholar</a>
-            <a class="pill" href="https://github.com/cenacchi2000" target="_blank" rel="noopener" title="GitHub"><img src="https://github.com/favicon.ico" class="inline-icon" alt=""> GitHub</a>
-            <a class="pill" href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener" title="LinkedIn"><img src="https://www.linkedin.com/favicon.ico" class="inline-icon" alt=""> LinkedIn</a>
-            <a class="pill" href="#contact" title="Email">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
-              Email
+          <p class="subtitle">
+            PhD Candidate, Computer Science (Frontier AI Research Centre) -
+            <a href="https://www.mq.edu.au/" target="_blank" rel="noopener" class="inline-link" title="Macquarie University">
+              <img src="logo.png" class="inline-icon mq" alt="Macquarie University logo"> Macquarie University
             </a>
-            <!-- Sydney live time + weather with Opera House icon -->
-            <span class="pill" id="syd-pill" aria-live="polite" title="Sydney time and weather">
-              <img src="house.png" class="inline-icon" alt="Sydney Opera House">
-              <span id="syd-time">Sydney ...</span><span id="syd-weather" style="margin-left:6px">• ...</span>
+          </p>
+
+          <p>My research is at the intersection of <strong>humanoid robots</strong>, <strong>multimodal AI</strong>, and <strong>mental-health diagnostics</strong>. I design simulation-first pipelines, trust-calibrated interaction policies, and privacy-preserving <em>avatarization</em> to make early assessment more reliable and equitable. I collaborate across computing, psychology, and clinical partners.</p>
+
+          <div class="kvs" aria-label="Quick links">
+            <a class="pill" href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
+              <span class="cap" aria-hidden="true"></span> Google Scholar
+            </a>
+            <a class="pill" href="https://github.com/cenacchi2000" target="_blank" rel="noopener" title="GitHub">
+              <img class="inline-icon" alt="" src="https://github.githubassets.com/favicons/favicon.svg"> GitHub
+            </a>
+            <a class="pill" href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener" title="LinkedIn">
+              <span class="iconify li-icon" aria-hidden="true"></span> LinkedIn
+            </a>
+            <a class="pill" href="#contact"><img class="inline-icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23334555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 4h16v16H4z'/><polyline points='22,6 12,13 2,6'/></svg>" alt=""> Email</a>
+            <span class="pill" id="sydneyPill">
+              <img src="house.png" class="inline-icon" alt="Sydney Opera House"> <span id="sydTime">Sydney --:--</span> · <span id="sydTemp">--°C</span> <span id="sydIcon"></span>
             </span>
           </div>
         </div>
-        <!-- Transparent floating globe -->
-        <div class="globe-float" aria-label="Live visitors globe">
-          <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
+
+        <!-- Globe, right column, transparent background -->
+        <div id="globeWrap">
+          <div class="globe-card">
+            <div id="globeMount" style="width:280px; height:280px; background:transparent"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -152,7 +174,7 @@
         </div>
         <div class="card">
           <h3 style="margin-top:0">Simulation-First Training</h3>
-          <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management, reducing hardware wear and accelerating iteration.</p>
+          <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
           <div class="kvs">
             <span class="badge">Unreal Engine 5</span>
             <span class="badge">MetaHuman</span>
@@ -163,7 +185,7 @@
       <div class="row">
         <div class="card">
           <h3 style="margin-top:0">Privacy-Preserving Avatarization</h3>
-          <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking and AI-assisted querying without storing voices or faces.</p>
+          <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
           <div class="kvs">
             <span class="badge">3D Avatars</span>
             <span class="badge">Longitudinal Analysis</span>
@@ -172,7 +194,7 @@
         </div>
         <div class="card">
           <h3 style="margin-top:0">Decision Support &amp; Triage</h3>
-          <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over static datasets (E-DAIC, DAIC-WOZ) to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong> to clinicians.</p>
+          <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
           <div class="kvs">
             <span class="badge">E-DAIC / DAIC-WOZ</span>
             <span class="badge">RL Probing</span>
@@ -182,66 +204,124 @@
       </div>
     </section>
 
-    <!-- Education -->
-    <section id="awards" class="section">
-      <h2>Prizes</h2>
-      <div class="awards">
-        <div class="card award">
-          <img src="3MT%20SoC.jpg" alt="Winner - School of Computing 3MT"/>
-          <h3 style="margin:12px 0 6px">Winner - School of Computing 3MT</h3>
-          <div class="meta">Macquarie University School of Computing - 2025</div>
-          <p style="margin:8px 0 0">First place at the School of Computing 3 Minute Thesis competition.</p>
+    <!-- Publications -->
+    <section id="publications" class="section">
+      <h2>Selected Publications</h2>
+      <div class="list">
+        <div class="card pub">
+          <span class="dot" title="highlight"></span>
+          <div>
+            <h3>Adaptive Multimodal Fusion for Emotion Recognition under Incomplete Inputs</h3>
+            <div class="meta">F. Cenacchi. AAMAS 2026 — submitted (under review).</div>
+            <div class="kvs"><span class="badge">A* CORE</span><a class="badge" href="#">PDF</a><a class="badge" href="#">Code</a></div>
+          </div>
         </div>
-        <div class="card award">
-          <img src="3MT%20FSE%20Faculty%20Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT"/>
-          <h3 style="margin:12px 0 6px">Runner-up - Faculty of Science and Engineering 3MT</h3>
-          <div class="meta">Macquarie University - 2025</div>
-          <p style="margin:8px 0 0">Runner-up at the Faculty final following the School-level win.</p>
+        <div class="card pub">
+          <span class="dot"></span>
+          <div>
+            <h3>Humanoid Robots in Early Disease Detection: Challenges, Techniques &amp; Opportunities</h3>
+            <div class="meta">F. Cenacchi. Scoping review, 32 studies synthesized. (Manuscript.)</div>
+            <div class="kvs"><a class="badge" href="#">PDF</a><span class="badge">Survey</span></div>
+          </div>
         </div>
-        <div class="card award">
-          <img src="2025.09.04_3%20Minute%20Thesis_TASK1289859_Kyisoe%20Han_30.jpg" alt="Finalist - University 3MT"/>
-          <h3 style="margin:12px 0 6px">Finalist - University 3MT</h3>
-          <div class="meta">Macquarie University - 2025</div>
-          <p style="margin:8px 0 0">Represented the Faculty in the University-level showcase.</p>
+        <div class="card pub">
+          <span class="dot"></span>
+          <div>
+            <h3>Nonverbal Behavioral Cues in Humanoid Interaction: A Trust Calibration Approach</h3>
+            <div class="meta">F. Cenacchi. Preprint; Ameca simulations; proposes the Trust Violation Index (TVI).</div>
+            <div class="kvs"><a class="badge" href="#">PDF</a><span class="badge">Preprint</span></div>
+          </div>
+        </div>
+        <div class="card pub">
+          <span class="dot"></span>
+          <div>
+            <h3>SimClinician: A Simulation Testbed for Reliable Psychologist–AI Collaboration</h3>
+            <div class="meta">F. Cenacchi, collaborators. In revision; MetaHuman patient bank, uncertainty-aware turn manager.</div>
+            <div class="kvs"><a class="badge" href="#">PDF</a><a class="badge" href="#">Project</a></div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Prizes (carousel) -->
+    <section id="awards" class="section">
+      <h2>Prizes</h2>
+      <div class="card prizes">
+        <div class="prize-track" id="prizeTrack">
+          <div class="prize-item">
+            <img src="3MT SoC.jpg" alt="Winner - School of Computing 3MT">
+            <div>
+              <h3 style="margin:0 0 6px">Winner — School of Computing 3MT</h3>
+              <div class="meta">Macquarie University · 2025</div>
+              <p>First place at the School of Computing 3 Minute Thesis competition.</p>
+            </div>
+          </div>
+          <div class="prize-item">
+            <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
+            <div>
+              <h3 style="margin:0 0 6px">Runner-up — Faculty of Science & Engineering 3MT</h3>
+              <div class="meta">Macquarie University · 2025</div>
+              <p>Runner-up at the Faculty final following the School-level win.</p>
+            </div>
+          </div>
+          <div class="prize-item">
+            <img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT">
+            <div>
+              <h3 style="margin:0 0 6px">Finalist — University 3MT</h3>
+              <div class="meta">Macquarie University · 2025</div>
+              <p>Represented the Faculty in the University-level showcase.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="section">
+      <h2>Experience</h2>
+      <div class="card timeline">
+        <div class="item"><div>Feb 2025 - present</div><div><strong>Doctoral Researcher</strong>, Macquarie University — humanoid robots in healthcare; multimodal analysis; human-centered, ethical interactions.</div></div>
+        <div class="item"><div>Jul 2025 - present</div><div><strong>Casual Teaching Academic</strong>, Macquarie University — COMP8851 (Major Project for Master of Data Science), COMP3850 (Computing Industry Project).</div></div>
+        <div class="item"><div>Jul 2025 - present</div><div><strong>Graduate Student Representative</strong>, Macquarie University — Faculty Research Training Committee.</div></div>
+        <div class="item"><div>Mar 2024 - Jan 2025</div><div><strong>Research Assistant</strong> — managed logistics and analysis with Construction Training Centre of Queensland; usability evaluations and industry collaboration.</div></div>
+        <div class="item"><div>Feb 2024 - Jan 2025</div><div><strong>Researcher (Contract)</strong>, Meta — ethical VR research with Macquarie partnership; user-to-user communication studies.</div></div>
+        <div class="item"><div>Oct 2022 - Jan 2024</div><div><strong>Product Manager</strong>, Genvalues.com (Stockholm · Hybrid) — product strategy; requirements; cross-functional delivery.</div></div>
+        <div class="item"><div>Mar 2022 - Sep 2022</div><div><strong>Associate Product Manager</strong>, IamIP (Stockholm) — MVPs; requirements; sprint delivery; client pilots.</div></div>
+        <div class="item"><div>Jun 2021 - Mar 2022</div><div><strong>Project Manager</strong>, Würth Phoenix (Bolzano) — low-code platforms; Dynamics 365 solutions.</div></div>
+        <div class="item"><div>Mar 2020 - Jun 2021</div><div><strong>VR Developer / Project Manager</strong>, Smart VR Lab (Amsterdam) — VR content & platform APIs; CRM rollout; medical training product.</div></div>
+      </div>
+    </section>
+
+    <!-- Education -->
     <section id="education" class="section">
       <h2>Education</h2>
       <div class="card timeline">
-        <div class="item">
-          <div>2024–present</div>
-          <div><strong>PhD in Computer Science</strong>, Macquarie University (Frontier AI Research Centre), Sydney - Humanoid-AI diagnostics, simulation-first training, VR ethics.</div>
-        </div>
-        <div class="item">
-          <div>2021–2023</div>
-          <div><strong>MSc</strong>, Human-Computer Interaction - KTH Royal Institute of Technology.</div>
-        </div>
-        <div class="item">
-          <div>2020–2022</div>
-          <div><strong>MSc</strong>, Situated Interactions - Université Paris-Saclay.</div>
-        </div>
-        <div class="item">
-          <div>2016–2019</div>
-          <div><strong>B.Eng</strong>, Computer Science - Free University of Bozen-Bolzano; Erasmus exchange at University of Helsinki.</div>
+        <div class="item"><div>2025 - 2028</div><div><strong>Doctorate in Computer Science</strong>, Macquarie University (Frontier AI Research Centre) — humanoid-driven early disease detection research.</div></div>
+        <div class="item"><div>2023 - 2025</div><div><strong>MSc</strong>, Situated Interactions — Université Paris-Saclay (Excellent with Honors).</div></div>
+        <div class="item"><div>2022 - 2024</div><div><strong>MSc</strong>, Human-Computer Interactions — KTH Royal Institute of Technology (Excellent).</div></div>
+        <div class="item"><div>2019 - 2022</div><div><strong>Bachelor of Engineering</strong>, Computer Science — Free University of Bozen-Bolzano; Erasmus at University of Helsinki.</div></div>
+      </div>
+    </section>
+
+    <!-- Licenses & certifications -->
+    <section id="certs" class="section">
+      <h2>Licenses & Certifications</h2>
+      <div class="card list">
+        <div><strong>Reviewer of IJCAI 2025</strong> — IJCAI International Joint Conferences on Artificial Intelligence Organization. <span class="meta">Issued Sep 2025</span></div>
+      </div>
+    </section>
+
+    <!-- Visitors -->
+    <section id="visitors" class="section">
+      <h2>Live Visitors</h2>
+      <div class="card" style="padding:0">
+        <div id="visitors-map" style="max-width:520px;margin:18px auto">
+          <!-- Your ClustrMaps embed code goes here -->
+          <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
         </div>
       </div>
     </section>
 
-    <section id="experience" class="section">
-      <h2>Work Experience</h2>
-      <div class="card timeline">
-        <div class="item">
-          <div>2024–present</div>
-          <div><strong>PhD Candidate</strong>, Frontier AI Research Centre, Macquarie University - research on humanoid-AI diagnostics and simulation-first training.</div>
-        </div>
-        <!-- Add more roles from LinkedIn here with exact dates/title/org -->
-      </div>
-    </section>
-
-    <!-- News -->
-    
     <!-- CV (inline PDF viewer) -->
     <section id="cv" class="section">
       <h2>Curriculum Vitae</h2>
@@ -256,7 +336,7 @@
       <h2>Contact</h2>
       <div class="card">
         <p><strong>Email:</strong> <a href="mailto:filippo.cenacchi@hdr.mq.edu.au">filippo.cenacchi@hdr.mq.edu.au</a></p>
-        <p><strong>Links:</strong> <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/cenacchi2000" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener">LinkedIn</a></p>
+        <p><strong>Links:</strong> <a href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/cenacchi2000" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener">LinkedIn</a></p>
         <blockquote>
           I welcome collaboration on simulation-based training for humanoid diagnostic agents, privacy-preserving avatarization, and clinician-centered AI triage.
         </blockquote>
@@ -271,50 +351,64 @@
   </footer>
 
   <script>
-    // Set year and last-updated
-    const y = document.getElementById('year'); y.textContent = new Date().getFullYear();
-    const lu = document.getElementById('lu'); lu.textContent = new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+    // year + last updated
+    year.textContent = new Date().getFullYear();
+    lu.textContent = new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
 
-    // Smooth scroll for in-page anchors
+    // smooth in-page nav
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});
+      a.addEventListener('click',e=>{
+        const id=a.getAttribute('href').slice(1);
+        const el=document.getElementById(id);
+        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
+      });
     });
 
-    // Sydney time (Australia/Sydney) + simple weather via Open-Meteo
-    const timeEl = document.getElementById('syd-time');
-    const wxEl = document.getElementById('syd-weather');
-    function tick(){
-      try {
-        const now = new Date();
-        const fmt = new Intl.DateTimeFormat('en-AU', {hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Australia/Sydney'});
-        timeEl.textContent = 'Sydney ' + fmt.format(now);
-      } catch(e) { timeEl.textContent = 'Sydney'; }
-    }
-    tick(); setInterval(tick, 60*1000);
+    // prizes carousel
+    (function(){ const track=document.getElementById('prizeTrack'); if(!track) return;
+      let i=0; const N=track.children.length;
+      setInterval(()=>{ i=(i+1)%N; track.style.transform=`translateX(-${i*100}%)`; }, 5000);
+    })();
 
-    (async()=>{
+    // Sydney time + weather (Open-Meteo)
+    async function loadSydney(){
       try{
-        const url = 'https://api.open-meteo.com/v1/forecast?latitude=-33.8688&longitude=151.2093&current=temperature_2m,weather_code';
-        const r = await fetch(url, {cache:'no-store'});
-        const j = await r.json();
-        const t = Math.round(j.current.temperature_2m);
-        const code = j.current.weather_code;
-        const icon = (c=>{
-          if(c===0) return '☀️';
-          if([1,2,3].includes(c)) return '⛅️';
-          if([45,48].includes(c)) return '🌫️';
-          if([51,53,55,56,57].includes(c)) return '🌦️';
-          if([61,63,65,66,67,80,81,82].includes(c)) return '🌧️';
-          if([71,73,75,77,85,86].includes(c)) return '❄️';
-          if([95,96,99].includes(c)) return '⛈️';
-          return '🌡️';
-        })(code);
-        wxEl.textContent = `• ${t}°C ${icon}`;
-      }catch(e){ wxEl.textContent = '• weather n/a'; }
+        const tz = 'Australia/Sydney';
+        const now = new Date();
+        const time = now.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz});
+        document.getElementById('sydTime').textContent = `Sydney ${time}`;
+
+        const lat = -33.8688, lon = 151.2093;
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
+        const res = await fetch(url); const data = await res.json();
+        const t = Math.round(data.current.temperature_2m);
+        const w = (data.current.weather_code||0);
+        const emoji = (c=>{
+          if ([0].includes(c)) return '☀️';
+          if ([1,2,3].includes(c)) return '⛅️';
+          if ([45,48].includes(c)) return '🌫️';
+          if ([51,53,55,61,63,65,80,81,82].includes(c)) return '🌧️';
+          if ([71,73,75,85,86].includes(c)) return '❄️';
+          if ([95,96,99].includes(c)) return '⛈️';
+          return '🌤️';
+        })(w);
+        document.getElementById('sydTemp').textContent = `${t}°C`;
+        document.getElementById('sydIcon').textContent = emoji;
+      }catch(e){/* silent */}
+    }
+    loadSydney(); setInterval(loadSydney, 60*1000);
+
+    // ClustrMaps globe mount (transparent)
+    (function(){
+      const mount = document.getElementById('globeMount');
+      const script = document.getElementById('clstr_globe');
+      if (mount && script) {
+        // the script auto-inserts the globe; container has transparent bg
+      }
     })();
   </script>
 
-  <!-- JSON-LD for richer search / sharing -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -324,7 +418,11 @@
     "affiliation":{"@type":"CollegeOrUniversity","name":"Macquarie University"},
     "address":{"@type":"PostalAddress","addressLocality":"Sydney","addressCountry":"AU"},
     "url":"https://example.com/",
-    "sameAs":["https://scholar.google.com/","https://github.com/cenacchi2000","https://www.linkedin.com/in/filippo-cenacchi-526b88170/"],
+    "sameAs":[
+      "https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en",
+      "https://github.com/cenacchi2000",
+      "https://www.linkedin.com/in/filippo-cenacchi-526b88170/"
+    ],
     "knowsAbout":["humanoid robots","multimodal AI","mental health diagnostics","VR ethics","simulation"],
     "image":"headshot.jpg"
   }
