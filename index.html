@@ -36,10 +36,11 @@
     .container{max-width:1100px;margin:0 auto;padding:28px}
     .grid{display:grid;gap:18px}
 
-    /* Hero: photo · text, with a floating globe overlay near the paragraph end */
+    /* Hero: photo · copy; floating globe sits to the right with reserved space */
     .hero{position:relative;display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center}
     .avatar{width:260px;height:260px;border-radius:22px;background:#ddd center/cover;border:1px solid var(--border);box-shadow:var(--shadow)}
-    .globe-float{position:absolute;right:-18px;top:32px;width:180px;height:180px;border-radius:22px;background:var(--panel);border:1px solid var(--border);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .copy{position:relative;margin-right:220px} /* reserve space so text never overlaps globe */
+    .globe-float{position:absolute;right:0;top:18px;width:200px;height:200px;border-radius:22px;background:transparent;border:none;box-shadow:none;display:flex;align-items:center;justify-content:center;overflow:visible}
     .title{font-size:38px;line-height:1.1;margin:0 0 6px}
     .subtitle{margin:0;color:var(--subtle)}
     .pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--border);background:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--subtle)}
@@ -71,10 +72,12 @@
     .nowrap{white-space:nowrap}
 
     /* responsive adjustments */
-    @media (max-width: 1100px){ .globe-float{right:-8px;top:40px;width:160px;height:160px} }
+    @media (max-width: 1200px){ .globe-float{width:180px;height:180px} .copy{margin-right:200px} }
+    @media (max-width: 1040px){ .globe-float{width:160px;height:160px} .copy{margin-right:180px} }
     @media (max-width: 940px){
       .hero{grid-template-columns:1fr;text-align:center}
       .avatar{margin:0 auto;width:78vw;max-width:420px;height:78vw;max-height:420px}
+      .copy{margin-right:0}
       .globe-float{position:static;margin:12px auto;width:220px;height:220px}
       .row, .row-3{grid-template-columns:1fr}
       .timeline .item{grid-template-columns:1fr}
@@ -98,7 +101,6 @@
         <a class="link hide-sm" href="#service">Service</a>
         <a class="link hide-sm" href="#education">Education</a>
         <a class="link" href="#news">News</a>
-        <a class="link" href="#visitors">Visitors</a>
         <a class="btn" href="#cv">View CV</a>
       </div>
     </div>
@@ -109,7 +111,7 @@
     <section id="about" class="section">
       <div class="hero">
         <div class="avatar" style="background-image:url('headshot.jpg')" role="img" aria-label="Portrait of Filippo Cenacchi"></div>
-        <div>
+        <div class="copy">
           <h1 class="title">Filippo Cenacchi</h1>
           <p class="subtitle">PhD Candidate, Computer Science (Frontier AI Research Centre) — Macquarie University, Sydney</p>
           <p>My research is at the intersection of <strong>humanoid robots</strong>, <strong>multimodal AI</strong>, and <strong>mental‑health diagnostics</strong>. I design simulation‑first pipelines, trust‑calibrated interaction policies, and privacy‑preserving <em>avatarization</em> to make early assessment more reliable and equitable. I collaborate across computing, psychology, and clinical partners.</p>
@@ -137,7 +139,7 @@
             </span>
           </div>
         </div>
-        <!-- Floating globe near the paragraph end (smaller) -->
+        <!-- Floating globe to the right; transparent (no frame) -->
         <div class="globe-float" aria-label="Live visitors globe">
           <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
         </div>
@@ -197,7 +199,7 @@
           <span class="dot" title="highlight"></span>
           <div>
             <h3>Adaptive Multimodal Fusion for Emotion Recognition under Incomplete Input Conditions</h3>
-            <div class="meta">F. Cenacchi. <span class="nowrap">AAMAS 2026</span> (accepted).</div>
+            <div class="meta">F. Cenacchi. <span class="nowrap">AAMAS 2026</span> — <em>submitted; under review</em>.</div>
             <div class="kvs"><span class="badge">A* CORE</span><a class="badge" href="#">PDF</a><a class="badge" href="#">Code</a></div>
           </div>
         </div>
@@ -302,21 +304,8 @@
       <h2>News</h2>
       <div class="card list news">
         <div><time>Aug 2025</time> — Trust‑calibration manuscript (Ameca, scripted interactions) posted as preprint.</div>
-        <div><time>Jul 2025</time> — AAMAS’26 paper on <em>Adaptive Multimodal Fusion</em> accepted.</div>
+        <div><time>Jul 2025</time> — AAMAS’26 paper on <em>Adaptive Multimodal Fusion</em> submitted.</div>
         <div><time>Jun 2025</time> — SimClinician adds uncertainty‑aware turn manager &amp; counterfactual replay.</div>
-      </div>
-    </section>
-
-    <!-- Live Visitors (full section retained for desktop deep-dive) -->
-    <section id="visitors" class="section">
-      <h2>Live Visitors</h2>
-      <div class="card" style="text-align:center">
-        <div style="display:inline-block;border:1px solid var(--border);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)">
-          <div id="visitors-map" style="width:520px;height:520px">
-            <script type="text/javascript" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
-          </div>
-        </div>
-        <p class="meta" style="margin-top:8px">Updates in real time via ClustrMaps.</p>
       </div>
     </section>
 
