@@ -289,7 +289,8 @@
   .card-media { aspect-ratio: 16/9; }
   .card-media::before { display: none; }
 }
-
+/* Hide the over-image chips completely */
+.media-chips{ display:none !important; }
     /* events carousel */
     .events{position:relative;overflow:hidden}
     .event-track{display:flex;gap:16px;transition:transform .6s ease}
@@ -480,10 +481,7 @@
         <div>
           <h1 class="title">Filippo Cenacchi</h1>
           <p class="subtitle">
-            PhD Candidate, Computer Science (Frontier AI Research Centre) at
-           <a href="https://www.mq.edu.au/" target="_blank" rel="noopener" class="inline-link" title="Macquarie University">
-            <img src="logo.png" class="inline-icon mq" alt="Macquarie University logo"> Macquarie University
-           </a>
+            Doctoral Researcher in Computer Science at Frontier AI Research Centre at Macquarie University
           </p>
 
 
@@ -533,11 +531,6 @@
       <button class="card-media" data-full="ameca.png" aria-label="Open image: Ameca">
         <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
         <span class="media-gradient"></span>
-        <span class="media-chips">
-          <span class="badge">Ameca</span>
-          <span class="badge">Multimodal Fusion</span>
-          <span class="badge">Trust &amp; Uncertainty</span>
-        </span>
       </button>
       <div class="card-body">
         <h3>Humanoid-AI Diagnostic Agents</h3>
