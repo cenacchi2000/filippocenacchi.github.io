@@ -324,7 +324,15 @@
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .cert-card{display:grid;grid-template-columns:minmax(120px,160px) 1fr;gap:14px;align-items:center;border:1px solid var(--border);background:var(--panel);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
 .cert-card .thumb{display:block}
-.cert-card .thumb canvas{width:100%;aspect-ratio:4/3;display:block;border-radius:10px;border:1px solid var(--border);background:#fff}
+/* Certificates: thumbnail canvas */
+.cert-card .thumb canvas{
+  width:100%;
+  height:auto;            /* let JS-set height show */
+  display:block;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#fff;
+}
 .cert-card h3{margin:0 0 6px;font-size:15px}
 .cert-card .meta{font-size:12px;color:var(--subtle)}
 
@@ -923,7 +931,10 @@
 
     <!-- IJCAI 2025 Reviewer -->
     <article class="cert-card">
-      
+      <!-- Clickable PDF thumbnail (auto-rendered) -->
+      <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
+        <canvas class="pdf-thumb" data-pdf="ijcai_reviewer_2025.pdf" aria-label="IJCAI 2025 Reviewer certificate preview"></canvas>
+      </a>
       <div>
         <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
         <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025</div>
@@ -1059,49 +1070,72 @@ document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
   }
   </script>
 
-  <!-- PDF.js (for certificate thumbnails) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js" integrity="sha512-n8s8pJL7hTqz3LJwC8mJ+9h4cC1o+q4qH7pNhkC/3r0S0H1qzq6t8y3B0O1m5q3m4ZlqgkJcA3B7Tf6kzY+8nQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- PDF.js (for certificate thumbnails) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-  // Configure worker
-  if (window['pdfjs-dist/build/pdf']) {
-    const pdfjsLib = window['pdfjs-dist/build/pdf'];
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js';
+(function(){
+  const PDFJS = window['pdfjs-dist/build/pdf'];
+  if(!PDFJS) return;
+  PDFJS.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js";
 
-    // Render first page of each certificate PDF into its canvas
-    async function renderPdfThumb(canvas){
-      const url = canvas.dataset.pdf;
-      try{
-        const pdf = await pdfjsLib.getDocument(url).promise;
-        const page = await pdf.getPage(1);
+  async function renderInto(canvas){
+    const url = canvas.dataset.pdf;
+    if(!url) return;
 
-        // Fit width of the canvas box
-        const baseViewport = page.getViewport({ scale: 1 });
-        const targetWidth = canvas.clientWidth || 220; // fallback
-        const scale = targetWidth / baseViewport.width;
-        const vp = page.getViewport({ scale });
+    // Guard: only render when we have a real width
+    const cssWidth = Math.max( Math.floor(canvas.getBoundingClientRect().width), 1 );
+    const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap for perf
+    const targetPx = cssWidth * dpr;
 
-        canvas.width = Math.round(vp.width);
-        canvas.height = Math.round(vp.height);
+    try{
+      const pdf = await PDFJS.getDocument(url).promise;
+      const page = await pdf.getPage(1);
 
-        const ctx = canvas.getContext('2d', { alpha:false });
-        await page.render({ canvasContext: ctx, viewport: vp, background:'#ffffff' }).promise;
-      }catch(e){
-        // Fallback: simple link chip if PDF failed
-        const wrap = document.createElement('div');
-        wrap.className = 'meta';
-        wrap.textContent = 'Preview unavailable — open PDF';
-        canvas.replaceWith(wrap);
-        console.warn('PDF thumbnail failed:', e);
-      }
+      const vp1 = page.getViewport({ scale: 1 });
+      const scale = targetPx / vp1.width;
+      const vp   = page.getViewport({ scale });
+
+      // Set backing store size (for crispness), CSS size follows from rule
+      canvas.width  = Math.round(vp.width);
+      canvas.height = Math.round(vp.height);
+
+      const ctx = canvas.getContext('2d', { alpha:false });
+      const task = page.render({ canvasContext: ctx, viewport: vp, background:'#ffffff' });
+      await task.promise;
+
+      // Optional: once drawn, fix the element's CSS height to avoid relayout jitter
+      canvas.style.height = (canvas.height / dpr) + 'px';
+    }catch(err){
+      // Soft fallback
+      const link = document.createElement('a');
+      link.href = url; link.target = "_blank"; link.rel = "noopener";
+      link.className = "badge";
+      link.textContent = "Open certificate (PDF)";
+      canvas.replaceWith(link);
+      console.warn('PDF thumb render failed:', err);
     }
-
-    // Kick off renders (and re-render on resize for better crispness)
-    const thumbs = Array.from(document.querySelectorAll('canvas.pdf-thumb'));
-    thumbs.forEach(renderPdfThumb);
-    let resizeTO=null;
-    window.addEventListener('resize', ()=>{ clearTimeout(resizeTO); resizeTO=setTimeout(()=>thumbs.forEach(renderPdfThumb), 200); });
   }
+
+  function observeAndRender(canvas){
+    // Render when width becomes non-zero, and re-render on size changes
+    const ro = new ResizeObserver((entries)=>{
+      for(const entry of entries){
+        const w = Math.floor(entry.contentRect.width);
+        if(w > 1){
+          // Debounce to avoid rapid re-renders during layout
+          clearTimeout(canvas._pdfTO);
+          canvas._pdfTO = setTimeout(()=>renderInto(canvas), 80);
+        }
+      }
+    });
+    ro.observe(canvas);
+    // kickoff in case it's already laid out
+    requestAnimationFrame(()=>renderInto(canvas));
+  }
+
+  document.querySelectorAll('canvas.pdf-thumb').forEach(observeAndRender);
+})();
 </script>
 
   
