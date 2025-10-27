@@ -323,35 +323,37 @@
 /* Certificates */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 /* --- Cert card tuning: smaller logo + more right offset for text --- */
+/* Restore “card” look by using the .card wrapper; keep inner clean */
 .cert-card{
-  grid-template-columns: 220px minmax(0,1fr); /* wider left column */
-  gap: 26px;                                   /* bigger gutter */
+  display:grid;
+  grid-template-columns: 200px minmax(0,1fr); /* left logo, right content */
+  gap:28px;                                   /* bigger gutter */
+  align-items:center;
 }
 
+/* Logo sizing */
 .cert-card .thumb{
   display:flex; align-items:center; justify-content:center;
-  padding:8px;               /* extra breathing room inside the frame */
 }
-
 .cert-card .thumb img{
-  width:auto;                /* don't stretch */
+  width:auto;
   max-width:100%;
-  max-height:120px;          /* <- shrink the logo */
-  aspect-ratio:auto;         /* keep the natural logo ratio */
+  max-height:110px;      /* smaller logo */
   object-fit:contain;
-  padding:0;                 /* remove inner padding from the image itself */
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px;
+  display:block;
 }
 
-/* Nudge the text block to the right a touch more */
-.cert-card > div{
-  padding-left: 6px;         /* subtle right shift without breaking wrap */
-  min-width:0;
-}
+/* Push the text a bit further right so it never crowds the logo */
+.cert-card .cert-body{ padding-left:10px; min-width:0; }
 
-/* Keep mobile clean */
+/* Mobile stacks neatly */
 @media (max-width:720px){
   .cert-card{ grid-template-columns:1fr; gap:14px }
-  .cert-card > div{ padding-left:0 }
+  .cert-card .cert-body{ padding-left:0 }
   .cert-card .thumb img{ max-height:90px }
 }
 
@@ -947,22 +949,22 @@
 <!-- Licenses & Certifications -->
 <section id="certs" class="section">
   <h2>Licenses & Certifications</h2>
-  <div class="cert-grid">
 
-    <!-- IJCAI 2025 Reviewer -->
+  <div class="card"> <!-- container restored -->
     <article class="cert-card">
       <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
         <img src="logo.png" alt="IJCAI — International Joint Conferences on Artificial Intelligence Organization logo">
       </a>
-      <div>
+
+      <!-- text block shifted a touch to the right -->
+      <div class="cert-body">
         <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
         <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025</div>
-        <div class="kvs" style="margin-top:6px">
+        <div class="kvs" style="margin-top:8px">
           <a class="badge" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener">View certificate (PDF)</a>
         </div>
       </div>
     </article>
-
   </div>
 </section>
 
