@@ -320,6 +320,14 @@
   text-align:center;
 }
 
+    /* Certificates */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.cert-card{display:grid;grid-template-columns:minmax(120px,160px) 1fr;gap:14px;align-items:center;border:1px solid var(--border);background:var(--panel);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+.cert-card .thumb img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+.cert-card h3{margin:0 0 6px;font-size:15px}
+.cert-card .meta{font-size:12px;color:var(--subtle)}
+
+
 /* Image sizing */
 .card-media > img {
   width: 100%;
@@ -509,7 +517,7 @@
         <a class="link" href="#research">Research Focus</a>
         <a class="link" href="#publications">Publications</a>
         <a class="link" href="#events">Recent Events</a>
-        <a class="link" href="#awards">Prizes</a>
+        <a class="link" href="#awards">Prizes & Grants</a>
         <a class="link" href="#leadership">Leadership</a>
         <a class="link hide-sm" href="#education">Education</a>
         <a class="link hide-sm" href="#experience">Experience</a>
@@ -749,7 +757,7 @@
 
     <!-- Prizes (list) -->
     <section id="awards" class="section">
-      <h2>Prizes</h2>
+      <h2>Prizes & Grants</h2>
       <div class="prize-list">
         <div class="card prize-card">
           <img src="3MT SoC.jpg" alt="Winner - School of Computing 3MT">
@@ -804,7 +812,7 @@
         <div class="item">
           <div class="date">2025 - 2028</div>
           <div class="content">
-            <strong>Doctorate in Computer Science</strong>
+            <strong>PhD, Computer Science</strong>
             <div>Macquarie University (Frontier AI Research Centre)</div>
             <div class="meta">Humanoid-driven early disease detection research</div>
           </div>
@@ -828,7 +836,7 @@
         <div class="item">
           <div class="date">2019 - 2022</div>
           <div class="content">
-            <strong>Bachelor of Engineering, Computer Science</strong>
+            <strong>BSc, Computer Science</strong>
             <div>Free University of Bozen-Bolzano</div>
             <div class="meta">Erasmus at University of Helsinki</div>
           </div>
@@ -906,13 +914,32 @@
           </div>
         </div>
      </section>
+
     <!-- Licenses & certifications -->
 <section id="certs" class="section">
   <h2>Licenses & Certifications</h2>
-  <div class="card list">
-    <div><strong>Reviewer of IJCAI 2025</strong> — IJCAI International Joint Conferences on Artificial Intelligence Organization. <span class="meta">Issued Sep 2025</span></div>
+  <div class="cert-grid">
+
+    <!-- IJCAI 2025 Reviewer -->
+    <article class="cert-card">
+      <!-- thumbnail: replace filename if you prefer (PNG/JPG). -->
+      <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
+        <img src="ijcai_reviewer_2025_thumb.jpg" alt="IJCAI 2025 Reviewer — Certificate thumbnail">
+      </a>
+      <div>
+        <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
+        <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025 · Montréal/Guangzhou</div>
+        <div class="kvs" style="margin-top:6px">
+          <a class="badge" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener">View certificate (PDF)</a>
+          <!-- Optional: link a full-size image preview if you export one -->
+          <!-- <a class="badge" href="ijcai_reviewer_2025_full.png" target="_blank" rel="noopener">Preview image</a> -->
+        </div>
+      </div>
+    </article>
+
   </div>
 </section>
+
 
 <!-- CV (inline PDF viewer) -->
 <section id="cv" class="section">
@@ -930,7 +957,7 @@
     <p><strong>Email:</strong> <a href="mailto:filippo.cenacchi@hdr.mq.edu.au">filippo.cenacchi@hdr.mq.edu.au</a></p>
     <p><strong>Links:</strong> <a href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/cenacchi2000" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener">LinkedIn</a></p>
     <blockquote>
-      I welcome collaboration on simulation-based training for humanoid diagnostic agents, privacy-preserving avatarization, and clinician-centered AI triage.
+      I welcome collaboration on simulation-based training for humanoid diagnostic agents, 3d human avatarization and clinician-centered AI diagnosis.
     </blockquote>
   </div>
 </section>
