@@ -325,14 +325,18 @@
 .cert-card{display:grid;grid-template-columns:minmax(120px,160px) 1fr;gap:14px;align-items:center;border:1px solid var(--border);background:var(--panel);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
 .cert-card .thumb{display:block}
 /* Certificates: thumbnail canvas */
-.cert-card .thumb canvas{
+/* Certificate logo thumbnail */
+.cert-card .thumb img{
   width:100%;
-  height:auto;            /* let JS-set height show */
-  display:block;
-  border-radius:10px;
-  border:1px solid var(--border);
+  aspect-ratio:4/3;
+  object-fit:contain;      /* no cropping */
   background:#fff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;            /* breathing room around the logo */
+  display:block;
 }
+
 .cert-card h3{margin:0 0 6px;font-size:15px}
 .cert-card .meta{font-size:12px;color:var(--subtle)}
 
@@ -924,28 +928,21 @@
         </div>
      </section>
 
-<!-- Licenses & certifications -->
-<section id="certs" class="section">
-  <h2>Licenses & Certifications</h2>
-  <div class="cert-grid">
-
-    <!-- IJCAI 2025 Reviewer -->
-    <article class="cert-card">
-      <!-- Clickable PDF thumbnail (auto-rendered) -->
-      <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
-        <canvas class="pdf-thumb" data-pdf="ijcai_reviewer_2025.pdf" aria-label="IJCAI 2025 Reviewer certificate preview"></canvas>
-      </a>
-      <div>
-        <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
-        <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025</div>
-        <div class="kvs" style="margin-top:6px">
-          <a class="badge" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener">View certificate (PDF)</a>
-        </div>
-      </div>
-    </article>
-
+<!-- IJCAI 2025 Reviewer -->
+<article class="cert-card">
+  <!-- Logo thumbnail linking to the certificate PDF -->
+  <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
+    <img src="logo.png" alt="IJCAI — International Joint Conferences on Artificial Intelligence Organization logo">
+  </a>
+  <div>
+    <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
+    <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025</div>
+    <div class="kvs" style="margin-top:6px">
+      <a class="badge" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener">View certificate (PDF)</a>
+    </div>
   </div>
-</section>
+</article>
+
 
 
 
