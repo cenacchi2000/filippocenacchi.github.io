@@ -320,10 +320,11 @@
   text-align:center;
 }
 
-    /* Certificates */
+/* Certificates */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .cert-card{display:grid;grid-template-columns:minmax(120px,160px) 1fr;gap:14px;align-items:center;border:1px solid var(--border);background:var(--panel);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
-.cert-card .thumb img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+.cert-card .thumb{display:block}
+.cert-card .thumb canvas{width:100%;aspect-ratio:4/3;display:block;border-radius:10px;border:1px solid var(--border);background:#fff}
 .cert-card h3{margin:0 0 6px;font-size:15px}
 .cert-card .meta{font-size:12px;color:var(--subtle)}
 
@@ -915,30 +916,29 @@
         </div>
      </section>
 
-    <!-- Licenses & certifications -->
+<!-- Licenses & certifications -->
 <section id="certs" class="section">
   <h2>Licenses & Certifications</h2>
   <div class="cert-grid">
 
     <!-- IJCAI 2025 Reviewer -->
     <article class="cert-card">
-      <!-- thumbnail: replace filename if you prefer (PNG/JPG). -->
+      <!-- Clickable PDF thumbnail (auto-rendered) -->
       <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
-        <img src="ijcai_reviewer_2025_thumb.jpg" alt="IJCAI 2025 Reviewer — Certificate thumbnail">
+        <canvas class="pdf-thumb" data-pdf="ijcai_reviewer_2025.pdf" aria-label="IJCAI 2025 Reviewer certificate preview"></canvas>
       </a>
       <div>
         <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
-        <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025 · Montréal/Guangzhou</div>
+        <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025</div>
         <div class="kvs" style="margin-top:6px">
           <a class="badge" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener">View certificate (PDF)</a>
-          <!-- Optional: link a full-size image preview if you export one -->
-          <!-- <a class="badge" href="ijcai_reviewer_2025_full.png" target="_blank" rel="noopener">Preview image</a> -->
         </div>
       </div>
     </article>
 
   </div>
 </section>
+
 
 
 <!-- CV (inline PDF viewer) -->
