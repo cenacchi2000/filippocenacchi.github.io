@@ -320,26 +320,45 @@
   text-align:center;
 }
 
-/* Certificates */
+//* Certificates */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.cert-card{display:grid;grid-template-columns:minmax(120px,160px) 1fr;gap:14px;align-items:center;border:1px solid var(--border);background:var(--panel);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
-.cert-card .thumb{display:block}
-/* Certificates: thumbnail canvas */
-/* Certificate logo thumbnail */
+
+.cert-card{
+  display:grid;
+  grid-template-columns: minmax(180px,220px) minmax(0,1fr); /* <- fixed left, flexible right */
+  gap:18px;
+  align-items:center;
+  border:1px solid var(--border);
+  background:var(--panel);
+  border-radius:14px;
+  padding:14px;
+  box-shadow:var(--shadow);
+}
+
+/* prevent the right side from pushing into the left column */
+.cert-card > .thumb,
+.cert-card > div{ min-width:0; }
+
 .cert-card .thumb img{
   width:100%;
   aspect-ratio:4/3;
-  object-fit:contain;      /* no cropping */
+  object-fit:contain;
   background:#fff;
   border:1px solid var(--border);
   border-radius:10px;
-  padding:12px;            /* breathing room around the logo */
+  padding:12px;
   display:block;
 }
 
-.cert-card h3{margin:0 0 6px;font-size:15px}
-.cert-card .meta{font-size:12px;color:var(--subtle)}
+/* badges wrap nicely and never overlap */
+.cert-card .kvs{ display:flex; flex-wrap:wrap; gap:8px }
+.cert-card .kvs .badge{ position:static }
 
+/* stack on small screens */
+@media (max-width: 720px){
+  .cert-card{ grid-template-columns:1fr; gap:12px }
+  .cert-card .thumb img{ aspect-ratio:16/9 }
+}
 
 /* Image sizing */
 .card-media > img {
