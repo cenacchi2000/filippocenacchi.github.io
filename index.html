@@ -1061,6 +1061,53 @@ document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
     "image":"headshot.jpg"
   }
   </script>
+
+  <!-- PDF.js (for certificate thumbnails) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js" integrity="sha512-n8s8pJL7hTqz3LJwC8mJ+9h4cC1o+q4qH7pNhkC/3r0S0H1qzq6t8y3B0O1m5q3m4ZlqgkJcA3B7Tf6kzY+8nQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  // Configure worker
+  if (window['pdfjs-dist/build/pdf']) {
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js';
+
+    // Render first page of each certificate PDF into its canvas
+    async function renderPdfThumb(canvas){
+      const url = canvas.dataset.pdf;
+      try{
+        const pdf = await pdfjsLib.getDocument(url).promise;
+        const page = await pdf.getPage(1);
+
+        // Fit width of the canvas box
+        const baseViewport = page.getViewport({ scale: 1 });
+        const targetWidth = canvas.clientWidth || 220; // fallback
+        const scale = targetWidth / baseViewport.width;
+        const vp = page.getViewport({ scale });
+
+        canvas.width = Math.round(vp.width);
+        canvas.height = Math.round(vp.height);
+
+        const ctx = canvas.getContext('2d', { alpha:false });
+        await page.render({ canvasContext: ctx, viewport: vp, background:'#ffffff' }).promise;
+      }catch(e){
+        // Fallback: simple link chip if PDF failed
+        const wrap = document.createElement('div');
+        wrap.className = 'meta';
+        wrap.textContent = 'Preview unavailable — open PDF';
+        canvas.replaceWith(wrap);
+        console.warn('PDF thumbnail failed:', e);
+      }
+    }
+
+    // Kick off renders (and re-render on resize for better crispness)
+    const thumbs = Array.from(document.querySelectorAll('canvas.pdf-thumb'));
+    thumbs.forEach(renderPdfThumb);
+    let resizeTO=null;
+    window.addEventListener('resize', ()=>{ clearTimeout(resizeTO); resizeTO=setTimeout(()=>thumbs.forEach(renderPdfThumb), 200); });
+  }
+</script>
+
+  
   <script>
   const lb = document.getElementById('lightbox');
   const img = document.getElementById('lightbox-img');
