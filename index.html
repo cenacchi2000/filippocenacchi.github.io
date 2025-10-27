@@ -322,43 +322,39 @@
 
 /* Certificates */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-
+/* --- Cert card tuning: smaller logo + more right offset for text --- */
 .cert-card{
-  display:grid;
-  grid-template-columns: minmax(180px,220px) minmax(0,1fr); /* <- fixed left, flexible right */
-  gap:18px;
-  align-items:center;
-  border:1px solid var(--border);
-  background:var(--panel);
-  border-radius:14px;
-  padding:14px;
-  box-shadow:var(--shadow);
+  grid-template-columns: 220px minmax(0,1fr); /* wider left column */
+  gap: 26px;                                   /* bigger gutter */
 }
 
-/* prevent the right side from pushing into the left column */
-.cert-card > .thumb,
-.cert-card > div{ min-width:0; }
+.cert-card .thumb{
+  display:flex; align-items:center; justify-content:center;
+  padding:8px;               /* extra breathing room inside the frame */
+}
 
 .cert-card .thumb img{
-  width:100%;
-  aspect-ratio:4/3;
+  width:auto;                /* don't stretch */
+  max-width:100%;
+  max-height:120px;          /* <- shrink the logo */
+  aspect-ratio:auto;         /* keep the natural logo ratio */
   object-fit:contain;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:12px;
-  display:block;
+  padding:0;                 /* remove inner padding from the image itself */
 }
 
-/* badges wrap nicely and never overlap */
-.cert-card .kvs{ display:flex; flex-wrap:wrap; gap:8px }
-.cert-card .kvs .badge{ position:static }
-
-/* stack on small screens */
-@media (max-width: 720px){
-  .cert-card{ grid-template-columns:1fr; gap:12px }
-  .cert-card .thumb img{ aspect-ratio:16/9 }
+/* Nudge the text block to the right a touch more */
+.cert-card > div{
+  padding-left: 6px;         /* subtle right shift without breaking wrap */
+  min-width:0;
 }
+
+/* Keep mobile clean */
+@media (max-width:720px){
+  .cert-card{ grid-template-columns:1fr; gap:14px }
+  .cert-card > div{ padding-left:0 }
+  .cert-card .thumb img{ max-height:90px }
+}
+
 
 /* Image sizing */
 .card-media > img {
