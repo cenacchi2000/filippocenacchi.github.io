@@ -12,6 +12,9 @@
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="headshot.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  <link rel="apple-touch-icon" href="favicon.jpeg">
+
 
   <style>
     :root{
@@ -46,6 +49,17 @@
       box-sizing:border-box;
     }
     .grid{display:grid;gap:18px}
+
+    .nav-avatar{
+     width:32px;
+     height:32px;
+     border-radius:50%;
+     display:block;
+     object-fit:cover;
+    }
+    .pill.avatar{
+     padding:2px;
+    }
 
     .nav{
       position:sticky;
@@ -540,9 +554,12 @@
   <nav class="nav">
     <div class="container inner">
       <div style="display:flex;align-items:center;gap:10px">
-        <span class="pill" aria-label="Site identity">FC</span>
-        <strong>Filippo&nbsp;Cenacchi</strong>
-      </div>
+  <span class="pill avatar" aria-label="Site identity">
+    <img src="favicon.jpeg" alt="Portrait of Filippo Cenacchi" class="nav-avatar">
+  </span>
+  <strong>Filippo&nbsp;Cenacchi</strong>
+</div>
+
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <a class="link" href="#research">Research Focus</a>
         <a class="link" href="#publications">Publications</a>
