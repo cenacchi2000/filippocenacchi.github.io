@@ -146,13 +146,16 @@
       align-items:start;
     }
     .avatar{
-      width:100%;
-      aspect-ratio:1;
-      border-radius:22px;
-      background:#ddd center/cover;
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-    }
+  width:100%;
+  max-width:220px;   /* was full width – now a bit smaller */
+  aspect-ratio:1;
+  border-radius:22px;
+  background:#ddd center/cover;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  margin:0 auto;     /* keeps it nicely centered in the column */
+}
+
     .title{font-size:clamp(32px, 5vw, 56px);line-height:1.08;margin:0 0 6px}
     .subtitle{margin:0;color:var(--subtle);font-size:clamp(14px, 2vw, 16px)}
     .pill{
