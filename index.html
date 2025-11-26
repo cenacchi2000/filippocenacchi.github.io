@@ -441,22 +441,13 @@
     }
   .event-item img{
   width:100%;
-  max-width:320px;       /* keeps the image column from dominating */
-  max-height:200px;      /* smaller, consistent height */
-  object-fit:cover;      /* crops nicely while filling the box */
+  max-height:260px;          /* keeps event images at a reasonable height */
+  object-fit:cover;          /* crops nicely while filling the box */
   border-radius:14px;
   border:1px solid var(--border);
   box-shadow:var(--shadow);
-  margin:0 auto;         /* centers in its column */
 }
 
-/* On small screens, let it use full width again */
-@media (max-width:768px){
-  .event-item img{
-    max-width:100%;
-    max-height:220px;
-  }
-}
 
     /* prizes list */
     .prize-list{display:grid;gap:12px}
@@ -960,7 +951,7 @@
             </div>
           </div>
                 <div class="event-item">
-        <img src="MQ_COMP_211125_052.jpg"
+        <img src="MQ.jpg"
              alt="Invited talk on humanoid robots and mental-health diagnostics at the Macquarie University School of Computing Industry Networking Event">
         <div>
           <h3 style="margin:0 0 6px">Invited Talk • School of Computing Industry Networking Event</h3>
