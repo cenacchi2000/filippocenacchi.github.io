@@ -72,6 +72,53 @@
       color:var(--subtle);
       white-space:nowrap;
     }
+    /* --- Publication filters --- */
+.pub-filters{
+  margin-bottom:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+  font-size:13px;
+}
+
+.pub-filter-label{
+  margin:0 6px 0 10px;
+  color:var(--subtle);
+  font-size:12px;
+}
+
+.pub-filter-btn{
+  border:1px solid #7c3aed;          /* purple like your screenshot */
+  background:#ffffff;
+  color:#7c3aed;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:13px;
+  cursor:pointer;
+  line-height:1.2;
+  white-space:nowrap;
+  user-select:none;
+  transition:background .15s ease,
+             color .15s ease,
+             box-shadow .15s ease;
+}
+
+.pub-filter-btn.active{
+  background:#7c3aed;
+  color:#ffffff;
+  box-shadow:0 0 0 1px rgba(124,58,237,.2);
+}
+
+.pub-filter-btn[data-mode]{
+  font-weight:600;
+}
+
+@media (max-width:600px){
+  .pub-filters{gap:4px;}
+  .pub-filter-btn{padding:5px 9px;font-size:12px;}
+}
+
     .nav a.link:hover{background:var(--muted);color:var(--text)}
     .btn{
       display:inline-flex;
@@ -712,13 +759,31 @@
 </section>
 
 
-    <!-- Publications -->
-  <section id="publications" class="section">
+ <section id="publications" class="section">
   <h2>Publications</h2>
+
+  <!-- Filter bar -->
+  <div class="pub-filters" id="pubFilters" aria-label="Filter publications by year and topic">
+    <button class="pub-filter-btn active" data-mode="selected">Show by Selected</button>
+    <button class="pub-filter-btn" data-mode="all">Show by All</button>
+
+    <span class="pub-filter-label">Year:</span>
+    <button class="pub-filter-btn" data-year="2025">2025</button>
+    <button class="pub-filter-btn" data-year="2024">2024</button>
+    <button class="pub-filter-btn" data-year="2023">2023</button>
+    <button class="pub-filter-btn" data-year="2022">2022</button>
+    <button class="pub-filter-btn" data-year="2021">2021</button>
+
+    <span class="pub-filter-label">Topic:</span>
+    <button class="pub-filter-btn" data-topic="humanoid">Humanoid &amp; Mental Health</button>
+    <button class="pub-filter-btn" data-topic="vr-ethics">VR &amp; Ethics</button>
+    <button class="pub-filter-btn" data-topic="hci-startups">HCI &amp; Startups</button>
+  </div>
+
   <div class="list">
 
-    <!-- NEW: Passive Dementia Screening paper -->
-    <div class="card pub">
+    <!-- Passive Dementia Screening paper -->
+    <div class="card pub" data-year="2025" data-topics="humanoid,mental-health,dementia">
       <a href="https://arxiv.org/abs/2511.13802" target="_blank" rel="noopener">
         <img src="passive.png"
              alt="Architecture diagram for Passive Dementia Screening via Facial Temporal Micro-Dynamics"
@@ -749,73 +814,74 @@
       </div>
     </div>
 
-    <!-- arXiv paper + project -->
-<div class="card pub">
-  <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
-    <img src="Diagram%20(5).png" alt="Architecture diagram for Tri-Modal Severity Fused Diagnosis" loading="lazy" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
-  </a>
-  <div>
-    <h3 style="margin-top:0">
+    <!-- Tri-Modal paper -->
+    <div class="card pub" data-year="2025" data-topics="humanoid,mental-health,ptsd">
       <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
-        Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders
+        <img src="Diagram%20(5).png"
+             alt="Architecture diagram for Tri-Modal Severity Fused Diagnosis"
+             loading="lazy"
+             style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
       </a>
-    </h3>
-    <div class="meta">Filippo Cenacchi, Deborah Richards, Longbing Cao.</div>
-    <div class="meta">arXiv:2510.20239.</div>
-    <div class="kvs">
-      <a class="badge" href="https://arxiv.org/abs/2510.20239" target="_blank" rel="noopener">arXiv</a>
-      <a class="badge" href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">Project</a>
-      <button type="button" class="badge cite-btn" data-target="bib-trimodal">Cite</button>
-    </div>
-    <pre id="bib-trimodal" class="bib-entry">@misc{cenacchi2025trimodalseverityfuseddiagnosis,
+      <div>
+        <h3 style="margin-top:0">
+          <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
+            Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders
+          </a>
+        </h3>
+        <div class="meta">Filippo Cenacchi, Deborah Richards, Longbing Cao.</div>
+        <div class="meta">arXiv:2510.20239.</div>
+        <div class="kvs">
+          <a class="badge" href="https://arxiv.org/abs/2510.20239" target="_blank" rel="noopener">arXiv</a>
+          <a class="badge" href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">Project</a>
+          <button type="button" class="badge cite-btn" data-target="bib-trimodal">Cite</button>
+        </div>
+        <pre id="bib-trimodal" class="bib-entry">@misc{cenacchi2025trimodalseverityfuseddiagnosis,
   title         = {Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders},
-  author        = {Filippo Cenacchi,Deborah Richards, Longbing Cao},
+  author        = {Filippo Cenacchi, Deborah Richards, Longbing Cao},
   year          = {2025},
   eprint        = {2510.20239},
   archivePrefix = {arXiv},
   primaryClass  = {cs.CL},
   url           = {https://arxiv.org/abs/2510.20239}
 }</pre>
-  </div>
-</div>
+      </div>
+    </div>
 
-
-<!-- JSIS journal paper (Fig. 1 only) -->
-<div class="card pub">
-  <a class="thumb" href="fig1.png" target="_blank" rel="noopener">
-    <img src="fig1.png" loading="lazy" alt="Figure 1 from the JSIS article">
-  </a>
-  <div>
-    <h3 style="margin-top:0">
-       <a href="https://www.sciencedirect.com/science/article/pii/S0963868725000526?via%3Dihub" target="_blank" rel="noopener">
-      Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR
+    <!-- JSIS VR ethics paper -->
+    <div class="card pub" data-year="2025" data-topics="vr-ethics">
+      <a class="thumb" href="fig1.png" target="_blank" rel="noopener">
+        <img src="fig1.png" loading="lazy" alt="Figure 1 from the JSIS article">
       </a>
-    </h3>
-    <div class="meta">
-      Sarah Bankins, Paul Formosa, Tom Montefiore, Deborah Richards, Filippo Cenacchi, Mitchell McEwan.
-    </div>
-    <div class="meta">
-      Journal of Strategic Information Systems (JSIS), 2025.
-    </div>
-    <div class="kvs">
-      <span class="badge">Journal</span>
-      <button type="button" class="badge cite-btn" data-target="bib-jsis">Cite</button>
-    </div>
-    <pre id="bib-jsis" class="bib-entry">@article{bankins2025virtual,
+      <div>
+        <h3 style="margin-top:0">
+          <a href="https://www.sciencedirect.com/science/article/pii/S0963868725000526?via%3Dihub" target="_blank" rel="noopener">
+            Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR
+          </a>
+        </h3>
+        <div class="meta">
+          Sarah Bankins, Paul Formosa, Tom Montefiore, Deborah Richards, Filippo Cenacchi, Mitchell McEwan.
+        </div>
+        <div class="meta">Journal of Strategic Information Systems (JSIS), 2025.</div>
+        <div class="kvs">
+          <span class="badge">Journal</span>
+          <button type="button" class="badge cite-btn" data-target="bib-jsis">Cite</button>
+        </div>
+        <pre id="bib-jsis" class="bib-entry">@article{bankins2025virtual,
   title   = {Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR},
-  author  = {Bankins Sarah, Formosa Paul, Montefiore Tom, Richards Deborah, Cenacchi Filippo, McEwan, Mitchell},
+  author  = {Bankins, Sarah and Formosa, Paul and Montefiore, Tom and Richards, Deborah and Cenacchi, Filippo and McEwan, Mitchell},
   journal = {Journal of Strategic Information Systems},
   year    = {2025},
   note    = {In press}
 }</pre>
-  </div>
-</div>
+      </div>
+    </div>
 
-
-    <!-- Springer chapter with thumbnail -->
-    <div class="card pub">
+    <!-- Springer low-code/no-code chapter -->
+    <div class="card pub" data-year="2022" data-topics="hci-startups,low-code">
       <a href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">
-        <img src="lcad_ncad.png" alt="Diagram from the Springer chapter on low-code/no-code adoption" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+        <img src="lcad_ncad.png"
+             alt="Diagram from the Springer chapter on low-code/no-code adoption"
+             style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
       </a>
       <div>
         <h3 style="margin-top:0">
@@ -831,7 +897,7 @@
         </div>
         <pre id="bib-springer" class="bib-entry">@inproceedings{rafiq2022understanding,
   title     = {Understanding Low-Code or No-Code Adoption in Software Startups: Preliminary Results from a Comparative Case Study},
-  author    = {Rafiq Usman, Cenacchi Filippo, Wang Xiaofeng},
+  author    = {Rafiq, Usman and Cenacchi, Filippo and Wang, Xiaofeng},
   booktitle = {Product-Focused Software Process Improvement (PROFES 2022)},
   series    = {Lecture Notes in Computer Science},
   volume    = {13709},
@@ -845,6 +911,7 @@
 
   </div>
 </section>
+
 
     <!-- Events (carousel) -->
     <section id="events" class="section">
@@ -1102,6 +1169,95 @@
     // year + last updated
     year.textContent = new Date().getFullYear();
     lu.textContent = new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+        // Publication filter (year + topic)
+    (function(){
+      const root = document.getElementById('pubFilters');
+      if(!root) return;
+
+      const modeButtons  = root.querySelectorAll('[data-mode]');
+      const yearButtons  = root.querySelectorAll('[data-year]');
+      const topicButtons = root.querySelectorAll('[data-topic]');
+      const cards        = document.querySelectorAll('.card.pub');
+
+      let mode        = 'selected';
+      let activeYear  = null;
+      let activeTopic = null;
+
+      function applyFilters(){
+        cards.forEach(card=>{
+          let show = true;
+
+          if(mode === 'selected'){
+            if(activeYear && card.dataset.year !== activeYear){
+              show = false;
+            }
+            if(activeTopic){
+              const topics = (card.dataset.topics || '')
+                .split(',')
+                .map(s => s.trim())
+                .filter(Boolean);
+              if(!topics.includes(activeTopic)){
+                show = false;
+              }
+            }
+          }
+
+          card.style.display = show ? '' : 'none';
+        });
+      }
+
+      // Mode buttons: Selected vs All
+      modeButtons.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          mode = btn.dataset.mode;
+          modeButtons.forEach(b => b.classList.toggle('active', b === btn));
+          if(mode === 'all'){
+            cards.forEach(card => card.style.display = '');
+          }else{
+            applyFilters();
+          }
+        });
+      });
+
+      // Year buttons
+      yearButtons.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          if(activeYear === btn.dataset.year){
+            activeYear = null;
+            btn.classList.remove('active');
+          }else{
+            activeYear = btn.dataset.year;
+            yearButtons.forEach(b => b.classList.toggle('active', b === btn));
+          }
+          if(mode === 'selected') applyFilters();
+        });
+      });
+
+      // Topic buttons
+      topicButtons.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          if(activeTopic === btn.dataset.topic){
+            activeTopic = null;
+            btn.classList.remove('active');
+          }else{
+            activeTopic = btn.dataset.topic;
+            topicButtons.forEach(b => b.classList.toggle('active', b === btn));
+          }
+          if(mode === 'selected') applyFilters();
+        });
+      });
+
+      // Initial state: Show-by-Selected with no filters → everything visible
+    })();
+
+    // Cite buttons toggle BibTeX blocks
+    document.querySelectorAll('.cite-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.dataset.target;
+        const block = document.getElementById(id);
+        if(block){ block.classList.toggle('show'); }
+      });
+    });
 
     // smooth in-page nav
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
