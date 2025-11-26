@@ -13,6 +13,10 @@
   <meta property="og:image" content="headshot.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
 
+  <!-- Favicon (NEW) -->
+  <link rel="icon" href="favicon.jpeg" sizes="any">
+  <link rel="apple-touch-icon" href="favicon.jpeg">
+
   <style>
     :root{
       --bg: #f7f9fc;
@@ -83,15 +87,14 @@
     }
     .nav a.link.active{color:var(--brand-ink); background:var(--muted); font-weight:600}
     .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease}
-.reveal.in{opacity:1; transform:none}
-@media (prefers-reduced-motion: reduce){
-  .reveal{opacity:1; transform:none}
-}
+    .reveal.in{opacity:1; transform:none}
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1; transform:none}
+    }
 
     .card-focus{transform-style:preserve-3d; perspective:800px}
-.card-focus:hover{transform:translateY(-3px)}
-.card-focus:has(.card-media:hover) img{transform:scale(1.07) rotate3d(.5,1,0,2deg)}
-
+    .card-focus:hover{transform:translateY(-3px)}
+    .card-focus:has(.card-media:hover) img{transform:scale(1.07) rotate3d(.5,1,0,2deg)}
 
     .section{padding:32px 0}
     .section h2{font-size:22px;margin:0 0 14px}
@@ -179,202 +182,192 @@
     }
 
     /* Grid */
-.research-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:24px;
-}
-@media (max-width:900px){
-  .research-grid{ grid-template-columns:1fr; }
-}
+    .research-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:24px;
+    }
+    @media (max-width:900px){
+      .research-grid{ grid-template-columns:1fr; }
+    }
 
-/* Card */
-.card-focus{
-  background:var(--panel,#fff);
-  border-radius:18px;
-  box-shadow:0 6px 24px rgba(20,40,80,.08);
-  overflow:hidden;
-  transition:transform .18s ease, box-shadow .18s ease;
-}
-.card-focus:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 36px rgba(20,40,80,.12);
-}
+    /* Card */
+    .card-focus{
+      background:var(--panel,#fff);
+      border-radius:18px;
+      box-shadow:0 6px 24px rgba(20,40,80,.08);
+      overflow:hidden;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .card-focus:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 36px rgba(20,40,80,.12);
+    }
 
-/* Media header with overlayed chips */
-.card-media{
-  position:relative;
-  display:block;
-  width:100%;
-  aspect-ratio: 16/9;
-  padding:0;
-  border:0;
-  background:transparent;
-  cursor:zoom-in;
-}
-.card-media img{
-  width:100%; height:100%;
-  object-fit:cover;
-  display:block;
-  transform:scale(1.01);
-  transition:transform .25s ease;
-}
- .card-focus:hover .card-media img{ transform:scale(1.05); }
+    /* Media header with overlayed chips */
+    .card-media{
+      position:relative;
+      display:block;
+      width:100%;
+      aspect-ratio: 16/9;
+      padding:0;
+      border:0;
+      background:transparent;
+      cursor:zoom-in;
+    }
+    .card-media img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transform:scale(1.01);
+      transition:transform .25s ease;
+    }
+    .card-focus:hover .card-media img{ transform:scale(1.05); }
 
- .media-gradient{
-   position:absolute; inset:0;
-   background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.45) 100%);
- }
- .media-chips{
-   position:absolute; left:12px; right:12px; bottom:12px;
-   display:flex; flex-wrap:wrap; gap:8px;
- }
- .badge{
-   display:inline-block;
-   padding:6px 10px;
-   font-size:12px;
-   border-radius:999px;
-   background:rgba(255,255,255,.86);
-   backdrop-filter:saturate(120%) blur(6px);
-   border:1px solid rgba(0,0,0,.06);
-  }
+    .media-gradient{
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.45) 100%);
+    }
+    .media-chips{
+      position:absolute; left:12px; right:12px; bottom:12px;
+      display:flex; flex-wrap:wrap; gap:8px;
+    }
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      font-size:12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.86);
+      backdrop-filter:saturate(120%) blur(6px);
+      border:1px solid rgba(0,0,0,.06);
+    }
 
-  /* Body */
-  .card-body{ padding:18px 18px 20px; }
-  .card-body h3{ margin:0 0 8px; font-weight:800; }
-  .card-body p{ margin:0; line-height:1.55; }
+    /* Body */
+    .card-body{ padding:18px 18px 20px; }
+    .card-body h3{ margin:0 0 8px; font-weight:800; }
+    .card-body p{ margin:0; line-height:1.55; }
 
-  /* Lightbox */
-  .lightbox{
-    width:min(1200px,92vw);
-    border:none; padding:0; margin:auto;
-    background:transparent;
-   }
-   .lightbox::backdrop{ background:rgba(0,0,0,.65); }
-   .lightbox img{
-    display:block; width:100%; height:auto; border-radius:14px;
-    box-shadow:0 20px 50px rgba(0,0,0,.35);
-   }
-   #lightbox-close{
-     position:absolute; top:-14px; right:-14px;
-     width:36px; height:36px; border-radius:50%;
-     border:none; background:#fff; font-size:22px; line-height:1; cursor:pointer;
-     box-shadow:0 8px 24px rgba(0,0,0,.22);
-   }
+    /* Lightbox */
+    .lightbox{
+      width:min(1200px,92vw);
+      border:none; padding:0; margin:auto;
+      background:transparent;
+    }
+    .lightbox::backdrop{ background:rgba(0,0,0,.65); }
+    .lightbox img{
+      display:block; width:100%; height:auto; border-radius:14px;
+      box-shadow:0 20px 50px rgba(0,0,0,.35);
+    }
+    #lightbox-close{
+      position:absolute; top:-14px; right:-14px;
+      width:36px; height:36px; border-radius:50%;
+      border:none; background:#fff; font-size:22px; line-height:1; cursor:pointer;
+      box-shadow:0 8px 24px rgba(0,0,0,.22);
+    }
 
-       /* Fallback to ensure .card-media has height even if aspect-ratio fails */
-.card-media {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  background: #000; /* avoids white flash while image loads */
-}
+    /* Fallback to ensure .card-media has height even if aspect-ratio fails */
+    .card-media {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      background: #000;
+    }
 
-/* Ratio shim */
-.card-media::before {
-  content: "";
-  display: block;
-  padding-top: 56.25%; /* 16:9 height */
-}
-/* Standard thumbnail sizing for all publications */
-.card.pub {
-  grid-template-columns: minmax(160px, 200px) 1fr; /* keep all cards consistent */
-}
+    /* Ratio shim */
+    .card-media::before {
+      content: "";
+      display: block;
+      padding-top: 56.25%; /* 16:9 height */
+    }
 
-.card.pub a.thumb img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;        /* consistent visual height */
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
+    /* Standard thumbnail sizing for all publications */
+    .card.pub {
+      grid-template-columns: minmax(160px, 200px) 1fr;
+    }
+    .card.pub a.thumb img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
 
-/* Absolutely position children over the ratio shim */
-.card-media > img,
-.card-media > .media-gradient,
-.card-media > .media-chips {
-  position: absolute;
-  inset: 0;
-}
-.pub-figs{
-  display:grid;
-  gap:10px;
-}
-.pub-figs .fig{
-  display:block;
-  text-decoration:none;
-}
-.pub-figs img{
-  width:100%; height:auto; display:block;
-  border-radius:12px;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-}
-.pub-figs .caption{
-  display:block;
-  margin-top:6px;
-  font-size:12px;
-  color:var(--subtle);
-  text-align:center;
-}
+    /* Absolutely position children over the ratio shim */
+    .card-media > img,
+    .card-media > .media-gradient,
+    .card-media > .media-chips {
+      position: absolute;
+      inset: 0;
+    }
+    .pub-figs{
+      display:grid;
+      gap:10px;
+    }
+    .pub-figs .fig{
+      display:block;
+      text-decoration:none;
+    }
+    .pub-figs img{
+      width:100%; height:auto; display:block;
+      border-radius:12px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    .pub-figs .caption{
+      display:block;
+      margin-top:6px;
+      font-size:12px;
+      color:var(--subtle);
+      text-align:center;
+    }
 
-/* Certificates */
-.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-/* --- Cert card tuning: smaller logo + more right offset for text --- */
-/* Restore “card” look by using the .card wrapper; keep inner clean */
-.cert-card{
-  display:grid;
-  grid-template-columns: 200px minmax(0,1fr); /* left logo, right content */
-  gap:28px;                                   /* bigger gutter */
-  align-items:center;
-}
+    /* Certificates */
+    .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .cert-card{
+      display:grid;
+      grid-template-columns: 200px minmax(0,1fr);
+      gap:28px;
+      align-items:center;
+    }
+    .cert-card .thumb{
+      display:flex; align-items:center; justify-content:center;
+    }
+    .cert-card .thumb img{
+      width:auto;
+      max-width:100%;
+      max-height:110px;
+      object-fit:contain;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:10px;
+      display:block;
+    }
+    .cert-card .cert-body{ padding-left:10px; min-width:0; }
+    @media (max-width:720px){
+      .cert-card{ grid-template-columns:1fr; gap:14px }
+      .cert-card .cert-body{ padding-left:0 }
+      .cert-card .thumb img{ max-height:90px }
+    }
 
-/* Logo sizing */
-.cert-card .thumb{
-  display:flex; align-items:center; justify-content:center;
-}
-.cert-card .thumb img{
-  width:auto;
-  max-width:100%;
-  max-height:110px;      /* smaller logo */
-  object-fit:contain;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:10px;
-  display:block;
-}
+    .card-media > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.01);
+      transition: transform .25s ease;
+    }
+    .card-focus:hover .card-media > img { transform: scale(1.05); }
 
-/* Push the text a bit further right so it never crowds the logo */
-.cert-card .cert-body{ padding-left:10px; min-width:0; }
+    @supports (aspect-ratio: 16/9) {
+      .card-media { aspect-ratio: 16/9; }
+      .card-media::before { display: none; }
+    }
 
-/* Mobile stacks neatly */
-@media (max-width:720px){
-  .cert-card{ grid-template-columns:1fr; gap:14px }
-  .cert-card .cert-body{ padding-left:0 }
-  .cert-card .thumb img{ max-height:90px }
-}
+    .media-chips{ display:none !important; }
 
-
-/* Image sizing */
-.card-media > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.01);
-  transition: transform .25s ease;
-}
-.card-focus:hover .card-media > img { transform: scale(1.05); }
-
-/* If the browser does support aspect-ratio, prefer it and remove the shim’s space */
-@supports (aspect-ratio: 16/9) {
-  .card-media { aspect-ratio: 16/9; }
-  .card-media::before { display: none; }
-}
-/* Hide the over-image chips completely */
-.media-chips{ display:none !important; }
     /* events carousel */
     .events{position:relative;overflow:hidden}
     .event-track{display:flex;gap:16px;transition:transform .6s ease}
@@ -391,7 +384,7 @@
       border:1px solid var(--border);
       box-shadow:var(--shadow);
     }
-    
+
     /* prizes list */
     .prize-list{display:grid;gap:12px}
     .prize-card{
@@ -435,7 +428,7 @@
       margin-bottom:4px;
       font-size:16px;
     }
-    
+
     /* leadership section */
     .leadership-grid{display:grid;gap:16px}
     .leadership-item{
@@ -451,7 +444,7 @@
       font-size:14px;
       margin-bottom:8px;
     }
-    
+
     /* Google Scholar icon */
     .scholar-icon{
       width:18px;
@@ -512,7 +505,6 @@
       .timeline .item{padding:12px}
     }
 
-    /* brand icons */
     .iconify{display:inline-block;width:18px;height:18px}
     .li-icon{
       background:#0A66C2;
@@ -570,7 +562,6 @@
             Doctoral Researcher in Computer Science at Frontier AI Research Centre at <a href="https://www.mq.edu.au/research" target="_blank"><strong>Macquarie University</strong></a>.
           </p>
 
-
           <p>My research is at the intersection of <strong>humanoid robots</strong>, <strong>multimodal AI</strong>, and <strong>mental-health diagnostics</strong>. I design simulation-first pipelines, trust-calibrated interaction policies, and privacy-preserving <em>avatarization</em> to make early assessment more reliable and equitable. I am supervised by Distinguished Chair Professor <a href="https://scholar.google.com.au/citations?user=cDs3DM8AAAAJ&hl=en" target="_blank">Longbing Cao</a> and Professor <a href="https://scholar.google.com.au/citations?user=p0BxAfAAAAAJ&hl=en" target="_blank">Deborah Richards</a>, collaborating across computing, psychology, and clinical partners.</p>
 
           <div class="kvs" aria-label="Quick links">
@@ -600,162 +591,141 @@
           </div>
         </div>
 
-        <!-- Globe, right column, transparent background -->
+        <!-- Globe -->
         <div id="globeWrap">
-        <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
+          <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=tc77m-zM-ZfpGviqAbtQdtyM2cotGUbr-hltW1MbFgA"></script>
         </div>
       </div>
     </section>
 
     <!-- Research Focus -->
-<section id="research" class="section">
-  <h2>Research Focus</h2>
+    <section id="research" class="section">
+      <h2>Research Focus</h2>
 
-  <div class="research-grid">
-    <!-- 1. Humanoid-AI Diagnostic Agents -->
-    <article class="card-focus">
-      <button class="card-media" data-full="ameca.png" aria-label="Open image: Ameca">
-        <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
-        <span class="media-gradient"></span>
-      </button>
-      <div class="card-body">
-        <h3>Humanoid-AI Diagnostic Agents</h3>
-        <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
+      <div class="research-grid">
+        <!-- 1. Humanoid-AI Diagnostic Agents -->
+        <article class="card-focus">
+          <button class="card-media" data-full="ameca.png" aria-label="Open image: Ameca">
+            <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
+            <span class="media-gradient"></span>
+          </button>
+          <div class="card-body">
+            <h3>Humanoid-AI Diagnostic Agents</h3>
+            <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
+          </div>
+        </article>
+
+        <!-- 2. Simulation-First Training -->
+        <article class="card-focus">
+          <button class="card-media" data-full="Scene%20(1).png" aria-label="Open image: Simulation frame">
+            <img src="Scene%20(1).png" alt="MetaHuman simulation scene from SimClinician">
+            <span class="media-gradient"></span>
+          </button>
+          <div class="card-body">
+            <h3>Simulation-First Training</h3>
+            <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
+          </div>
+        </article>
+
+        <!-- 3. Privacy-Preserving Avatarization -->
+        <article class="card-focus">
+          <button class="card-media" data-full="facegaze_top_female%20(1).png" aria-label="Open image: Avatarized face & gaze">
+            <img src="facegaze_top_female%20(1).png" alt="Animated 3D avatar with AU heatmap for privacy-preserving replay">
+            <span class="media-gradient"></span>
+          </button>
+          <div class="card-body">
+            <h3>Privacy-Preserving Avatarization</h3>
+            <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
+          </div>
+        </article>
+
+        <!-- 4. Decision Support & Triage -->
+        <article class="card-focus">
+          <button class="card-media" data-full="20250901_165725.jpg" aria-label="Open image: Decision support">
+            <img src="20250901_165725.jpg" alt="Robot and screen-based triage tools used with clinicians">
+            <span class="media-gradient"></span>
+          </button>
+          <div class="card-body">
+            <h3>Decision Support &amp; Triage</h3>
+            <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
+          </div>
+        </article>
       </div>
-    </article>
 
-    <!-- 2. Simulation-First Training -->
-    <article class="card-focus">
-      <button class="card-media" data-full="Scene%20(1).png" aria-label="Open image: Simulation frame">
-        <img src="Scene%20(1).png" alt="MetaHuman simulation scene from SimClinician">
-        <span class="media-gradient"></span>
-        <span class="media-chips">
-          <span class="badge">Unreal Engine 5</span>
-          <span class="badge">MetaHuman</span>
-          <span class="badge">Counterfactual Replay</span>
-        </span>
-      </button>
-      <div class="card-body">
-        <h3>Simulation-First Training</h3>
-        <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
-      </div>
-    </article>
-
-    <!-- 3. Privacy-Preserving Avatarization -->
-    <article class="card-focus">
-      <button class="card-media" data-full="facegaze_top_female%20(1).png" aria-label="Open image: Avatarized face & gaze">
-        <img src="facegaze_top_female%20(1).png" alt="Animated 3D avatar with AU heatmap for privacy-preserving replay">
-        <span class="media-gradient"></span>
-        <span class="media-chips">
-          <span class="badge">3D Avatars</span>
-          <span class="badge">Longitudinal Analysis</span>
-          <span class="badge">Ethics by Design</span>
-        </span>
-      </button>
-      <div class="card-body">
-        <h3>Privacy-Preserving Avatarization</h3>
-        <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
-      </div>
-    </article>
-
-    <!-- 4. Decision Support & Triage -->
-    <article class="card-focus">
-      <button class="card-media" data-full="20250901_165725.jpg" aria-label="Open image: Decision support">
-        <img src="20250901_165725.jpg" alt="Robot and screen-based triage tools used with clinicians">
-        <span class="media-gradient"></span>
-        <span class="media-chips">
-          <span class="badge">E-DAIC / DAIC-WOZ</span>
-          <span class="badge">RL Probing</span>
-          <span class="badge">Explainability</span>
-        </span>
-      </button>
-      <div class="card-body">
-        <h3>Decision Support &amp; Triage</h3>
-        <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
-      </div>
-    </article>
-  </div>
-
-  <!-- Lightbox (needed by your JS at the bottom) -->
-  <dialog id="lightbox" class="lightbox">
-    <img alt="" id="lightbox-img">
-    <button id="lightbox-close" aria-label="Close">×</button>
-  </dialog>
-</section>
-
+      <!-- Lightbox -->
+      <dialog id="lightbox" class="lightbox">
+        <img alt="" id="lightbox-img">
+        <button id="lightbox-close" aria-label="Close">×</button>
+      </dialog>
+    </section>
 
     <!-- Publications -->
-  <section id="publications" class="section">
-  <h2>Publications</h2>
-  <div class="list">
+    <section id="publications" class="section">
+      <h2>Publications</h2>
+      <div class="list">
 
-    <!-- arXiv paper + project -->
-    
-<div class="card pub" style="grid-template-columns:minmax(160px, 200px) 1fr;">
-  <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
-    <img src="Diagram%20(5).png" alt="Architecture diagram for Tri-Modal Severity Fused Diagnosis" loading="lazy" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
-  </a>
-  <div>
-    <h3 style="margin-top:0">
-      <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
-        Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders
-      </a>
-    </h3>
-    <div class="meta">Filippo Cenacchi, Deborah Richards, Longbing Cao.</div>
-    <div class="meta">arXiv:2510.20239.</div>
-    <div class="kvs">
-      <a class="badge" href="https://arxiv.org/abs/2510.20239" target="_blank" rel="noopener">arXiv</a>
-      <a class="badge" href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">Project</a>
-    </div>
-  </div>
-</div>
-
-
-<!-- JSIS journal paper (Fig. 1 only) -->
-<div class="card pub">
-  <a class="thumb" href="fig1.png" target="_blank" rel="noopener">
-    <img src="fig1.png" loading="lazy">
-  </a>
-  <div>
-    <h3 style="margin-top:0">
-       <a href="https://www.sciencedirect.com/science/article/pii/S0963868725000526?via%3Dihub" target="_blank" rel="noopener">
-      Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR
-      </a>
-    </h3>
-    <div class="meta">
-      Sarah Bankins, Paul Formosa, Tom Montefiore, Deborah Richards, Filippo Cenacchi, Mitchell McEwan
-    </div>
-    <div class="meta">
-    Journal of Strategic Information Systems (JSIS)
-</div>
-    <div class="kvs">
-      <span class="badge">Journal</span>
-    </div>
-  </div>
-</div>
-
-
-    <!-- Springer chapter with thumbnail -->
-    <div class="card pub" style="grid-template-columns:minmax(140px, 180px) 1fr;">
-      <a href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">
-        <img src="lcad_ncad.png" alt="Diagram from the Springer chapter on low-code/no-code adoption" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
-      </a>
-      <div>
-        <h3 style="margin-top:0">
-          <a href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">
-            Understanding Low-Code/No-Code Adoption in Software Startups
+        <!-- arXiv paper + project -->
+        <div class="card pub" style="grid-template-columns:minmax(160px, 200px) 1fr;">
+          <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
+            <img src="Diagram%20(5).png" alt="Architecture diagram for Tri-Modal Severity Fused Diagnosis" loading="lazy" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
           </a>
-        </h3>
-        <div class="meta">Usman Rafiq, Filippo Cenacchi, Xiaofeng Wang. </div>
-        <div class="meta">Product-Focused Software Process Improvement (PROFES).</div>
-        <div class="kvs">
-          <a class="badge" href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">Springer Link</a>
+          <div>
+            <h3 style="margin-top:0">
+              <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
+                Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders
+              </a>
+            </h3>
+            <div class="meta">Filippo Cenacchi, Deborah Richards, Longbing Cao.</div>
+            <div class="meta">arXiv:2510.20239.</div>
+            <div class="kvs">
+              <a class="badge" href="https://arxiv.org/abs/2510.20239" target="_blank" rel="noopener">arXiv</a>
+              <a class="badge" href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">Project</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-  </div>
-</section>
+        <!-- JSIS journal paper -->
+        <div class="card pub">
+          <a class="thumb" href="fig1.png" target="_blank" rel="noopener">
+            <img src="fig1.png" loading="lazy" alt="">
+          </a>
+          <div>
+            <h3 style="margin-top:0">
+              <a href="https://www.sciencedirect.com/science/article/pii/S0963868725000526?via%3Dihub" target="_blank" rel="noopener">
+                Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR
+              </a>
+            </h3>
+            <div class="meta">
+              Sarah Bankins, Paul Formosa, Tom Montefiore, Deborah Richards, Filippo Cenacchi, Mitchell McEwan
+            </div>
+            <div class="meta">Journal of Strategic Information Systems (JSIS)</div>
+            <div class="kvs">
+              <span class="badge">Journal</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Springer chapter -->
+        <div class="card pub" style="grid-template-columns:minmax(140px, 180px) 1fr;">
+          <a href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">
+            <img src="lcad_ncad.png" alt="Diagram from the Springer chapter on low-code/no-code adoption" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+          </a>
+          <div>
+            <h3 style="margin-top:0">
+              <a href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">
+                Understanding Low-Code/No-Code Adoption in Software Startups
+              </a>
+            </h3>
+            <div class="meta">Usman Rafiq, Filippo Cenacchi, Xiaofeng Wang.</div>
+            <div class="meta">Product-Focused Software Process Improvement (PROFES).</div>
+            <div class="kvs">
+              <a class="badge" href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">Springer Link</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- Events (carousel) -->
     <section id="events" class="section">
@@ -765,7 +735,7 @@
           <div class="event-item">
             <img src="3MT SoC.jpg" alt="Winner - School of Computing 3MT">
             <div>
-              <h3 style="margin:0 0 6px">Winner of the School of Computing 3MT (2nd Place & People's choice)</h3>
+              <h3 style="margin:0 0 6px">Winner of the School of Computing 3MT (2nd Place &amp; People's choice)</h3>
               <div class="meta">Macquarie University · 2025</div>
               <p>Grant of 300$ for research funding.</p>
             </div>
@@ -773,7 +743,7 @@
           <div class="event-item">
             <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
             <div>
-              <h3 style="margin:0 0 6px">Winner of the Faculty of Science & Engineering 3MT (2nd Runner Upper)</h3>
+              <h3 style="margin:0 0 6px">Winner of the Faculty of Science &amp; Engineering 3MT (2nd Runner Upper)</h3>
               <div class="meta">Macquarie University · 2025</div>
               <p>Grant of 250$ for research funding.</p>
             </div>
@@ -786,18 +756,29 @@
               <p>Grant of 350$ for research funding.</p>
             </div>
           </div>
+
+          <!-- NEW PERCC EVENT -->
+          <div class="event-item">
+            <img src="percc.png" alt="Recognition from the Performance and Expertise Research Centre">
+            <div>
+              <h3 style="margin:0 0 6px">Recognition from the Performance and Expertise Research Centre</h3>
+              <div class="meta">Macquarie University · 2025</div>
+              <p>Recognition for outstanding engagement and research potential within the Performance and Expertise Research Centre.</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
     <!-- Prizes (list) -->
     <section id="awards" class="section">
-      <h2>Prizes & Grants</h2>
+      <h2>Prizes &amp; Grants</h2>
       <div class="prize-list">
         <div class="card prize-card">
           <img src="3MT SoC.jpg" alt="Winner - School of Computing 3MT">
           <div>
-            <h3 style="margin:0 0 6px">Winner of the School of Computing 3MT (2nd Place & People's choice)</h3>
+            <h3 style="margin:0 0 6px">Winner of the School of Computing 3MT (2nd Place &amp; People's choice)</h3>
             <div class="meta">Macquarie University · 2025</div>
             <p>Grant of 300$ for research funding.</p>
           </div>
@@ -805,7 +786,7 @@
         <div class="card prize-card">
           <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
           <div>
-            <h3 style="margin:0 0 6px">Winner of the Faculty of Science & Engineering 3MT (2nd Runner Upper)</h3>
+            <h3 style="margin:0 0 6px">Winner of the Faculty of Science &amp; Engineering 3MT (2nd Runner Upper)</h3>
             <div class="meta">Macquarie University · 2025</div>
             <p>Grant of 250$ for research funding.</p>
           </div>
@@ -823,7 +804,7 @@
 
     <!-- Leadership & Supervision -->
     <section id="leadership" class="section">
-      <h2>Leadership & Supervision</h2>
+      <h2>Leadership &amp; Supervision</h2>
       <div class="card leadership-grid">
         <div class="leadership-item">
           <h3>Graduate Research Student Representative</h3>
@@ -937,69 +918,66 @@
             <strong>Project Manager</strong>
             <div>Würth Phoenix (Bolzano)</div>
             <div class="meta">Low-code platforms; Dynamics 365 solutions</div>
-         </div>
+          </div>
         </div>
         <div class="item">
           <div class="date">Mar 2020 - Jun 2021</div>
           <div class="content">
             <strong>VR Developer / Project Manager</strong>
             <div>Smart VR Lab (Amsterdam)</div>
-            <div class="meta">VR content & platform APIs; CRM rollout; medical training product</div>
+            <div class="meta">VR content &amp; platform APIs; CRM rollout; medical training product</div>
           </div>
-          </div>
-        </div>
-     </section>
-
-<!-- Licenses & Certifications -->
-<section id="certs" class="section">
-  <h2>Licenses & Certifications</h2>
-
-  <div class="card"> <!-- container restored -->
-    <article class="cert-card">
-      <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
-        <img src="logo.png" alt="IJCAI — International Joint Conferences on Artificial Intelligence Organization logo">
-      </a>
-
-      <!-- text block shifted a touch to the right -->
-      <div class="cert-body">
-        <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
-        <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025</div>
-        <div class="kvs" style="margin-top:8px">
-          <a class="badge" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener">View certificate (PDF)</a>
         </div>
       </div>
-    </article>
-  </div>
-</section>
+    </section>
 
+    <!-- Licenses & Certifications -->
+    <section id="certs" class="section">
+      <h2>Licenses &amp; Certifications</h2>
+      <div class="card">
+        <article class="cert-card">
+          <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
+            <img src="logo.png" alt="IJCAI — International Joint Conferences on Artificial Intelligence Organization logo">
+          </a>
+          <div class="cert-body">
+            <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
+            <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025</div>
+            <div class="kvs" style="margin-top:8px">
+              <a class="badge" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener">View certificate (PDF)</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
+    <!-- CV -->
+    <section id="cv" class="section">
+      <h2>Curriculum Vitae</h2>
+      <div class="card">
+        <iframe src="cv_filippo_cenacchi.pdf#view=FitH" width="100%" height="920" style="border:1px solid var(--border);border-radius:14px"></iframe>
+        <p class="meta">If the PDF does not display, <a href="cv_filippo_cenacchi.pdf" target="_blank" rel="noopener">open it in a new tab</a>.</p>
+      </div>
+    </section>
 
-<!-- CV (inline PDF viewer) -->
-<section id="cv" class="section">
-  <h2>Curriculum Vitae</h2>
-  <div class="card">
-    <iframe src="cv_filippo_cenacchi.pdf#view=FitH" width="100%" height="920" style="border:1px solid var(--border);border-radius:14px"></iframe>
-    <p class="meta">If the PDF does not display, <a href="cv_filippo_cenacchi.pdf" target="_blank" rel="noopener">open it in a new tab</a>.</p>
-  </div>
-</section>
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <div class="card">
+        <p><strong>Email:</strong> <a href="mailto:filippo.cenacchi@hdr.mq.edu.au">filippo.cenacchi@hdr.mq.edu.au</a></p>
+        <p><strong>Links:</strong> <a href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/cenacchi2000" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener">LinkedIn</a></p>
+        <blockquote>
+          I welcome collaboration on simulation-based training for humanoid diagnostic agents, 3d human avatarization and clinician-centered AI diagnosis.
+        </blockquote>
+      </div>
+    </section>
+  </main>
 
-<!-- Contact -->
-<section id="contact" class="section">
-  <h2>Contact</h2>
-  <div class="card">
-    <p><strong>Email:</strong> <a href="mailto:filippo.cenacchi@hdr.mq.edu.au">filippo.cenacchi@hdr.mq.edu.au</a></p>
-    <p><strong>Links:</strong> <a href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://github.com/cenacchi2000" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener">LinkedIn</a></p>
-    <blockquote>
-      I welcome collaboration on simulation-based training for humanoid diagnostic agents, 3d human avatarization and clinician-centered AI diagnosis.
-    </blockquote>
-  </div>
-</section>
-    </main>
   <footer class="footer">
     <div class="container">
       © <span id="year"></span> Filippo Cenacchi • Last updated <span id="lu"></span>
     </div>
   </footer>
+
   <script>
     // year + last updated
     year.textContent = new Date().getFullYear();
@@ -1021,31 +999,31 @@
     })();
 
     // header scrollspy + progress
-const links = [...document.querySelectorAll('.nav a.link')];
-const sections = links.map(a => document.querySelector(a.getAttribute('href')));
-const prog = document.getElementById('progress');
-const spy = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      links.forEach(l=>l.classList.remove('active'));
-      const id = '#'+e.target.id;
-      const curr = links.find(l=>l.getAttribute('href')===id);
-      if(curr) curr.classList.add('active');
-    }
-  });
-},{rootMargin:'-40% 0px -55% 0px',threshold:[0,1]});
-sections.forEach(s=>s && spy.observe(s));
-window.addEventListener('scroll',()=>{
-  const h = document.documentElement;
-  const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight)*100;
-  prog.style.background = `linear-gradient(90deg,var(--brand) ${pct}%, transparent ${pct}%)`;
-});
+    const links = [...document.querySelectorAll('.nav a.link')];
+    const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+    const prog = document.getElementById('progress');
+    const spy = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          links.forEach(l=>l.classList.remove('active'));
+          const id = '#'+e.target.id;
+          const curr = links.find(l=>l.getAttribute('href')===id);
+          if(curr) curr.classList.add('active');
+        }
+      });
+    },{rootMargin:'-40% 0px -55% 0px',threshold:[0,1]});
+    sections.forEach(s=>s && spy.observe(s));
+    window.addEventListener('scroll',()=>{
+      const h = document.documentElement;
+      const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight)*100;
+      prog.style.background = `linear-gradient(90deg,var(--brand) ${pct}%, transparent ${pct}%)`;
+    });
 
     document.querySelectorAll('.card, .card-focus, .timeline .item').forEach(el=>el.classList.add('reveal'));
-const rev = new IntersectionObserver(es=>{
-  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); rev.unobserve(e.target); }});
-},{threshold:0.12});
-document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
+    const rev = new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); rev.unobserve(e.target); }});
+    },{threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
 
     // Sydney time + weather (Open-Meteo)
     async function loadSydney(){
@@ -1075,6 +1053,7 @@ document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
     }
     loadSydney(); setInterval(loadSydney, 60*1000);
   </script>
+
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
@@ -1095,90 +1074,77 @@ document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
   }
   </script>
 
-<!-- PDF.js (for certificate thumbnails) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-(function(){
-  const PDFJS = window['pdfjs-dist/build/pdf'];
-  if(!PDFJS) return;
-  PDFJS.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js";
-
-  async function renderInto(canvas){
-    const url = canvas.dataset.pdf;
-    if(!url) return;
-
-    // Guard: only render when we have a real width
-    const cssWidth = Math.max( Math.floor(canvas.getBoundingClientRect().width), 1 );
-    const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap for perf
-    const targetPx = cssWidth * dpr;
-
-    try{
-      const pdf = await PDFJS.getDocument(url).promise;
-      const page = await pdf.getPage(1);
-
-      const vp1 = page.getViewport({ scale: 1 });
-      const scale = targetPx / vp1.width;
-      const vp   = page.getViewport({ scale });
-
-      // Set backing store size (for crispness), CSS size follows from rule
-      canvas.width  = Math.round(vp.width);
-      canvas.height = Math.round(vp.height);
-
-      const ctx = canvas.getContext('2d', { alpha:false });
-      const task = page.render({ canvasContext: ctx, viewport: vp, background:'#ffffff' });
-      await task.promise;
-
-      // Optional: once drawn, fix the element's CSS height to avoid relayout jitter
-      canvas.style.height = (canvas.height / dpr) + 'px';
-    }catch(err){
-      // Soft fallback
-      const link = document.createElement('a');
-      link.href = url; link.target = "_blank"; link.rel = "noopener";
-      link.className = "badge";
-      link.textContent = "Open certificate (PDF)";
-      canvas.replaceWith(link);
-      console.warn('PDF thumb render failed:', err);
-    }
-  }
-
-  function observeAndRender(canvas){
-    // Render when width becomes non-zero, and re-render on size changes
-    const ro = new ResizeObserver((entries)=>{
-      for(const entry of entries){
-        const w = Math.floor(entry.contentRect.width);
-        if(w > 1){
-          // Debounce to avoid rapid re-renders during layout
-          clearTimeout(canvas._pdfTO);
-          canvas._pdfTO = setTimeout(()=>renderInto(canvas), 80);
-        }
-      }
-    });
-    ro.observe(canvas);
-    // kickoff in case it's already laid out
-    requestAnimationFrame(()=>renderInto(canvas));
-  }
-
-  document.querySelectorAll('canvas.pdf-thumb').forEach(observeAndRender);
-})();
-</script>
-
-  
+  <!-- PDF.js (for certificate thumbnails) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-  const lb = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  const closeBtn = document.getElementById('lightbox-close');
+  (function(){
+    const PDFJS = window['pdfjs-dist/build/pdf'];
+    if(!PDFJS) return;
+    PDFJS.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js";
 
-  document.querySelectorAll('.card-media').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      img.src = el.getAttribute('data-full');
-      img.alt = el.querySelector('img').alt || '';
-      lb.showModal();
+    async function renderInto(canvas){
+      const url = canvas.dataset.pdf;
+      if(!url) return;
+      const cssWidth = Math.max( Math.floor(canvas.getBoundingClientRect().width), 1 );
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const targetPx = cssWidth * dpr;
+
+      try{
+        const pdf = await PDFJS.getDocument(url).promise;
+        const page = await pdf.getPage(1);
+
+        const vp1 = page.getViewport({ scale: 1 });
+        const scale = targetPx / vp1.width;
+        const vp   = page.getViewport({ scale });
+
+        canvas.width  = Math.round(vp.width);
+        canvas.height = Math.round(vp.height);
+
+        const ctx = canvas.getContext('2d', { alpha:false });
+        const task = page.render({ canvasContext: ctx, viewport: vp, background:'#ffffff' });
+        await task.promise;
+
+        canvas.style.height = (canvas.height / dpr) + 'px';
+      }catch(err){
+        const link = document.createElement('a');
+        link.href = url; link.target = "_blank"; link.rel = "noopener";
+        link.className = "badge";
+        link.textContent = "Open certificate (PDF)";
+        canvas.replaceWith(link);
+        console.warn('PDF thumb render failed:', err);
+      }
+    }
+
+    function observeAndRender(canvas){
+      const ro = new ResizeObserver((entries)=>{
+        for(const entry of entries){
+          const w = Math.floor(entry.contentRect.width);
+          if(w > 1){
+            clearTimeout(canvas._pdfTO);
+            canvas._pdfTO = setTimeout(()=>renderInto(canvas), 80);
+          }
+        }
+      });
+      ro.observe(canvas);
+      requestAnimationFrame(()=>renderInto(canvas));
+    }
+
+    document.querySelectorAll('canvas.pdf-thumb').forEach(observeAndRender);
+  })();
+  </script>
+
+  <!-- Lightbox behaviour -->
+  <script>
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('lightbox-close');
+
+    document.querySelectorAll('.card-media').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        img.src = el.getAttribute('data-full');
+        img.alt = el.querySelector('img').alt || '';
+        lb.showModal();
+      });
     });
-  });
-  closeBtn.addEventListener('click', ()=> lb.close());
-  lb.addEventListener('click', (e)=>{ if(e.target === lb) lb.close(); });
-</script>
-
-</body>
-</html>
+    clo
