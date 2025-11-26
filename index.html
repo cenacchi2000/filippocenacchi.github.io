@@ -6,15 +6,16 @@
   <title>Filippo Cenacchi</title>
   <meta name="description" content="Filippo Cenacchi — PhD candidate at Macquarie University. Research: humanoid robots, multimodal AI for mental health diagnostics, VR ethics, simulation-based training.">
 
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
   <!-- Open Graph / Twitter -->
   <meta property="og:title" content="Filippo Cenacchi — Humanoid AI & Mental Health"/>
   <meta property="og:description" content="PhD candidate at Macquarie University. Humanoid robots · Multimodal AI · Mental health diagnostics · VR ethics."/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="headshot.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
   <style>
     :root{
@@ -405,9 +406,12 @@
     }
     .prize-card img{
       width:100%;
+      max-width:100%;
+      height:auto;
       border-radius:14px;
       border:1px solid var(--border);
       box-shadow:var(--shadow);
+      object-fit:contain;
     }
 
     /* timeline improvements */
@@ -462,6 +466,21 @@
       display:inline-block;
       vertical-align:-3px;
     }
+
+    /* BibTeX blocks + cite buttons */
+    .bib-entry{
+      display:none;
+      margin-top:8px;
+      padding:10px 12px;
+      font-size:12px;
+      background:var(--muted);
+      border-radius:8px;
+      border:1px solid var(--border);
+      white-space:pre;
+      overflow:auto;
+    }
+    .bib-entry.show{display:block;}
+    .cite-btn{cursor:pointer;}
 
     @media (max-width: 1024px){
       .hero{
@@ -570,9 +589,11 @@
         <div>
           <h1 class="title">Filippo Cenacchi</h1>
           <p class="subtitle">
-            Doctoral Researcher in Computer Science at the
-            <a href="https://www.mq.edu.au/research/research-centres-groups-and-facilities/centres/frontier-ai-research" target="_blank"><strong>Frontier AI Research Centre</strong></a>,
-            <a href="https://www.mq.edu.au" target="_blank"><strong>Macquarie University</strong></a>.
+            Doctoral Researcher in Computer Science at
+            <a href="https://www.mq.edu.au/research/research-centres-groups-and-facilities/centres/frontier-ai-research-centre" target="_blank">
+              <strong>Frontier AI Research Centre</strong>
+            </a>
+            at <a href="https://www.mq.edu.au/research" target="_blank"><strong>Macquarie University</strong></a>.
           </p>
 
           <p>My research is at the intersection of <strong>humanoid robots</strong>, <strong>multimodal AI</strong>, and <strong>mental-health diagnostics</strong>. I design simulation-first pipelines, trust-calibrated interaction policies, and privacy-preserving <em>avatarization</em> to make early assessment more reliable and equitable. I am supervised by Distinguished Chair Professor <a href="https://scholar.google.com.au/citations?user=cDs3DM8AAAAJ&hl=en" target="_blank">Longbing Cao</a> and Professor <a href="https://scholar.google.com.au/citations?user=p0BxAfAAAAAJ&hl=en" target="_blank">Deborah Richards</a>, collaborating across computing, psychology, and clinical partners.</p>
@@ -693,9 +714,40 @@
   <h2>Publications</h2>
   <div class="list">
 
+    <!-- NEW: Passive Dementia Screening paper -->
+    <div class="card pub">
+      <a href="https://arxiv.org/abs/2511.13802" target="_blank" rel="noopener">
+        <img src="dementia_microdynamics.png"
+             alt="Architecture diagram for Passive Dementia Screening via Facial Temporal Micro-Dynamics"
+             loading="lazy"
+             style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+      </a>
+      <div>
+        <h3 style="margin-top:0">
+          <a href="https://arxiv.org/abs/2511.13802" target="_blank" rel="noopener">
+            Passive Dementia Screening via Facial Temporal Micro-Dynamics Analysis of In-the-Wild Talking-Head Video
+          </a>
+        </h3>
+        <div class="meta">Filippo Cenacchi, Longbing Cao, Mitchell McEwan, Deborah Richards.</div>
+        <div class="meta">arXiv:2511.13802.</div>
+        <div class="kvs">
+          <a class="badge" href="https://arxiv.org/abs/2511.13802" target="_blank" rel="noopener">arXiv</a>
+          <button type="button" class="badge cite-btn" data-target="bib-dementia">Cite</button>
+        </div>
+        <pre id="bib-dementia" class="bib-entry">@misc{cao2025passivedementiascreeningfacial,
+  title         = {Passive Dementia Screening via Facial Temporal Micro-Dynamics Analysis of In-the-Wild Talking-Head Video},
+  author        = {Filippo Cenacchi and Longbing Cao and Mitchell McEwan and Deborah Richards},
+  year          = {2025},
+  eprint        = {2511.13802},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2511.13802}
+}</pre>
+      </div>
+    </div>
+
     <!-- arXiv paper + project -->
-    
-<div class="card pub" style="grid-template-columns:minmax(160px, 200px) 1fr;">
+<div class="card pub">
   <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
     <img src="Diagram%20(5).png" alt="Architecture diagram for Tri-Modal Severity Fused Diagnosis" loading="lazy" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
   </a>
@@ -710,7 +762,17 @@
     <div class="kvs">
       <a class="badge" href="https://arxiv.org/abs/2510.20239" target="_blank" rel="noopener">arXiv</a>
       <a class="badge" href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">Project</a>
+      <button type="button" class="badge cite-btn" data-target="bib-trimodal">Cite</button>
     </div>
+    <pre id="bib-trimodal" class="bib-entry">@misc{cenacchi2025trimodalseverityfuseddiagnosis,
+  title         = {Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders},
+  author        = {Filippo Cenacchi and Deborah Richards and Longbing Cao},
+  year          = {2025},
+  eprint        = {2510.20239},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2510.20239}
+}</pre>
   </div>
 </div>
 
@@ -718,7 +780,7 @@
 <!-- JSIS journal paper (Fig. 1 only) -->
 <div class="card pub">
   <a class="thumb" href="fig1.png" target="_blank" rel="noopener">
-    <img src="fig1.png" loading="lazy">
+    <img src="fig1.png" loading="lazy" alt="Figure 1 from the JSIS article">
   </a>
   <div>
     <h3 style="margin-top:0">
@@ -727,20 +789,28 @@
       </a>
     </h3>
     <div class="meta">
-      Sarah Bankins, Paul Formosa, Tom Montefiore, Deborah Richards, Filippo Cenacchi, Mitchell McEwan
+      Sarah Bankins, Paul Formosa, Tom Montefiore, Deborah Richards, Filippo Cenacchi, Mitchell McEwan.
     </div>
     <div class="meta">
-    Journal of Strategic Information Systems (JSIS)
-</div>
+      Journal of Strategic Information Systems (JSIS), 2025.
+    </div>
     <div class="kvs">
       <span class="badge">Journal</span>
+      <button type="button" class="badge cite-btn" data-target="bib-jsis">Cite</button>
     </div>
+    <pre id="bib-jsis" class="bib-entry">@article{bankins2025virtual,
+  title   = {Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR},
+  author  = {Bankins, Sarah and Formosa, Paul and Montefiore, Tom and Richards, Deborah and Cenacchi, Filippo and McEwan, Mitchell},
+  journal = {Journal of Strategic Information Systems},
+  year    = {2025},
+  note    = {In press}
+}</pre>
   </div>
 </div>
 
 
     <!-- Springer chapter with thumbnail -->
-    <div class="card pub" style="grid-template-columns:minmax(140px, 180px) 1fr;">
+    <div class="card pub">
       <a href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">
         <img src="lcad_ncad.png" alt="Diagram from the Springer chapter on low-code/no-code adoption" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
       </a>
@@ -750,11 +820,23 @@
             Understanding Low-Code/No-Code Adoption in Software Startups
           </a>
         </h3>
-        <div class="meta">Usman Rafiq, Filippo Cenacchi, Xiaofeng Wang. </div>
-        <div class="meta">Product-Focused Software Process Improvement (PROFES).</div>
+        <div class="meta">Usman Rafiq, Filippo Cenacchi, Xiaofeng Wang.</div>
+        <div class="meta">Product-Focused Software Process Improvement (PROFES 2022), Lecture Notes in Computer Science.</div>
         <div class="kvs">
           <a class="badge" href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">Springer Link</a>
+          <button type="button" class="badge cite-btn" data-target="bib-springer">Cite</button>
         </div>
+        <pre id="bib-springer" class="bib-entry">@inproceedings{rafiq2022understanding,
+  title     = {Understanding Low-Code or No-Code Adoption in Software Startups: Preliminary Results from a Comparative Case Study},
+  author    = {Rafiq, Usman and Cenacchi, Filippo and Wang, Xiaofeng},
+  booktitle = {Product-Focused Software Process Improvement (PROFES 2022)},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {13709},
+  publisher = {Springer},
+  address   = {Cham},
+  year      = {2022},
+  doi       = {10.1007/978-3-031-21388-5_27}
+}</pre>
       </div>
     </div>
 
@@ -820,6 +902,16 @@
             <h3 style="margin:0 0 6px">Finalist of the Macquarie University 3MT (2nd Runner Upper)</h3>
             <div class="meta">Macquarie University · 2025</div>
             <p>Grant of 350$ for research funding.</p>
+          </div>
+        </div>
+
+        <!-- Re-added PERC image with controlled width -->
+        <div class="card prize-card">
+          <img src="perc.png" alt="PERC-related recognition (update title as needed)">
+          <div>
+            <h3 style="margin:0 0 6px">PERC recognition</h3>
+            <div class="meta">Details & year — update text</div>
+            <p>Short description of the PERC-related prize or grant. Replace this text with the exact title and description you prefer.</p>
           </div>
         </div>
       </div>
@@ -958,13 +1050,12 @@
 <section id="certs" class="section">
   <h2>Licenses & Certifications</h2>
 
-  <div class="card"> <!-- container restored -->
+  <div class="card">
     <article class="cert-card">
       <a class="thumb" href="ijcai_reviewer_2025.pdf" target="_blank" rel="noopener" title="Open certificate (PDF)">
         <img src="logo.png" alt="IJCAI — International Joint Conferences on Artificial Intelligence Organization logo">
       </a>
 
-      <!-- text block shifted a touch to the right -->
       <div class="cert-body">
         <h3>Reviewer — IJCAI 2025 (AI for Technology Special Track)</h3>
         <div class="meta">IJCAI — International Joint Conferences on Artificial Intelligence · Issued Sep 2025</div>
@@ -1078,6 +1169,15 @@ document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
       }catch(e){/* silent */}
     }
     loadSydney(); setInterval(loadSydney, 60*1000);
+
+    // Cite buttons toggle BibTeX blocks
+    document.querySelectorAll('.cite-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.dataset.target;
+        const block = document.getElementById(id);
+        if(block){ block.classList.toggle('show'); }
+      });
+    });
   </script>
   <!-- JSON-LD -->
   <script type="application/ld+json">
