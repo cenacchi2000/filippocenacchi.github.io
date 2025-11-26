@@ -1,4 +1,4 @@
-<!doctype html>
+in the rplacement of the publication section you are missing all the bibs and its link to cite! <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -439,16 +439,13 @@
       gap:18px;
       align-items:center;
     }
-  .event-item img{
-  width:100%;
-  max-height:260px;          /* keeps event images at a reasonable height */
-  object-fit:cover;          /* crops nicely while filling the box */
-  border-radius:14px;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-}
-
-
+    .event-item img{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    
     /* prizes list */
     .prize-list{display:grid;gap:12px}
     .prize-card{
@@ -622,7 +619,6 @@
         <a class="link" href="#research">Research Focus</a>
         <a class="link" href="#publications">Publications</a>
         <a class="link" href="#events">Recent Events</a>
-        <a class="link" href="#talks">Invited Talks</a>
         <a class="link" href="#awards">Prizes & Grants</a>
         <a class="link" href="#leadership">Leadership</a>
         <a class="link hide-sm" href="#education">Education</a>
@@ -763,30 +759,13 @@
 </section>
 
 
- <section id="publications" class="section">
+    <!-- Publications -->
+  <section id="publications" class="section">
   <h2>Publications</h2>
-
-  <!-- Filter bar -->
-  <div class="pub-filters" id="pubFilters" aria-label="Filter publications by year and topic">
-    <button class="pub-filter-btn active" data-mode="selected">Show by Selected</button>
-    <button class="pub-filter-btn" data-mode="all">Show by All</button>
-
-    <span class="pub-filter-label">Year:</span>
-    <button class="pub-filter-btn" data-year="2026">2026</button>
-    <button class="pub-filter-btn" data-year="2025">2025</button>
-    <button class="pub-filter-btn" data-year="2022">2022</button>
-    
-
-    <span class="pub-filter-label">Topic:</span>
-    <button class="pub-filter-btn" data-topic="humanoid">Humanoid &amp; Mental Health</button>
-    <button class="pub-filter-btn" data-topic="vr-ethics">VR &amp; Ethics</button>
-    <button class="pub-filter-btn" data-topic="hci-startups">HCI &amp; Startups</button>
-  </div>
-
   <div class="list">
 
-    <!-- Passive Dementia Screening paper -->
-    <div class="card pub" data-year="2025" data-topics="humanoid,mental-health,dementia">
+    <!-- NEW: Passive Dementia Screening paper -->
+    <div class="card pub">
       <a href="https://arxiv.org/abs/2511.13802" target="_blank" rel="noopener">
         <img src="passive.png"
              alt="Architecture diagram for Passive Dementia Screening via Facial Temporal Micro-Dynamics"
@@ -817,79 +796,73 @@
       </div>
     </div>
 
-    <!-- Tri-Modal paper -->
-    <div class="card pub" data-year="2025" data-topics="humanoid,mental-health,ptsd">
+    <!-- arXiv paper + project -->
+<div class="card pub">
+  <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
+    <img src="Diagram%20(5).png" alt="Architecture diagram for Tri-Modal Severity Fused Diagnosis" loading="lazy" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+  </a>
+  <div>
+    <h3 style="margin-top:0">
       <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
-        <img src="Diagram%20(5).png"
-             alt="Architecture diagram for Tri-Modal Severity Fused Diagnosis"
-             loading="lazy"
-             style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+        Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders
       </a>
-      <div>
-        <h3 style="margin-top:0">
-          <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
-            Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders
-          </a>
-        </h3>
-        <div class="meta">Filippo Cenacchi, Deborah Richards, Longbing Cao.</div>
-        <div class="meta">arXiv:2510.20239.</div>
-        <div class="kvs">
-          <a class="badge" href="https://arxiv.org/abs/2510.20239" target="_blank" rel="noopener">arXiv</a>
-          <a class="badge" href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">Project</a>
-          <button type="button" class="badge cite-btn" data-target="bib-trimodal">Cite</button>
-        </div>
-        <pre id="bib-trimodal" class="bib-entry">@misc{cenacchi2025trimodalseverityfuseddiagnosis,
+    </h3>
+    <div class="meta">Filippo Cenacchi, Deborah Richards, Longbing Cao.</div>
+    <div class="meta">arXiv:2510.20239.</div>
+    <div class="kvs">
+      <a class="badge" href="https://arxiv.org/abs/2510.20239" target="_blank" rel="noopener">arXiv</a>
+      <a class="badge" href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">Project</a>
+      <button type="button" class="badge cite-btn" data-target="bib-trimodal">Cite</button>
+    </div>
+    <pre id="bib-trimodal" class="bib-entry">@misc{cenacchi2025trimodalseverityfuseddiagnosis,
   title         = {Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders},
-  author        = {Filippo Cenacchi, Deborah Richards, Longbing Cao},
+  author        = {Filippo Cenacchi,Deborah Richards, Longbing Cao},
   year          = {2025},
   eprint        = {2510.20239},
   archivePrefix = {arXiv},
   primaryClass  = {cs.CL},
   url           = {https://arxiv.org/abs/2510.20239}
 }</pre>
-      </div>
-    </div>
-
-    <!-- JSIS VR ethics paper -->
-    <div class="card pub" data-year="2025" data-topics="vr-ethics">
-      <a class="thumb" href="fig1.png" target="_blank" rel="noopener">
-        <img src="fig1.png" loading="lazy" alt="Figure 1 from the JSIS article">
-      </a>
-      <div>
-        <h3 style="margin-top:0">
-          <a href="https://www.sciencedirect.com/science/article/pii/S0963868725000526?via%3Dihub" target="_blank" rel="noopener">
-            Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR
-          </a>
-        </h3>
-        <div class="meta">
-          Sarah Bankins, Paul Formosa, Tom Montefiore, Deborah Richards, Filippo Cenacchi, Mitchell McEwan.
-        </div>
-        <div class="meta">Journal of Strategic Information Systems (JSIS), 2025.</div>
-        <div class="kvs">
-  <a class="badge"
-     href="https://www.sciencedirect.com/science/article/pii/S0963868725000526?via%3Dihub"
-     target="_blank" rel="noopener">
-    Journal
-  </a>
-  <button type="button" class="badge cite-btn" data-target="bib-jsis">Cite</button>
+  </div>
 </div>
 
-        <pre id="bib-jsis" class="bib-entry">@article{bankins2025virtual,
+
+<!-- JSIS journal paper (Fig. 1 only) -->
+<div class="card pub">
+  <a class="thumb" href="fig1.png" target="_blank" rel="noopener">
+    <img src="fig1.png" loading="lazy" alt="Figure 1 from the JSIS article">
+  </a>
+  <div>
+    <h3 style="margin-top:0">
+       <a href="https://www.sciencedirect.com/science/article/pii/S0963868725000526?via%3Dihub" target="_blank" rel="noopener">
+      Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR
+      </a>
+    </h3>
+    <div class="meta">
+      Sarah Bankins, Paul Formosa, Tom Montefiore, Deborah Richards, Filippo Cenacchi, Mitchell McEwan.
+    </div>
+    <div class="meta">
+      Journal of Strategic Information Systems (JSIS), 2025.
+    </div>
+    <div class="kvs">
+      <span class="badge">Journal</span>
+      <button type="button" class="badge cite-btn" data-target="bib-jsis">Cite</button>
+    </div>
+    <pre id="bib-jsis" class="bib-entry">@article{bankins2025virtual,
   title   = {Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR},
-  author  = {Bankins, Sarah and Formosa, Paul and Montefiore, Tom and Richards, Deborah and Cenacchi, Filippo and McEwan, Mitchell},
+  author  = {Bankins Sarah, Formosa Paul, Montefiore Tom, Richards Deborah, Cenacchi Filippo, McEwan, Mitchell},
   journal = {Journal of Strategic Information Systems},
   year    = {2025},
   note    = {In press}
 }</pre>
-      </div>
-    </div>
+  </div>
+</div>
 
-    <!-- Springer low-code/no-code chapter -->
-    <div class="card pub" data-year="2022" data-topics="hci-startups,low-code">
+
+    <!-- Springer chapter with thumbnail -->
+    <div class="card pub">
       <a href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">
-        <img src="lcad_ncad.png"
-             alt="Diagram from the Springer chapter on low-code/no-code adoption"
-             style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+        <img src="lcad_ncad.png" alt="Diagram from the Springer chapter on low-code/no-code adoption" style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
       </a>
       <div>
         <h3 style="margin-top:0">
@@ -905,7 +878,7 @@
         </div>
         <pre id="bib-springer" class="bib-entry">@inproceedings{rafiq2022understanding,
   title     = {Understanding Low-Code or No-Code Adoption in Software Startups: Preliminary Results from a Comparative Case Study},
-  author    = {Rafiq, Usman and Cenacchi, Filippo and Wang, Xiaofeng},
+  author    = {Rafiq Usman, Cenacchi Filippo, Wang Xiaofeng},
   booktitle = {Product-Focused Software Process Improvement (PROFES 2022)},
   series    = {Lecture Notes in Computer Science},
   volume    = {13709},
@@ -919,7 +892,6 @@
 
   </div>
 </section>
-
 
     <!-- Events (carousel) -->
     <section id="events" class="section">
@@ -950,39 +922,9 @@
               <p>Grant of 350$ for research funding.</p>
             </div>
           </div>
-                <div class="event-item">
-        <img src="MQ.jpg"
-             alt="Invited talk on humanoid robots and mental-health diagnostics at the Macquarie University School of Computing Industry Networking Event">
-        <div>
-          <h3 style="margin:0 0 6px">Invited Talk • School of Computing Industry Networking Event</h3>
-          <div class="meta">Macquarie University · 21 Nov 2025</div>
-          <p>
-            Theme: <em>Can humanoid robots help diagnose cognitive and affective health?</em>
-            I presented an Ameca-based, avatarised mental-health assessment pipeline that guides natural conversations, analyses speech and facial micro-dynamics, and converts each session into a de-identified 3D avatar to support scalable, consistent diagnosis of mood disorders.
-          </p>
-        </div>
-      </div>
-
         </div>
       </div>
     </section>
-
-    <section id="talks" class="section">
-  <h2>Invited Talks</h2>
-  <div class="card timeline">
-    <div class="item">
-      <div class="date">21 Nov 2025</div>
-      <div class="content">
-        <strong>Can humanoid robots help diagnose cognitive and affective health?</strong>
-        <div>School of Computing Industry Networking Event, School of Computing, Macquarie University</div>
-        <div class="meta">
-          Invited talk presenting an Ameca-based diagnostic system that guides patients through natural conversations while analysing speech tone, rhythm, hesitation, and facial expressions. Sessions are converted into fully anonymised 3D avatars, and a multimodal fusion engine integrates these signals into early-warning profiles for anxiety and depression, aiming for more compassionate, precise, and scalable mental-health care.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 
     <!-- Prizes (list) -->
     <section id="awards" class="section">
@@ -1203,218 +1145,90 @@
       © <span id="year"></span> Filippo Cenacchi • Last updated <span id="lu"></span>
     </div>
   </footer>
- <script>
-  // year + last updated (robust to modern browsers)
-  (function () {
-    const yearEl = document.getElementById('year');
-    const luEl   = document.getElementById('lu');
-    if (yearEl) {
-      yearEl.textContent = new Date().getFullYear();
-    }
-    if (luEl) {
-      luEl.textContent = new Date().toLocaleDateString(
-        undefined,
-        { year: 'numeric', month: 'short', day: 'numeric' }
-      );
-    }
-  })();
+  <script>
+    // year + last updated
+    year.textContent = new Date().getFullYear();
+    lu.textContent = new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
 
-  // Publication filter (year + topic)
-  (function(){
-    const root = document.getElementById('pubFilters');
-    if (!root) return;
-
-    const modeButtons  = root.querySelectorAll('[data-mode]');
-    const yearButtons  = root.querySelectorAll('[data-year]');
-    const topicButtons = root.querySelectorAll('[data-topic]');
-    const cards        = document.querySelectorAll('.card.pub');
-
-    let mode        = 'selected';
-    let activeYear  = null;
-    let activeTopic = null;
-
-    function applyFilters(){
-      cards.forEach(card => {
-        let show = true;
-
-        if (mode === 'selected') {
-          if (activeYear && card.dataset.year !== activeYear) {
-            show = false;
-          }
-          if (activeTopic) {
-            const topics = (card.dataset.topics || '')
-              .split(',')
-              .map(s => s.trim())
-              .filter(Boolean);
-            if (!topics.includes(activeTopic)) {
-              show = false;
-            }
-          }
-        }
-        card.style.display = show ? '' : 'none';
-      });
-    }
-
-    // Mode buttons: Selected vs All
-    modeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        mode = btn.dataset.mode;
-        modeButtons.forEach(b => b.classList.toggle('active', b === btn));
-        if (mode === 'all') {
-          cards.forEach(card => card.style.display = '');
-        } else {
-          applyFilters();
-        }
+    // smooth in-page nav
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const id=a.getAttribute('href').slice(1);
+        const el=document.getElementById(id);
+        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
       });
     });
 
-    // Year buttons
-    yearButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (activeYear === btn.dataset.year) {
-          activeYear = null;
-          btn.classList.remove('active');
-        } else {
-          activeYear = btn.dataset.year;
-          yearButtons.forEach(b => b.classList.toggle('active', b === btn));
-        }
-        if (mode === 'selected') applyFilters();
-      });
-    });
+    // events carousel
+    (function(){ const track=document.getElementById('eventTrack'); if(!track) return;
+      let i=0; const N=track.children.length;
+      setInterval(()=>{ i=(i+1)%N; track.style.transform=`translateX(-${i*100}%)`; }, 5000);
+    })();
 
-    // Topic buttons
-    topicButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (activeTopic === btn.dataset.topic) {
-          activeTopic = null;
-          btn.classList.remove('active');
-        } else {
-          activeTopic = btn.dataset.topic;
-          topicButtons.forEach(b => b.classList.toggle('active', b === btn));
-        }
-        if (mode === 'selected') applyFilters();
-      });
-    });
+    // header scrollspy + progress
+const links = [...document.querySelectorAll('.nav a.link')];
+const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+const prog = document.getElementById('progress');
+const spy = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const id = '#'+e.target.id;
+      const curr = links.find(l=>l.getAttribute('href')===id);
+      if(curr) curr.classList.add('active');
+    }
+  });
+},{rootMargin:'-40% 0px -55% 0px',threshold:[0,1]});
+sections.forEach(s=>s && spy.observe(s));
+window.addEventListener('scroll',()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight)*100;
+  prog.style.background = `linear-gradient(90deg,var(--brand) ${pct}%, transparent ${pct}%)`;
+});
 
-    // Initial state
-    applyFilters();
-  })();
+    document.querySelectorAll('.card, .card-focus, .timeline .item').forEach(el=>el.classList.add('reveal'));
+const rev = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); rev.unobserve(e.target); }});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
 
-  // Wire Cite buttons ONCE
-  (function(){
-    document.querySelectorAll('.cite-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();   // just in case the button sits near a link
+    // Sydney time + weather (Open-Meteo)
+    async function loadSydney(){
+      try{
+        const tz = 'Australia/Sydney';
+        const now = new Date();
+        const time = now.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz});
+        document.getElementById('sydTime').textContent = `Sydney ${time}`;
+
+        const lat = -33.8688, lon = 151.2093;
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
+        const res = await fetch(url); const data = await res.json();
+        const t = Math.round(data.current.temperature_2m);
+        const w = (data.current.weather_code||0);
+        const emoji = (c=>{
+          if ([0].includes(c)) return '☀️';
+          if ([1,2,3].includes(c)) return '⛅️';
+          if ([45,48].includes(c)) return '🌫️';
+          if ([51,53,55,61,63,65,80,81,82].includes(c)) return '🌧️';
+          if ([71,73,75,85,86].includes(c)) return '❄️';
+          if ([95,96,99].includes(c)) return '⛈️';
+          return '🌤️';
+        })(w);
+        document.getElementById('sydTemp').textContent = `${t}°C`;
+        document.getElementById('sydIcon').textContent = emoji;
+      }catch(e){/* silent */}
+    }
+    loadSydney(); setInterval(loadSydney, 60*1000);
+
+    // Cite buttons toggle BibTeX blocks
+    document.querySelectorAll('.cite-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
         const id = btn.dataset.target;
         const block = document.getElementById(id);
-        if (block) {
-          block.classList.toggle('show');
-        }
+        if(block){ block.classList.toggle('show'); }
       });
     });
-  })();
-
-  // smooth in-page nav
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href').slice(1);
-      const el = document.getElementById(id);
-      if (el) {
-        e.preventDefault();
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
-  // events carousel
-  (function(){ 
-    const track = document.getElementById('eventTrack'); 
-    if (!track) return;
-    let i = 0; 
-    const N = track.children.length;
-    setInterval(() => {
-      i = (i + 1) % N;
-      track.style.transform = `translateX(-${i*100}%)`;
-    }, 5000);
-  })();
-
-  // header scrollspy + progress
-  const links = [...document.querySelectorAll('.nav a.link')];
-  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
-  const prog = document.getElementById('progress');
-  const spy = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        links.forEach(l => l.classList.remove('active'));
-        const id = '#' + e.target.id;
-        const curr = links.find(l => l.getAttribute('href') === id);
-        if (curr) curr.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px', threshold: [0, 1] });
-
-  sections.forEach(s => s && spy.observe(s));
-
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
-    prog.style.background =
-      `linear-gradient(90deg,var(--brand) ${pct}%, transparent ${pct}%)`;
-  });
-
-  // reveal-on-scroll
-  document.querySelectorAll('.card, .card-focus, .timeline .item')
-    .forEach(el => el.classList.add('reveal'));
-  const rev = new IntersectionObserver(es => {
-    es.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        rev.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => rev.observe(el));
-
-  // Sydney time + weather
-  async function loadSydney(){
-    try{
-      const tz = 'Australia/Sydney';
-      const now = new Date();
-      const time = now.toLocaleTimeString('en-AU',{
-        hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz
-      });
-      const timeEl = document.getElementById('sydTime');
-      if (timeEl) timeEl.textContent = `Sydney ${time}`;
-
-      const lat = -33.8688, lon = 151.2093;
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
-      const res = await fetch(url);
-      const data = await res.json();
-      const t = Math.round(data.current.temperature_2m);
-      const w = (data.current.weather_code || 0);
-      const emoji = (c => {
-        if ([0].includes(c)) return '☀️';
-        if ([1,2,3].includes(c)) return '⛅️';
-        if ([45,48].includes(c)) return '🌫️';
-        if ([51,53,55,61,63,65,80,81,82].includes(c)) return '🌧️';
-        if ([71,73,75,85,86].includes(c)) return '❄️';
-        if ([95,96,99].includes(c)) return '⛈️';
-        return '🌤️';
-      })(w);
-
-      const tempEl = document.getElementById('sydTemp');
-      const iconEl = document.getElementById('sydIcon');
-      if (tempEl) tempEl.textContent = `${t}°C`;
-      if (iconEl) iconEl.textContent = emoji;
-    }catch(e){
-      // silent fallback
-    }
-  }
-  loadSydney();
-  setInterval(loadSydney, 60 * 1000);
-</script>
-
+  </script>
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
