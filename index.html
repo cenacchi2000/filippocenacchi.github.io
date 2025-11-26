@@ -768,11 +768,10 @@
     <button class="pub-filter-btn" data-mode="all">Show by All</button>
 
     <span class="pub-filter-label">Year:</span>
+    <button class="pub-filter-btn" data-year="2026">2026</button>
     <button class="pub-filter-btn" data-year="2025">2025</button>
-    <button class="pub-filter-btn" data-year="2024">2024</button>
-    <button class="pub-filter-btn" data-year="2023">2023</button>
     <button class="pub-filter-btn" data-year="2022">2022</button>
-    <button class="pub-filter-btn" data-year="2021">2021</button>
+    
 
     <span class="pub-filter-label">Topic:</span>
     <button class="pub-filter-btn" data-topic="humanoid">Humanoid &amp; Mental Health</button>
@@ -863,9 +862,14 @@
         </div>
         <div class="meta">Journal of Strategic Information Systems (JSIS), 2025.</div>
         <div class="kvs">
-          <span class="badge">Journal</span>
-          <button type="button" class="badge cite-btn" data-target="bib-jsis">Cite</button>
-        </div>
+  <a class="badge"
+     href="https://www.sciencedirect.com/science/article/pii/S0963868725000526?via%3Dihub"
+     target="_blank" rel="noopener">
+    Journal
+  </a>
+  <button type="button" class="badge cite-btn" data-target="bib-jsis">Cite</button>
+</div>
+
         <pre id="bib-jsis" class="bib-entry">@article{bankins2025virtual,
   title   = {Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR},
   author  = {Bankins, Sarah and Formosa, Paul and Montefiore, Tom and Richards, Deborah and Cenacchi, Filippo and McEwan, Mitchell},
@@ -1165,179 +1169,218 @@
       © <span id="year"></span> Filippo Cenacchi • Last updated <span id="lu"></span>
     </div>
   </footer>
-  <script>
-    // year + last updated
-    year.textContent = new Date().getFullYear();
-    lu.textContent = new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
-        // Publication filter (year + topic)
-    (function(){
-      const root = document.getElementById('pubFilters');
-      if(!root) return;
+ <script>
+  // year + last updated (robust to modern browsers)
+  (function () {
+    const yearEl = document.getElementById('year');
+    const luEl   = document.getElementById('lu');
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
+    if (luEl) {
+      luEl.textContent = new Date().toLocaleDateString(
+        undefined,
+        { year: 'numeric', month: 'short', day: 'numeric' }
+      );
+    }
+  })();
 
-      const modeButtons  = root.querySelectorAll('[data-mode]');
-      const yearButtons  = root.querySelectorAll('[data-year]');
-      const topicButtons = root.querySelectorAll('[data-topic]');
-      const cards        = document.querySelectorAll('.card.pub');
+  // Publication filter (year + topic)
+  (function(){
+    const root = document.getElementById('pubFilters');
+    if (!root) return;
 
-      let mode        = 'selected';
-      let activeYear  = null;
-      let activeTopic = null;
+    const modeButtons  = root.querySelectorAll('[data-mode]');
+    const yearButtons  = root.querySelectorAll('[data-year]');
+    const topicButtons = root.querySelectorAll('[data-topic]');
+    const cards        = document.querySelectorAll('.card.pub');
 
-      function applyFilters(){
-        cards.forEach(card=>{
-          let show = true;
+    let mode        = 'selected';
+    let activeYear  = null;
+    let activeTopic = null;
 
-          if(mode === 'selected'){
-            if(activeYear && card.dataset.year !== activeYear){
+    function applyFilters(){
+      cards.forEach(card => {
+        let show = true;
+
+        if (mode === 'selected') {
+          if (activeYear && card.dataset.year !== activeYear) {
+            show = false;
+          }
+          if (activeTopic) {
+            const topics = (card.dataset.topics || '')
+              .split(',')
+              .map(s => s.trim())
+              .filter(Boolean);
+            if (!topics.includes(activeTopic)) {
               show = false;
             }
-            if(activeTopic){
-              const topics = (card.dataset.topics || '')
-                .split(',')
-                .map(s => s.trim())
-                .filter(Boolean);
-              if(!topics.includes(activeTopic)){
-                show = false;
-              }
-            }
           }
+        }
+        card.style.display = show ? '' : 'none';
+      });
+    }
 
-          card.style.display = show ? '' : 'none';
-        });
+    // Mode buttons: Selected vs All
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        mode = btn.dataset.mode;
+        modeButtons.forEach(b => b.classList.toggle('active', b === btn));
+        if (mode === 'all') {
+          cards.forEach(card => card.style.display = '');
+        } else {
+          applyFilters();
+        }
+      });
+    });
+
+    // Year buttons
+    yearButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (activeYear === btn.dataset.year) {
+          activeYear = null;
+          btn.classList.remove('active');
+        } else {
+          activeYear = btn.dataset.year;
+          yearButtons.forEach(b => b.classList.toggle('active', b === btn));
+        }
+        if (mode === 'selected') applyFilters();
+      });
+    });
+
+    // Topic buttons
+    topicButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (activeTopic === btn.dataset.topic) {
+          activeTopic = null;
+          btn.classList.remove('active');
+        } else {
+          activeTopic = btn.dataset.topic;
+          topicButtons.forEach(b => b.classList.toggle('active', b === btn));
+        }
+        if (mode === 'selected') applyFilters();
+      });
+    });
+
+    // Initial state
+    applyFilters();
+  })();
+
+  // Wire Cite buttons ONCE
+  (function(){
+    document.querySelectorAll('.cite-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();   // just in case the button sits near a link
+        const id = btn.dataset.target;
+        const block = document.getElementById(id);
+        if (block) {
+          block.classList.toggle('show');
+        }
+      });
+    });
+  })();
+
+  // smooth in-page nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-
-      // Mode buttons: Selected vs All
-      modeButtons.forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          mode = btn.dataset.mode;
-          modeButtons.forEach(b => b.classList.toggle('active', b === btn));
-          if(mode === 'all'){
-            cards.forEach(card => card.style.display = '');
-          }else{
-            applyFilters();
-          }
-        });
-      });
-
-      // Year buttons
-      yearButtons.forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          if(activeYear === btn.dataset.year){
-            activeYear = null;
-            btn.classList.remove('active');
-          }else{
-            activeYear = btn.dataset.year;
-            yearButtons.forEach(b => b.classList.toggle('active', b === btn));
-          }
-          if(mode === 'selected') applyFilters();
-        });
-      });
-
-      // Topic buttons
-      topicButtons.forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          if(activeTopic === btn.dataset.topic){
-            activeTopic = null;
-            btn.classList.remove('active');
-          }else{
-            activeTopic = btn.dataset.topic;
-            topicButtons.forEach(b => b.classList.toggle('active', b === btn));
-          }
-          if(mode === 'selected') applyFilters();
-        });
-      });
-
-      // Initial state: Show-by-Selected with no filters → everything visible
-    })();
-
-    // Cite buttons toggle BibTeX blocks
-    document.querySelectorAll('.cite-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const id = btn.dataset.target;
-        const block = document.getElementById(id);
-        if(block){ block.classList.toggle('show'); }
-      });
     });
-
-    // smooth in-page nav
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{
-        const id=a.getAttribute('href').slice(1);
-        const el=document.getElementById(id);
-        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
-      });
-    });
-
-    // events carousel
-    (function(){ const track=document.getElementById('eventTrack'); if(!track) return;
-      let i=0; const N=track.children.length;
-      setInterval(()=>{ i=(i+1)%N; track.style.transform=`translateX(-${i*100}%)`; }, 5000);
-    })();
-
-    // header scrollspy + progress
-const links = [...document.querySelectorAll('.nav a.link')];
-const sections = links.map(a => document.querySelector(a.getAttribute('href')));
-const prog = document.getElementById('progress');
-const spy = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      links.forEach(l=>l.classList.remove('active'));
-      const id = '#'+e.target.id;
-      const curr = links.find(l=>l.getAttribute('href')===id);
-      if(curr) curr.classList.add('active');
-    }
   });
-},{rootMargin:'-40% 0px -55% 0px',threshold:[0,1]});
-sections.forEach(s=>s && spy.observe(s));
-window.addEventListener('scroll',()=>{
-  const h = document.documentElement;
-  const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight)*100;
-  prog.style.background = `linear-gradient(90deg,var(--brand) ${pct}%, transparent ${pct}%)`;
-});
 
-    document.querySelectorAll('.card, .card-focus, .timeline .item').forEach(el=>el.classList.add('reveal'));
-const rev = new IntersectionObserver(es=>{
-  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); rev.unobserve(e.target); }});
-},{threshold:0.12});
-document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
+  // events carousel
+  (function(){ 
+    const track = document.getElementById('eventTrack'); 
+    if (!track) return;
+    let i = 0; 
+    const N = track.children.length;
+    setInterval(() => {
+      i = (i + 1) % N;
+      track.style.transform = `translateX(-${i*100}%)`;
+    }, 5000);
+  })();
 
-    // Sydney time + weather (Open-Meteo)
-    async function loadSydney(){
-      try{
-        const tz = 'Australia/Sydney';
-        const now = new Date();
-        const time = now.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz});
-        document.getElementById('sydTime').textContent = `Sydney ${time}`;
-
-        const lat = -33.8688, lon = 151.2093;
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
-        const res = await fetch(url); const data = await res.json();
-        const t = Math.round(data.current.temperature_2m);
-        const w = (data.current.weather_code||0);
-        const emoji = (c=>{
-          if ([0].includes(c)) return '☀️';
-          if ([1,2,3].includes(c)) return '⛅️';
-          if ([45,48].includes(c)) return '🌫️';
-          if ([51,53,55,61,63,65,80,81,82].includes(c)) return '🌧️';
-          if ([71,73,75,85,86].includes(c)) return '❄️';
-          if ([95,96,99].includes(c)) return '⛈️';
-          return '🌤️';
-        })(w);
-        document.getElementById('sydTemp').textContent = `${t}°C`;
-        document.getElementById('sydIcon').textContent = emoji;
-      }catch(e){/* silent */}
-    }
-    loadSydney(); setInterval(loadSydney, 60*1000);
-
-    // Cite buttons toggle BibTeX blocks
-    document.querySelectorAll('.cite-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const id = btn.dataset.target;
-        const block = document.getElementById(id);
-        if(block){ block.classList.toggle('show'); }
-      });
+  // header scrollspy + progress
+  const links = [...document.querySelectorAll('.nav a.link')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const prog = document.getElementById('progress');
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const id = '#' + e.target.id;
+        const curr = links.find(l => l.getAttribute('href') === id);
+        if (curr) curr.classList.add('active');
+      }
     });
-  </script>
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: [0, 1] });
+
+  sections.forEach(s => s && spy.observe(s));
+
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    prog.style.background =
+      `linear-gradient(90deg,var(--brand) ${pct}%, transparent ${pct}%)`;
+  });
+
+  // reveal-on-scroll
+  document.querySelectorAll('.card, .card-focus, .timeline .item')
+    .forEach(el => el.classList.add('reveal'));
+  const rev = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        rev.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => rev.observe(el));
+
+  // Sydney time + weather
+  async function loadSydney(){
+    try{
+      const tz = 'Australia/Sydney';
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-AU',{
+        hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz
+      });
+      const timeEl = document.getElementById('sydTime');
+      if (timeEl) timeEl.textContent = `Sydney ${time}`;
+
+      const lat = -33.8688, lon = 151.2093;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const t = Math.round(data.current.temperature_2m);
+      const w = (data.current.weather_code || 0);
+      const emoji = (c => {
+        if ([0].includes(c)) return '☀️';
+        if ([1,2,3].includes(c)) return '⛅️';
+        if ([45,48].includes(c)) return '🌫️';
+        if ([51,53,55,61,63,65,80,81,82].includes(c)) return '🌧️';
+        if ([71,73,75,85,86].includes(c)) return '❄️';
+        if ([95,96,99].includes(c)) return '⛈️';
+        return '🌤️';
+      })(w);
+
+      const tempEl = document.getElementById('sydTemp');
+      const iconEl = document.getElementById('sydIcon');
+      if (tempEl) tempEl.textContent = `${t}°C`;
+      if (iconEl) iconEl.textContent = emoji;
+    }catch(e){
+      // silent fallback
+    }
+  }
+  loadSydney();
+  setInterval(loadSydney, 60 * 1000);
+</script>
+
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
