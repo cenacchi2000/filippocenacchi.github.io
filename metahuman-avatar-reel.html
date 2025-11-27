@@ -4,13 +4,134 @@
   <meta charset="utf-8">
   <title>MetaHuman Avatar Reel • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="A short reel showcasing MetaHuman avatars driven by diagnostic signals, used to communicate research and prototype real-time humanoid–avatar synchronisation.">
+
+  <style>
+    :root{
+      --bg:#f7f9fc;--panel:#ffffff;--text:#0b1220;--subtle:#475569;
+      --brand:#2563eb;--brand-ink:#1d4ed8;--border:#e5e7eb;
+      --shadow:0 10px 32px rgba(15,23,42,0.10);
+      --accent-soft:rgba(37,99,235,0.08);
+    }
+    *{box-sizing:border-box;}
+    html,body{
+      margin:0;padding:0;min-height:100vh;
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 650px at 8% -10%,rgba(37,99,235,.16),transparent 55%),
+        radial-gradient(900px 600px at 100% 0%,rgba(147,51,234,.18),transparent 55%),
+        linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
+    }
+    a{color:var(--brand-ink);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:720px;margin:0 auto;padding:24px 16px 40px;}
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:12px;margin-bottom:20px;
+    }
+    .back-link{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      background:#fff;border:1px solid var(--border);
+      font-size:14px;box-shadow:0 4px 16px rgba(15,23,42,0.12);
+    }
+    h1{font-size:clamp(30px,4vw,40px);margin:8px 0 4px;}
+    .subtitle{margin:0;color:var(--subtle);font-size:15px;}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(15,23,42,0.03);
+      border:1px solid rgba(148,163,184,0.6);
+      font-size:13px;color:var(--subtle);
+      margin-bottom:10px;
+    }
+    .pill span.dot{width:8px;height:8px;border-radius:999px;background:#a855f7;}
+    section{
+      margin-bottom:20px;background:var(--panel);border-radius:18px;
+      border:1px solid var(--border);box-shadow:var(--shadow);
+      padding:18px 20px 18px;
+    }
+    section h2{margin-top:0;font-size:20px;}
+    video{
+      width:100%;height:auto;border-radius:18px;
+      border:1px solid var(--border);box-shadow:var(--shadow);
+      display:block;background:#000;
+    }
+    .small{font-size:14px;color:var(--subtle);}
+  </style>
 </head>
 <body>
-  <h1>MetaHuman Avatar Reel</h1>
-  <video src="metahuman_reel.mov" controls playsinline style="max-width:100%;height:auto;">
-    Your browser does not support the video tag.
-  </video>
-  <p>Explain what the reel shows (Ameca sync, expression mapping, training scenarios, etc.).</p>
-  <p><a href="index.html">← Back to main page</a></p>
+  <div class="container">
+    <header>
+      <a class="back-link" href="index.html#research">← Back to research overview</a>
+      <span class="small">Filippo Cenacchi · MetaHuman Avatar Reel</span>
+    </header>
+
+    <p class="pill">
+      <span class="dot"></span>
+      Short reel · Research storytelling &amp; synchronisation prototype
+    </p>
+    <h1>MetaHuman Avatar Reel</h1>
+    <p class="subtitle">
+      A fast, visual way to show how diagnostic signals can drive expressive, realistic
+      avatars for simulation, communication and future tele-presence.
+    </p>
+
+    <section>
+      <h2>Reel</h2>
+      <video src="metahuman_reel.mov" controls playsinline>
+        Your browser does not support the video tag.
+      </video>
+      <p class="small" style="margin-top:10px;">
+        The reel is optimised for vertical viewing (social media and mobile) and loops
+        through several MetaHuman characters being driven by pre-recorded speech and
+        motion profiles derived from diagnostic scenarios.
+      </p>
+    </section>
+
+    <section>
+      <h2>Purpose</h2>
+      <p>
+        The reel plays a double role. First, it acts as a <strong>communication
+        artefact</strong> for talks, grant pitches and public engagement, making the
+        research immediately tangible without requiring access to the full Ameca
+        hardware or simulation environment. Second, it serves as a testbed for
+        real-time <strong>humanoid–avatar synchronisation</strong>, where signals
+        captured from Ameca or other sensors are mapped live to MetaHuman rigs.
+      </p>
+      <p>
+        This mapping allows experiments where a humanoid robot interacts in the lab
+        while a visually richer avatar mirrors its behaviour in a virtual environment,
+        enabling remote observation, annotation and—in the future—tele-presence.
+      </p>
+    </section>
+
+    <section>
+      <h2>Technical Setup</h2>
+      <p>
+        The current reel is rendered in Unreal Engine&nbsp;5 using MetaHuman assets and
+        sequencers. Motion is driven by a combination of facial blendshape curves,
+        gaze targets and body pose trajectories. In parallel work, these trajectories
+        are aligned with sensor streams from humanoid prototypes, creating a clean
+        separation between <em>where the data comes from</em> (Ameca, video corpora,
+        simulated patients) and <em>how it is visualised</em> (photorealistic avatars,
+        stylised avatars, or privacy-preserving representations).
+      </p>
+    </section>
+
+    <section>
+      <h2>Future Directions</h2>
+      <p>
+        Upcoming iterations will explore driving the reel from live diagnostic sessions,
+        adding overlaid indicators of risk and uncertainty, and embedding the avatars
+        into shared virtual spaces where clinicians, researchers and even patients can
+        review episodes together. The long-term goal is to make the underlying
+        multimodal signals <strong>legible and explorable</strong> for humans, not
+        just for models.
+      </p>
+    </section>
+  </div>
 </body>
 </html>
