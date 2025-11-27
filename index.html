@@ -685,7 +685,7 @@
       </div>
     </section>
 
-    <!-- Research Focus -->
+<!-- Research Focus -->
 <section id="research" class="section">
   <h2>Research Focus</h2>
 
@@ -699,6 +699,7 @@
       <div class="card-body">
         <h3>Humanoid-AI Diagnostic Agents</h3>
         <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
+        <p class="meta"><a href="humanoid-diagnostic.html">Dedicated project page →</a></p>
       </div>
     </article>
 
@@ -716,6 +717,7 @@
       <div class="card-body">
         <h3>Simulation-First Training</h3>
         <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
+        <p class="meta"><a href="simulation-first-training.html">Dedicated project page →</a></p>
       </div>
     </article>
 
@@ -733,6 +735,7 @@
       <div class="card-body">
         <h3>Privacy-Preserving Avatarization</h3>
         <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
+        <p class="meta"><a href="privacy-preserving-avatarization.html">Dedicated project page →</a></p>
       </div>
     </article>
 
@@ -750,9 +753,33 @@
       <div class="card-body">
         <h3>Decision Support &amp; Triage</h3>
         <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
+        <p class="meta"><a href="decision-support-triage.html">Dedicated project page →</a></p>
+      </div>
+    </article>
+
+    <!-- 5. NEW: MetaHuman Avatar Reel (.mov video) -->
+    <article class="card-focus">
+      <div class="card-media" aria-label="MetaHuman avatar reel demo">
+        <video src="metahuman_reel.mov" autoplay muted loop playsinline>
+          Your browser does not support the video tag.
+        </video>
+        <span class="media-gradient"></span>
+      </div>
+      <div class="card-body">
+        <h3>MetaHuman Avatar Reel</h3>
+        <p>Vertical <strong>.mov demo</strong> of a MetaHuman avatar driven by Ameca-style signals. Showcases synchronised facial motion, gaze and pacing for simulation-first training.</p>
+        <p class="meta"><a href="metahuman-avatar-reel.html">Dedicated project page →</a></p>
       </div>
     </article>
   </div>
+
+  <!-- Lightbox (kept as before, for image cards) -->
+  <dialog id="lightbox" class="lightbox">
+    <img alt="" id="lightbox-img">
+    <button id="lightbox-close" aria-label="Close">×</button>
+  </dialog>
+</section>
+
 
   <!-- Lightbox (needed by your JS at the bottom) -->
   <dialog id="lightbox" class="lightbox">
