@@ -60,6 +60,24 @@
       display:block;background:#000;
     }
     .small{font-size:14px;color:var(--subtle);}
+    .video-frame{
+  position:relative;
+  width:100%;
+  max-width:100%;
+  aspect-ratio: 9 / 16;              /* tall, vertical reel */
+  border-radius:18px;
+  border:1px solid rgba(148,165,184,0.6);
+  box-shadow:0 18px 45px rgba(15,23,42,0.75);
+  overflow:hidden;
+  background:#000;
+}
+.video-frame iframe{
+  width:100%;
+  height:100%;
+  display:block;
+  border:0;
+}
+
   </style>
 </head>
 <body>
@@ -80,16 +98,26 @@
     </p>
 
     <section>
-      <h2>Reel</h2>
-      <video src="metahuman_reel.mov" controls playsinline>
-        Your browser does not support the video tag.
-      </video>
-      <p class="small" style="margin-top:10px;">
-        The reel is optimised for vertical viewing (social media and mobile) and loops
-        through several MetaHuman characters being driven by pre-recorded speech and
-        motion profiles derived from diagnostic scenarios.
-      </p>
-    </section>
+  <h2>Reel</h2>
+
+  <div class="video-frame">
+    <iframe
+      src="https://www.youtube.com/embed/Z5OKkYK8zjc?autoplay=1&mute=1&loop=1&playlist=Z5OKkYK8zjc&controls=1&modestbranding=1&rel=0"
+      title="MetaHuman Avatar Reel"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+  </div>
+
+  <p class="small" style="margin-top:10px;">
+    The reel is optimised for vertical viewing (social media and mobile) and loops
+    through several MetaHuman characters being driven by pre-recorded speech and
+    motion profiles derived from diagnostic scenarios.
+  </p>
+</section>
+
 
     <section>
       <h2>Purpose</h2>
