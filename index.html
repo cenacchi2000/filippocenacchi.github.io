@@ -607,77 +607,6 @@
       font-family:Arial,Helvetica,system-ui;
       font-size:12px;
     }
-    /* --- Research carousel + vertical cards + video --- */
-
-/* Outer mask */
-.research-strip{
-  position:relative;
-  overflow:hidden;
-  padding:12px 0 4px;
-}
-
-/* Moving track */
-.research-track{
-  display:flex;
-  gap:18px;
-  animation: researchScroll 40s linear infinite;
-}
-
-/* Pause on hover so people can read */
-.research-track:hover{
-  animation-play-state:paused;
-}
-
-/* Each card behaves like a “story” tile */
-.research-track .card-focus{
-  flex:0 0 260px;
-}
-
-/* Slightly rounder cards */
-.card-focus{
-  border-radius:24px;
-}
-
-/* Continuous loop: original set + cloned set (see JS) */
-@keyframes researchScroll{
-  0%   { transform:translateX(0); }
-  100% { transform:translateX(-50%); }
-}
-
-/* Portrait-ish media, like reels */
-.card-media{
-  background:#000;
-}
-
-/* Fallback ratio (portrait) */
-.card-media::before{
-  padding-top:177.78%; /* height = 16/9 * width (vertical) */
-}
-
-/* Make both images and videos fill the frame */
-.card-media > img,
-.card-media > video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-
-/* Hover zoom works for both */
-.card-focus:hover .card-media > img,
-.card-focus:hover .card-media > video{
-  transform:scale(1.05);
-}
-
-/* Keep gradient & chips above media */
-.card-media > .media-gradient,
-.card-media > .media-chips{
-  position:absolute;
-  inset:0;
-}
-
   </style>
 </head>
 <body>
@@ -760,101 +689,77 @@
 <section id="research" class="section">
   <h2>Research Focus</h2>
 
-  <!-- New horizontal, slowly-scrolling strip -->
-  <div class="research-strip">
-    <div class="research-track">
-      <!-- 1. Humanoid-AI Diagnostic Agents -->
-      <article class="card-focus">
-        <button class="card-media" type="button"
-                data-full="ameca.png"
-                aria-label="Open image: Ameca diagnostic agent">
-          <img src="ameca.png"
-               alt="Ameca humanoid robot used for diagnostic conversations">
-          <span class="media-gradient"></span>
-        </button>
-        <div class="card-body">
-          <h3>Humanoid-AI Diagnostic Agents</h3>
-          <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
-        </div>
-      </article>
+  <div class="research-grid">
+    <!-- 1. Humanoid-AI Diagnostic Agents -->
+    <article class="card-focus">
+      <button class="card-media" data-full="ameca.png" aria-label="Open image: Ameca">
+        <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
+        <span class="media-gradient"></span>
+      </button>
+      <div class="card-body">
+        <h3>Humanoid-AI Diagnostic Agents</h3>
+        <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
+      </div>
+    </article>
 
-      <!-- 2. Simulation-First Training -->
-      <article class="card-focus">
-        <button class="card-media" type="button"
-                data-full="Scene%20(1).png"
-                aria-label="Open image: Simulation frame">
-          <img src="Scene%20(1).png"
-               alt="MetaHuman simulation scene from SimClinician">
-          <span class="media-gradient"></span>
-        </button>
-        <div class="card-body">
-          <h3>Simulation-First Training</h3>
-          <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
-        </div>
-      </article>
+    <!-- 2. Simulation-First Training -->
+    <article class="card-focus">
+      <button class="card-media" data-full="Scene%20(1).png" aria-label="Open image: Simulation frame">
+        <img src="Scene%20(1).png" alt="MetaHuman simulation scene from SimClinician">
+        <span class="media-gradient"></span>
+        <span class="media-chips">
+          <span class="badge">Unreal Engine 5</span>
+          <span class="badge">MetaHuman</span>
+          <span class="badge">Counterfactual Replay</span>
+        </span>
+      </button>
+      <div class="card-body">
+        <h3>Simulation-First Training</h3>
+        <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
+      </div>
+    </article>
 
-      <!-- 3. Privacy-Preserving Avatarization -->
-      <article class="card-focus">
-        <button class="card-media" type="button"
-                data-full="facegaze_top_female%20(1).png"
-                aria-label="Open image: Avatarized face & gaze">
-          <img src="facegaze_top_female%20(1).png"
-               alt="Animated 3D avatar with AU heatmap for privacy-preserving replay">
-          <span class="media-gradient"></span>
-        </button>
-        <div class="card-body">
-          <h3>Privacy-Preserving Avatarization</h3>
-          <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
-        </div>
-      </article>
+    <!-- 3. Privacy-Preserving Avatarization -->
+    <article class="card-focus">
+      <button class="card-media" data-full="facegaze_top_female%20(1).png" aria-label="Open image: Avatarized face & gaze">
+        <img src="facegaze_top_female%20(1).png" alt="Animated 3D avatar with AU heatmap for privacy-preserving replay">
+        <span class="media-gradient"></span>
+        <span class="media-chips">
+          <span class="badge">3D Avatars</span>
+          <span class="badge">Longitudinal Analysis</span>
+          <span class="badge">Ethics by Design</span>
+        </span>
+      </button>
+      <div class="card-body">
+        <h3>Privacy-Preserving Avatarization</h3>
+        <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
+      </div>
+    </article>
 
-      <!-- 4. Decision Support & Triage -->
-      <article class="card-focus">
-        <button class="card-media" type="button"
-                data-full="20250901_165725.jpg"
-                aria-label="Open image: Decision support">
-          <img src="20250901_165725.jpg"
-               alt="Robot and screen-based triage tools used with clinicians">
-          <span class="media-gradient"></span>
-        </button>
-        <div class="card-body">
-          <h3>Decision Support &amp; Triage</h3>
-          <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
-        </div>
-      </article>
-
-      <!-- 5. NEW: MetaHuman Avatar Reel (.mov video card) -->
-      <article class="card-focus">
-        <button class="card-media" type="button"
-                aria-label="MetaHuman avatar reel demo">
-          <!-- Poster image (reuse your simulation frame) -->
-          <img src="Scene%20(1).png"
-               alt="Vertical reel of a MetaHuman patient avatar during conversation">
-          <!-- Inline video: update the file name to your actual .mov -->
-          <video src="metahuman_reel.mov"
-                 autoplay
-                 muted
-                 loop
-                 playsinline>
-            Your browser does not support the video tag.
-          </video>
-          <span class="media-gradient"></span>
-        </button>
-        <div class="card-body">
-          <h3>MetaHuman Avatar Reel</h3>
-          <p>Inline <strong>.mov demo</strong> of a MetaHuman avatar driven by Ameca-style signals. Plays on loop to showcase synchronised facial motion, gaze and pacing for simulation-first training.</p>
-        </div>
-      </article>
-    </div>
+    <!-- 4. Decision Support & Triage -->
+    <article class="card-focus">
+      <button class="card-media" data-full="20250901_165725.jpg" aria-label="Open image: Decision support">
+        <img src="20250901_165725.jpg" alt="Robot and screen-based triage tools used with clinicians">
+        <span class="media-gradient"></span>
+        <span class="media-chips">
+          <span class="badge">E-DAIC / DAIC-WOZ</span>
+          <span class="badge">RL Probing</span>
+          <span class="badge">Explainability</span>
+        </span>
+      </button>
+      <div class="card-body">
+        <h3>Decision Support &amp; Triage</h3>
+        <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
+      </div>
+    </article>
   </div>
 
-  <!-- Lightbox for the image cards (not used by the video reel) -->
+  <!-- Lightbox (needed by your JS at the bottom) -->
   <dialog id="lightbox" class="lightbox">
     <img alt="" id="lightbox-img">
     <button id="lightbox-close" aria-label="Close">×</button>
   </dialog>
 </section>
-
 
 
  <section id="publications" class="section">
@@ -1586,45 +1491,20 @@
 
   
   <script>
-(function(){
-  // 1) Duplicate research cards for seamless loop (second half = clones)
-  const track = document.querySelector('.research-track');
-  if (track) {
-    const originals = Array.from(track.children);
-    originals.forEach(card => {
-      const clone = card.cloneNode(true);
-
-      // For clones of the video card, drop the <video> so
-      // we don’t load/play the movie twice.
-      const vid = clone.querySelector('video');
-      if (vid) vid.remove();
-
-      track.appendChild(clone);
-    });
-  }
-
-  // 2) Lightbox: only for media that declare a data-full image
-  const lb       = document.getElementById('lightbox');
-  const img      = document.getElementById('lightbox-img');
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
   const closeBtn = document.getElementById('lightbox-close');
-  if (!lb || !img || !closeBtn) return;
 
-  document.querySelectorAll('.card-media[data-full]').forEach(el => {
-    el.addEventListener('click', () => {
-      const full = el.getAttribute('data-full');
-      if (!full) return;
-      img.src = full;
-      const imgEl = el.querySelector('img');
-      img.alt = imgEl ? imgEl.alt : '';
+  document.querySelectorAll('.card-media').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      img.src = el.getAttribute('data-full');
+      img.alt = el.querySelector('img').alt || '';
       lb.showModal();
     });
   });
-
-  closeBtn.addEventListener('click', () => lb.close());
-  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
-})();
+  closeBtn.addEventListener('click', ()=> lb.close());
+  lb.addEventListener('click', (e)=>{ if(e.target === lb) lb.close(); });
 </script>
-
 
 </body>
 </html> 
