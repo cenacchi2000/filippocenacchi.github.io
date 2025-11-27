@@ -2,12 +2,215 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Decision Support & Triage • Filippo Cenacchi</title>
+  <title>Decision Support &amp; Triage • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="A trust-calibrated multimodal triage copilot that layers RL-inspired probing and explainable predictions over E-DAIC / DAIC-WOZ style interviews.">
+
+  <style>
+    :root{
+      --bg:#f7f9fc;--panel:#ffffff;--text:#0b1220;--subtle:#475569;
+      --brand:#2563eb;--brand-ink:#1d4ed8;--border:#e5e7eb;
+      --shadow:0 10px 32px rgba(15,23,42,0.10);
+      --accent-soft:rgba(37,99,235,0.08);
+    }
+    *{box-sizing:border-box;}
+    html,body{
+      margin:0;padding:0;min-height:100vh;
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 650px at 8% -10%,rgba(37,99,235,.16),transparent 55%),
+        radial-gradient(900px 600px at 100% 0%,rgba(251,146,60,.12),transparent 55%),
+        linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
+    }
+    a{color:var(--brand-ink);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:960px;margin:0 auto;padding:24px 16px 40px;}
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:12px;margin-bottom:24px;
+    }
+    .back-link{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      background:#fff;border:1px solid var(--border);
+      font-size:14px;box-shadow:0 4px 16px rgba(15,23,42,0.12);
+    }
+    h1{font-size:clamp(30px,4vw,40px);margin:8px 0 4px;}
+    .subtitle{margin:0;color:var(--subtle);font-size:15px;}
+    .hero{
+      display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1.4fr);
+      gap:24px;align-items:flex-start;margin-bottom:28px;
+    }
+    .hero-media{
+      border-radius:22px;overflow:hidden;border:1px solid var(--border);
+      box-shadow:var(--shadow);background:#000;
+    }
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block;}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(15,23,42,0.03);
+      border:1px solid rgba(148,163,184,0.6);
+      font-size:13px;color:var(--subtle);
+    }
+    .pill span.dot{width:8px;height:8px;border-radius:999px;background:#fb923c;}
+    section{
+      margin-bottom:26px;background:var(--panel);border-radius:18px;
+      border:1px solid var(--border);box-shadow:var(--shadow);
+      padding:18px 20px 18px;
+    }
+    section h2{margin-top:0;font-size:20px;}
+    .tag-row{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+    .tag{
+      font-size:12px;padding:4px 9px;border-radius:999px;
+      background:var(--accent-soft);color:var(--brand-ink);
+      border:1px solid rgba(37,99,235,0.25);
+    }
+    .two-col{
+      display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+      gap:18px;
+    }
+    @media(max-width:800px){
+      .hero{grid-template-columns:1fr;}
+      .two-col{grid-template-columns:1fr;}
+    }
+    .callout{
+      margin:0;padding:12px 14px;border-radius:12px;
+      background:rgba(251,146,60,0.08);
+      border-left:4px solid #f97316;
+      font-size:14px;color:var(--subtle);
+    }
+    .small{font-size:14px;color:var(--subtle);}
+  </style>
 </head>
 <body>
-  <h1>Decision Support & Triage</h1>
-  <p>Describe the RL-inspired probing, trust calibration, E-DAIC / DAIC-WOZ integration, and dashboard ideas.</p>
-  <p><a href="index.html">← Back to main page</a></p>
+  <div class="container">
+    <header>
+      <a class="back-link" href="index.html#research">← Back to research overview</a>
+      <span class="small">Filippo Cenacchi · Decision Support &amp; Triage</span>
+    </header>
+
+    <div class="hero">
+      <div>
+        <p class="pill">
+          <span class="dot"></span>
+          Multimodal triage copilot · RL-inspired probing
+        </p>
+        <h1>Decision Support &amp; Triage</h1>
+        <p class="subtitle">
+          A trust-calibrated triage system that layers multi-modal predictions and
+          reinforcement-learning-style probing over diagnostic interviews, making
+          model reasoning visible to clinicians.
+        </p>
+      </div>
+      <figure class="hero-media">
+        <img src="20250901_165725.jpg"
+             alt="Robot and screen-based triage tools used with clinicians">
+      </figure>
+    </div>
+
+    <section>
+      <h2>From Scores to Decisions</h2>
+      <p>
+        Modern models can estimate depression and PTSD severity from speech, facial
+        dynamics and text, but clinicians rarely see more than a single number and
+        a threshold. This is misaligned with how triage decisions actually work:
+        clinicians care about uncertainty, conflicting signals and which questions
+        would help disambiguate the case.
+      </p>
+      <p>
+        This project treats triage as an <strong>interactive decision process</strong>
+        rather than a static classification task. The system is designed not to replace
+        clinicians but to act as a transparent, queryable copilot that helps them decide
+        when to probe more, when to escalate and when to confidently reassure.
+      </p>
+    </section>
+
+    <section>
+      <h2>Architecture</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            The triage copilot ingests multi-modal features derived from interview data
+            (E-DAIC / DAIC-WOZ style corpora) and outputs both severity estimates and
+            calibrated uncertainty. On top of this, a <strong>probing policy</strong>,
+            inspired by reinforcement learning, selects the most informative next
+            question or modality to query, constrained by clinical safety rules.
+          </p>
+          <p class="callout">
+            Instead of asking “what is the diagnosis?”, the agent repeatedly asks
+            “what should we ask or observe <em>next</em> to reduce uncertainty without
+            overburdening the patient?”.
+          </p>
+        </div>
+        <div>
+          <p class="small"><strong>Layers:</strong></p>
+          <p class="small">
+            • tri-modal fusion model (audio, face, text) with robustness to missing
+            modalities<br>
+            • uncertainty estimation and risk calibration<br>
+            • RL-style probing module that chooses questions / modalities<br>
+            • clinician dashboard that surfaces rationales and trajectories
+          </p>
+          <div class="tag-row">
+            <span class="tag">E-DAIC / DAIC-WOZ</span>
+            <span class="tag">Reinforcement learning</span>
+            <span class="tag">Uncertainty</span>
+            <span class="tag">Explainability</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Clinician-Facing Interface</h2>
+      <p>
+        On the surface, clinicians see a timeline of the interview with overlays showing
+        when the model’s confidence rises or drops, which modalities are driving the
+        estimate, and which potential next questions would have the largest expected
+        reduction in uncertainty. Suggested probes are accompanied by short natural-
+        language rationales rooted in model attributions.
+      </p>
+      <p>
+        Crucially, the interface exposes <strong>model humility</strong>: it indicates
+        when the system is extrapolating beyond familiar regions of the data, when
+        modalities are partially missing, and when it recommends immediate escalation
+        regardless of uncertainty.
+      </p>
+    </section>
+
+    <section>
+      <h2>Deployment Targets</h2>
+      <p>
+        The triage copilot is designed to operate across several front-ends:
+        humanoid robots such as Ameca, tele-health video calls and in-clinic screen-based
+        questionnaires. In each case, it respects different bandwidth and workload
+        constraints but shares the same underlying calibration and probing logic.
+      </p>
+      <p>
+        In the humanoid setting, it can quietly shape Ameca’s follow-up questions and
+        pacing. In tele-health, it serves as a background assistant that highlights segments
+        of concern and suggests follow-up questions to the clinician in real time or
+        post-hoc.
+      </p>
+    </section>
+
+    <section>
+      <h2>Research Questions &amp; Status</h2>
+      <p>
+        Ongoing work addresses questions such as how to balance exploration and burden
+        when probing vulnerable participants, how to combine clinician feedback with
+        data-driven policies, and how to report uncertainty in ways that align with
+        clinical decision-making practices.
+      </p>
+      <p>
+        Prototype implementations have been validated offline on E-DAIC / DAIC-WOZ
+        data, and are being integrated with the humanoid diagnostic agent and
+        SimClinician environment for controlled user studies with clinicians.
+      </p>
+    </section>
+  </div>
 </body>
 </html>
