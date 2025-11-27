@@ -4,10 +4,291 @@
   <meta charset="utf-8">
   <title>Humanoid-AI Diagnostic Agents • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="Ameca-driven humanoid diagnostic agents that fuse speech, facial dynamics and language for early assessment of depression, PTSD and cognitive decline.">
+
+  <style>
+    :root{
+      --bg: #f7f9fc;
+      --panel: #ffffff;
+      --text: #0b1220;
+      --subtle: #475569;
+      --brand: #2563eb;
+      --brand-ink: #1d4ed8;
+      --border: #e5e7eb;
+      --shadow: 0 10px 32px rgba(15,23,42,0.10);
+      --accent-soft: rgba(37,99,235,0.08);
+    }
+    *{box-sizing:border-box;}
+    html,body{
+      margin:0;
+      padding:0;
+      min-height:100vh;
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% -10%, rgba(37,99,235,.16), transparent 55%),
+        radial-gradient(900px 600px at 100% 0%, rgba(56,189,248,.12), transparent 55%),
+        linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
+    }
+    a{color:var(--brand-ink);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{
+      max-width:960px;
+      margin:0 auto;
+      padding:24px 16px 40px;
+    }
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:24px;
+    }
+    .back-link{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--border);
+      font-size:14px;
+      box-shadow:0 4px 16px rgba(15,23,42,0.12);
+    }
+    h1{
+      font-size:clamp(30px,4vw,40px);
+      margin:8px 0 4px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--subtle);
+      font-size:15px;
+    }
+    .hero{
+      display:grid;
+      grid-template-columns:minmax(0,2fr) minmax(260px,1.4fr);
+      gap:24px;
+      align-items:flex-start;
+      margin-bottom:28px;
+    }
+    .hero-media{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      background:#000;
+    }
+    .hero-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.03);
+      border:1px solid rgba(148,163,184,0.6);
+      font-size:13px;
+      color:var(--subtle);
+    }
+    .pill span.dot{
+      width:8px;height:8px;border-radius:999px;background:#22c55e;
+    }
+    section{
+      margin-bottom:26px;
+      background:var(--panel);
+      border-radius:18px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      padding:18px 20px 18px;
+    }
+    section h2{
+      margin-top:0;
+      font-size:20px;
+    }
+    .tag-row{
+      margin-top:8px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+    }
+    .tag{
+      font-size:12px;
+      padding:4px 9px;
+      border-radius:999px;
+      background:var(--accent-soft);
+      color:var(--brand-ink);
+      border:1px solid rgba(37,99,235,0.25);
+    }
+    .two-col{
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+      gap:18px;
+    }
+    @media(max-width:800px){
+      .hero{grid-template-columns:1fr;}
+      .two-col{grid-template-columns:1fr;}
+    }
+    .callout{
+      margin:0;
+      padding:12px 14px;
+      border-radius:12px;
+      background:rgba(37,99,235,0.05);
+      border-left:4px solid var(--brand);
+      font-size:14px;
+      color:var(--subtle);
+    }
+    .small{
+      font-size:14px;
+      color:var(--subtle);
+    }
+  </style>
 </head>
 <body>
-  <h1>Humanoid-AI Diagnostic Agents</h1>
-  <p>Longer description of your Ameca-based diagnostic system, architecture, datasets, and planned studies.</p>
-  <p><a href="index.html">← Back to main page</a></p>
+  <div class="container">
+    <header>
+      <a class="back-link" href="index.html#research">← Back to research overview</a>
+      <span class="small">Filippo Cenacchi · Humanoid-AI Diagnostic Agents</span>
+    </header>
+
+    <div class="hero">
+      <div>
+        <p class="pill">
+          <span class="dot"></span>
+          Live project · Ameca-based diagnostic conversations
+        </p>
+        <h1>Humanoid-AI Diagnostic Agents</h1>
+        <p class="subtitle">
+          Building Ameca-driven agents that run structured yet natural conversations and
+          transform multi-modal behaviour into early-warning signals for depression,
+          PTSD and cognitive decline.
+        </p>
+      </div>
+      <figure class="hero-media">
+        <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
+      </figure>
+    </div>
+
+    <section>
+      <h2>Motivation</h2>
+      <p>
+        Traditional mental-health and cognitive assessments rely on short, highly structured
+        questionnaires administered in constrained clinical settings. They are difficult to
+        repeat frequently, capture only a thin slice of behaviour, and often miss early,
+        subtle changes. At the same time, fully automated chatbots lack the sense of presence,
+        pacing and accountability clinicians offer, which can undermine trust in high-stakes
+        diagnoses.
+      </p>
+      <p>
+        This project explores whether a physically present humanoid robot can act as an
+        <strong>intermediate diagnostic agent</strong>: more available and consistent than
+        busy clinicians, yet more embodied, accountable and emotionally legible than a
+        disembodied app. The Ameca platform is used as a tangible, expressive front-end to
+        a multi-modal diagnostic engine and a trust-calibrated interaction policy.
+      </p>
+    </section>
+
+    <section>
+      <h2>System Overview</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            The humanoid-AI diagnostic agent is organised into four tightly coupled layers.
+            Ameca’s sensors and microphones capture speech, timing, hesitation, facial
+            micro-dynamics and posture. A perception layer performs <strong>tri-modal
+            feature extraction</strong>, feeding a fusion model derived from my
+            <em>Tri-Modal Severity Fused Diagnosis</em> work. A dialogue manager decides
+            how to pace the interaction, when to probe or slow down, and when to hand off
+            to a clinician. Finally, a trust module surfaces calibrated risk estimates and
+            reasons to both the patient and the clinician.
+          </p>
+          <p class="callout">
+            Conceptually, Ameca is treated less as a “robot therapist” and more as a
+            <strong>diagnostic sensor with agency</strong>: it can adjust its behaviour
+            to make data more informative while keeping the experience humane.
+          </p>
+        </div>
+        <div>
+          <p class="small"><strong>Current capabilities include:</strong></p>
+          <p class="small">
+            • scripted interview flows aligned with PHQ-8 / PCL-C and MoCA-style questions<br>
+            • fine-grained timing of pauses, hesitations and self-corrections in speech<br>
+            • capture of facial micro-movements and gaze shifts over time<br>
+            • configurable “strictness” and empathy profiles for different populations
+          </p>
+          <div class="tag-row">
+            <span class="tag">Ameca</span>
+            <span class="tag">Multi-modal fusion</span>
+            <span class="tag">Severity estimation</span>
+            <span class="tag">Trust calibration</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Interaction &amp; Trust Calibration</h2>
+      <p>
+        A central concern is <strong>how much autonomy</strong> the robot should have
+        in shaping the interview. The interaction policy therefore exposes a set of
+        explicit dials:
+      </p>
+      <p>
+        • <strong>Risk-aware pacing</strong> – sessions start with low-sensitivity
+        questions and only escalate when early signals are stable and the patient’s
+        behaviour suggests comfort.<br>
+        • <strong>Evidence-linked feedback</strong> – rather than opaque scores,
+        the system surfaces which segments of speech and which non-verbal patterns
+        most strongly drove a risk estimate.<br>
+        • <strong>Hand-off triggers</strong> – thresholds for when Ameca must stop
+        probing and bring a human clinician into the loop are encoded directly in
+        the policy.
+      </p>
+      <p>
+        These mechanisms are evaluated not only on predictive performance but also on
+        whether users perceive the system as <em>competent, honest and appropriately
+        cautious</em>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Relationship to Other Projects</h2>
+      <p>
+        The humanoid-AI diagnostic agent acts as a physical deployment target for several
+        strands of my work:
+      </p>
+      <p>
+        • the <em>Tri-Modal Severity Fused Diagnosis</em> model for robust depression /
+        PTSD severity estimation under missing modalities;<br>
+        • the <em>SimClinician</em> simulation testbed, which allows interaction policies
+        to be stress-tested in thousands of synthetic interviews before any patient sees
+        them;<br>
+        • the <em>avatarization pipeline</em>, which replays real Ameca sessions as
+        anonymised 3D avatars for longitudinal analysis.
+      </p>
+      <p>
+        Together, these components allow rapid iteration on interaction strategies and
+        diagnostic models without repeatedly exposing vulnerable participants to
+        immature prototypes.
+      </p>
+    </section>
+
+    <section>
+      <h2>Status &amp; Next Steps</h2>
+      <p>
+        The current prototype is capable of running fully automated screening interviews
+        and producing calibrated severity scores backed by multi-modal evidence. Ongoing
+        work focuses on tighter integration with clinical partners, expanded support for
+        cognitive screening tasks, and formal user studies on trust, workload and
+        perceived empathy when interacting with humanoid agents compared to screen-based
+        tools.
+      </p>
+    </section>
+  </div>
 </body>
 </html>
