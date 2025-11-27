@@ -45,7 +45,7 @@
       backdrop-filter:blur(10px);
     }
     .subpage-nav{
-      max-width:1100px;
+      max-width:1200px;
       margin:0 auto;
       padding:0 20px 4px;
     }
@@ -55,7 +55,7 @@
     }
 
     .hero-content{
-      max-width:1100px;
+      max-width:1200px;
       margin:0 auto;
       padding:10px 20px 24px;
     }
@@ -96,7 +96,7 @@
     }
 
     .subpage-main{
-      max-width:1100px;
+      max-width:1200px;
       margin:0 auto 48px;
       padding:20px;
     }
@@ -155,33 +155,25 @@
       margin-top:4px;
     }
 
-    /* Figure cards for the two images */
-    .figure-grid{
-      display:grid;
-      gap:18px;
-    }
-    @media (min-width: 900px){
-      .figure-grid{
-        grid-template-columns:minmax(0,1.1fr) minmax(0,1.1fr);
-      }
-    }
+    /* Big figure cards – stacked vertically */
     .figure-card{
       background:var(--muted);
-      border-radius:16px;
-      padding:10px 10px 12px;
+      border-radius:18px;
+      padding:14px 14px 16px;
       border:1px solid var(--border);
       box-shadow:var(--shadow);
+      margin-bottom:18px;
     }
     .figure-card img{
       width:100%;
       height:auto;
-      border-radius:12px;
+      border-radius:14px;
       display:block;
       border:1px solid var(--border);
-      box-shadow:0 6px 20px rgba(15,23,42,0.18);
+      box-shadow:0 10px 30px rgba(15,23,42,0.22);
     }
     .figure-card figcaption{
-      margin-top:8px;
+      margin-top:10px;
       font-size:13px;
       color:var(--subtle);
     }
@@ -313,28 +305,34 @@
       </ol>
     </section>
 
-    <!-- Visual UI + pipeline figures -->
+    <!-- Visual UI + pipeline figures, big & stacked -->
     <section class="subsection">
       <h2>Analysis UI and pipeline visuals</h2>
-      <div class="figure-grid">
-        <figure class="figure-card">
-          <img src="dementia%20(4).png"
-               alt="Dashboard showing multiple YT-DemTalk faces with overlayed landmarks and micro-dynamics traces." />
-          <figcaption>
-            Live analysis UI: multiple YT-DemTalk clips with stabilised landmarks, stream traces
-            (blink, jaw, gaze, brow, head), and calibrated risk badges for fast clinician review.
-          </figcaption>
-        </figure>
 
-        <figure class="figure-card">
-          <img src="dementia.diagram%20(6).png"
-               alt="Architecture diagram of the passive dementia screening micro-dynamics pipeline." />
-          <figcaption>
-            End-to-end micro-dynamics pipeline: extraction &amp; event tokens, time+spectral encoding,
-            adaptive baseline normalisation, and calibrated stacked classifier head.
-          </figcaption>
-        </figure>
-      </div>
+      <figure class="figure-card">
+        <img src="analysis_dashboard.png"
+             alt="Live dementia analysis dashboard with a talking-head video, facial landmarks, micro-dynamics traces and a spatiotemporal stability heatmap." />
+        <figcaption>
+          <strong>Live micro-dynamics dashboard.</strong> A dementia clip from YT-DemTalk is analysed
+          frame by frame. Stabilised landmarks are overlaid on the video (left), while the right side
+          shows calibrated micro-dynamics traces (blinking, eyelid stability, mouth–jaw motion, gaze
+          lability, brow asymmetry, head jitter) and a spatiotemporal stability map. Clinicians can see
+          how local changes in gaze, jaw motion, or head jitter directly influence the moment-to-moment
+          risk estimate.
+        </figcaption>
+      </figure>
+
+      <figure class="figure-card">
+        <img src="dementia.diagram%20(6).png"
+             alt="Architecture diagram of the passive dementia screening micro-dynamics pipeline from raw frames to calibrated dementia scores." />
+        <figcaption>
+          <strong>End-to-end screening pipeline.</strong> From short talking-head clips, the system
+          extracts micro-dynamics event tokens (blink, jaw, gaze, brow, head), encodes them in
+          time–spectral windows, applies adaptive baseline normalisation, then feeds motion-mix
+          embeddings into a calibrated stacked classifier head. The final calibrated score can be
+          thresholded for screening or integrated into a broader multi-disorder triage dashboard.
+        </figcaption>
+      </figure>
     </section>
 
     <!-- Dataset section -->
