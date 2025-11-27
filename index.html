@@ -671,10 +671,10 @@
       font-size:12px;
     }
 
-  /* --- Education logos: floating badges on the right ----------------------- */
+  /* --- Education logos: full logos on the right, no container ----------- */
 #education .timeline .item{
   position:relative;
-  padding-right:96px; /* room for the logo badge */
+  padding-right:140px;   /* more space for a wide logo */
 }
 
 #education .edu-logo-link{
@@ -682,34 +682,27 @@
   top:50%;
   right:32px;
   transform:translateY(-50%);
-  width:56px;
-  height:56px;
-  border-radius:18px;
-  background:#ffffff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 16px 40px rgba(15,23,42,.18);
-  border:1px solid rgba(148,163,184,.45);
-  transition:
-    transform .18s ease,
-    box-shadow .18s ease,
-    border-color .18s ease;
+  display:block;
 }
 
 #education .edu-logo-link img{
-  max-width:72%;
-  max-height:72%;
+  display:block;
+  height:56px;          /* make them nicely big */
+  width:auto;
   object-fit:contain;
+  filter:drop-shadow(0 10px 26px rgba(15,23,42,.25));
+  transition:
+    transform .18s ease,
+    filter .18s ease;
 }
 
-#education .edu-logo-link:hover{
-  transform:translateY(-50%) translateY(-1px) scale(1.03);
-  box-shadow:0 20px 50px rgba(15,23,42,.26);
-  border-color:rgba(59,130,246,.65);
+/* gentle hover lift */
+#education .edu-logo-link:hover img{
+  transform:translateY(-1px) scale(1.04);
+  filter:drop-shadow(0 14px 34px rgba(15,23,42,.32));
 }
 
-/* Mobile: stack logo under the text so it doesn't crowd */
+/* Mobile: logo sits under the text so it doesn't crowd the card */
 @media (max-width:720px){
   #education .timeline .item{
     padding-right:16px;
@@ -717,10 +710,10 @@
   #education .edu-logo-link{
     position:static;
     margin-top:10px;
-    width:48px;
-    height:48px;
     transform:none;
-    box-shadow:0 10px 28px rgba(15,23,42,.16);
+  }
+  #education .edu-logo-link img{
+    height:46px;
   }
 }
 
