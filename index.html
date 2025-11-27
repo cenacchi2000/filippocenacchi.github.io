@@ -51,6 +51,15 @@
     }
     .grid{display:grid;gap:18px}
 
+    /* Make video iframes fill the entire media area */
+.card-media iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
     .nav{
       position:sticky;
       top:0;
@@ -293,10 +302,64 @@
    border:1px solid rgba(0,0,0,.06);
   }
 
-  /* Body */
-  .card-body{ padding:18px 18px 20px; }
-  .card-body h3{ margin:0 0 8px; font-weight:800; }
+   .card-body{
+    padding:18px 18px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .card-body h3{ margin:0 0 4px; font-weight:800; }
   .card-body p{ margin:0; line-height:1.55; }
+
+  /* Palette-style "Dedicated project page" buttons */
+  .project-strip{
+    margin-top:10px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    color:#f9fafb;
+    box-shadow:0 8px 24px rgba(15,23,42,.25);
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  .project-strip span.label{
+    padding:2px 9px;
+    border-radius:999px;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    background:rgba(15,23,42,.18);
+  }
+  .project-strip:hover{
+    text-decoration:none;
+    transform:translateY(-1px);
+    box-shadow:0 12px 30px rgba(15,23,42,.35);
+  }
+
+  /* Different colour palette for each card */
+  .project-strip--humanoid{
+    background:linear-gradient(135deg,#4f46e5,#818cf8);
+  }
+  .project-strip--sim{
+    background:linear-gradient(135deg,#0f766e,#22c55e);
+  }
+  .project-strip--avatar{
+    background:linear-gradient(135deg,#f97316,#ec4899);
+  }
+  .project-strip--triage{
+    background:linear-gradient(135deg,#0ea5e9,#22c55e);
+  }
+  .project-strip--dementia{
+    background:linear-gradient(135deg,#7c3aed,#a855f7);
+  }
+  .project-strip--reel{
+    background:linear-gradient(135deg,#ec4899,#6366f1);
+  }
+
 
   /* Lightbox */
   .lightbox{
@@ -699,7 +762,11 @@
       <div class="card-body">
         <h3>Humanoid-AI Diagnostic Agents</h3>
         <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
-        <p class="meta"><a href="humanoid-diagnostic.html">Dedicated project page →</a></p>
+        <a class="project-strip project-strip--humanoid" href="humanoid-diagnostic.html">
+  <span class="label">Humanoid AI</span>
+  <span>Dedicated project page →</span>
+</a>
+
       </div>
     </article>
 
@@ -717,7 +784,11 @@
       <div class="card-body">
         <h3>Simulation-First Training</h3>
         <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
-        <p class="meta"><a href="simulation-first-training.html">Dedicated project page →</a></p>
+        <a class="project-strip project-strip--sim" href="simulation-first-training.html">
+  <span class="label">Simulation</span>
+  <span>Dedicated project page →</span>
+</a>
+
       </div>
     </article>
 
@@ -735,7 +806,11 @@
       <div class="card-body">
         <h3>Privacy-Preserving Avatarization</h3>
         <p>Transforming raw sessions into re-playable 3D <strong>avatars</strong> that encode behavioral and affective signals while <strong>removing identifiers</strong>. Supports longitudinal tracking without storing voices or faces.</p>
-        <p class="meta"><a href="privacy-preserving-avatarization.html">Dedicated project page →</a></p>
+        <a class="project-strip project-strip--avatar" href="privacy-preserving-avatarization.html">
+  <span class="label">Avatarization</span>
+  <span>Dedicated project page →</span>
+</a>
+
       </div>
     </article>
 
@@ -753,34 +828,15 @@
       <div class="card-body">
         <h3>Decision Support &amp; Triage</h3>
         <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
-        <p class="meta"><a href="decision-support-triage.html">Dedicated project page →</a></p>
+        <a class="project-strip project-strip--triage" href="decision-support-triage.html">
+  <span class="label">Triage AI</span>
+  <span>Dedicated project page →</span>
+</a>
+
       </div>
     </article>
 
-    <!-- 5. NEW: MetaHuman Avatar Reel (.mov video) -->
-    <article class="card-focus">
-      <div class="card-media" aria-label="MetaHuman avatar reel demo">
-        <div class="video-wrapper">
-  <iframe
-    src="https://www.youtube.com/embed/Z5OKkYK8zjc?autoplay=1&mute=1&loop=1&playlist=Z5OKkYK8zjc&controls=0&modestbranding=1&rel=0"
-    title="Passive Dementia Screening demo"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-    loading="lazy">
-  </iframe>
-</div>
-
-        <span class="media-gradient"></span>
-      </div>
-      <div class="card-body">
-        <h3>MetaHuman Avatar Reel</h3>
-        <p>Vertical <strong>.mov demo</strong> of a MetaHuman avatar driven by Ameca-style signals. Showcases synchronised facial motion, gaze and pacing for simulation-first training.</p>
-        <p class="meta"><a href="metahuman-avatar-reel.html">Dedicated project page →</a></p>
-      </div>
-    </article>
-  </div>
-      <!-- 6. Passive Dementia Screening -->
+    <!-- 5. Passive Dementia Screening (LEFT card of last row) -->
     <article class="card-focus">
       <button class="card-media" data-full="yt-demtalk-ui.png" aria-label="Open image: Passive dementia screening UI">
         <img src="yt-demtalk-ui.png" alt="UI for passive dementia screening from talking-head video">
@@ -798,27 +854,45 @@
           in-the-wild talking-head video, using blink, gaze, and jaw dynamics with a calibrated, deployable
           risk score.
         </p>
-        <a class="card-link" href="passive-dementia-screening.html">
-          Explore project &rarr;
-        </a>
+        <a class="project-strip project-strip--dementia" href="passive-dementia-screening.html">
+  <span class="label">Dementia</span>
+  <span>Dedicated project page →</span>
+</a>
+
       </div>
     </article>
 
+    <!-- 6. MetaHuman Avatar Reel (RIGHT card of last row) -->
+    <article class="card-focus">
+      <div class="card-media" aria-label="MetaHuman avatar reel demo">
+        <iframe
+          src="https://www.youtube.com/embed/Z5OKkYK8zjc?autoplay=1&mute=1&loop=1&playlist=Z5OKkYK8zjc&controls=0&modestbranding=1&rel=0"
+          title="MetaHuman Avatar Reel"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+        <span class="media-gradient"></span>
+      </div>
+      <div class="card-body">
+        <h3>MetaHuman Avatar Reel</h3>
+        <p>Vertical demo of a MetaHuman avatar driven by Ameca-style signals. Showcases synchronised facial motion, gaze and pacing for simulation-first training.</p>
+        <a class="project-strip project-strip--reel" href="metahuman-avatar-reel.html">
+  <span class="label">Demo Reel</span>
+  <span>Dedicated project page →</span>
+</a>
 
-  <!-- Lightbox (kept as before, for image cards) -->
+      </div>
+    </article>
+  </div>
+
+  <!-- Single lightbox for image cards -->
   <dialog id="lightbox" class="lightbox">
     <img alt="" id="lightbox-img">
     <button id="lightbox-close" aria-label="Close">×</button>
   </dialog>
 </section>
 
-
-  <!-- Lightbox (needed by your JS at the bottom) -->
-  <dialog id="lightbox" class="lightbox">
-    <img alt="" id="lightbox-img">
-    <button id="lightbox-close" aria-label="Close">×</button>
-  </dialog>
-</section>
 
 
  <section id="publications" class="section">
