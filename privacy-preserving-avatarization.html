@@ -4,10 +4,209 @@
   <meta charset="utf-8">
   <title>Privacy-Preserving Avatarization • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="An avatarization pipeline that converts raw humanoid sessions into anonymised 3D avatar replays, preserving temporal behaviour while removing biometric identifiers.">
+
+  <style>
+    :root{
+      --bg:#f7f9fc;--panel:#ffffff;--text:#0b1220;--subtle:#475569;
+      --brand:#2563eb;--brand-ink:#1d4ed8;--border:#e5e7eb;
+      --shadow:0 10px 32px rgba(15,23,42,0.10);
+      --accent-soft:rgba(37,99,235,0.08);
+    }
+    *{box-sizing:border-box;}
+    html,body{
+      margin:0;padding:0;min-height:100vh;
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% -10%,rgba(37,99,235,.18),transparent 55%),
+        radial-gradient(900px 600px at 100% 0%,rgba(52,211,153,.15),transparent 55%),
+        linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
+    }
+    a{color:var(--brand-ink);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:960px;margin:0 auto;padding:24px 16px 40px;}
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:12px;margin-bottom:24px;
+    }
+    .back-link{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      background:#fff;border:1px solid var(--border);
+      font-size:14px;box-shadow:0 4px 16px rgba(15,23,42,0.12);
+    }
+    h1{font-size:clamp(30px,4vw,40px);margin:8px 0 4px;}
+    .subtitle{margin:0;color:var(--subtle);font-size:15px;}
+    .hero{
+      display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1.4fr);
+      gap:24px;align-items:flex-start;margin-bottom:28px;
+    }
+    .hero-media{
+      border-radius:22px;overflow:hidden;border:1px solid var(--border);
+      box-shadow:var(--shadow);background:#000;
+    }
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block;}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(15,23,42,0.03);
+      border:1px solid rgba(148,163,184,0.6);
+      font-size:13px;color:var(--subtle);
+    }
+    .pill span.dot{width:8px;height:8px;border-radius:999px;background:#22c55e;}
+    section{
+      margin-bottom:26px;background:var(--panel);border-radius:18px;
+      border:1px solid var(--border);box-shadow:var(--shadow);
+      padding:18px 20px 18px;
+    }
+    section h2{margin-top:0;font-size:20px;}
+    .tag-row{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+    .tag{
+      font-size:12px;padding:4px 9px;border-radius:999px;
+      background:var(--accent-soft);color:var(--brand-ink);
+      border:1px solid rgba(37,99,235,0.25);
+    }
+    .two-col{
+      display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+      gap:18px;
+    }
+    @media(max-width:800px){
+      .hero{grid-template-columns:1fr;}
+      .two-col{grid-template-columns:1fr;}
+    }
+    .callout{
+      margin:0;padding:12px 14px;border-radius:12px;
+      background:rgba(34,197,94,0.07);
+      border-left:4px solid #22c55e;
+      font-size:14px;color:var(--subtle);
+    }
+    .small{font-size:14px;color:var(--subtle);}
+  </style>
 </head>
 <body>
-  <h1>Privacy-Preserving Avatarization</h1>
-  <p>Explain your avatarization pipeline, anonymisation, longitudinal analysis, and clinical use cases.</p>
-  <p><a href="index.html">← Back to main page</a></p>
+  <div class="container">
+    <header>
+      <a class="back-link" href="index.html#research">← Back to research overview</a>
+      <span class="small">Filippo Cenacchi · Privacy-Preserving Avatarization</span>
+    </header>
+
+    <div class="hero">
+      <div>
+        <p class="pill">
+          <span class="dot"></span>
+          Avatar-based replays · Longitudinal analysis without faces
+        </p>
+        <h1>Privacy-Preserving Avatarization</h1>
+        <p class="subtitle">
+          A pipeline that converts raw Ameca and tele-health sessions into stylised
+          3D avatars, preserving timing, gaze and affective dynamics while stripping
+          away biometric identity.
+        </p>
+      </div>
+      <figure class="hero-media">
+        <img src="facegaze_top_female%20(1).png"
+             alt="Animated 3D avatar with AU heatmap for privacy-preserving replay">
+      </figure>
+    </div>
+
+    <section>
+      <h2>Problem</h2>
+      <p>
+        For early disease detection, the most informative signals are often subtle and
+        longitudinal: small changes in facial micro-movements, hesitation patterns, gaze
+        avoidance or prosody across months. Capturing these trajectories at scale would
+        require storing large amounts of raw video and audio, which is ethically fraught
+        and often impossible under current privacy regulations.
+      </p>
+      <p>
+        The avatarization project tackles this tension directly by asking:
+        <em>how much of a person’s diagnostic footprint can be retained if we remove
+        their actual face and voice?</em>
+      </p>
+    </section>
+
+    <section>
+      <h2>Pipeline</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            Each recorded session (from Ameca or tele-health) is decomposed into
+            temporally aligned streams: facial action units, gaze vectors, head pose,
+            body posture descriptors and speech features. Rather than storing pixels,
+            the system stores a compressed behavioural timeline.
+          </p>
+          <p>
+            This timeline is then “re-rendered” onto a <strong>neutral 3D avatar</strong>
+            inside a game engine. The avatar’s identity is deliberately generic, but its
+            movements and gaze follow the original participant with high temporal
+            fidelity. Audio can be represented as a de-identified transcript plus
+            synthetic speech, or removed entirely depending on the risk profile.
+          </p>
+        </div>
+        <div>
+          <p class="small"><strong>Key properties:</strong></p>
+          <p class="small">
+            • no raw facial pixels or original voice stored<br>
+            • continuous replay of behavioural timelines for expert review<br>
+            • precise timestamps that align with model features and clinician notes<br>
+            • configurable anonymisation levels for different ethics requirements
+          </p>
+          <div class="tag-row">
+            <span class="tag">3D avatars</span>
+            <span class="tag">Behavioural timelines</span>
+            <span class="tag">De-identification</span>
+            <span class="tag">Longitudinal cohorts</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Use Cases</h2>
+      <p>
+        For clinicians, avatar replays act as a <strong>timeline microscope</strong>:
+        sessions can be reviewed quickly at 1.5×–2× speed, focusing on non-verbal
+        patterns rather than personal appearance. For researchers, large banks of
+        avatarised sessions can be shared across institutions with substantially lower
+        risk than raw video, enabling replication and cross-site studies.
+      </p>
+      <p>
+        The same representations also support model introspection. If a model’s risk
+        estimate spikes, investigators can replay the corresponding avatar segment and
+        inspect which combinations of gaze, AUs and prosody might be driving the change
+        without ever seeing the real person.
+      </p>
+    </section>
+
+    <section>
+      <h2>Ethical Framing</h2>
+      <p class="callout">
+        The goal is not to “launder” sensitive data but to
+        <strong>design privacy into the representation itself</strong>. The pipeline is
+        developed under formal ethics approval, with participants informed that their
+        data may be represented through anonymous avatars rather than raw recordings.
+      </p>
+      <p>
+        Open questions include how much identity can leak through body language alone,
+        how to handle culturally specific gestures, and how avatar style (realistic vs
+        stylised) influences both diagnostic validity and participant comfort. These
+        questions form a dedicated research agenda around avatar-based clinical data.
+      </p>
+    </section>
+
+    <section>
+      <h2>Status &amp; Integration</h2>
+      <p>
+        Avatarization is being integrated with both the Ameca diagnostic agent and
+        SimClinician. Humanoid sessions can be replayed as avatars in the same virtual
+        spaces used for simulation, enabling a tight loop between real participants,
+        synthetic patients and model training. Future work includes probabilistic
+        guarantees of de-identification and interactive tools for clinicians to annotate
+        and compare avatar timelines across cohorts.
+      </p>
+    </section>
+  </div>
 </body>
 </html>
