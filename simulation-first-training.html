@@ -2,12 +2,213 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Simulation-First Training • Filippo Cenacchi</title>
+  <title>Simulation-First Training (SimClinician) • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="SimClinician: an Unreal Engine 5 / MetaHuman testbed for counterfactual diagnostic simulations, letting clinicians and agents practise thousands of synthetic interviews before deployment.">
+
+  <style>
+    :root{
+      --bg:#f7f9fc;--panel:#ffffff;--text:#0b1220;--subtle:#475569;
+      --brand:#2563eb;--brand-ink:#1d4ed8;--border:#e5e7eb;
+      --shadow:0 10px 32px rgba(15,23,42,0.10);
+      --accent-soft:rgba(37,99,235,0.08);
+    }
+    *{box-sizing:border-box;}
+    html,body{
+      margin:0;padding:0;min-height:100vh;
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 650px at 8% -10%,rgba(37,99,235,.16),transparent 55%),
+        radial-gradient(900px 600px at 100% 0%,rgba(244,114,182,.12),transparent 55%),
+        linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
+    }
+    a{color:var(--brand-ink);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:960px;margin:0 auto;padding:24px 16px 40px;}
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:12px;margin-bottom:24px;
+    }
+    .back-link{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      background:#fff;border:1px solid var(--border);
+      font-size:14px;box-shadow:0 4px 16px rgba(15,23,42,0.12);
+    }
+    h1{font-size:clamp(30px,4vw,40px);margin:8px 0 4px;}
+    .subtitle{margin:0;color:var(--subtle);font-size:15px;}
+    .hero{
+      display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1.4fr);
+      gap:24px;align-items:flex-start;margin-bottom:28px;
+    }
+    .hero-media{
+      border-radius:22px;overflow:hidden;border:1px solid var(--border);
+      box-shadow:var(--shadow);background:#000;
+    }
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block;}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(15,23,42,0.03);
+      border:1px solid rgba(148,163,184,0.6);
+      font-size:13px;color:var(--subtle);
+    }
+    .pill span.dot{width:8px;height:8px;border-radius:999px;background:#f97316;}
+    section{
+      margin-bottom:26px;background:var(--panel);border-radius:18px;
+      border:1px solid var(--border);box-shadow:var(--shadow);
+      padding:18px 20px 18px;
+    }
+    section h2{margin-top:0;font-size:20px;}
+    .tag-row{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+    .tag{
+      font-size:12px;padding:4px 9px;border-radius:999px;
+      background:var(--accent-soft);color:var(--brand-ink);
+      border:1px solid rgba(37,99,235,0.25);
+    }
+    .two-col{
+      display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+      gap:18px;
+    }
+    @media(max-width:800px){
+      .hero{grid-template-columns:1fr;}
+      .two-col{grid-template-columns:1fr;}
+    }
+    .callout{
+      margin:0;padding:12px 14px;border-radius:12px;
+      background:rgba(37,99,235,0.05);
+      border-left:4px solid var(--brand);
+      font-size:14px;color:var(--subtle);
+    }
+    .small{font-size:14px;color:var(--subtle);}
+  </style>
 </head>
 <body>
-  <h1>Simulation-First Training (SimClinician)</h1>
-  <p>Details about the SimClinician pipeline, MetaHuman setup, PHQ-8 / PCL-C flows, counterfactual replay, etc.</p>
-  <p><a href="index.html">← Back to main page</a></p>
+  <div class="container">
+    <header>
+      <a class="back-link" href="index.html#research">← Back to research overview</a>
+      <span class="small">Filippo Cenacchi · Simulation-First Training</span>
+    </header>
+
+    <div class="hero">
+      <div>
+        <p class="pill">
+          <span class="dot"></span>
+          SimClinician · MetaHuman diagnostic sandbox
+        </p>
+        <h1>Simulation-First Training for Diagnostic Agents</h1>
+        <p class="subtitle">
+          SimClinician is an Unreal Engine 5 / MetaHuman testbed that lets agents and
+          clinicians rehearse thousands of synthetic interviews before anything reaches
+          real patients.
+        </p>
+      </div>
+      <figure class="hero-media">
+        <img src="Scene%20(1).png" alt="MetaHuman simulation scene from SimClinician">
+      </figure>
+    </div>
+
+    <section>
+      <h2>Why Simulation-First?</h2>
+      <p>
+        Mental-health and cognitive screening tools are typically tuned directly on small,
+        precious clinical datasets. Every design mistake carries ethical risk, and it is
+        difficult to explore alternative interaction policies or edge cases without burdening
+        participants. At the same time, large pre-training corpora rarely reflect the
+        turn-taking, hesitation patterns and emotional nuance that appear in real clinical
+        conversations.
+      </p>
+      <p>
+        SimClinician treats simulation not as a game-like toy, but as a
+        <strong>high-fidelity rehearsal space</strong> where models, policies and clinicians
+        can be stress-tested against a wide spectrum of synthetic patients before any
+        deployment to humanoid robots or tele-health settings.
+      </p>
+    </section>
+
+    <section>
+      <h2>Core Design</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            The platform is built on Unreal Engine&nbsp;5 with <strong>MetaHuman</strong>
+            characters serving as simulated patients. Each scene binds together
+            synchronised speech, facial animation, gaze behaviour and body posture, driven
+            by annotated diagnostic flows such as PHQ-8 and PCL-C. Episodes are controlled
+            by a scenario graph that encodes patient trajectories, risk profiles and
+            possible branching responses.
+          </p>
+          <p class="callout">
+            A single scenario template can be replayed with many different non-verbal
+            styles, noise conditions and pacing strategies, which is crucial for
+            training robust multi-modal models and interaction policies.
+          </p>
+        </div>
+        <div>
+          <p class="small"><strong>Key ingredients:</strong></p>
+          <p class="small">
+            • MetaHuman patients with controllable affect and engagement<br>
+            • synchronised facial AUs, gaze and audio for each scripted turn<br>
+            • environment variations (lighting, noise, camera framing)<br>
+            • logging hooks that mirror what Ameca or tele-health systems would record
+          </p>
+          <div class="tag-row">
+            <span class="tag">Unreal Engine 5</span>
+            <span class="tag">MetaHuman</span>
+            <span class="tag">Scenario graphs</span>
+            <span class="tag">Counterfactual replay</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Counterfactual &amp; Perturbation Experiments</h2>
+      <p>
+        SimClinician is explicitly optimised for <strong>counterfactual experiments</strong>.
+        For a fixed transcript, the system can vary only the non-verbal profile of the
+        patient (eye contact, micro-expressions, fidgeting), or only the clinician’s
+        pacing and prompt wording, while keeping everything else identical. This makes it
+        possible to isolate which behavioural dimensions most strongly influence a model’s
+        risk estimates and a user’s sense of being understood.
+      </p>
+      <p>
+        These counterfactuals also underpin the design of <em>humanoid-friendly</em>
+        behavioural cues: rather than simply copying human clinicians, policies are
+        derived from structured sweeps over what works best for specific user profiles,
+        noise levels and comorbidities.
+      </p>
+    </section>
+
+    <section>
+      <h2>Bridging to Real-World Data</h2>
+      <p>
+        SimClinician is not intended to replace clinical data. Instead, it sits between
+        corpora such as E-DAIC / DAIC-WOZ and humanoid deployments. Models are first
+        pre-trained on real datasets, then stress-tested and adapted within simulation,
+        and finally evaluated again with clinicians and, eventually, patients.
+      </p>
+      <p>
+        This pipeline reduces the number of risky prototypes that need to be tested with
+        vulnerable participants and allows more principled exploration of edge cases
+        (for example, highly reticent or over-talkative patients) that are rare in
+        existing datasets.
+      </p>
+    </section>
+
+    <section>
+      <h2>Current Status &amp; Outlook</h2>
+      <p>
+        The current version of SimClinician supports small libraries of depression and
+        trauma-focused scenarios, with export hooks for both offline model training and
+        online policy evaluation. Next steps include richer social contexts (e.g.,
+        caregiver–patient dyads), explicit modelling of clinician workload, and direct
+        streaming of simulated sessions into Ameca and other humanoids for hardware-in-the-loop
+        testing.
+      </p>
+    </section>
+  </div>
 </body>
 </html>
