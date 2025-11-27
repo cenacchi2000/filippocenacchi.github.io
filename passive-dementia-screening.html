@@ -4,21 +4,207 @@
   <meta charset="UTF-8" />
   <title>Passive Dementia Screening – Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- keep if you later move shared CSS here -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- local UI styling so this page looks like the main site even if styles.css is empty -->
+  <style>
+    :root{
+      --bg: #f7f9fc;
+      --panel: #ffffff;
+      --text: #0b1220;
+      --subtle: #475569;
+      --brand: #2563eb;
+      --brand-ink: #1d4ed8;
+      --muted: #f1f5f9;
+      --border: #e5e7eb;
+      --shadow: 0 8px 30px rgba(2,6,23,0.08);
+    }
+
+    *{box-sizing:border-box;}
+
+    body.subpage{
+      margin:0;
+      padding:0;
+      background:
+        radial-gradient(1200px 700px at 12% -10%, rgba(37,99,235,.12), transparent 50%),
+        radial-gradient(900px 600px at 100% 0%, rgba(99,102,241,.10), transparent 50%),
+        linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
+      color:var(--text);
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial;
+    }
+
+    a{color:var(--brand-ink);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .subpage-hero{
+      padding:18px 0 10px;
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,0.82);
+      backdrop-filter:blur(10px);
+    }
+    .subpage-nav{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 20px 4px;
+    }
+    .nav-back{
+      font-size:14px;
+      color:var(--subtle);
+    }
+
+    .hero-content{
+      max-width:1100px;
+      margin:0 auto;
+      padding:10px 20px 24px;
+    }
+    .eyebrow{
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:12px;
+      color:var(--subtle);
+      margin:0 0 4px;
+    }
+    .hero-content h1{
+      margin:0 0 8px;
+      font-size:clamp(26px, 4vw, 34px);
+      line-height:1.15;
+    }
+    .hero-lead{
+      margin:0 0 10px;
+      max-width:60ch;
+      color:var(--subtle);
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      font-size:13px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--muted);
+      color:var(--subtle);
+    }
+    .hero-tags{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .subpage-main{
+      max-width:1100px;
+      margin:0 auto 48px;
+      padding:20px;
+    }
+    .subsection{
+      background:var(--panel);
+      border-radius:18px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      padding:20px 22px;
+      margin-bottom:20px;
+    }
+    .subsection h2{
+      margin-top:0;
+      font-size:20px;
+    }
+
+    .metric-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:14px;
+    }
+    .metric{
+      padding:12px 12px 10px;
+      border-radius:14px;
+      background:var(--muted);
+    }
+    .metric-label{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:var(--subtle);
+    }
+    .metric-value{
+      font-weight:700;
+      font-size:16px;
+      margin:2px 0 4px;
+    }
+    .metric-note{
+      margin:0;
+      font-size:13px;
+      color:var(--subtle);
+    }
+
+    .numbered{
+      padding-left:18px;
+    }
+    .numbered li + li{
+      margin-top:6px;
+    }
+
+    .bullet-list{
+      padding-left:18px;
+      margin:8px 0 0;
+    }
+    .bullet-list li + li{
+      margin-top:4px;
+    }
+
+    /* Figure cards for the two images */
+    .figure-grid{
+      display:grid;
+      gap:18px;
+    }
+    @media (min-width: 900px){
+      .figure-grid{
+        grid-template-columns:minmax(0,1.1fr) minmax(0,1.1fr);
+      }
+    }
+    .figure-card{
+      background:var(--muted);
+      border-radius:16px;
+      padding:10px 10px 12px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    .figure-card img{
+      width:100%;
+      height:auto;
+      border-radius:12px;
+      display:block;
+      border:1px solid var(--border);
+      box-shadow:0 6px 20px rgba(15,23,42,0.18);
+    }
+    .figure-card figcaption{
+      margin-top:8px;
+      font-size:13px;
+      color:var(--subtle);
+    }
+
+    @media (max-width:600px){
+      .subpage-main{padding:14px;}
+      .subsection{padding:16px 16px 18px;}
+    }
+  </style>
 </head>
 <body class="subpage">
 
   <!-- Simple top nav back to home -->
   <header class="subpage-hero">
     <nav class="subpage-nav">
-      <a href="index.html" class="nav-back">&larr; Back to overview</a>
+      <a href="index.html#research" class="nav-back">&larr; Back to overview</a>
     </nav>
 
     <div class="hero-content">
       <p class="eyebrow">Project</p>
       <h1>Passive Dementia Screening via Facial Temporal Micro-Dynamics</h1>
       <p class="hero-lead">
-        Language-free screening from ordinary talking-head video using stabilized
+        Language-free screening from ordinary talking-head video using stabilised
         <strong>facial micro-dynamics</strong> instead of transcripts or scripted interviews.
       </p>
 
@@ -41,7 +227,7 @@
         camera-facing talking-head videos. Instead of relying on language, transcripts, or scripted
         clinical interviews, it analyses <strong>how the face moves over time</strong>—blink rhythm,
         eyelid stability, mouth–jaw motion, gaze dispersion, brow asymmetry, and subtle head
-        micro-jitter—to estimate dementia risk from natural, in-the-wild recordings. :contentReference[oaicite:0]{index=0}
+        micro-jitter—to estimate dementia risk from natural, in-the-wild recordings.
       </p>
       <p>
         The core idea: if we can reliably quantify small, prosodic-scale facial movements, we can
@@ -96,16 +282,16 @@
       </p>
       <ol class="numbered">
         <li>
-          <strong>Stabilize the face.</strong> Each frame is processed with FaceMesh/Iris and head-pose
+          <strong>Stabilise the face.</strong> Each frame is processed with FaceMesh/Iris and head-pose
           estimation (SolvePnP) to decouple camera shake from true micromotor activity.
         </li>
         <li>
-          <strong>Extract micro-dynamic streams.</strong> For every frame, the system tracks:
+          <strong>Extract micro-dynamic streams.</strong> For every frame, the system tracks
           blink and eyelid regularity, mouth–jaw opening cycles, gaze dispersion, brow asymmetry,
           and head micro-movements.
         </li>
         <li>
-          <strong>Short-window encoding.</strong> Signals are smoothed and summarized over 6-second
+          <strong>Short-window encoding.</strong> Signals are smoothed and summarised over 6-second
           windows (2-second hop) after a 15-second baseline, capturing prosodic-scale dynamics
           rather than isolated frames.
         </li>
@@ -127,6 +313,30 @@
       </ol>
     </section>
 
+    <!-- Visual UI + pipeline figures -->
+    <section class="subsection">
+      <h2>Analysis UI and pipeline visuals</h2>
+      <div class="figure-grid">
+        <figure class="figure-card">
+          <img src="dementia%20(4).png"
+               alt="Dashboard showing multiple YT-DemTalk faces with overlayed landmarks and micro-dynamics traces." />
+          <figcaption>
+            Live analysis UI: multiple YT-DemTalk clips with stabilised landmarks, stream traces
+            (blink, jaw, gaze, brow, head), and calibrated risk badges for fast clinician review.
+          </figcaption>
+        </figure>
+
+        <figure class="figure-card">
+          <img src="dementia.diagram%20(6).png"
+               alt="Architecture diagram of the passive dementia screening micro-dynamics pipeline." />
+          <figcaption>
+            End-to-end micro-dynamics pipeline: extraction &amp; event tokens, time+spectral encoding,
+            adaptive baseline normalisation, and calibrated stacked classifier head.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
     <!-- Dataset section -->
     <section class="subsection">
       <h2>YT-DemTalk: in-the-wild dementia video corpus</h2>
@@ -134,7 +344,7 @@
         To support passive screening, the project introduces <strong>YT-DemTalk</strong>, a new corpus of
         300 publicly available, camera-facing videos curated from YouTube and similar platforms.
         Recordings include personal vlogs, interviews, and day-in-the-life clips where people
-        speak naturally outside experimental or clinical settings. :contentReference[oaicite:1]{index=1}
+        speak naturally outside experimental or clinical settings.
       </p>
       <ul class="bullet-list">
         <li><strong>Balanced labels:</strong> 150 clips from individuals who explicitly self-report
@@ -171,18 +381,18 @@
         Single-channel ablations show that <strong>gaze lability</strong> and <strong>mouth/jaw dynamics</strong>
         carry the strongest signal, with brow asymmetry and head micro-jitter providing secondary
         gains. This aligns with neuro-cognitive findings on oculomotor anomalies, orofacial praxis,
-        and postural stability in dementia. :contentReference[oaicite:2]{index=2}
+        and postural stability in dementia.
       </p>
       <p>
-        A live analysis UI overlays stabilized landmarks and stream traces (blink, gaze, jaw, etc.)
-        on the video, with calibrated “risk badges” summarizing the current estimate. This makes the
+        A live analysis UI overlays stabilised landmarks and stream traces (blink, gaze, jaw, etc.)
+        on the video, with calibrated “risk badges” summarising the current estimate. This makes the
         model’s behaviour <strong>visually inspectable</strong> by clinicians: they can see risk rise when
         gaze wanders or jaw cycles become irregular, and fall when facial behaviour is stable and
         well-framed.
       </p>
     </section>
 
-    <!-- Role in your broader agenda -->
+    <!-- Role in broader agenda -->
     <section class="subsection">
       <h2>How this connects to my broader research</h2>
       <p>
@@ -210,9 +420,7 @@
     <!-- Future work -->
     <section class="subsection">
       <h2>Next directions</h2>
-      <p>
-        Ongoing and future work focuses on:
-      </p>
+      <p>Ongoing and future work focuses on:</p>
       <ul class="bullet-list">
         <li>
           Coupling micro-dynamics with <strong>self-supervised video pretraining</strong> for stronger
@@ -224,7 +432,7 @@
         </li>
         <li>
           Embedding the model into <strong>resource-constrained humanoid platforms</strong> for on-device,
-          in-the-wild triage with human-in-the-loop oversight and calibration monitoring. :contentReference[oaicite:3]{index=3}
+          in-the-wild triage with human-in-the-loop oversight and calibration monitoring.
         </li>
       </ul>
     </section>
