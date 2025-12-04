@@ -349,31 +349,32 @@
       </p>
     </section>
 
-    <!-- CENTERED LIVE DEMO -->
     <section class="demo-section">
-      <h2>Interactive Dashboard (Live Demo)</h2>
-      <p class="live-demo-intro">
-        The panel below embeds a running instance of the SimClinician simulation dashboard.
-        You can scroll, switch patients, inspect multimodal evidence and see how the risk
-        gauge and decision bar respond — all without leaving this page.
-      </p>
+  <h2>Interactive Dashboard (Live Demo)</h2>
+  <p>
+    The panel below embeds a running instance of the SimClinician simulation dashboard.
+    You can scroll, switch patients, inspect multimodal evidence and see how the risk
+    gauge and decision bar respond — all without leaving this page.
+  </p>
 
-      <div class="demo-frame-wrap">
-        <iframe
-          src="https://filo-cenacchi-simclinician.hf.space"
-          title="SimClinician dashboard demo"
-          loading="lazy"
-          sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
-        </iframe>
-      </div>
+  <!-- Clear legend with the full text -->
+  <p class="demo-legend">
+    <strong>Depression band labels:</strong>
+    0–4 = <em>Minimal/None</em>, 5–9 = <em>Mild</em>, 10–14 = <em>Moderate</em>,
+    15–19 = <em>Moderately severe</em>, 20–24 = <em>Severe</em>.
+  </p>
 
-      <div class="demo-footer">
-        <span>Best experienced on desktop or laptop (full-screen view).</span>
-        <a href="https://filo-cenacchi-simclinician.hf.space" target="_blank" rel="noopener">
-          Open SimClinician in a separate tab →
-        </a>
-      </div>
-    </section>
+  <div class="demo-shell">
+    <iframe
+      class="demo-frame"
+      src="https://huggingface.co/spaces/filo-cenacchi/SimClinician/embed"
+      loading="lazy"
+      allow="accelerometer; ambient-light-sensor; camera; encrypted-media; gyroscope; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+      sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+    ></iframe>
+  </div>
+</section>
+
 
   </div>
 </body>
