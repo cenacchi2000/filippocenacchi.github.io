@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>SimClinician • Humanoid-AI Diagnostic Agents</title>
+  <title>Humanoid-AI Diagnostic Agents • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-        content="SimClinician: a multimodal simulation testbed where psychologists can explore AI-supported mental health diagnosis dashboards before live deployment.">
+        content="Ameca-driven humanoid diagnostic agents that fuse speech, facial dynamics and language for early assessment of depression, PTSD and cognitive decline.">
 
   <style>
     :root{
@@ -34,7 +34,7 @@
     a{color:var(--brand-ink);text-decoration:none}
     a:hover{text-decoration:underline}
     .container{
-      max-width:1080px;
+      max-width:1120px;
       margin:0 auto;
       padding:24px 16px 40px;
     }
@@ -67,10 +67,23 @@
     }
     .hero{
       display:grid;
-      grid-template-columns:minmax(0,1.3fr) minmax(260px,1fr);
+      grid-template-columns:minmax(0,2fr) minmax(260px,1.4fr);
       gap:24px;
       align-items:flex-start;
       margin-bottom:28px;
+    }
+    .hero-media{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      background:#000;
+    }
+    .hero-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
     .pill{
       display:inline-flex;
@@ -86,20 +99,6 @@
     .pill span.dot{
       width:8px;height:8px;border-radius:999px;background:#22c55e;
     }
-    .hero-media{
-      border-radius:22px;
-      overflow:hidden;
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-      background:#000;
-    }
-    .hero-media img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
     section{
       margin-bottom:26px;
       background:var(--panel);
@@ -112,21 +111,6 @@
       margin-top:0;
       font-size:20px;
     }
-
-    .small{
-      font-size:14px;
-      color:var(--subtle);
-    }
-    .two-col{
-      display:grid;
-      grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
-      gap:18px;
-    }
-    @media(max-width:900px){
-      .hero{grid-template-columns:1fr;}
-      .two-col{grid-template-columns:1fr;}
-    }
-
     .tag-row{
       margin-top:8px;
       display:flex;
@@ -141,7 +125,15 @@
       color:var(--brand-ink);
       border:1px solid rgba(37,99,235,0.25);
     }
-
+    .two-col{
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+      gap:18px;
+    }
+    @media(max-width:800px){
+      .hero{grid-template-columns:1fr;}
+      .two-col{grid-template-columns:1fr;}
+    }
     .callout{
       margin:0;
       padding:12px 14px;
@@ -151,221 +143,223 @@
       font-size:14px;
       color:var(--subtle);
     }
+    .small{
+      font-size:14px;
+      color:var(--subtle);
+    }
 
-    /* --- Embedded app card --- */
-    .embed-card{
+    /* Live demo block */
+    .live-demo-intro{
+      margin-bottom:10px;
+      font-size:14px;
+      color:var(--subtle);
+    }
+    .demo-frame-wrap{
+      margin-top:10px;
       border-radius:18px;
-      border:1px solid var(--border);
-      background:#020617;
-      box-shadow:var(--shadow);
-      padding:0;
       overflow:hidden;
-    }
-    .embed-header{
-      padding:12px 16px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      border-bottom:1px solid rgba(148,163,184,0.4);
-      background:linear-gradient(90deg,#020617,#020617 40%,#0f172a 100%);
-      color:#e5e7eb;
-    }
-    .embed-title{
-      font-size:15px;
-      font-weight:500;
-    }
-    .embed-badge{
-      font-size:11px;
-      padding:4px 8px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-    }
-    .embed-badge span{
-      width:7px;height:7px;border-radius:999px;background:#22c55e;
-    }
-    .embed-iframe-wrapper{
-      position:relative;
-      width:100%;
-      /* 16:9 aspect ratio */
-      padding-top:62%;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
       background:#020617;
     }
-    .embed-iframe-wrapper iframe{
-      position:absolute;
-      inset:0;
+    .demo-frame-wrap iframe{
+      display:block;
       width:100%;
-      height:100%;
+      height:720px;       /* Nice big viewport */
       border:0;
     }
-    .embed-footer{
-      padding:10px 14px 12px;
-      background:#020617;
-      border-top:1px solid rgba(15,23,42,0.9);
-      color:#9ca3af;
-      font-size:12px;
+    @media(max-width:900px){
+      .demo-frame-wrap iframe{
+        height:640px;
+      }
+    }
+    @media(max-width:640px){
+      .demo-frame-wrap iframe{
+        height:540px;
+      }
+    }
+    .demo-footer{
       display:flex;
       justify-content:space-between;
-      gap:8px;
-      flex-wrap:wrap;
+      align-items:center;
+      gap:12px;
+      margin-top:10px;
+      font-size:12px;
+      color:var(--subtle);
     }
-    .embed-footer a{
-      color:#93c5fd;
-      text-decoration:none;
+    .demo-footer a{
+      font-weight:500;
     }
-    .embed-footer a:hover{text-decoration:underline;}
-
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <a class="back-link" href="index.html#research">← Back to research overview</a>
-      <span class="small">Filippo Cenacchi · SimClinician</span>
+      <span class="small">Filippo Cenacchi · Humanoid-AI Diagnostic Agents</span>
     </header>
 
     <div class="hero">
       <div>
         <p class="pill">
           <span class="dot"></span>
-          Live simulator · AI-supported mental health dashboard
+          Live project · Ameca-based diagnostic conversations
         </p>
-        <h1>SimClinician: Multimodal Simulation Testbed</h1>
+        <h1>Humanoid-AI Diagnostic Agents</h1>
         <p class="subtitle">
-          An interactive environment that turns real interview data into
-          psychologist–AI collaboration. Explore how audio, transcripts,
-          facial dynamics and risk gauges come together in a single
-          decision-support interface for depression and PTSD triage. :contentReference[oaicite:1]{index=1}
+          Building Ameca-driven agents that run structured yet natural conversations and
+          transform multi-modal behaviour into early-warning signals for depression,
+          PTSD and cognitive decline.
         </p>
       </div>
       <figure class="hero-media">
-        <img src="simclinician_overview.png"
-             alt="Screenshot of the SimClinician dashboard with multimodal evidence panels and risk gauge">
+        <!-- back to your original hero image -->
+        <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
       </figure>
     </div>
 
-    <!-- LIVE EMBED -->
     <section>
-      <h2>Interactive Dashboard (Live Demo)</h2>
-      <p class="small">
-        The panel below embeds a running instance of the simulation dashboard.
-        You can scroll, switch patients, inspect multimodal evidence and see how
-        the risk gauge and decision bar respond—directly from this page,
-        without leaving the site. :contentReference[oaicite:2]{index=2}
+      <h2>Motivation</h2>
+      <p>
+        Traditional mental-health and cognitive assessments rely on short, highly structured
+        questionnaires administered in constrained clinical settings. They are difficult to
+        repeat frequently, capture only a thin slice of behaviour, and often miss early,
+        subtle changes. At the same time, fully automated chatbots lack the sense of presence,
+        pacing and accountability clinicians offer, which can undermine trust in high-stakes
+        diagnoses.
       </p>
-
-      <div class="embed-card">
-        <div class="embed-header">
-          <div class="embed-title">SimClinician · Simulation run on E-DAIC interviews</div>
-          <div class="embed-badge">
-            <span></span> Live, sandboxed instance
-          </div>
-        </div>
-        <div class="embed-iframe-wrapper">
-          <!-- Replace src with the exact URL of your Space/app if different -->
-          <iframe
-            src="https://filo-cenacchi-simclinician.hf.space"
-            title="SimClinician interactive dashboard"
-            loading="lazy"
-            allow="clipboard-read; clipboard-write; microphone; autoplay">
-          </iframe>
-        </div>
-        <div class="embed-footer">
-          <span>Best experienced on desktop or laptop (full-screen view).</span>
-          <span>
-            Open in a separate tab:
-            <a href="https://filo-cenacchi-simclinician.hf.space" target="_blank" rel="noopener noreferrer">
-              SimClinician app
-            </a>
-          </span>
-        </div>
-      </div>
+      <p>
+        This project explores whether a physically present humanoid robot can act as an
+        <strong>intermediate diagnostic agent</strong>: more available and consistent than
+        busy clinicians, yet more embodied, accountable and emotionally legible than a
+        disembodied app. The Ameca platform is used as a tangible, expressive front-end to
+        a multi-modal diagnostic engine and a trust-calibrated interaction policy.
+      </p>
     </section>
 
     <section>
-      <h2>What You Can Explore in the Demo</h2>
+      <h2>System Overview</h2>
       <div class="two-col">
         <div>
           <p>
-            SimClinician is organised around the full journey a psychologist would take
-            when negotiating AI suggestions: from baseline questionnaire scores to
-            multimodal evidence panels, risk estimates and final decisions. :contentReference[oaicite:3]{index=3}
+            The humanoid-AI diagnostic agent is organised into four tightly coupled layers.
+            Ameca’s sensors and microphones capture speech, timing, hesitation, facial
+            micro-dynamics and posture. A perception layer performs <strong>tri-modal
+            feature extraction</strong>, feeding a fusion model derived from my
+            severity-aware diagnostic work. A dialogue manager decides
+            how to pace the interaction, when to probe or slow down, and when to hand off
+            to a clinician. Finally, a trust module surfaces calibrated risk estimates and
+            reasons to both the patient and the clinician.
           </p>
-          <p>
-            In the interface you can:
-          </p>
-          <p class="small">
-            • Start from validated anchors such as PHQ-8 and PCL-C, grounding decisions
-            in measurement-based care.<br>
-            • Inspect high-resolution spectrograms with rails for flat prosody, silence
-            and stress bursts.<br>
-            • Scroll through transcript ribbons showing negations, hedging, sentiment
-            shifts and temporal focus, then drill down into theory-aligned quotes.<br>
-            • Replay de-identified avatars that mirror facial action units and gaze,
-            protecting privacy while keeping non-verbal cues analysable. :contentReference[oaicite:4]{index=4}
+          <p class="callout">
+            Conceptually, Ameca is treated less as a “robot therapist” and more as a
+            <strong>diagnostic sensor with agency</strong>: it can adjust its behaviour
+            to make data more informative while keeping the experience humane.
           </p>
         </div>
         <div>
-          <p class="small"><strong>Decision layer &amp; policies</strong></p>
+          <p class="small"><strong>Current capabilities include:</strong></p>
           <p class="small">
-            At the bottom of each case the banded risk gauge aggregates depression
-            (0–4) and PTSD (0–2) into a fused risk score, surfaced with plain-language
-            next-step suggestions. The action bar lets a “synthetic clinician” confirm,
-            override up or down, or defer, with soft frictions that model real-world
-            confirmation and alert-fatigue effects. :contentReference[oaicite:5]{index=5}
-          </p>
-          <p class="small">
-            Under the hood, a unified controller applies consistent policies in both
-            interactive and large-scale simulation runs, so what you see in the
-            demo is exactly what is used to generate judge–advisor statistics,
-            calibration curves and override distributions.
+            • scripted interview flows aligned with PHQ-8 / PCL-C and MoCA-style questions<br>
+            • fine-grained timing of pauses, hesitations and self-corrections in speech<br>
+            • capture of facial micro-movements and gaze shifts over time<br>
+            • configurable “strictness” and empathy profiles for different populations
           </p>
           <div class="tag-row">
-            <span class="tag">Multimodal fusion</span>
-            <span class="tag">Clinician-in-the-loop</span>
-            <span class="tag">Simulation-first</span>
-            <span class="tag">Measurement-based care</span>
+            <span class="tag">Ameca</span>
+            <span class="tag">Multi-modal fusion</span>
+            <span class="tag">Severity estimation</span>
+            <span class="tag">Trust calibration</span>
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>Why Simulation First?</h2>
+      <h2>Interaction &amp; Trust Calibration</h2>
       <p>
-        Live clinician studies are expensive, slow to approve and ethically sensitive.
-        SimClinician acts as a buffer: it allows thousands of simulated psychologist–AI
-        interactions to be run on top of real interviews before any clinician is
-        recruited. This makes it possible to tune interface levers such as explanation
-        granularity, override friction and collaboration style (safety vs. parsimony
-        vs. deferral) while directly measuring their impact on acceptance, escalation
-        and latency. :contentReference[oaicite:6]{index=6}
+        A central concern is <strong>how much autonomy</strong> the robot should have
+        in shaping the interview. The interaction policy therefore exposes a set of
+        explicit dials:
       </p>
-      <p class="callout">
-        The demo you see here is not a toy mock-up: it is the same UI exercised by the
-        simulation harness, with a shared controller and logging schema. Design tweaks
-        explored in the browser can be swept at scale to understand how they reshape
-        clinician–AI collaboration patterns.
+      <p>
+        • <strong>Risk-aware pacing</strong> – sessions start with low-sensitivity
+        questions and only escalate when early signals are stable and the patient’s
+        behaviour suggests comfort.<br>
+        • <strong>Evidence-linked feedback</strong> – rather than opaque scores,
+        the system surfaces which segments of speech and which non-verbal patterns
+        most strongly drove a risk estimate.<br>
+        • <strong>Hand-off triggers</strong> – thresholds for when Ameca must stop
+        probing and bring a human clinician into the loop are encoded directly in
+        the policy.
+      </p>
+      <p>
+        These mechanisms are evaluated not only on predictive performance but also on
+        whether users perceive the system as <em>competent, honest and appropriately
+        cautious</em>.
       </p>
     </section>
 
     <section>
-      <h2>Status &amp; Next Directions</h2>
+      <h2>Relationship to Other Projects</h2>
       <p>
-        The current prototype runs on interviews from the E-DAIC corpus, generating
-        calibrated risk estimates and full judge–advisor logs across thousands of
-        simulated sessions. Ongoing work focuses on extending the same controller to
-        embodied settings such as humanoid robots, expanding cognitive-screening
-        tasks, and connecting simulation-derived policies to small-scale clinician
-        pilots and longitudinal measurement-based care loops. :contentReference[oaicite:7]{index=7}
+        The humanoid-AI diagnostic agent acts as a physical deployment target for several
+        strands of my work:
       </p>
-      <p class="small">
-        For collaboration or access to the full simulation harness and analysis code,
-        feel free to reach out by email.
+      <p>
+        • multi-modal severity estimation models for robust depression /
+        PTSD risk scoring under missing modalities;<br>
+        • the <em>SimClinician</em> simulation testbed, which allows interaction policies
+        to be stress-tested in thousands of synthetic interviews before any patient sees
+        them;<br>
+        • the <em>avatarization pipeline</em>, which replays real Ameca sessions as
+        anonymised 3D avatars for longitudinal analysis.
+      </p>
+      <p>
+        Together, these components allow rapid iteration on interaction strategies and
+        diagnostic models without repeatedly exposing vulnerable participants to
+        immature prototypes.
       </p>
     </section>
+
+    <section>
+      <h2>Status &amp; Next Steps</h2>
+      <p>
+        The current prototype is capable of running fully automated screening interviews
+        and producing calibrated severity scores backed by multi-modal evidence. Ongoing
+        work focuses on tighter integration with clinical partners, expanded support for
+        cognitive screening tasks, and formal user studies on trust, workload and
+        perceived empathy when interacting with humanoid agents compared to screen-based
+        tools.
+      </p>
+    </section>
+
+    <!-- BIG, CENTERED LIVE DEMO -->
+    <section>
+      <h2>Interactive Dashboard (Live Demo)</h2>
+      <p class="live-demo-intro">
+        The panel below embeds a running instance of the SimClinician simulation dashboard.
+        You can scroll, switch patients, inspect multimodal evidence and see how the risk
+        gauge and decision bar respond — all without leaving this page.
+      </p>
+
+      <div class="demo-frame-wrap">
+        <iframe
+          src="https://filo-cenacchi-simclinician.hf.space"
+          title="SimClinician dashboard demo"
+          loading="lazy"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
+        </iframe>
+      </div>
+
+      <div class="demo-footer">
+        <span>Best experienced on desktop or laptop (full-screen view).</span>
+        <a href="https://filo-cenacchi-simclinician.hf.space" target="_blank" rel="noopener">
+          Open SimClinician in a separate tab →
+        </a>
+      </div>
+    </section>
+
   </div>
 </body>
 </html>
