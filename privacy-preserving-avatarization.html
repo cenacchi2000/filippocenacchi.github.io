@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Privacy-Preserving Avatarization • Filippo Cenacchi</title>
+  <title>LLM-Guided Clinical Avatar • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-        content="An avatarization pipeline that converts raw humanoid sessions into anonymised 3D avatar replays, preserving temporal behaviour while removing biometric identifiers.">
+        content="A 3D clinical avatar and imaging-guided organ twin prototype that combines Human Reference Atlas meshes, a clinical-twin model and CT/MRI-derived organ evolution.">
 
   <style>
     :root{
@@ -83,128 +83,247 @@
       font-size:14px;color:var(--subtle);
     }
     .small{font-size:14px;color:var(--subtle);}
+
+    .demo-button{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 14px;border-radius:999px;
+      background:var(--brand);color:#fff;
+      font-size:14px;font-weight:500;
+      border:none;box-shadow:var(--shadow);
+    }
+    .demo-button span.icon{font-size:16px;}
+    .demo-button:hover{
+      background:var(--brand-ink);
+      text-decoration:none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <a class="back-link" href="index.html#research">← Back to research overview</a>
-      <span class="small">Filippo Cenacchi · Privacy-Preserving Avatarization</span>
+      <span class="small">Filippo Cenacchi · LLM-Guided Clinical Avatar</span>
     </header>
 
     <div class="hero">
       <div>
         <p class="pill">
           <span class="dot"></span>
-          Avatar-based replays · Longitudinal analysis without faces
+          3D anatomical twin · Imaging-guided organ evolution
         </p>
-        <h1>Privacy-Preserving Avatarization</h1>
+        <h1>LLM-Guided Clinical Avatar</h1>
         <p class="subtitle">
-          A pipeline that converts raw Ameca and tele-health sessions into stylised
-          3D avatars, preserving timing, gaze and affective dynamics while stripping
-          away biometric identity.
+          A clinical digital-twin prototype that links a full-body anatomical avatar,
+          an interview-driven risk model and CT/MRI-derived organ meshes into one
+          coherent, interactive simulation.
         </p>
       </div>
       <figure class="hero-media">
-        <img src="facegaze_top_female%20(1).png"
-             alt="Animated 3D avatar with AU heatmap for privacy-preserving replay">
+        <img src="Screenshot%202025-12-05%20at%203.15.27%20pm.png"
+             alt="3D clinical avatar showing full body anatomy and blood vasculature">
       </figure>
     </div>
 
     <section>
-      <h2>Problem</h2>
-      <p>
-        For early disease detection, the most informative signals are often subtle and
-        longitudinal: small changes in facial micro-movements, hesitation patterns, gaze
-        avoidance or prosody across months. Capturing these trajectories at scale would
-        require storing large amounts of raw video and audio, which is ethically fraught
-        and often impossible under current privacy regulations.
-      </p>
-      <p>
-        The avatarization project tackles this tension directly by asking:
-        <em>how much of a person’s diagnostic footprint can be retained if we remove
-        their actual face and voice?</em>
-      </p>
-    </section>
-
-    <section>
-      <h2>Pipeline</h2>
+      <h2>Live Demo</h2>
       <div class="two-col">
         <div>
           <p>
-            Each recorded session (from Ameca or tele-health) is decomposed into
-            temporally aligned streams: facial action units, gaze vectors, head pose,
-            body posture descriptors and speech features. Rather than storing pixels,
-            the system stores a compressed behavioural timeline.
+            The prototype is implemented as a <strong>Streamlit application</strong>
+            that runs in three coordinated panels:
           </p>
-          <p>
-            This timeline is then “re-rendered” onto a <strong>neutral 3D avatar</strong>
-            inside a game engine. The avatar’s identity is deliberately generic, but its
-            movements and gaze follow the original participant with high temporal
-            fidelity. Audio can be represented as a de-identified transcript plus
-            synthetic speech, or removed entirely depending on the risk profile.
+          <ul class="small">
+            <li><strong>Avatar</strong> – a HuBMAP / Human Reference Atlas whole-body model with organ-level focusing.</li>
+            <li><strong>Agent interview</strong> – a question–answer loop that builds a structured clinical twin.</li>
+            <li><strong>Organ progression</strong> – CT/MRI-based meshes with simulated future morphology.</li>
+          </ul>
+          <p class="small">
+            Under the hood the app uses <code>nibabel</code>, <code>scikit-image</code>,
+            <code>scipy.ndimage</code> and <code>plotly</code> to go from raw volumetric data
+            to risk-coloured 3D organs and future deformations.
           </p>
         </div>
         <div>
-          <p class="small"><strong>Key properties:</strong></p>
-          <p class="small">
-            • no raw facial pixels or original voice stored<br>
-            • continuous replay of behavioural timelines for expert review<br>
-            • precise timestamps that align with model features and clinician notes<br>
-            • configurable anonymisation levels for different ethics requirements
+          <a class="demo-button"
+             href="https://huggingface.co/spaces/filo-cenacchi/SimClinician"
+             target="_blank" rel="noopener">
+            <span class="icon">▶</span>
+            <span>Open live demo on Hugging Face</span>
+          </a>
+          <p class="small" style="margin-top:10px;">
+            ⚠️ Research prototype only — not a medical device and not intended for clinical use.
           </p>
           <div class="tag-row">
-            <span class="tag">3D avatars</span>
-            <span class="tag">Behavioural timelines</span>
-            <span class="tag">De-identification</span>
-            <span class="tag">Longitudinal cohorts</span>
+            <span class="tag">3D Clinical Avatar</span>
+            <span class="tag">Human Reference Atlas</span>
+            <span class="tag">Digital Twins</span>
+            <span class="tag">CT / MRI Volumes</span>
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>Use Cases</h2>
-      <p>
-        For clinicians, avatar replays act as a <strong>timeline microscope</strong>:
-        sessions can be reviewed quickly at 1.5×–2× speed, focusing on non-verbal
-        patterns rather than personal appearance. For researchers, large banks of
-        avatarised sessions can be shared across institutions with substantially lower
-        risk than raw video, enabling replication and cross-site studies.
-      </p>
-      <p>
-        The same representations also support model introspection. If a model’s risk
-        estimate spikes, investigators can replay the corresponding avatar segment and
-        inspect which combinations of gaze, AUs and prosody might be driving the change
-        without ever seeing the real person.
-      </p>
+      <h2>Architecture at a Glance</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            The underlying Python code exposes a clean separation between three layers:
+          </p>
+          <p class="small">
+            <strong>1. Clinical twin model.</strong> A dataclass-based representation
+            (<code>ClinicalTwin</code>) encodes demographics, lifestyle and organ-specific
+            risk indices. It computes a composite global health score that can be updated
+            either manually in the sidebar or via an interview agent.
+          </p>
+          <p class="small">
+            <strong>2. Anatomical avatar layer.</strong> Generic male/female
+            GLB bodies and Human Reference Atlas organ meshes are loaded and cached.
+            A custom <code>&lt;model-viewer&gt;</code> wrapper renders whole body
+            plus an optional focus organ in synchronised viewports.
+          </p>
+          <p class="small">
+            <strong>3. Imaging layer.</strong> A longitudinal imaging database
+            (CSV + volumes) is wrapped in an <code>ImagingDatabase</code> class that
+            yields time-series of CT/MRI scans per patient and organ, ready to be
+            meshed and visualised.
+          </p>
+        </div>
+        <div>
+          <p class="small"><strong>Technically, the prototype demonstrates:</strong></p>
+          <p class="small">
+            • loading real or synthetic volumes (<code>.npy</code>, <code>.nii</code>)<br>
+            • intensity-based organ risk maps and morphological evolution<br>
+            • marching-cubes meshes via <code>skimage.measure.marching_cubes</code><br>
+            • future deformation of high-risk areas at mesh level<br>
+            • a self-contained UI that runs both locally and on Hugging Face Spaces
+          </p>
+        </div>
+      </div>
     </section>
 
     <section>
-      <h2>Ethical Framing</h2>
+      <h2>1. Anatomical Avatar & HRA Organ Focusing</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            The avatar tab renders a generic male or female anatomical reference
+            (GLB) and lets the user “dock” any organ mesh from the
+            <strong>Human Reference Atlas</strong> alongside it.
+          </p>
+          <p class="small">
+            Organs are fetched via the HRA API, downloaded once into a local cache and
+            exposed through a grouped selector (e.g., kidneys, lungs, liver with
+            left/right variants). A lightweight static HTTP server serves GLBs to
+            <code>&lt;model-viewer&gt;</code> with proper CORS headers, keeping the
+            Streamlit message size small.
+          </p>
+        </div>
+        <div>
+          <p class="small"><strong>Contribution.</strong></p>
+          <p class="small">
+            This layer turns static HRA assets into an <strong>interactive clinical
+            front-end</strong> where the same organ can be explored both as a generic
+            reference and, in the organ tab, as a patient-specific mesh extracted
+            from imaging data. It establishes the “avatar shell” for the digital twin.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Interview-Driven Clinical Twin</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            The agent tab runs a small question–answer loop that progressively fills
+            the clinical twin. In the current prototype this is implemented as a
+            deterministic rule-based agent, but the interface is designed to be
+            drop-in compatible with a local LLaMA-style LLM.
+          </p>
+          <p class="small">
+            Answers about age, height, weight, smoking status and self-reported
+            activity/diet/sleep scores are parsed into structured fields. From these,
+            the model computes BMI and adjusts organ-level risks (e.g., lungs and heart
+            for smoking and BMI deviations, skeleton and muscle for underweight).
+          </p>
+        </div>
+        <div>
+          <p class="small"><strong>Contribution.</strong></p>
+          <p class="small">
+            The interview layer shows how a conversational agent can be wired directly
+            into a clinical twin: every response has an explicit effect on the organ
+            risk vector and on the global health score. This offers a concrete
+            blueprint for <strong>LLM-mediated parameterisation</strong> of digital
+            twins, beyond free-text notes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Imaging-Driven Organ Progression</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            The organ progression tab connects the avatar to volumetric imaging.
+            A CSV index (<code>patients_index.csv</code>) maps
+            <em>(patient, organ, year)</em> tuples to volume paths and optional
+            segmentation masks. The demo ships with a synthetic patient
+            (DEMO001, lungs + liver, baseline and 5-year follow-up).
+          </p>
+          <p class="small">
+            For each timepoint the pipeline:
+          </p>
+          <ul class="small">
+            <li>loads the CT-like volume and mask,</li>
+            <li>computes an organ-specific intensity deviation risk map,</li>
+            <li>extracts a surface mesh with marching cubes,</li>
+            <li>samples per-vertex risk values to colour the mesh.</li>
+          </ul>
+          <p class="small">
+            Future years beyond the last scan are simulated by deforming the mesh
+            outward in high-risk regions and scaling risk values, yielding a
+            qualitative view of “worsening” or “improvement” scenarios.
+          </p>
+        </div>
+        <div>
+          <p class="small"><strong>Contribution.</strong></p>
+          <p class="small">
+            This layer grounds the digital twin in <strong>actual imaging
+            data</strong>. The same organ is viewable as:
+          </p>
+          <ul class="small">
+            <li>a CT slice with overlayed segmentation,</li>
+            <li>a 3D risk-coloured mesh at each timepoint,</li>
+            <li>a simulated future trajectory under different clinical assumptions.</li>
+          </ul>
+          <p class="small">
+            The design explicitly separates data loading, risk mapping and
+            deformation, making it straightforward to swap in real hospital
+            cohorts or disease-specific models.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Research Agenda & Integration</h2>
       <p class="callout">
-        The goal is not to “launder” sensitive data but to
-        <strong>design privacy into the representation itself</strong>. The pipeline is
-        developed under formal ethics approval, with participants informed that their
-        data may be represented through anonymous avatars rather than raw recordings.
+        The prototype is not about clinical accuracy yet; it is about showing
+        <strong>how a humanoid/LLM stack can be wired into a multi-scale
+        clinical twin</strong> that spans lifestyle, anatomy and imaging.
       </p>
       <p>
-        Open questions include how much identity can leak through body language alone,
-        how to handle culturally specific gestures, and how avatar style (realistic vs
-        stylised) influences both diagnostic validity and participant comfort. These
-        questions form a dedicated research agenda around avatar-based clinical data.
+        The same abstractions are planned to be connected to Ameca-based
+        humanoid interactions and to the SimClinician framework, allowing
+        behavioural signals (facial micro-dynamics, gaze, prosody) and imaging
+        to co-exist inside one coherent twin representation.
       </p>
-    </section>
-
-    <section>
-      <h2>Status &amp; Integration</h2>
       <p>
-        Avatarization is being integrated with both the Ameca diagnostic agent and
-        SimClinician. Humanoid sessions can be replayed as avatars in the same virtual
-        spaces used for simulation, enabling a tight loop between real participants,
-        synthetic patients and model training. Future work includes probabilistic
-        guarantees of de-identification and interactive tools for clinicians to annotate
-        and compare avatar timelines across cohorts.
+        Next steps include replacing heuristic risk maps with model-based ones,
+        adding uncertainty estimates, and exploring differential privacy and
+        formal de-identification for the imaging and behavioural layers.
       </p>
     </section>
   </div>
