@@ -52,12 +52,12 @@
     .grid{display:grid;gap:18px}
 
     <style id="teaching-upgrade-css">
-/* ===== Teaching section upgrade ===== */
+/* ===== Teaching section: full replacement ===== */
 
 #teaching .card,
 #teaching .teach-card,
 #teaching .teach-stat{
-  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
 }
 
 #teaching .teaching-wrap{
@@ -66,12 +66,12 @@
 }
 
 #teaching .teaching-intro{
-  max-width:none;              /* removes narrow paragraph feel */
   width:100%;
+  max-width:none;
+  margin:0 0 8px;
   font-size:clamp(20px,2.05vw,26px);
   line-height:1.65;
   color:var(--subtle);
-  margin:0 0 8px;
 }
 
 #teaching .teaching-intro strong{
@@ -126,7 +126,8 @@
   margin-bottom:8px;
   color:var(--brand-ink);
   letter-spacing:-.04em;
-  animation:teachNumberPulse 3s ease-in-out infinite;
+  font-variant-numeric:tabular-nums;
+  animation:none !important;
 }
 
 #teaching .teach-stat .small{
@@ -134,11 +135,6 @@
   color:var(--subtle);
   text-transform:uppercase;
   letter-spacing:.12em;
-}
-
-@keyframes teachNumberPulse{
-  0%,100%{ transform:scale(1); }
-  50%{ transform:scale(1.06); }
 }
 
 #teaching .teaching-grid{
@@ -197,6 +193,15 @@
   font-size:15px;
   letter-spacing:.02em;
   border:1px solid transparent;
+  text-decoration:none;
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+#teaching .teach-code:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(15,23,42,.10);
+  text-decoration:none;
+  filter:saturate(1.05);
 }
 
 #teaching .teach-enrol{
@@ -210,6 +215,8 @@
   font-weight:900;
   line-height:.95;
   letter-spacing:-.05em;
+  font-variant-numeric:tabular-nums;
+  animation:none !important;
 }
 
 #teaching .teach-enrol .label{
@@ -228,6 +235,16 @@
   letter-spacing:-.03em;
 }
 
+#teaching .teach-card h3 a{
+  color:inherit;
+  text-decoration:none;
+  transition:color .2s ease;
+}
+
+#teaching .teach-card:hover h3 a{
+  color:var(--brand-ink);
+}
+
 #teaching .teach-role{
   margin-bottom:14px;
   font-size:15px;
@@ -238,6 +255,7 @@
   margin:0 0 16px;
   font-size:17px;
   line-height:1.7;
+  color:var(--text);
 }
 
 #teaching .teach-deliver{
@@ -254,7 +272,37 @@
   font-weight:600;
   background:rgba(255,255,255,.9);
   border:1px solid rgba(15,23,42,.08);
+  color:var(--subtle);
   box-shadow:none;
+}
+
+#teaching .teach-link-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
+
+#teaching .teach-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 13px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700;
+  border:1px solid rgba(15,23,42,.08);
+  background:rgba(255,255,255,.92);
+  color:var(--text);
+  text-decoration:none;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+#teaching .teach-link:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(15,23,42,.10);
+  border-color:rgba(37,99,235,.28);
+  text-decoration:none;
 }
 
 /* Per-course color identities */
@@ -271,6 +319,9 @@
 #teaching .teach-card--comp1000 .teach-enrol .num{
   color:#0f172a;
 }
+#teaching .teach-card--comp1000:hover{
+  border-color:rgba(59,130,246,.35);
+}
 
 #teaching .teach-card--comp3310{
   background:linear-gradient(180deg,#ffffff 0%,#f5faff 100%);
@@ -281,6 +332,12 @@
 #teaching .teach-card--comp3310 .teach-code{
   background:#e0e7ff;
   color:#4338ca;
+}
+#teaching .teach-card--comp3310 .teach-enrol .num{
+  color:#1f2937;
+}
+#teaching .teach-card--comp3310:hover{
+  border-color:rgba(99,102,241,.35);
 }
 
 #teaching .teach-card--comp8851{
@@ -293,6 +350,12 @@
   background:#dcfce7;
   color:#15803d;
 }
+#teaching .teach-card--comp8851 .teach-enrol .num{
+  color:#14532d;
+}
+#teaching .teach-card--comp8851:hover{
+  border-color:rgba(34,197,94,.35);
+}
 
 #teaching .teach-card--comp3850{
   background:linear-gradient(180deg,#ffffff 0%,#fff8f3 100%);
@@ -304,212 +367,38 @@
   background:#ffedd5;
   color:#c2410c;
 }
-
-/* stronger hover accents */
-#teaching .teach-card--comp1000:hover{ border-color:rgba(59,130,246,.35); }
-#teaching .teach-card--comp3310:hover{ border-color:rgba(99,102,241,.35); }
-#teaching .teach-card--comp8851:hover{ border-color:rgba(34,197,94,.35); }
-#teaching .teach-card--comp3850:hover{ border-color:rgba(249,115,22,.35); }
+#teaching .teach-card--comp3850 .teach-enrol .num{
+  color:#7c2d12;
+}
+#teaching .teach-card--comp3850:hover{
+  border-color:rgba(249,115,22,.35);
+}
 
 @media (max-width:1100px){
-  #teaching .teaching-summary{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-  #teaching .teaching-grid{ grid-template-columns:1fr; }
+  #teaching .teaching-summary{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  #teaching .teaching-grid{
+    grid-template-columns:1fr;
+  }
 }
 
 @media (max-width:640px){
-  #teaching .teaching-summary{ grid-template-columns:1fr; }
-  #teaching .teach-top{ flex-direction:column; align-items:flex-start; }
-  #teaching .teach-enrol{ text-align:left; }
+  #teaching .teaching-summary{
+    grid-template-columns:1fr;
+  }
+  #teaching .teach-top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  #teaching .teach-enrol{
+    text-align:left;
+  }
   #teaching .teaching-intro{
     font-size:18px;
     line-height:1.55;
   }
 }
-
-
-        /* Teaching section */
-    .teaching-wrap{
-      display:grid;
-      gap:18px;
-    }
-
-    .teaching-intro{
-      color:var(--subtle);
-      max-width:900px;
-      margin-bottom:4px;
-    }
-
-    .teaching-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .teach-card{
-      position:relative;
-      overflow:hidden;
-      border:1px solid var(--border);
-      background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
-      border-radius:20px;
-      padding:22px;
-      box-shadow:var(--shadow);
-      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-      isolation:isolate;
-    }
-
-    .teach-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 16px 38px rgba(37,99,235,0.12);
-      border-color:rgba(37,99,235,.25);
-    }
-
-    .teach-card::before{
-      content:"";
-      position:absolute;
-      inset:auto -20% -35% auto;
-      width:180px;
-      height:180px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(37,99,235,.13) 0%, rgba(37,99,235,0) 70%);
-      z-index:-1;
-      animation:teachFloat 6s ease-in-out infinite;
-    }
-
-    .teach-card:nth-child(2)::before{ animation-delay:.8s; }
-    .teach-card:nth-child(3)::before{ animation-delay:1.6s; }
-    .teach-card:nth-child(4)::before{ animation-delay:2.4s; }
-
-    @keyframes teachFloat{
-      0%,100%{ transform:translateY(0px) scale(1); }
-      50%{ transform:translateY(-10px) scale(1.06); }
-    }
-
-    .teach-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:14px;
-      margin-bottom:12px;
-      flex-wrap:wrap;
-    }
-
-    .teach-code{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 12px;
-      border-radius:999px;
-      background:rgba(37,99,235,.08);
-      color:var(--brand-ink);
-      font-weight:700;
-      font-size:13px;
-      letter-spacing:.02em;
-    }
-
-    .teach-enrol{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      line-height:1;
-      min-width:88px;
-    }
-
-    .teach-enrol .num{
-      font-size:30px;
-      font-weight:800;
-      color:var(--text);
-      letter-spacing:-.03em;
-      animation:teachPulse 3.2s ease-in-out infinite;
-    }
-
-    .teach-enrol .label{
-      font-size:12px;
-      color:var(--subtle);
-      margin-top:6px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    @keyframes teachPulse{
-      0%,100%{ transform:scale(1); }
-      50%{ transform:scale(1.04); }
-    }
-
-    .teach-card h3{
-      margin:0 0 6px;
-      font-size:22px;
-      line-height:1.2;
-    }
-
-    .teach-role{
-      color:var(--subtle);
-      font-size:14px;
-      margin-bottom:12px;
-    }
-
-    .teach-card p{
-      margin:0 0 14px;
-      color:var(--text);
-      line-height:1.6;
-    }
-
-    .teach-deliver{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:auto;
-    }
-
-    .teach-deliver .badge{
-      background:#fff;
-      border:1px solid var(--border);
-      color:var(--subtle);
-      box-shadow:none;
-      padding:7px 10px;
-    }
-
-    .teaching-summary{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:12px;
-      margin-top:4px;
-    }
-
-    .teach-stat{
-      border:1px solid var(--border);
-      background:var(--panel);
-      border-radius:16px;
-      padding:18px 16px;
-      text-align:center;
-      box-shadow:var(--shadow);
-    }
-
-    .teach-stat .big{
-      display:block;
-      font-size:28px;
-      font-weight:800;
-      color:var(--brand-ink);
-      line-height:1;
-      margin-bottom:6px;
-    }
-
-    .teach-stat .small{
-      font-size:12px;
-      color:var(--subtle);
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    @media (max-width:900px){
-      .teaching-grid{ grid-template-columns:1fr; }
-      .teaching-summary{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-    }
-
-    @media (max-width:560px){
-      .teaching-summary{ grid-template-columns:1fr; }
-      .teach-enrol{ align-items:flex-start; }
-      .teach-top{ flex-direction:column; align-items:flex-start; }
-    }
 
     /* Make video iframes fill the entire media area */
 .card-media iframe{
@@ -1879,19 +1768,19 @@
 
     <div class="teaching-summary">
       <div class="teach-stat">
-        <span class="big">4</span>
+        <span class="big" data-count="4">0</span>
         <span class="small">Courses taught</span>
       </div>
       <div class="teach-stat">
-        <span class="big">276</span>
+        <span class="big" data-count="276">0</span>
         <span class="small">Students supported</span>
       </div>
       <div class="teach-stat">
-        <span class="big">2</span>
+        <span class="big" data-count="2">0</span>
         <span class="small">Project-based units</span>
       </div>
       <div class="teach-stat">
-        <span class="big">2</span>
+        <span class="big" data-count="2">0</span>
         <span class="small">Technical units</span>
       </div>
     </div>
@@ -1899,13 +1788,17 @@
     <div class="teaching-grid">
       <article class="teach-card teach-card--comp1000 reveal">
         <div class="teach-top">
-          <span class="teach-code">COMP1000</span>
+          <a class="teach-code" href="https://coursehandbook.mq.edu.au/2026/units/comp1000?year=2026" target="_blank" rel="noopener">COMP1000</a>
           <div class="teach-enrol">
-            <span class="num">90</span>
+            <span class="num" data-count="90">0</span>
             <span class="label">Students</span>
           </div>
         </div>
-        <h3>Introduction to Computer Programming</h3>
+        <h3>
+          <a href="https://coursehandbook.mq.edu.au/2026/units/comp1000?year=2026" target="_blank" rel="noopener">
+            Introduction to Computer Programming
+          </a>
+        </h3>
         <div class="teach-role">Foundational programming teaching</div>
         <p>Supporting a large introductory cohort in core computational thinking and programming practice. The unit develops students’ ability to design programs, reason through logic, debug systematically, and build confidence with the foundations of software creation.</p>
         <div class="teach-deliver">
@@ -1914,17 +1807,24 @@
           <span class="badge">Debugging skills</span>
           <span class="badge">Beginner support</span>
         </div>
+        <div class="teach-link-row">
+          <a class="teach-link" href="https://coursehandbook.mq.edu.au/2026/units/comp1000?year=2026" target="_blank" rel="noopener">Course handbook →</a>
+        </div>
       </article>
 
       <article class="teach-card teach-card--comp3310 reveal">
         <div class="teach-top">
-          <span class="teach-code">COMP3310</span>
+          <a class="teach-code" href="https://coursehandbook.mq.edu.au/2026/units/comp3310?year=2026" target="_blank" rel="noopener">COMP3310</a>
           <div class="teach-enrol">
-            <span class="num">35</span>
+            <span class="num" data-count="35">0</span>
             <span class="label">Students</span>
           </div>
         </div>
-        <h3>Secure Applications Development</h3>
+        <h3>
+          <a href="https://coursehandbook.mq.edu.au/2026/units/comp3310?year=2026" target="_blank" rel="noopener">
+            Secure Applications Development
+          </a>
+        </h3>
         <div class="teach-role">Security-oriented software teaching</div>
         <p>Teaching practical principles for designing and building safer software systems. The unit helps students understand secure development workflows, common vulnerabilities, and how to think critically about robustness, attack surfaces, and responsible engineering decisions.</p>
         <div class="teach-deliver">
@@ -1933,17 +1833,24 @@
           <span class="badge">Threat awareness</span>
           <span class="badge">Robust development</span>
         </div>
+        <div class="teach-link-row">
+          <a class="teach-link" href="https://coursehandbook.mq.edu.au/2026/units/comp3310?year=2026" target="_blank" rel="noopener">Course handbook →</a>
+        </div>
       </article>
 
       <article class="teach-card teach-card--comp8851 reveal">
         <div class="teach-top">
-          <span class="teach-code">COMP8851</span>
+          <a class="teach-code" href="https://coursehandbook.mq.edu.au/2026/units/COMP8851?year=2026" target="_blank" rel="noopener">COMP8851</a>
           <div class="teach-enrol">
-            <span class="num">21</span>
+            <span class="num" data-count="21">0</span>
             <span class="label">Students</span>
           </div>
         </div>
-        <h3>Major Project for Master of Data Science</h3>
+        <h3>
+          <a href="https://coursehandbook.mq.edu.au/2026/units/COMP8851?year=2026" target="_blank" rel="noopener">
+            Major Project for Master of Data Science
+          </a>
+        </h3>
         <div class="teach-role">Advanced project supervision</div>
         <p>Mentoring master's students through substantial capstone-style projects in data science. This includes shaping project scope, guiding technical decisions, supporting evaluation design, and helping students translate analytical work into clear professional and academic deliverables.</p>
         <div class="teach-deliver">
@@ -1952,17 +1859,24 @@
           <span class="badge">Research guidance</span>
           <span class="badge">Project delivery</span>
         </div>
+        <div class="teach-link-row">
+          <a class="teach-link" href="https://coursehandbook.mq.edu.au/2026/units/COMP8851?year=2026" target="_blank" rel="noopener">Course handbook →</a>
+        </div>
       </article>
 
       <article class="teach-card teach-card--comp3850 reveal">
         <div class="teach-top">
-          <span class="teach-code">COMP3850</span>
+          <a class="teach-code" href="https://coursehandbook.mq.edu.au/2026/units/comp3850?year=2026" target="_blank" rel="noopener">COMP3850</a>
           <div class="teach-enrol">
-            <span class="num">130</span>
+            <span class="num" data-count="130">0</span>
             <span class="label">Students</span>
           </div>
         </div>
-        <h3>Computing Industry Project</h3>
+        <h3>
+          <a href="https://coursehandbook.mq.edu.au/2026/units/comp3850?year=2026" target="_blank" rel="noopener">
+            Computing Industry Project
+          </a>
+        </h3>
         <div class="teach-role">Industry-facing project-based teaching</div>
         <p>Supporting students in applying computing knowledge to realistic industry-style projects. The unit emphasizes teamwork, requirements interpretation, communication with stakeholders, and the delivery of practical outcomes that reflect real professional computing environments.</p>
         <div class="teach-deliver">
@@ -1971,11 +1885,13 @@
           <span class="badge">Stakeholder communication</span>
           <span class="badge">Applied delivery</span>
         </div>
+        <div class="teach-link-row">
+          <a class="teach-link" href="https://coursehandbook.mq.edu.au/2026/units/comp3850?year=2026" target="_blank" rel="noopener">Course handbook →</a>
+        </div>
       </article>
     </div>
   </div>
 </section>
-
     <!-- Experience -->
     <section id="experience" class="section">
       <h2>Experience</h2>
@@ -2452,6 +2368,52 @@
   });
   closeBtn.addEventListener('click', ()=> lb.close());
   lb.addEventListener('click', (e)=>{ if(e.target === lb) lb.close(); });
+</script>
+
+<script>
+(function(){
+  const teaching = document.getElementById('teaching');
+  if(!teaching) return;
+
+  const counters = teaching.querySelectorAll('[data-count]');
+  let hasRun = false;
+
+  function animateCount(el, target, duration = 1400){
+    const startTime = performance.now();
+    const start = 0;
+    const end = parseInt(target, 10) || 0;
+
+    function step(now){
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const value = Math.round(start + (end - start) * eased);
+      el.textContent = value.toLocaleString();
+
+      if(progress < 1){
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = end.toLocaleString();
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !hasRun){
+        hasRun = true;
+        counters.forEach((el, idx) => {
+          const target = el.getAttribute('data-count');
+          setTimeout(() => animateCount(el, target), idx * 120);
+        });
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  observer.observe(teaching);
+})();
 </script>
 
 </body>
