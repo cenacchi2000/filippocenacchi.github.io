@@ -51,6 +51,282 @@
     }
     .grid{display:grid;gap:18px}
 
+    <style id="teaching-upgrade-css">
+/* ===== Teaching section upgrade ===== */
+
+#teaching .card,
+#teaching .teach-card,
+#teaching .teach-stat{
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+}
+
+#teaching .teaching-wrap{
+  display:grid;
+  gap:22px;
+}
+
+#teaching .teaching-intro{
+  max-width:none;              /* removes narrow paragraph feel */
+  width:100%;
+  font-size:clamp(20px,2.05vw,26px);
+  line-height:1.65;
+  color:var(--subtle);
+  margin:0 0 8px;
+}
+
+#teaching .teaching-intro strong{
+  color:var(--text);
+}
+
+#teaching .teaching-summary{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+
+#teaching .teach-stat{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:24px 18px;
+  text-align:center;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  box-shadow:var(--shadow);
+  cursor:default;
+}
+
+#teaching .teach-stat::before{
+  content:"";
+  position:absolute;
+  inset:-30% auto auto -10%;
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(37,99,235,.16) 0%, rgba(37,99,235,0) 70%);
+  transform:translateY(0);
+  transition:transform .28s ease;
+}
+
+#teaching .teach-stat:hover{
+  transform:translateY(-6px) scale(1.01);
+  box-shadow:0 18px 40px rgba(37,99,235,.13);
+  border-color:rgba(37,99,235,.25);
+}
+
+#teaching .teach-stat:hover::before{
+  transform:translateY(8px) scale(1.08);
+}
+
+#teaching .teach-stat .big{
+  display:block;
+  font-size:clamp(34px,3.2vw,48px);
+  font-weight:900;
+  line-height:1;
+  margin-bottom:8px;
+  color:var(--brand-ink);
+  letter-spacing:-.04em;
+  animation:teachNumberPulse 3s ease-in-out infinite;
+}
+
+#teaching .teach-stat .small{
+  font-size:13px;
+  color:var(--subtle);
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+@keyframes teachNumberPulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.06); }
+}
+
+#teaching .teaching-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+}
+
+#teaching .teach-card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:26px;
+  padding:26px;
+  background:linear-gradient(180deg,#ffffff 0%,#f9fbff 100%);
+  box-shadow:var(--shadow);
+}
+
+#teaching .teach-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 22px 48px rgba(15,23,42,.14);
+}
+
+#teaching .teach-card::after{
+  content:"";
+  position:absolute;
+  right:-45px;
+  top:-45px;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  opacity:.18;
+  transition:transform .3s ease, opacity .3s ease;
+}
+
+#teaching .teach-card:hover::after{
+  transform:scale(1.14);
+  opacity:.28;
+}
+
+#teaching .teach-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+
+#teaching .teach-code{
+  display:inline-flex;
+  align-items:center;
+  padding:10px 18px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:15px;
+  letter-spacing:.02em;
+  border:1px solid transparent;
+}
+
+#teaching .teach-enrol{
+  text-align:right;
+  min-width:110px;
+}
+
+#teaching .teach-enrol .num{
+  display:block;
+  font-size:clamp(42px,4vw,56px);
+  font-weight:900;
+  line-height:.95;
+  letter-spacing:-.05em;
+}
+
+#teaching .teach-enrol .label{
+  display:block;
+  margin-top:8px;
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--subtle);
+}
+
+#teaching .teach-card h3{
+  margin:0 0 8px;
+  font-size:clamp(28px,2.4vw,38px);
+  line-height:1.12;
+  letter-spacing:-.03em;
+}
+
+#teaching .teach-role{
+  margin-bottom:14px;
+  font-size:15px;
+  color:var(--subtle);
+}
+
+#teaching .teach-card p{
+  margin:0 0 16px;
+  font-size:17px;
+  line-height:1.7;
+}
+
+#teaching .teach-deliver{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:10px;
+}
+
+#teaching .teach-deliver .badge{
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(15,23,42,.08);
+  box-shadow:none;
+}
+
+/* Per-course color identities */
+#teaching .teach-card--comp1000{
+  background:linear-gradient(180deg,#ffffff 0%,#f6fbff 100%);
+}
+#teaching .teach-card--comp1000::after{
+  background:radial-gradient(circle, #60a5fa 0%, transparent 70%);
+}
+#teaching .teach-card--comp1000 .teach-code{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+#teaching .teach-card--comp1000 .teach-enrol .num{
+  color:#0f172a;
+}
+
+#teaching .teach-card--comp3310{
+  background:linear-gradient(180deg,#ffffff 0%,#f5faff 100%);
+}
+#teaching .teach-card--comp3310::after{
+  background:radial-gradient(circle, #818cf8 0%, transparent 70%);
+}
+#teaching .teach-card--comp3310 .teach-code{
+  background:#e0e7ff;
+  color:#4338ca;
+}
+
+#teaching .teach-card--comp8851{
+  background:linear-gradient(180deg,#ffffff 0%,#f6fff8 100%);
+}
+#teaching .teach-card--comp8851::after{
+  background:radial-gradient(circle, #4ade80 0%, transparent 70%);
+}
+#teaching .teach-card--comp8851 .teach-code{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+#teaching .teach-card--comp3850{
+  background:linear-gradient(180deg,#ffffff 0%,#fff8f3 100%);
+}
+#teaching .teach-card--comp3850::after{
+  background:radial-gradient(circle, #fb923c 0%, transparent 70%);
+}
+#teaching .teach-card--comp3850 .teach-code{
+  background:#ffedd5;
+  color:#c2410c;
+}
+
+/* stronger hover accents */
+#teaching .teach-card--comp1000:hover{ border-color:rgba(59,130,246,.35); }
+#teaching .teach-card--comp3310:hover{ border-color:rgba(99,102,241,.35); }
+#teaching .teach-card--comp8851:hover{ border-color:rgba(34,197,94,.35); }
+#teaching .teach-card--comp3850:hover{ border-color:rgba(249,115,22,.35); }
+
+@media (max-width:1100px){
+  #teaching .teaching-summary{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  #teaching .teaching-grid{ grid-template-columns:1fr; }
+}
+
+@media (max-width:640px){
+  #teaching .teaching-summary{ grid-template-columns:1fr; }
+  #teaching .teach-top{ flex-direction:column; align-items:flex-start; }
+  #teaching .teach-enrol{ text-align:left; }
+  #teaching .teaching-intro{
+    font-size:18px;
+    line-height:1.55;
+  }
+}
+</style>
+
         /* Teaching section */
     .teaching-wrap{
       display:grid;
@@ -1593,8 +1869,7 @@
 
   </div>
 </section>
-
-  <section id="teaching" class="section">
+<section id="teaching" class="section">
   <h2>Teaching</h2>
 
   <div class="teaching-wrap">
@@ -1622,19 +1897,17 @@
     </div>
 
     <div class="teaching-grid">
-      <article class="teach-card reveal">
+      <article class="teach-card teach-card--comp1000 reveal">
         <div class="teach-top">
           <span class="teach-code">COMP1000</span>
           <div class="teach-enrol">
             <span class="num">90</span>
-            <span class="label">students</span>
+            <span class="label">Students</span>
           </div>
         </div>
         <h3>Introduction to Computer Programming</h3>
         <div class="teach-role">Foundational programming teaching</div>
-        <p>
-          Supporting a large introductory cohort in core computational thinking and programming practice. The unit develops students’ ability to design programs, reason through logic, debug systematically, and build confidence with the foundations of software creation.
-        </p>
+        <p>Supporting a large introductory cohort in core computational thinking and programming practice. The unit develops students’ ability to design programs, reason through logic, debug systematically, and build confidence with the foundations of software creation.</p>
         <div class="teach-deliver">
           <span class="badge">Programming foundations</span>
           <span class="badge">Problem solving</span>
@@ -1643,19 +1916,17 @@
         </div>
       </article>
 
-      <article class="teach-card reveal">
+      <article class="teach-card teach-card--comp3310 reveal">
         <div class="teach-top">
           <span class="teach-code">COMP3310</span>
           <div class="teach-enrol">
             <span class="num">35</span>
-            <span class="label">students</span>
+            <span class="label">Students</span>
           </div>
         </div>
         <h3>Secure Applications Development</h3>
         <div class="teach-role">Security-oriented software teaching</div>
-        <p>
-          Teaching practical principles for designing and building safer software systems. The unit helps students understand secure development workflows, common vulnerabilities, and how to think critically about robustness, attack surfaces, and responsible engineering decisions.
-        </p>
+        <p>Teaching practical principles for designing and building safer software systems. The unit helps students understand secure development workflows, common vulnerabilities, and how to think critically about robustness, attack surfaces, and responsible engineering decisions.</p>
         <div class="teach-deliver">
           <span class="badge">Secure coding</span>
           <span class="badge">Application security</span>
@@ -1664,19 +1935,17 @@
         </div>
       </article>
 
-      <article class="teach-card reveal">
+      <article class="teach-card teach-card--comp8851 reveal">
         <div class="teach-top">
           <span class="teach-code">COMP8851</span>
           <div class="teach-enrol">
             <span class="num">21</span>
-            <span class="label">students</span>
+            <span class="label">Students</span>
           </div>
         </div>
         <h3>Major Project for Master of Data Science</h3>
         <div class="teach-role">Advanced project supervision</div>
-        <p>
-          Mentoring master's students through substantial capstone-style projects in data science. This includes shaping project scope, guiding technical decisions, supporting evaluation design, and helping students translate analytical work into clear professional and academic deliverables.
-        </p>
+        <p>Mentoring master's students through substantial capstone-style projects in data science. This includes shaping project scope, guiding technical decisions, supporting evaluation design, and helping students translate analytical work into clear professional and academic deliverables.</p>
         <div class="teach-deliver">
           <span class="badge">Capstone supervision</span>
           <span class="badge">Data science projects</span>
@@ -1685,19 +1954,17 @@
         </div>
       </article>
 
-      <article class="teach-card reveal">
+      <article class="teach-card teach-card--comp3850 reveal">
         <div class="teach-top">
           <span class="teach-code">COMP3850</span>
           <div class="teach-enrol">
             <span class="num">130</span>
-            <span class="label">students</span>
+            <span class="label">Students</span>
           </div>
         </div>
         <h3>Computing Industry Project</h3>
         <div class="teach-role">Industry-facing project-based teaching</div>
-        <p>
-          Supporting students in applying computing knowledge to realistic industry-style projects. The unit emphasizes teamwork, requirements interpretation, communication with stakeholders, and the delivery of practical outcomes that reflect real professional computing environments.
-        </p>
+        <p>Supporting students in applying computing knowledge to realistic industry-style projects. The unit emphasizes teamwork, requirements interpretation, communication with stakeholders, and the delivery of practical outcomes that reflect real professional computing environments.</p>
         <div class="teach-deliver">
           <span class="badge">Industry projects</span>
           <span class="badge">Team supervision</span>
