@@ -19,7 +19,9 @@
       --shadow: 0 10px 32px rgba(15,23,42,0.10);
       --accent-soft: rgba(37,99,235,0.08);
     }
+
     *{box-sizing:border-box;}
+
     html,body{
       margin:0;
       padding:0;
@@ -31,8 +33,15 @@
         radial-gradient(900px 600px at 100% 0%, rgba(56,189,248,.12), transparent 55%),
         linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
     }
-    a{color:var(--brand-ink);text-decoration:none}
-    a:hover{text-decoration:underline}
+
+    a{
+      color:var(--brand-ink);
+      text-decoration:none;
+    }
+
+    a:hover{
+      text-decoration:underline;
+    }
 
     .container{
       max-width:1200px;
@@ -47,6 +56,7 @@
       gap:12px;
       margin-bottom:24px;
     }
+
     .back-link{
       display:inline-flex;
       align-items:center;
@@ -58,10 +68,12 @@
       font-size:14px;
       box-shadow:0 4px 16px rgba(15,23,42,0.12);
     }
+
     h1{
       font-size:clamp(30px,4vw,40px);
       margin:8px 0 4px;
     }
+
     .subtitle{
       margin:0;
       color:var(--subtle);
@@ -75,6 +87,7 @@
       align-items:flex-start;
       margin-bottom:28px;
     }
+
     .hero-media{
       border-radius:22px;
       overflow:hidden;
@@ -82,6 +95,7 @@
       box-shadow:var(--shadow);
       background:#000;
     }
+
     .hero-media img{
       width:100%;
       height:100%;
@@ -100,8 +114,12 @@
       font-size:13px;
       color:var(--subtle);
     }
+
     .pill span.dot{
-      width:8px;height:8px;border-radius:999px;background:#22c55e;
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:#22c55e;
     }
 
     section{
@@ -112,6 +130,7 @@
       box-shadow:var(--shadow);
       padding:18px 20px 18px;
     }
+
     section h2{
       margin-top:0;
       font-size:20px;
@@ -123,6 +142,7 @@
       flex-wrap:wrap;
       gap:6px;
     }
+
     .tag{
       font-size:12px;
       padding:4px 9px;
@@ -137,10 +157,6 @@
       grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
       gap:18px;
     }
-    @media(max-width:800px){
-      .hero{grid-template-columns:1fr;}
-      .two-col{grid-template-columns:1fr;}
-    }
 
     .callout{
       margin:0;
@@ -151,6 +167,7 @@
       font-size:14px;
       color:var(--subtle);
     }
+
     .small{
       font-size:14px;
       color:var(--subtle);
@@ -162,6 +179,7 @@
       gap:18px;
       margin-top:16px;
     }
+
     .case-card{
       border:1px solid var(--border);
       border-radius:18px;
@@ -169,6 +187,7 @@
       background:#fff;
       box-shadow:0 6px 18px rgba(15,23,42,0.08);
     }
+
     .case-card img{
       width:100%;
       display:block;
@@ -176,44 +195,48 @@
       object-fit:cover;
       background:#000;
     }
+
     .case-card .card-body{
       padding:14px 14px 16px;
     }
+
     .case-card h3{
       margin:0 0 6px;
       font-size:16px;
     }
+
     .case-card p{
       margin:0;
       font-size:14px;
       color:var(--subtle);
     }
+
     .case-card.wide{
       grid-column:1 / -1;
     }
+
     .case-card.wide img{
       aspect-ratio:16/8;
       object-fit:cover;
       object-position:center;
     }
+
     .privacy-note{
       margin-top:14px;
       font-size:13px;
       color:var(--subtle);
     }
-    @media(max-width:850px){
-      .case-grid{grid-template-columns:1fr;}
-      .case-card.wide{grid-column:auto;}
-    }
 
     .demo-section{
       margin-top:32px;
     }
+
     .live-demo-intro{
       margin-bottom:10px;
       font-size:14px;
       color:var(--subtle);
     }
+
     .demo-frame-wrap{
       margin-top:10px;
       border-radius:24px;
@@ -222,17 +245,12 @@
       box-shadow:var(--shadow);
       background:#020617;
     }
+
     .demo-frame-wrap iframe{
       display:block;
       width:100%;
       height:820px;
       border:0;
-    }
-    @media(max-width:900px){
-      .demo-frame-wrap iframe{height:700px;}
-    }
-    @media(max-width:640px){
-      .demo-frame-wrap iframe{height:600px;}
     }
 
     .demo-footer{
@@ -244,10 +262,42 @@
       font-size:12px;
       color:var(--subtle);
     }
+
     .demo-footer a{
       font-weight:500;
     }
+
+    @media(max-width:900px){
+      .demo-frame-wrap iframe{
+        height:700px;
+      }
+    }
+
+    @media(max-width:850px){
+      .case-grid{
+        grid-template-columns:1fr;
+      }
+
+      .case-card.wide{
+        grid-column:auto;
+      }
+    }
+
+    @media(max-width:800px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .two-col{
+        grid-template-columns:1fr;
+      }
+    }
+
     @media(max-width:640px){
+      .demo-frame-wrap iframe{
+        height:600px;
+      }
+
       .demo-footer{
         flex-direction:column;
         align-items:flex-start;
@@ -275,8 +325,9 @@
           PTSD and cognitive decline.
         </p>
       </div>
+
       <figure class="hero-media">
-        <img src="patient-assessment-1.jpeg" alt="Patient interacting with a humanoid diagnostic interface during assessment">
+        <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
       </figure>
     </div>
 
@@ -319,6 +370,7 @@
             to make data more informative while keeping the experience humane.
           </p>
         </div>
+
         <div>
           <p class="small"><strong>Current capabilities include:</strong></p>
           <p class="small">
@@ -340,61 +392,75 @@
     <section>
       <h2>Assessment Examples</h2>
       <p>
-        The examples below show real prototype sessions in which patients are assessed through
-        the humanoid interface, alongside a computer-vision example of motor-function evaluation
-        used to support post-surgical recovery tracking and functional monitoring.
+        The examples below show prototype sessions in which patients are assessed through
+        the humanoid interface, together with one example of computer-vision-based motor
+        evaluation used to monitor physical recovery and functional condition after surgery.
       </p>
 
       <div class="case-grid">
         <article class="case-card">
-          <img src="patient-assessment-1.jpeg" alt="Patient speaking into a handheld microphone while being assessed through the humanoid interface">
+          <img
+            src="WhatsApp%20Image%202026-04-16%20at%2012.05.19.jpeg"
+            alt="Patient speaking into a handheld microphone while being assessed through the humanoid interface"
+            loading="lazy">
           <div class="card-body">
             <h3>Patient assessment session 1</h3>
             <p>
-              A conversational screening interaction in which the patient responds to structured
-              questions through the humanoid interface while the system logs speech timing and
-              behavioural cues.
+              Example of a spoken assessment session in which the patient interacts directly
+              with the humanoid interface while the system captures verbal timing and
+              behavioural response patterns.
             </p>
           </div>
         </article>
 
         <article class="case-card">
-          <img src="patient-assessment-2.jpeg" alt="Patient seated in front of a humanoid diagnostic agent during an assessment session">
+          <img
+            src="WhatsApp%20Image%202026-04-16%20at%2012.07.35%20%281%29.jpeg"
+            alt="Patient seated in front of the humanoid diagnostic system during screening"
+            loading="lazy">
           <div class="card-body">
             <h3>Patient assessment session 2</h3>
             <p>
-              A second example of the embodied interview setup, illustrating the face-to-face
-              interaction style used to make assessment sessions feel more natural and engaging.
+              A second example of the embodied interview setup, illustrating a face-to-face
+              assessment configuration designed to support more natural and comfortable
+              patient interaction.
             </p>
           </div>
         </article>
 
         <article class="case-card">
-          <img src="patient-assessment-3.jpeg" alt="Patient undergoing a spoken assessment through the humanoid diagnostic interface">
+          <img
+            src="WhatsApp%20Image%202026-04-16%20at%2012.07.35.jpeg"
+            alt="Patient undergoing a conversational screening through the humanoid interface"
+            loading="lazy">
           <div class="card-body">
             <h3>Patient assessment session 3</h3>
             <p>
-              Another deployment snapshot showing the platform used with a different participant,
-              highlighting the adaptability of the setup across individuals and screening contexts.
+              Another deployment example showing the platform used with a different
+              participant, highlighting the flexibility of the assessment setup across
+              patient profiles and clinical contexts.
             </p>
           </div>
         </article>
 
         <article class="case-card wide">
-          <img src="motor-evaluation-example.jpeg" alt="Computer-vision dashboard displaying motor evaluation metrics for a patient">
+          <img
+            src="WhatsApp%20Image%202026-04-16%20at%2012.07.34.jpeg"
+            alt="Computer vision dashboard displaying motor evaluation and movement tracking after surgery"
+            loading="lazy">
           <div class="card-body">
             <h3>Motor evaluation example after surgery</h3>
             <p>
-              Example computer-vision dashboard for motor assessment, showing a structured
-              movement task and live pose-based feedback that can be used to quantify strength,
-              endurance, symmetry and recovery progression after surgery.
+              Computer-vision-based motor evaluation example showing structured movement
+              analysis and live pose-tracking feedback that can support assessment of
+              strength, endurance, symmetry and functional recovery after surgery.
             </p>
           </div>
         </article>
       </div>
 
       <p class="privacy-note">
-        Patient images are shown with visible facial redaction to preserve privacy in presentation materials.
+        Patient images are presented with facial redaction to preserve privacy in public-facing materials.
       </p>
     </section>
 
