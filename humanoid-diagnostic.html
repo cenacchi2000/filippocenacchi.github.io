@@ -501,33 +501,70 @@
       </div>
 
     </section>
+<section class="demo-section">
+  <h2>Psychological Evaluation</h2>
 
-    <section class="demo-section">
-      <h2>Psychological evualuation</h2>
-      <p class="live-demo-intro">
-        The panel below embeds a running instance of the SimClinician simulation dashboard.
-        You can scroll, switch patients, inspect multimodal evidence and observe how the
-        risk gauge and decision bar respond.
-      </p>
+  <p class="live-demo-intro">
+    This component is not a disconnected dashboard, but the psychological-analysis layer of the broader
+    assessment pipeline that also includes embodied conversation and motor evaluation. During the spoken
+    interaction, the system does not rely only on questionnaire totals: it analyses acoustic structure,
+    hesitation behaviour, pause duration, speech-rate variation, vocal energy and spectral patterns,
+    transcript content, negative or trauma-relevant language markers, and facial/gaze dynamics in order
+    to estimate whether the observed behavioural profile is consistent with depression- or PTSD-related
+    burden.
+  </p>
 
-      <div class="demo-frame-wrap">
-        <iframe
-          src="https://filo-cena-simclinician.hf.space"
-          title="SimClinician dashboard demo"
-          loading="lazy"
-          allow="fullscreen"
-          style="width:100%; height:820px; border:0;"
-        ></iframe>
-      </div>
+  <p class="live-demo-intro">
+    The PHQ-8 and PCL-C then function as validated reference anchors for confirming whether these inferred
+    multimodal patterns are aligned with clinically meaningful depressive or post-traumatic symptom burden.
+    In other words, the system first tries to understand the patient through behavioural evidence and then
+    compares that interpretation against questionnaire-grounded severity, allowing the evaluation to move
+    beyond self-report alone toward a richer and more auditable psychological assessment.
+  </p>
 
-      <div class="demo-footer">
-        <span>Best experienced on desktop or laptop (full-screen view).</span>
-        <a href="https://huggingface.co/spaces/filo-cena/SimClinician" target="_blank" rel="noopener">
-          Open SimClinician in a separate tab →
-        </a>
-      </div>
-    </section>
+  <p class="callout">
+    This module is grounded in my paper
+    <a href="https://arxiv.org/abs/2512.08953" target="_blank" rel="noopener">
+      <strong>SimClinician: A Multimodal Simulation Testbed for Reliable Psychologist–AI Collaboration in Mental Health Diagnosis</strong>
+    </a>.
+    The paper presents a clinician-facing framework that integrates PHQ-8/PCL-C anchors with audio prosody,
+    transcript dynamics, replayable facial/gaze evidence, and a fusion-based decision layer. Across
+    276 E-DAIC interviews expanded to 480,000 simulations, the framework reports a 22.9 percentage-point
+    increase in acceptance under a lightweight confirmation step, a worst-case upward override rate of
+    8.4%, 95th-percentile latency of 139 ms, and 94% acceptance under the safety prior. It also reports
+    substantially improved depression calibration after isotonic regression, reducing ECE from 0.128 to 0.028.
+  </p>
 
+  <div class="tag-row" style="margin-bottom:10px;">
+    <span class="tag">PHQ-8 / PCL-C anchoring</span>
+    <span class="tag">Audio spectrum & pauses</span>
+    <span class="tag">Transcript analysis</span>
+    <span class="tag">Facial & gaze evidence</span>
+    <span class="tag">Fusion-based risk estimation</span>
+  </div>
+
+  <div class="demo-frame-wrap">
+    <iframe
+      src="https://filo-cena-simclinician.hf.space"
+      title="SimClinician dashboard demo"
+      loading="lazy"
+      allow="fullscreen"
+      style="width:100%; height:820px; border:0;"
+    ></iframe>
+  </div>
+
+  <div class="demo-footer">
+    <span>Best experienced on desktop or laptop (full-screen view).</span>
+    <div style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="https://huggingface.co/spaces/filo-cena/SimClinician" target="_blank" rel="noopener">
+        Open SimClinician in a separate tab →
+      </a>
+      <a href="https://arxiv.org/abs/2512.08953" target="_blank" rel="noopener">
+        Read the paper →
+      </a>
+    </div>
+  </div>
+</section>
    <style>
   .note-legend{
     margin-top: 0.85rem;
