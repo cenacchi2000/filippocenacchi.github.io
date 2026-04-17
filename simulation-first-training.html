@@ -2,12 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Simulation-First Training (SimClinician) • Filippo Cenacchi</title>
+  <title>Simulation-First Training • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-        content="SimClinician: an Unreal Engine 5 / MetaHuman testbed for counterfactual diagnostic simulations, letting clinicians and agents practise thousands of synthetic interviews before deployment.">
+        content="Unreal Engine 5 / MetaHuman testbed for counterfactual diagnostic simulations, letting clinicians and agents practise thousands of synthetic interviews before deployment.">
 
   <style>
+    .paper-study-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(0,0.95fr);
+  gap:18px;
+  align-items:start;
+}
+.metric-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:14px 0 14px;
+}
+.metric-card{
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:#fff;
+  box-shadow:0 8px 22px rgba(15,23,42,0.06);
+}
+.metric-card strong{
+  display:block;
+  font-size:22px;
+  line-height:1.05;
+  margin-bottom:6px;
+  color:var(--brand-ink);
+}
+.metric-card span{
+  display:block;
+  font-size:13px;
+  color:var(--subtle);
+}
+.reflect-box{
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(37,99,235,0.06);
+  border-left:4px solid var(--brand);
+}
+.paper-preview-panel{
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 10px 28px rgba(15,23,42,0.08);
+}
+.paper-preview-header{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+}
+.paper-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+.paper-link-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 11px;
+  border-radius:999px;
+  border:1px solid rgba(37,99,235,0.25);
+  background:rgba(37,99,235,0.08);
+  color:var(--brand-ink);
+  font-size:13px;
+  text-decoration:none;
+}
+.paper-link-btn:hover{
+  text-decoration:none;
+  background:rgba(37,99,235,0.12);
+}
+.paper-preview-panel iframe{
+  width:100%;
+  height:760px;
+  border:0;
+  display:block;
+  background:#fff;
+}
+@media(max-width:800px){
+  .paper-study-grid{grid-template-columns:1fr;}
+  .metric-grid{grid-template-columns:1fr;}
+  .paper-preview-panel iframe{height:620px;}
+}
     :root{
       --bg:#f7f9fc;--panel:#ffffff;--text:#0b1220;--subtle:#475569;
       --brand:#2563eb;--brand-ink:#1d4ed8;--border:#e5e7eb;
@@ -96,17 +180,17 @@
       <div>
         <p class="pill">
           <span class="dot"></span>
-          SimClinician · MetaHuman diagnostic sandbox
+           MetaHuman diagnostic sandbox
         </p>
         <h1>Simulation-First Training for Diagnostic Agents</h1>
         <p class="subtitle">
-          SimClinician is an Unreal Engine 5 / MetaHuman testbed that lets agents and
+          Our concept is to use an Unreal Engine 5 / MetaHuman testbed that lets agents and
           clinicians rehearse thousands of synthetic interviews before anything reaches
           real patients.
         </p>
       </div>
       <figure class="hero-media">
-        <img src="Scene%20(1).png" alt="MetaHuman simulation scene from SimClinician">
+        <img src="Scene%20(1).png" alt="MetaHuman simulation scene">
       </figure>
     </div>
 
@@ -121,7 +205,7 @@
         conversations.
       </p>
       <p>
-        SimClinician treats simulation not as a game-like toy, but as a
+        We treat simulation not as a game-like toy, but as a
         <strong>high-fidelity rehearsal space</strong> where models, policies and clinicians
         can be stress-tested against a wide spectrum of synthetic patients before any
         deployment to humanoid robots or tele-health settings.
@@ -167,7 +251,7 @@
     <section>
       <h2>Counterfactual &amp; Perturbation Experiments</h2>
       <p>
-        SimClinician is explicitly optimised for <strong>counterfactual experiments</strong>.
+        The simulation is explicitly optimised for <strong>counterfactual experiments</strong>.
         For a fixed transcript, the system can vary only the non-verbal profile of the
         patient (eye contact, micro-expressions, fidgeting), or only the clinician’s
         pacing and prompt wording, while keeping everything else identical. This makes it
@@ -185,7 +269,7 @@
     <section>
       <h2>Bridging to Real-World Data</h2>
       <p>
-        SimClinician is not intended to replace clinical data. Instead, it sits between
+        The simulation is not intended to replace clinical data. Instead, it sits between
         corpora such as E-DAIC / DAIC-WOZ and humanoid deployments. Models are first
         pre-trained on real datasets, then stress-tested and adapted within simulation,
         and finally evaluated again with clinicians and, eventually, patients.
@@ -199,16 +283,128 @@
     </section>
 
     <section>
-      <h2>Current Status &amp; Outlook</h2>
+  <h2>Study Evidence and Reflection: Learning When to Ask</h2>
+
+  <div class="paper-study-grid">
+    <div>
       <p>
-        The current version of SimClinician supports small libraries of depression and
-        trauma-focused scenarios, with export hooks for both offline model training and
-        online policy evaluation. Next steps include richer social contexts (e.g.,
-        caregiver–patient dyads), explicit modelling of clinician workload, and direct
-        streaming of simulated sessions into Ameca and other humanoids for hardware-in-the-loop
-        testing.
+        The clearest empirical demonstration of the concept is presented in
+        <em>Learning When to Ask: Simulation-Trained Humanoids for Mental-Health Diagnosis</em>.
+        This study moves the platform beyond a generic virtual interview environment and
+        turns it into a controlled policy-learning substrate in which conversational timing,
+        interruption management, uncertainty handling, and multimodal diagnostic reasoning
+        can be examined quantitatively rather than described only conceptually.
       </p>
-    </section>
+
+      <p>
+        Methodologically, the paper constructs a simulation cohort of <strong>276 interactive Unreal Engine 5
+        MetaHuman patients</strong> derived from interview data, each with synchronised speech,
+        facial behaviour, gaze, and head–torso motion, and each embedded in a structured
+        PHQ-8 and PCL-C assessment flow. Each episode is framed as a <strong>25-turn interview</strong>,
+        corresponding to the 8 PHQ-8 items and the 17 PCL-C items. The interaction state is
+        formulated through a <strong>20-dimensional observable state</strong>, while the controller acts
+        through a <strong>5-dimensional continuous action space</strong> governing response latency,
+        intervention timing, backchannel frequency, interruption tolerance, and immediacy-related
+        behavioural gain. This is important because the system is not only learning questionnaire
+        completion; it is learning how to regulate the social timing of diagnostic exchange.
+      </p>
+
+      <div class="metric-grid">
+        <div class="metric-card">
+          <strong>276</strong>
+          <span>interactive MetaHuman patients instantiated for simulation-scale policy learning</span>
+        </div>
+        <div class="metric-card">
+          <strong>25 turns</strong>
+          <span>per interview episode across PHQ-8 and PCL-C diagnostic flows</span>
+        </div>
+        <div class="metric-card">
+          <strong>20D / 5D</strong>
+          <span>state–action formulation for timing, waiting, backchanneling, and interruption control</span>
+        </div>
+        <div class="metric-card">
+          <strong>200k</strong>
+          <span>replay-buffer capacity with batch-based off-policy learning and counterfactual replay</span>
+        </div>
+      </div>
+
+      <p>
+        The empirical results show a more nuanced and more convincing story than a simple
+        “best model wins” narrative. All three controllers converge within a relatively narrow
+        reward band, around <strong>0.64–0.65</strong>, but the customised TD3 controller learns substantially
+        more from the same simulation budget. Relative to its own starting point, TD3 records
+        gains of <strong>+0.024 in reward</strong>, <strong>+0.085 in coverage</strong>, <strong>+0.114 in rapport</strong>, and
+        <strong>+0.051 in pace</strong>. In final values, TD3 reaches <strong>0.993 coverage</strong>, slightly above
+        CEM at 0.990 and PPO at 0.981, while also achieving the strongest final pace score
+        of <strong>0.779</strong>. CEM retains the highest final rapport value at <strong>0.711</strong>, but with almost
+        no learning gain from its initial condition, which makes it a high-start but relatively
+        static baseline rather than the strongest adaptive policy.
+      </p>
+
+      <p>
+        The decision-quality analysis is even more revealing. For the full TD3 stack, the paper
+        reports <strong>100% cut consistency</strong>, a <strong>9.9% clarification rate</strong>,
+        <strong>53.1% backchannel precision</strong>, and a <strong>1.0-second wait value</strong> in the final evaluation
+        window. These numbers matter because they show that the controller is not merely producing
+        complete interviews; it is learning when to pause, when to acknowledge, and when to continue
+        without socially disruptive behaviour. In a clinical screening context, that distinction is
+        methodologically important: a system that reaches the end of a questionnaire is not necessarily
+        a system that conducts the interaction well.
+      </p>
+
+
+      <p>
+        What makes the paper especially useful for this webpage is that it also includes the right
+        scientific restraint. The evaluation is explicitly described as <strong>simulation-only</strong>, and the
+        humanoid is framed as the <strong>transfer target</strong> rather than as a clinically validated endpoint.
+        The paper also acknowledges that the E-DAIC-derived cohort is English-centred and demographically
+        limited, and that MetaHuman patients remain approximations rather than full substitutes for
+        real human behavioural variability. This reflective positioning is not a weakness for the site;
+        it is a strength. 
+      </p>
+
+      <div class="reflect-box">
+        <strong>Why this changes the interpretation of the project.</strong>
+        The significance is not only that it can host synthetic clinical interviews.
+        The stronger claim, and the one substantiated by this paper, is that simulation can become an
+        auditable environment for learning socially disciplined diagnostic behaviour: not just what to ask,
+        but when to ask, when to wait, when to signal attention, and how to preserve clinical pacing under
+        uncertainty. That moves the project from a visual demonstration platform toward a credible experimental
+        infrastructure for embodied clinical AI.
+      </div>
+    </div>
+
+    <div>
+      <div class="paper-preview-panel">
+        <div class="paper-preview-header">
+          <h3 style="margin:0 0 6px; font-size:18px;">Embedded manuscript preview</h3>
+          <p class="small" style="margin:0;">
+            The full paper can be previewed directly below, making the research output visible
+            alongside the platform description rather than hidden behind a separate link.
+          </p>
+
+          <div class="paper-links">
+            <a class="paper-link-btn" href="2512.08952v1.pdf" target="_blank" rel="noopener">Open local PDF</a>
+            <a class="paper-link-btn" href="https://arxiv.org/abs/2512.08952" target="_blank" rel="noopener">Open abstract</a>
+            <a class="paper-link-btn" href="https://arxiv.org/pdf/2512.08952" target="_blank" rel="noopener">Open arXiv PDF</a>
+          </div>
+        </div>
+
+        <iframe
+          src="2512.08952v1.pdf#toolbar=1&navpanes=0&view=FitH"
+          title="Learning When to Ask manuscript preview"
+          loading="lazy">
+        </iframe>
+      </div>
+
+      <p class="small" style="margin-top:10px;">
+        For local hosting, keep <code>2512.08952v1.pdf</code> in the same directory as this page.
+        If you host the PDF elsewhere, replace the iframe source and the local-PDF button link
+        with your deployed file path.
+      </p>
+    </div>
+  </div>
+</section>
     
   </div>
 
