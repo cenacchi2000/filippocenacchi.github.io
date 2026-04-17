@@ -2,171 +2,569 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>MetaHuman Avatar & Humanoid AI • Filippo Cenacchi</title>
+  <title>Scan-to-MetaHuman Embodiment • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-        content="A short demo showcasing MetaHuman avatars driven by diagnostic signals, used to communicate research and prototype real-time humanoid–avatar synchronisation.">
+        content="A research pipeline for reconstructing ultra-realistic digital humans from 3D scans, adapting them to MetaHuman, and synchronising personal, virtual and humanoid embodiments.">
 
   <style>
     :root{
-      --bg:#f7f9fc;--panel:#ffffff;--text:#0b1220;--subtle:#475569;
-      --brand:#2563eb;--brand-ink:#1d4ed8;--border:#e5e7eb;
-      --shadow:0 10px 32px rgba(15,23,42,0.10);
-      --accent-soft:rgba(37,99,235,0.08);
+      --bg:#f7f9fc;
+      --panel:#ffffff;
+      --text:#0b1220;
+      --subtle:#475569;
+      --brand:#7c3aed;
+      --brand-ink:#6d28d9;
+      --border:#e5e7eb;
+      --shadow:0 12px 36px rgba(15,23,42,0.10);
+      --shadow-strong:0 22px 55px rgba(15,23,42,0.16);
+      --accent-soft:rgba(124,58,237,0.08);
     }
+
     *{box-sizing:border-box;}
+
     html,body{
-      margin:0;padding:0;min-height:100vh;
-      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+      margin:0;
+      padding:0;
+      min-height:100vh;
+      font:16px/1.68 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
       color:var(--text);
       background:
-        radial-gradient(1100px 650px at 8% -10%,rgba(37,99,235,.16),transparent 55%),
-        radial-gradient(900px 600px at 100% 0%,rgba(147,51,234,.18),transparent 55%),
+        radial-gradient(1100px 650px at 8% -10%,rgba(37,99,235,.13),transparent 55%),
+        radial-gradient(950px 650px at 100% 0%,rgba(124,58,237,.18),transparent 55%),
         linear-gradient(180deg,#f7f9fc 0%,#fbfdff 55%,#f7f9fc 100%);
     }
-    a{color:var(--brand-ink);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .container{max-width:720px;margin:0 auto;padding:24px 16px 40px;}
+
+    a{
+      color:var(--brand-ink);
+      text-decoration:none;
+    }
+
+    a:hover{
+      text-decoration:underline;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:0 auto;
+      padding:24px 16px 46px;
+    }
+
     header{
-      display:flex;justify-content:space-between;align-items:center;
-      gap:12px;margin-bottom:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:20px;
     }
+
     .back-link{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:6px 10px;border-radius:999px;
-      background:#fff;border:1px solid var(--border);
-      font-size:14px;box-shadow:0 4px 16px rgba(15,23,42,0.12);
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--border);
+      font-size:14px;
+      box-shadow:0 4px 16px rgba(15,23,42,0.12);
     }
-    h1{font-size:clamp(30px,4vw,40px);margin:8px 0 4px;}
-    .subtitle{margin:0;color:var(--subtle);font-size:15px;}
+
+    .small{
+      font-size:14px;
+      color:var(--subtle);
+    }
+
     .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
       background:rgba(15,23,42,0.03);
       border:1px solid rgba(148,163,184,0.6);
-      font-size:13px;color:var(--subtle);
+      font-size:13px;
+      color:var(--subtle);
       margin-bottom:10px;
     }
-    .pill span.dot{width:8px;height:8px;border-radius:999px;background:#a855f7;}
+
+    .pill span.dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--brand);
+    }
+
+    h1{
+      font-size:clamp(32px,4.4vw,46px);
+      margin:8px 0 8px;
+      line-height:1.12;
+    }
+
+    .subtitle{
+      margin:0 0 22px;
+      color:var(--subtle);
+      font-size:17px;
+      max-width:980px;
+    }
+
     section{
-      margin-bottom:20px;background:var(--panel);border-radius:18px;
-      border:1px solid var(--border);box-shadow:var(--shadow);
-      padding:18px 20px 18px;
+      margin-bottom:24px;
+      background:var(--panel);
+      border-radius:22px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      padding:20px 22px 22px;
     }
-    section h2{margin-top:0;font-size:20px;}
-    video{
-      width:100%;height:auto;border-radius:18px;
-      border:1px solid var(--border);box-shadow:var(--shadow);
-      display:block;background:#000;
+
+    section h2{
+      margin:0 0 12px;
+      font-size:23px;
+      line-height:1.2;
     }
-    .small{font-size:14px;color:var(--subtle);}
-    /* NEW – horizontal 16:9 demo */
-.video-frame{
-  position:relative;
-  width:100%;
-  max-width:100%;
-  aspect-ratio: 16 / 9;   /* landscape */
-  border-radius:18px;
-  border:1px solid rgba(148,165,184,0.6);
-  box-shadow:0 18px 45px rgba(15,23,42,0.75);
-  overflow:hidden;
-  background:#000;
-}
 
-.video-frame iframe{
-  width:100%;
-  height:100%;
-  display:block;
-  border:0;
-}
+    section p{
+      margin:0 0 12px;
+    }
 
-.video-frame iframe{
-  width:100%;
-  height:100%;
-  display:block;
-  border:0;
-}
+    .video-frame{
+      position:relative;
+      width:100%;
+      aspect-ratio:16 / 9;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(148,165,184,0.55);
+      box-shadow:var(--shadow-strong);
+      background:#000;
+      margin-top:12px;
+    }
 
+    .video-frame iframe{
+      width:100%;
+      height:100%;
+      display:block;
+      border:0;
+    }
+
+    .video-caption{
+      margin-top:12px;
+      font-size:14px;
+      color:var(--subtle);
+    }
+
+    .featured-stage{
+      margin-top:16px;
+      border:1px solid var(--border);
+      border-radius:20px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 10px 26px rgba(15,23,42,0.08);
+    }
+
+    .featured-stage img{
+      width:100%;
+      display:block;
+      aspect-ratio:16/9;
+      object-fit:cover;
+      background:#000;
+    }
+
+    .featured-stage figcaption{
+      padding:14px 16px 16px;
+      font-size:14px;
+      color:var(--subtle);
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:minmax(0,1.08fr) minmax(0,0.92fr);
+      gap:18px;
+      align-items:start;
+    }
+
+    .callout{
+      margin-top:8px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:var(--accent-soft);
+      border-left:4px solid var(--brand);
+      color:var(--subtle);
+      font-size:14px;
+    }
+
+    .pipeline-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+      margin-top:14px;
+    }
+
+    .step-card{
+      border:1px solid var(--border);
+      border-radius:18px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 8px 22px rgba(15,23,42,0.07);
+    }
+
+    .step-card img{
+      width:100%;
+      display:block;
+      aspect-ratio:16/10;
+      object-fit:cover;
+      background:#0b1220;
+    }
+
+    .step-card .body{
+      padding:14px 15px 16px;
+    }
+
+    .step-card h3{
+      margin:0 0 8px;
+      font-size:17px;
+      line-height:1.25;
+    }
+
+    .step-card p{
+      margin:0;
+      font-size:14px;
+      color:var(--subtle);
+    }
+
+    .triad-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin-top:14px;
+    }
+
+    .triad-card{
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      background:#fff;
+      box-shadow:0 8px 22px rgba(15,23,42,0.06);
+    }
+
+    .triad-card h3{
+      margin:0 0 8px;
+      font-size:17px;
+    }
+
+    .triad-card p{
+      margin:0;
+      font-size:14px;
+      color:var(--subtle);
+    }
+
+    .result-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:18px;
+      margin-top:14px;
+      align-items:start;
+    }
+
+    .result-card{
+      border:1px solid var(--border);
+      border-radius:18px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 8px 22px rgba(15,23,42,0.06);
+    }
+
+    .result-card img{
+      width:100%;
+      display:block;
+      aspect-ratio:4/3;
+      object-fit:cover;
+      background:#000;
+    }
+
+    .result-card .body{
+      padding:14px 15px 16px;
+    }
+
+    .result-card h3{
+      margin:0 0 8px;
+      font-size:17px;
+    }
+
+    .result-card p{
+      margin:0;
+      font-size:14px;
+      color:var(--subtle);
+    }
+
+    .ethics-note{
+      margin-top:10px;
+      font-size:13px;
+      color:var(--subtle);
+    }
+
+    @media(max-width:980px){
+      .pipeline-grid,
+      .result-grid,
+      .triad-grid,
+      .two-col{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:640px){
+      .container{
+        padding:18px 12px 34px;
+      }
+
+      section{
+        padding:16px 16px 18px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <a class="back-link" href="index.html#research">← Back to research overview</a>
-      <span class="small">Filippo Cenacchi · MetaHuman Avatar to Humanoid</span>
+      <span class="small">Filippo Cenacchi · Scan-to-MetaHuman Embodiment</span>
     </header>
 
     <p class="pill">
       <span class="dot"></span>
-      Short Demo · Research storytelling &amp; synchronisation prototype
+      Research Demo · 3D reconstruction, MetaHuman adaptation and synchronised embodiment
     </p>
-    <h1>MetaHuman Avatar to Humanoid</h1>
+
+    <h1>From Ultra-Realistic 3D Scan to MetaHuman, Voice Clone and Humanoid Embodiment</h1>
     <p class="subtitle">
-      A fast, visual way to show how diagnostic signals can drive expressive, realistic
-      avatars for simulation, communication and future tele-presence.
+      This project presents a full identity-preserving embodiment pipeline in which a real person is reconstructed from a high-detail 3D scan, translated into a photorealistic MetaHuman-compatible character, synchronised with cloned voice and animation, and finally connected across three coordinated embodiments: the physical humanoid AI embodiment, the MetaHuman agent embodiment and the original personal embodiment.
     </p>
 
     <section>
-  <h2>Demo</h2>
+      <h2>Final Demonstration</h2>
+      <p>
+        The video below is the final demonstration and is intentionally positioned first so that visitors immediately see the complete embodied result before moving through the underlying reconstruction pipeline. It shows the end state of the system in which the rendered identity, the cloned vocal stream and the embodied agent logic are brought into a single communicative loop.
+      </p>
 
-<div class="video-frame">
-  <iframe
-    src="https://www.youtube.com/embed/Z5OKkYK8zjc?autoplay=1&mute=1&loop=1&playlist=Z5OKkYK8zjc&controls=1&modestbranding=1&rel=0&vq=hd1080"
-    title="MetaHuman Avatar Reel"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-    loading="lazy">
-  </iframe>
-</div>
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/kw-PMX5aiTg?rel=0&controls=1&modestbranding=1"
+          title="Scan-to-MetaHuman synchronized embodiment demo"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
 
+      <p class="video-caption">
+        Final demonstration of the synchronised embodiment pipeline, showing how the personalised rendering, cloned voice and agent behaviour converge into a coherent digital-human presentation.
+      </p>
 
-  <p class="small" style="margin-top:10px;">
-    MetaHuman character being driven by llm and
-    motion profiles derived from Jensen Huang recordings.
-  </p>
-</section>
-
+      <figure class="featured-stage">
+        <img
+          src="Screenshot%202026-04-14%20102948.png"
+          alt="CEO-style stage presentation showing the final embodied character in a live demonstration setting"
+          loading="lazy">
+        <figcaption>
+          Featured demonstration frame shown immediately after the video: the staged result illustrates the public-facing presentation condition, where the reconstructed and adapted identity can be deployed as a high-fidelity digital presenter or embodied AI agent in a live environment.
+        </figcaption>
+      </figure>
+    </section>
 
     <section>
-      <h2>Purpose</h2>
+      <h2>Research Aim</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            The scientific goal of this work is not merely visual realism, but the construction of a <strong>computationally aligned human embodiment stack</strong>. Starting from dense 3D capture, the pipeline progressively converts raw geometry into a semantically controllable and visually persuasive digital identity. This identity is then made operational through MetaHuman-based rigging, high-resolution material refinement, speech identity preservation and cross-platform behavioural synchronisation.
+          </p>
+          <p>
+            In academic terms, the contribution sits at the intersection of digital human reconstruction, animation retargeting, embodied conversational AI and human-centred telepresence. The key novelty is that the same identity can be instantiated in three synchronised conditions rather than being trapped in only one representational medium.
+          </p>
+        </div>
+        <div>
+          <div class="callout">
+            The pipeline therefore moves from <strong>capture</strong>, to <strong>cleanup</strong>, to <strong>registration</strong>, to <strong>MetaHuman adaptation</strong>, to <strong>8K-grade rendering refinement</strong>, and finally to <strong>synchronised triadic embodiment</strong>, where a real person, a MetaHuman agent and a physical humanoid AI embodiment can all be aligned around the same identity model.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Academic Reconstruction Pipeline</h2>
       <p>
-        The demo plays a double role. First, it acts as a <strong>communication
-        artefact</strong> for talks, grant pitches and public engagement, making the
-        research immediately tangible without requiring access to the full Ameca
-        hardware or simulation environment. Second, it serves as a testbed for
-        real-time <strong>humanoid–avatar synchronisation</strong>, where signals
-        captured from Ameca or other sensors are mapped live to MetaHuman rigs.
+        The reconstruction process begins with a raw 3D scan that captures identity geometry at a level sufficient for facial proportions, local asymmetries and surface idiosyncrasies to be preserved. However, raw scans are not directly deployable for animation or embodied AI. They typically contain topological noise, incomplete regions, irregular boundaries and surface inconsistencies that must be normalised before any rigged digital-human system can meaningfully use them. The images below illustrate the full transition from dense scan data to the final operational digital identity.
+      </p>
+
+      <div class="pipeline-grid">
+        <article class="step-card">
+          <img
+            src="timscann.png"
+            alt="Raw 3D scan bust of a person before reconstruction cleanup"
+            loading="lazy">
+          <div class="body">
+            <h3>1. Raw 3D identity acquisition</h3>
+            <p>
+              The first stage captures a dense geometric approximation of the subject. At this point, the scan preserves valuable craniofacial structure and broad surface morphology, but it still contains artefacts, incomplete contour regions and a representation that is unsuitable for animation, retargeting or semantic control.
+            </p>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <img
+            src="Screenshot%202026-04-14%20064637.png"
+            alt="Side view of the raw mesh showing dense triangulation and geometry structure"
+            loading="lazy">
+          <div class="body">
+            <h3>2. Mesh inspection, topology diagnosis and geometric cleanup</h3>
+            <p>
+              The second stage focuses on structural diagnosis of the scan mesh. Dense triangulation, irregular edge flow and peripheral deformation are analysed so that geometry can be cleaned, reoriented and prepared for more stable downstream processing. This stage is essential because high realism without topological discipline leads to poor deformation and unreliable facial transfer.
+            </p>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <img
+            src="Screenshot%202026-01-30%20035445.png"
+            alt="Textured frontal reconstruction showing projected appearance on the scanned identity"
+            loading="lazy">
+          <div class="body">
+            <h3>3. Texture projection and canonical facial rendering</h3>
+            <p>
+              Once geometry becomes sufficiently stable, a canonical facial rendering can be produced by projecting appearance information back onto the reconstructed surface. This step converts the scan from a purely structural object into an identity-bearing visual asset, allowing skin detail, tonal variation and major facial characteristics to be preserved in a renderable form.
+            </p>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <img
+            src="timmarkers.png"
+            alt="Facial landmark overlay used for semantic registration and rig alignment"
+            loading="lazy">
+          <div class="body">
+            <h3>4. Landmark-guided semantic registration</h3>
+            <p>
+              Semantic facial landmarks are then aligned with the rendered face so that the subject can be mapped onto a controllable facial schema. This is the bridge between static likeness reconstruction and dynamic avatar control. Landmark-guided registration makes it possible to preserve identity while preparing the face for rig transfer, blendshape correspondence and expression-consistent retargeting.
+            </p>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <img
+            src="tim.png"
+            alt="Refined facial rendering after identity transfer into a high-realism avatar pipeline"
+            loading="lazy">
+          <div class="body">
+            <h3>5. MetaHuman adaptation and high-fidelity material refinement</h3>
+            <p>
+              After registration, the identity is adapted into a MetaHuman-compatible representation. In practical terms, this means matching the reconstructed person to a rigged digital human whose topology, facial control system and animation interfaces support real-time operation. Material refinement then pushes the asset toward highly realistic 8K-grade detail, particularly in skin response, pore-level variation, shading continuity and perceptual likeness.
+            </p>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <img
+            src="tiiiiimmm.png"
+            alt="Final highly realistic portrait rendering of the adapted MetaHuman identity"
+            loading="lazy">
+          <div class="body">
+            <h3>6. Final photorealistic embodiment output</h3>
+            <p>
+              The final stage produces a stable, visually persuasive digital person rather than a mere scan-derived face. At this point, the character is no longer only an image asset: it becomes an operational embodied interface capable of receiving voice, animation and dialogue-control signals while still maintaining strong visual continuity with the original person.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why the 2D Rendering Stage Matters</h2>
+      <p>
+        A crucial intermediate step in this workflow is the generation of a controlled 2D rendering from the reconstructed 3D identity. This stage may appear visually simple, but academically it is essential because it acts as the interface between raw scanned geometry and semantically interpretable facial representation. The 2D render enables identity checking, landmark placement, appearance correction, texture auditing and rig-transfer validation under a standardised viewpoint. In other words, it provides a stable observational plane from which the realism of the 3D subject can be evaluated and the adaptation to MetaHuman can be made more accurate and more reproducible.
       </p>
       <p>
-        This mapping allows experiments where a humanoid robot interacts in the lab
-        while a visually richer avatar mirrors its behaviour in a virtual environment,
-        enabling remote observation, annotation and—in the future—tele-presence.
+        Without this rendering stage, the transition from scan space to avatar space becomes much less controlled. With it, the workflow gains an explicit validation layer where likeness, feature alignment and material continuity can be iteratively corrected before animation and embodiment are introduced.
       </p>
     </section>
 
     <section>
-      <h2>Technical Setup</h2>
+      <h2>Synchronised Triadic Embodiment</h2>
       <p>
-        The current demo is rendered in Unreal Engine&nbsp;5 using MetaHuman assets and
-        sequencers. Motion is driven by a combination of facial blendshape curves,
-        gaze targets and body pose trajectories. In parallel work, these trajectories
-        are aligned with sensor streams from humanoid prototypes, creating a clean
-        separation between <em>where the data comes from</em> (Ameca, video corpora,
-        simulated patients) and <em>how it is visualised</em> (photorealistic avatars,
-        stylised avatars, or privacy-preserving representations).
+        The end result of the pipeline is not a single avatar, but a coordinated identity system spanning three embodiments that can interact with each other and with humans. This creates a new communicative configuration in which the same person can exist simultaneously as a physical agent, as a virtual photorealistic agent and as the original personal source identity.
+      </p>
+
+      <div class="triad-grid">
+        <article class="triad-card">
+          <h3>Physical AI humanoid embodiment</h3>
+          <p>
+            In the first condition, the identity is projected into a physical humanoid platform such as Ameca. This embodiment contributes physical co-presence, spatial interaction, robotic gesture and situated engagement in the real world.
+          </p>
+        </article>
+
+        <article class="triad-card">
+          <h3>MetaHuman agent embodiment</h3>
+          <p>
+            In the second condition, the same identity is realised as a photorealistic MetaHuman agent. This embodiment contributes visual richness, cinematic realism, remote deployability and a controllable digital-human interface suitable for simulation, performance and telepresence.
+          </p>
+        </article>
+
+        <article class="triad-card">
+          <h3>Personal source embodiment</h3>
+          <p>
+            In the third condition, the original human source remains the reference identity for visual likeness, vocal style and behavioural grounding. This embodiment anchors the other two so that synchronisation remains identity-consistent rather than becoming a generic animation transfer.
+          </p>
+        </article>
+      </div>
+
+      <p style="margin-top:14px;">
+        When these three conditions are synchronised, the system moves beyond avatar generation and becomes a form of <strong>multi-embodiment identity orchestration</strong>. The person, the MetaHuman and the humanoid agent can all be linked through shared voice, aligned dialogue logic, coordinated turn-taking and matched expressive behaviour. This is the core reason the final demo is important: it illustrates not only realism, but the possibility of identity continuity across physical and virtual communicative bodies.
       </p>
     </section>
 
     <section>
-      <h2>Future Directions</h2>
+      <h2>Rendered Results and Embodied Outcome</h2>
       <p>
-        Upcoming iterations will explore driving the demo from live diagnostic sessions,
-        adding overlaid indicators of risk and uncertainty, and embedding the avatars
-        into shared virtual spaces where clinicians, researchers and even patients can
-        review episodes together. The long-term goal is to make the underlying
-        multimodal signals <strong>legible and explorable</strong> for humans, not
-        just for models.
+        The images below summarise the visual transition from registered identity to final embodied output. Together with the stage demonstration shown earlier, they make clear that the pipeline is not only about reconstructing a face, but about constructing a reusable embodied identity that can function in presentation, interaction and humanoid AI contexts.
+      </p>
+
+      <div class="result-grid">
+        <article class="result-card">
+          <img
+            src="tim.png"
+            alt="High-fidelity frontal render of the adapted face"
+            loading="lazy">
+          <div class="body">
+            <h3>Registered high-fidelity identity</h3>
+            <p>
+              This render represents the stabilised face after reconstruction and identity transfer. It captures the phase where likeness is already strong and suitable for refinement into a controllable digital-human asset.
+            </p>
+          </div>
+        </article>
+
+        <article class="result-card">
+          <img
+            src="tiiiiimmm.png"
+            alt="Final photorealistic MetaHuman-style portrait used as embodied digital human output"
+            loading="lazy">
+          <div class="body">
+            <h3>Final embodied digital-human presentation</h3>
+            <p>
+              This final result demonstrates the photorealistic endpoint of the pipeline, where visual fidelity, skin response and subject likeness become robust enough for public demonstration, avatar telepresence and synchronised embodied AI deployment.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Voice Cloning and Behavioural Synchronisation</h2>
+      <p>
+        Visual embodiment alone is insufficient if the character does not sound and behave like the original identity. For that reason, the pipeline also includes voice cloning and synchronisation between rendered speech, agent timing and embodiment output. In the final demonstration, the vocal identity is preserved and aligned with the visual identity so that the audience perceives a coherent person rather than a disconnected animation layer.
+      </p>
+      <p>
+        When this vocal stream is synchronised with MetaHuman animation and, in parallel, with Ameca-based embodiment logic, the system produces a unified communicative agent that can be perceived across media as the same identity. This is precisely where the work becomes interesting from an HCI and embodied-AI perspective: the contribution is not only realism, but continuity of personhood cues across platforms.
+      </p>
+      <p class="ethics-note">
+        In research and deployment contexts, this type of identity-preserving embodiment should be used with explicit consent, traceable provenance and clear disclosure of how voice, likeness and behavioural control are derived and synchronised.
       </p>
     </section>
   </div>
