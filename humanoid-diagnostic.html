@@ -596,13 +596,275 @@
   }
 </style>
 
+<style>
+  .clinical-note-compare{
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto 1.25rem;
+    padding: 22px 26px 22px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 10px 32px rgba(15,23,42,0.10);
+  }
+
+  .clinical-note-compare-header{
+    margin-bottom: 1rem;
+  }
+
+  .clinical-note-compare-header h2{
+    margin: 0 0 0.55rem 0;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #0b1220;
+  }
+
+  .clinical-note-compare-header p{
+    margin: 0;
+    max-width: 980px;
+    line-height: 1.7;
+    color: #475569;
+    font-size: 0.98rem;
+  }
+
+  .clinical-note-compare-stack{
+    display: grid;
+    gap: 1.35rem;
+    margin-top: 1rem;
+  }
+
+  .clinical-note-row{
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    gap: 1.15rem;
+    align-items: start;
+  }
+
+  .clinical-note-card{
+    background: linear-gradient(180deg, rgba(18,22,31,0.96) 0%, rgba(10,12,18,0.97) 100%);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 52px rgba(0,0,0,0.24);
+  }
+
+  .clinical-note-card-inner{
+    padding: 1rem;
+  }
+
+  .clinical-note-pill{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.58rem;
+    margin-bottom: 0.82rem;
+    padding: 0.42rem 0.74rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.84);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .clinical-note-pill::before{
+    content:"";
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    background: #9ca6b8;
+    box-shadow: 0 0 0 0.2rem rgba(156,166,184,0.15);
+  }
+
+  .clinical-note-pill.ai::before{
+    background: #5ea7ff;
+    box-shadow: 0 0 0 0.2rem rgba(94,167,255,0.16);
+  }
+
+  .pdf-preview-shell{
+    height: 740px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #10141d;
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+
+  .pdf-preview-frame{
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+    background: #fff;
+  }
+
+  .expanded-note{
+    background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+    border-radius: 18px;
+    border: 1px solid rgba(52,96,162,0.16);
+    padding: 1.05rem 1rem 1.05rem;
+    color: #183252;
+    min-height: 740px;
+  }
+
+  .expanded-note h3{
+    margin: 0 0 0.72rem 0;
+    color: #102847;
+    font-size: 1.02rem;
+    line-height: 1.34;
+  }
+
+  .expanded-note p{
+    margin: 0 0 0.82rem 0;
+    font-size: 0.965rem;
+    line-height: 1.68;
+    color: #183252;
+  }
+
+  .expanded-note p:last-child{
+    margin-bottom: 0;
+  }
+
+  .hl-motor{
+    background: rgba(116,181,255,0.30);
+    box-shadow: 0 0 0 2px rgba(116,181,255,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
+  }
+
+  .hl-gaze{
+    background: rgba(255,201,107,0.34);
+    box-shadow: 0 0 0 2px rgba(255,201,107,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
+  }
+
+  .hl-facial{
+    background: rgba(255,153,194,0.30);
+    box-shadow: 0 0 0 2px rgba(255,153,194,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
+  }
+
+  .hl-audio{
+    background: rgba(181,154,255,0.30);
+    box-shadow: 0 0 0 2px rgba(181,154,255,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
+  }
+
+  .hl-text{
+    background: rgba(130,214,177,0.32);
+    box-shadow: 0 0 0 2px rgba(130,214,177,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
+  }
+
+  .hl-fusion{
+    background: rgba(169,214,110,0.32);
+    box-shadow: 0 0 0 2px rgba(169,214,110,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
+  }
+
+  .hl-questionnaire{
+    background: rgba(255,140,140,0.30);
+    box-shadow: 0 0 0 2px rgba(255,140,140,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
+  }
+
+  .hl-clinical{
+    background: rgba(109,224,224,0.30);
+    box-shadow: 0 0 0 2px rgba(109,224,224,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
+  }
+
+  .note-legend{
+    margin-top: 1rem;
+    padding: 1rem 1.1rem;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #d7deea;
+    box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+  }
+
+  .note-legend-title{
+    margin: 0 0 0.85rem 0;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #334155;
+  }
+
+  .note-legend-grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem 1.6rem;
+  }
+
+  .note-legend-item{
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    align-items: center;
+    column-gap: 0.7rem;
+    min-width: 0;
+  }
+
+  .note-legend-swatch{
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    display: block;
+  }
+
+  .note-legend-label{
+    display: block;
+    color: #1e293b;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+
+  .note-legend-swatch.motor{ background:#74b5ff; }
+  .note-legend-swatch.gaze{ background:#ffc96b; }
+  .note-legend-swatch.facial{ background:#ff99c2; }
+  .note-legend-swatch.audio{ background:#b59aff; }
+  .note-legend-swatch.text{ background:#82d6b1; }
+  .note-legend-swatch.fusion{ background:#a9d66e; }
+  .note-legend-swatch.questionnaire{ background:#ff8c8c; }
+  .note-legend-swatch.clinical{ background:#6de0e0; }
+
+  @media (max-width: 980px){
+    .clinical-note-row{
+      grid-template-columns: 1fr;
+    }
+
+    .pdf-preview-shell,
+    .expanded-note{
+      min-height: 640px;
+      height: auto;
+    }
+
+    .pdf-preview-shell{
+      height: 640px;
+    }
+
+    .note-legend-grid{
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 <section class="clinical-note-compare">
   <div class="clinical-note-compare-header">
     <h2>Original Clinical Notes vs Humanoid AI Monitoring Expanded Clinical Notes</h2>
     <p>
-      The left column shows the redacted original clinical-note PDFs. The right column shows expanded notes generated by the humanoid AI
-      monitoring workflow, with colour-coded highlighting used to distinguish modality-specific additions, multimodal synthesis, screening
-      alignment, and added clinical interpretation.
+      The left column shows the redacted original clinical-note PDFs. The right column presents corresponding expanded clinical notes, with colour-coded highlighting used to distinguish patient-level motor findings, gaze and visual behaviour, facial expression, acoustic evidence, transcript-derived language patterns, multimodal convergence, questionnaire-linked interpretation, and final clinical synthesis.
     </p>
   </div>
 
@@ -626,209 +888,123 @@
       <article class="clinical-note-card">
         <div class="clinical-note-card-inner">
           <div class="clinical-note-pill ai">Humanoid AI Monitoring Expanded Clinical Note</div>
-   <!-- CASE 1 RIGHT COLUMN ONLY -->
-<div class="expanded-note">
-  <h3>Case 1 — Post-operative clinical synthesis</h3>
+          <div class="expanded-note">
+            <h3>Case 1 — Post-operative clinical synthesis</h3>
 
-  <p>
-    The patient was reviewed following repeat cervical decompressive surgery. Relative to the pre-operative state, the current profile is
-    consistent with substantial improvement in the dominant pain complaint, in keeping with the original follow-up note. A residual distal
-    arm pain component remains present. There is no evidence in the source note of a new neurological deficit, and the wound was described
-    as clean and dry at review.
-  </p>
+            <p>
+              The patient was reviewed following repeat cervical decompressive surgery. Relative to the pre-operative state, the current profile is consistent with substantial improvement in the dominant pain complaint, in keeping with the original follow-up note. A residual distal arm pain component remains present. There is no evidence in the source note of a new neurological deficit, and the wound was described as clean and dry at review.
+            </p>
 
-  <p>
-    <span class="hl-motor">Within the monitored assessment, the main residual abnormality should be described only in terms of the
-    patient’s observed behaviour: [EVIDENCE: reduced excursion during cervical rotation / guarded shoulder elevation / slower initiation of
-    upper-limb movement / asymmetry between sides / protective unloading of the symptomatic side]. These findings should be reported with
-    concrete evidence, for example: [LEFT/RIGHT] shoulder flexion was reduced by [x%], task initiation latency increased to [x] seconds,
-    or movement variability increased during pain-relevant actions.</span>
-  </p>
+            <p>
+              <span class="hl-motor">Within the monitored assessment, the main residual abnormality should be described only in terms of the patient’s observed behaviour: [EVIDENCE: reduced excursion during cervical rotation / guarded shoulder elevation / slower initiation of upper-limb movement / asymmetry between sides / protective unloading of the symptomatic side]. These findings should be reported with concrete evidence, for example: [LEFT/RIGHT] shoulder flexion was reduced by [x%], task initiation latency increased to [x] seconds, or movement variability increased during pain-relevant actions.</span>
+            </p>
 
-  <p>
-    <span class="hl-facial">If facial evidence was present, state the specific patient response rather than the tool: for example,
-    pain-linked facial tightening during symptom questioning, brief grimacing during arm elevation, or increased periocular tension during
-    neck movement, evidenced by [AU pattern / frame count / peak intensity / percentage of task duration].</span>
-    <span class="hl-audio">If speech evidence was present, report the patient-level pattern directly: for example, increased pause burden,
-    reduced vocal energy, or brief hesitations during pain-related responses, evidenced by [pause count], [mean pause duration], [speech
-    rate], or [intensity/prosodic change] compared with the patient’s own baseline in neutral segments.</span>
-  </p>
+            <p>
+              <span class="hl-facial">If facial evidence was present, state the specific patient response rather than the tool: for example, pain-linked facial tightening during symptom questioning, brief grimacing during arm elevation, or increased periocular tension during neck movement, evidenced by [AU pattern / frame count / peak intensity / percentage of task duration].</span>
+              <span class="hl-audio">If speech evidence was present, report the patient-level pattern directly: for example, increased pause burden, reduced vocal energy, or brief hesitations during pain-related responses, evidenced by [pause count], [mean pause duration], [speech rate], or [intensity/prosodic change] compared with the patient’s own baseline in neutral segments.</span>
+            </p>
 
-  <p>
-    <span class="hl-text">If transcript evidence was present, document the actual content pattern: for example, repeated reference to
-    soreness in the distal arm, avoidance language around specific movements, or improvement-focused wording without catastrophic phrasing,
-    evidenced by [quoted symptom terms], [frequency of pain-related lexical items], or [difference between neutral and symptom-focused
-    segments].</span>
-    <span class="hl-fusion">Any multimodal statement should remain evidence-led, for example: the convergence of guarded movement,
-    pain-linked facial tension, and hesitancy during symptom-focused responses supports persistent but reduced postoperative symptom
-    burden rather than complete symptom resolution.</span>
-  </p>
+            <p>
+              <span class="hl-text">If transcript evidence was present, document the actual content pattern: for example, repeated reference to soreness in the distal arm, avoidance language around specific movements, or improvement-focused wording without catastrophic phrasing, evidenced by [quoted symptom terms], [frequency of pain-related lexical items], or [difference between neutral and symptom-focused segments].</span>
+              <span class="hl-fusion">Any multimodal statement should remain evidence-led, for example: the convergence of guarded movement, pain-linked facial tension, and hesitancy during symptom-focused responses supports persistent but reduced postoperative symptom burden rather than complete symptom resolution.</span>
+            </p>
 
-  <p>
-    <span class="hl-clinical">Overall, the note should conclude that the patient shows marked postoperative improvement with residual
-    symptomatology still evident in [specific movement/task], supported by [explicit evidence]. The appropriate interpretation is improving
-    recovery with persistent residual pain-related protective behaviour, not complete normalisation. Ongoing physiotherapy and interval
-    follow-up remain appropriate, with attention to whether the residual arm symptoms and protective motor pattern continue to diminish or
-    become persistent.</span>
-  </p>
-</div>
-
-<!-- CASE 2 RIGHT COLUMN ONLY -->
-<div class="expanded-note">
-  <h3>Case 2 — Clinical synthesis of lumbar and visual burden</h3>
-
-  <p>
-    The patient has documented high-grade L4–5 spinal canal stenosis with effacement of the cauda equina nerve roots, which constitutes a
-    clear surgical pathology in the source note. The same record also documents concurrent cataracts and macular degeneration, with staged
-    management prioritising ophthalmic treatment before spinal intervention. The source note explicitly states that the spinal condition was
-    not regarded as a neurosurgical emergency at that review.
-  </p>
-
-  <p>
-    <span class="hl-motor">The expanded note should report only the patient’s observed functional pattern. If present in your outputs,
-    write this concretely as: cautious sit-to-stand transfer, reduced gait confidence, shortened step length, prolonged turning time,
-    guarded trunk motion, reduced tolerance of sustained standing, or slowed transition between postures, evidenced by [task duration],
-    [step-time asymmetry], [reduced range], [increased sway], or [number of hesitations / rest pauses].</span>
-  </p>
-
-  <p>
-    <span class="hl-gaze">Visual findings should also be stated at the patient level. For example: repeated loss of fixation, fragmented
-    tracking, delayed visual re-orientation, or unstable gaze anchoring during instruction-following, evidenced by [fixation breaks],
-    [saccadic interruptions], [missed targets], or [time to reacquire visual target].</span>
-    <span class="hl-facial">If discomfort was visible during loading or positional change, state that directly, for example: facial
-    tension increased during sit-to-stand or spinal loading tasks, evidenced by [specific AU/score/peak expression interval].</span>
-  </p>
-
-  <p>
-    <span class="hl-audio">If the patient’s spoken responses showed burden, record the actual pattern: for example, slowed response
-    onset, increased pauses before describing mobility limitations, or reduced vocal energy during symptom-related answers, evidenced by
-    [response latency], [pause duration], [speech rate], or [prosodic attenuation].</span>
-    <span class="hl-text">If transcript evidence was available, report concrete symptom language rather than generic analytics, for
-    example: recurrent references to difficulty standing, fear of worsening symptoms, prioritisation of vision treatment, or language
-    indicating functional caution, evidenced by [quoted phrases], [term counts], or [theme frequency].</span>
-  </p>
-
-  <p>
-    <span class="hl-fusion">A multimodal conclusion should be written only where several patient-specific signals converge. For example:
-    the combination of guarded transfers, slowed gait-related behaviour, fixation instability, and effortful symptom description supports a
-    clinically meaningful functional burden that is broader than the structural diagnosis statement alone.</span>
-    <span class="hl-clinical">Overall, the note should conclude that the patient demonstrates functionally significant limitation
-    consistent with the documented lumbar pathology, with additional observable visual instability likely relevant to task performance.
-    This interpretation should be tied to explicit observed evidence from the session and used to support staged planning, follow-up
-    comparison, and monitoring of whether mobility restriction, gaze instability, and task hesitancy worsen, stabilise, or improve over
-    time.</span>
-  </p>
-</div>
-
-<style>
-  .clinical-note-compare .note-legend{
-    margin-top: 1rem;
-    padding: 1rem 1.1rem;
-    border-radius: 18px;
-    background: #ffffff;
-    border: 1px solid #d7deea;
-    box-shadow: 0 8px 24px rgba(15,23,42,0.06);
-  }
-
-  .clinical-note-compare .note-legend-title{
-    margin: 0 0 0.85rem 0;
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #334155;
-  }
-
-  .clinical-note-compare .note-legend-grid{
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem 1.6rem;
-  }
-
-  .clinical-note-compare .note-legend-item{
-    display: grid;
-    grid-template-columns: 16px 1fr;
-    align-items: center;
-    column-gap: 0.7rem;
-    min-width: 0;
-  }
-
-  .clinical-note-compare .note-legend-swatch{
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
-    display: block;
-  }
-
-  .clinical-note-compare .note-legend-label{
-    display: block;
-    color: #1e293b;
-    font-size: 0.95rem;
-    line-height: 1.35;
-    font-weight: 600;
-  }
-
-  .clinical-note-compare .note-legend-swatch.motor{ background:#74b5ff; }
-  .clinical-note-compare .note-legend-swatch.gaze{ background:#ffc96b; }
-  .clinical-note-compare .note-legend-swatch.facial{ background:#ff99c2; }
-  .clinical-note-compare .note-legend-swatch.audio{ background:#b59aff; }
-  .clinical-note-compare .note-legend-swatch.text{ background:#82d6b1; }
-  .clinical-note-compare .note-legend-swatch.fusion{ background:#a9d66e; }
-  .clinical-note-compare .note-legend-swatch.questionnaire{ background:#ff8c8c; }
-  .clinical-note-compare .note-legend-swatch.clinical{ background:#6de0e0; }
-
-  @media (max-width: 900px){
-    .clinical-note-compare .note-legend-grid{
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
-
-<div class="note-legend">
-  <div class="note-legend-title">Highlight Legend</div>
-
-  <div class="note-legend-grid">
-    <div class="note-legend-item">
-      <span class="note-legend-swatch motor"></span>
-      <span class="note-legend-label">Motor behaviour</span>
+            <p>
+              <span class="hl-clinical">Overall, the note should conclude that the patient shows marked postoperative improvement with residual symptomatology still evident in [specific movement/task], supported by [explicit evidence]. The appropriate interpretation is improving recovery with persistent residual pain-related protective behaviour, not complete normalisation. Ongoing physiotherapy and interval follow-up remain appropriate, with attention to whether the residual arm symptoms and protective motor pattern continue to diminish or become persistent.</span>
+            </p>
+          </div>
+        </div>
+      </article>
     </div>
 
-    <div class="note-legend-item">
-      <span class="note-legend-swatch gaze"></span>
-      <span class="note-legend-label">Gaze / visual behaviour</span>
+    <div class="clinical-note-row">
+      <article class="clinical-note-card">
+        <div class="clinical-note-card-inner">
+          <div class="clinical-note-pill">Original clinical note</div>
+          <div class="pdf-preview-shell">
+            <iframe
+              class="pdf-preview-frame"
+              src="02.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+              title="Original clinical note PDF for Case 2"
+              loading="lazy">
+            </iframe>
+          </div>
+        </div>
+      </article>
+
+      <article class="clinical-note-card">
+        <div class="clinical-note-card-inner">
+          <div class="clinical-note-pill ai">Humanoid AI Monitoring Expanded Clinical Note</div>
+          <div class="expanded-note">
+            <h3>Case 2 — Clinical synthesis of lumbar and visual burden</h3>
+
+            <p>
+              The patient has documented high-grade L4–5 spinal canal stenosis with effacement of the cauda equina nerve roots, which constitutes a clear surgical pathology in the source note. The same record also documents concurrent cataracts and macular degeneration, with staged management prioritising ophthalmic treatment before spinal intervention. The source note explicitly states that the spinal condition was not regarded as a neurosurgical emergency at that review.
+            </p>
+
+            <p>
+              <span class="hl-motor">The expanded note should report only the patient’s observed functional pattern. If present in your outputs, write this concretely as: cautious sit-to-stand transfer, reduced gait confidence, shortened step length, prolonged turning time, guarded trunk motion, reduced tolerance of sustained standing, or slowed transition between postures, evidenced by [task duration], [step-time asymmetry], [reduced range], [increased sway], or [number of hesitations / rest pauses].</span>
+            </p>
+
+            <p>
+              <span class="hl-gaze">Visual findings should also be stated at the patient level. For example: repeated loss of fixation, fragmented tracking, delayed visual re-orientation, or unstable gaze anchoring during instruction-following, evidenced by [fixation breaks], [saccadic interruptions], [missed targets], or [time to reacquire visual target].</span>
+              <span class="hl-facial">If discomfort was visible during loading or positional change, state that directly, for example: facial tension increased during sit-to-stand or spinal loading tasks, evidenced by [specific AU/score/peak expression interval].</span>
+            </p>
+
+            <p>
+              <span class="hl-audio">If the patient’s spoken responses showed burden, record the actual pattern: for example, slowed response onset, increased pauses before describing mobility limitations, or reduced vocal energy during symptom-related answers, evidenced by [response latency], [pause duration], [speech rate], or [prosodic attenuation].</span>
+              <span class="hl-text">If transcript evidence was available, report concrete symptom language rather than generic analytics, for example: recurrent references to difficulty standing, fear of worsening symptoms, prioritisation of vision treatment, or language indicating functional caution, evidenced by [quoted phrases], [term counts], or [theme frequency].</span>
+            </p>
+
+            <p>
+              <span class="hl-fusion">A multimodal conclusion should be written only where several patient-specific signals converge. For example: the combination of guarded transfers, slowed gait-related behaviour, fixation instability, and effortful symptom description supports a clinically meaningful functional burden that is broader than the structural diagnosis statement alone.</span>
+              <span class="hl-clinical">Overall, the note should conclude that the patient demonstrates functionally significant limitation consistent with the documented lumbar pathology, with additional observable visual instability likely relevant to task performance. This interpretation should be tied to explicit observed evidence from the session and used to support staged planning, follow-up comparison, and monitoring of whether mobility restriction, gaze instability, and task hesitancy worsen, stabilise, or improve over time.</span>
+            </p>
+          </div>
+        </div>
+      </article>
     </div>
 
-    <div class="note-legend-item">
-      <span class="note-legend-swatch facial"></span>
-      <span class="note-legend-label">Facial expression</span>
-    </div>
+  </div>
 
-    <div class="note-legend-item">
-      <span class="note-legend-swatch audio"></span>
-      <span class="note-legend-label">Acoustic / speech analysis</span>
-    </div>
-
-    <div class="note-legend-item">
-      <span class="note-legend-swatch text"></span>
-      <span class="note-legend-label">Transcript / language analysis</span>
-    </div>
-
-    <div class="note-legend-item">
-      <span class="note-legend-swatch fusion"></span>
-      <span class="note-legend-label">Multimodal fusion</span>
-    </div>
-
-    <div class="note-legend-item">
-      <span class="note-legend-swatch questionnaire"></span>
-      <span class="note-legend-label">Questionnaire-informed interpretation</span>
-    </div>
-
-    <div class="note-legend-item">
-      <span class="note-legend-swatch clinical"></span>
-      <span class="note-legend-label">Clinical interpretation / decision support</span>
+  <div class="note-legend">
+    <div class="note-legend-title">Highlight Legend</div>
+    <div class="note-legend-grid">
+      <div class="note-legend-item">
+        <span class="note-legend-swatch motor"></span>
+        <span class="note-legend-label">Motor behaviour</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch gaze"></span>
+        <span class="note-legend-label">Gaze / visual behaviour</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch facial"></span>
+        <span class="note-legend-label">Facial expression</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch audio"></span>
+        <span class="note-legend-label">Acoustic / speech analysis</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch text"></span>
+        <span class="note-legend-label">Transcript / language analysis</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch fusion"></span>
+        <span class="note-legend-label">Multimodal fusion</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch questionnaire"></span>
+        <span class="note-legend-label">Questionnaire-informed interpretation</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch clinical"></span>
+        <span class="note-legend-label">Clinical interpretation / decision support</span>
+      </div>
     </div>
   </div>
-</div>
+</section>
     <section>
       <h2>Interaction &amp; Trust Calibration</h2>
       <p>
