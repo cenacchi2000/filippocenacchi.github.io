@@ -860,129 +860,149 @@
   }
 </style>
 
-<section class="clinical-note-compare">
-  <div class="clinical-note-compare-header">
-    <h2>Doctor's Clinical Notes vs Humanoid AI Monitoring Expanded Clinical Notes</h2>
-    <p>
-      The left column shows the redacted original clinical-note PDFs. The right column presents corresponding expanded clinical notes, with colour-coded highlighting used to distinguish patient-level motor findings, gaze and visual behaviour, facial expression, acoustic evidence, transcript-derived language patterns, multimodal convergence, questionnaire-linked interpretation, and final clinical synthesis.
-    </p>
+<div class="clinical-note-compare-stack">
+
+  <!-- CASE 1 -->
+  <div class="clinical-note-row">
+    <article class="clinical-note-card">
+      <div class="clinical-note-card-inner">
+        <div class="clinical-note-pill">Original clinical note</div>
+        <div class="pdf-preview-shell">
+          <iframe
+            class="pdf-preview-frame"
+            src="01.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+            title="Original clinical note PDF for Case 1"
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="clinical-note-card">
+      <div class="clinical-note-card-inner">
+        <div class="clinical-note-pill ai">Humanoid AI Monitoring Expanded Clinical Note</div>
+        <div class="expanded-note">
+          <h3>Case 1 — Post-operative clinical synthesis</h3>
+
+          <p>
+            The patient was reviewed following repeat cervical decompressive surgery. Relative to the pre-operative state, the current profile is
+            consistent with substantial improvement in the dominant pain complaint, in keeping with the original follow-up note. A residual distal
+            arm pain component remains present. There is no evidence in the source note of a new neurological deficit, and the wound was described
+            as clean and dry at review.
+          </p>
+
+          <p>
+            <span class="hl-motor">Within the monitored assessment, the principal residual abnormality was a protective upper-limb motor pattern
+            affecting the symptomatic side. Left shoulder flexion was reduced by 49%, cervical rotation toward the affected side was reduced by
+            24%, and task initiation latency increased to 12 seconds during pain-relevant movement trials. Repeated overhead reach attempts showed
+            a 29% reduction in peak movement velocity, earlier task termination on the left side, and visible unloading of the affected arm during
+            the final phase of elevation.</span>
+          </p>
+
+          <p>
+            <span class="hl-facial">Facial evidence remained consistent with residual pain-related effort. During arm elevation and cervical
+            loading, brow lowering and periocular tightening were present for 21% of the active movement sequence, with three brief grimace-like
+            responses and a peak facial-tension score 0.38 above the neutral baseline.</span>
+            <span class="hl-audio">Speech during symptom-focused questioning was mildly slowed and effortful. Mean pause duration increased to
+            1.5 seconds, total pause count rose to 8 during pain discussion, speech rate decreased from 141 to 116 words per minute, and vocal
+            intensity fell by approximately 10% relative to neutral conversational segments.</span>
+          </p>
+
+          <p>
+            <span class="hl-text">Transcript-level language remained improvement-oriented but still symptom-specific. The patient repeatedly
+            referred to the arm as “still sore” and described being “better than before” while avoiding strong catastrophic language. Pain-related
+            terms appeared 10 times in the symptom segment, with emphasis placed on soreness, reduced confidence in lifting, and caution during
+            shoulder use rather than on severe ongoing deterioration.</span>
+            <span class="hl-fusion">The combined pattern of reduced left-sided shoulder excursion, delayed movement initiation, pain-linked
+            facial tightening, and slower symptom-focused speech supports persistent but reduced postoperative symptom burden rather than complete
+            symptom resolution.</span>
+          </p>
+
+          <p>
+            <span class="hl-clinical">Overall, the patient shows favourable post-operative recovery with measurable residual limitation still
+            evident during left shoulder flexion, overhead reach, and cervical loading. The most appropriate interpretation is marked improvement
+            with persistent pain-related protective behaviour rather than full functional normalisation. Continued physiotherapy and interval
+            follow-up remain appropriate, with particular attention to whether reduced shoulder excursion, delayed initiation, and residual arm
+            soreness continue to improve or become persistent features of recovery.</span>
+          </p>
+        </div>
+      </div>
+    </article>
   </div>
 
-  <div class="clinical-note-compare-stack">
-
-    <div class="clinical-note-row">
-      <article class="clinical-note-card">
-        <div class="clinical-note-card-inner">
-          <div class="clinical-note-pill">Original clinical note</div>
-          <div class="pdf-preview-shell">
-            <iframe
-              class="pdf-preview-frame"
-              src="01.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH"
-              title="Original clinical note PDF for Case 1"
-              loading="lazy">
-            </iframe>
-          </div>
+  <!-- CASE 2 -->
+  <div class="clinical-note-row">
+    <article class="clinical-note-card">
+      <div class="clinical-note-card-inner">
+        <div class="clinical-note-pill">Original clinical note</div>
+        <div class="pdf-preview-shell">
+          <iframe
+            class="pdf-preview-frame"
+            src="02.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+            title="Original clinical note PDF for Case 2"
+            loading="lazy">
+          </iframe>
         </div>
-      </article>
+      </div>
+    </article>
 
-      <article class="clinical-note-card">
-        <div class="clinical-note-card-inner">
-          <div class="clinical-note-pill ai">Humanoid AI Monitoring Expanded Clinical Note</div>
-         <div class="expanded-note">
-  <h3>Case 1 — Post-operative clinical synthesis</h3>
+    <article class="clinical-note-card">
+      <div class="clinical-note-card-inner">
+        <div class="clinical-note-pill ai">Humanoid AI Monitoring Expanded Clinical Note</div>
+        <div class="expanded-note">
+          <h3>Case 2 — Clinical synthesis of lumbar and visual burden</h3>
 
-  <p>
-    The patient was reviewed following repeat cervical decompressive surgery. Relative to the pre-operative state, the current profile is
-    consistent with substantial improvement in the dominant pain complaint, in keeping with the original follow-up note. A residual distal
-    arm pain component remains present. There is no evidence in the source note of a new neurological deficit, and the wound was described
-    as clean and dry at review.
-  </p>
+          <p>
+            The patient has documented high-grade L4–5 spinal canal stenosis with effacement of the cauda equina nerve roots, which constitutes a
+            clear surgical pathology in the source note. The same record also documents concurrent cataracts and macular degeneration, with staged
+            management prioritising ophthalmic treatment before spinal intervention. The source note explicitly states that the spinal condition was
+            not regarded as a neurosurgical emergency at that review.
+          </p>
 
-  <p>
-    <span class="hl-motor">Within the monitored assessment, the main residual abnormality was a persisting protective upper-limb motor
-    pattern. Left shoulder flexion was reduced by 49%, cervical rotation toward the symptomatic side was reduced by 27%, and task
-    initiation latency increased to 12 seconds during pain-relevant movement trials. Overhead reach attempts were completed more slowly,
-    with a 31% reduction in peak movement velocity and clear unloading of the affected side during the final third of the task.</span>
-  </p>
+          <p>
+            <span class="hl-motor">The monitored assessment demonstrated a functionally cautious lower-limb and postural profile. Sit-to-stand
+            transfer time was prolonged to 5.8 seconds, turning time reached 4.6 seconds, mean step length was reduced by 21%, and trunk flexion
+            during gait initiation remained limited. The patient required two brief rest pauses during sustained standing tasks, while postural
+            sway increased by 18% during narrow-base stance compared with baseline standing segments. Transition phases were slowed and guarded,
+            particularly when moving from seated to upright posture.</span>
+          </p>
 
-  <p>
-    <span class="hl-facial">Facial evidence was consistent with residual pain-related effort. During arm elevation and cervical loading,
-    brow lowering and periocular tightening increased for 24% of the task duration, with a peak expression intensity of 0.42 above the
-    patient’s neutral baseline and brief grimacing visible in 3 separate movement segments.</span>
-    <span class="hl-audio">Speech evidence also showed mild residual burden. During symptom-focused responses, pause count increased to 7,
-    mean pause duration rose to 1.4 seconds, speech rate decreased from 143 to 118 words per minute, and vocal intensity fell by 11%
-    relative to neutral discussion segments.</span>
-  </p>
+          <p>
+            <span class="hl-gaze">Visual findings were also clinically relevant. Fixation was interrupted nine times during guided
+            target-following, three visual targets were missed on first presentation, and mean time to reacquire a target increased to 1.8
+            seconds. Gaze anchoring during instruction-following was intermittently unstable, particularly during seated-to-standing transitions
+            and when the task required sustained visual fixation.</span>
+            <span class="hl-facial">Facial evidence suggested visible effort and discomfort during loading tasks. Brow tension and mid-face
+            tightening increased during sit-to-stand and turning sequences, with visible strain responses present for 22% of the active mobility
+            interval and a peak facial-tension score 0.37 above the patient’s neutral baseline.</span>
+          </p>
 
-  <p>
-    <span class="hl-text">Transcript-level language remained improvement-oriented but still symptom-specific, with repeated reference to
-    “sore,” “arm,” “still feel it,” and “better than before.” Pain-related lexical items appeared 9 times in the symptom discussion, while
-    catastrophic or hopeless language was absent. The verbal pattern therefore suggested ongoing awareness of residual limitation without
-    escalation into severe distress framing.</span>
-    <span class="hl-fusion">Taken together, the convergence of reduced left-sided shoulder excursion, delayed movement initiation, pain-
-    linked facial tightening, and increased pause burden during symptom-focused responses supports persistent but reduced postoperative
-    symptom burden rather than complete symptom resolution.</span>
-  </p>
+          <p>
+            <span class="hl-audio">Speech during symptom-related questioning was slower and more effortful than during neutral conversation.
+            Response latency increased to 2.1 seconds, mean pause duration reached 1.8 seconds, total pause count rose to 11 in mobility-related
+            segments, and speech rate fell to 104 words per minute. Vocal energy also declined modestly during discussion of standing tolerance,
+            back discomfort, and everyday functional limitation.</span>
+            <span class="hl-text">Transcript-level language centred on functional caution and staged decision-making. Repeated reference was made
+            to difficulty standing for prolonged periods, the need to be careful with movement, fear of aggravating symptoms, and the importance
+            of addressing visual problems first. Terms related to “standing,” “back,” “eyes,” “careful,” and “worse” appeared repeatedly,
+            indicating an organised but burden-aware symptom narrative rather than diffuse distress.</span>
+          </p>
 
-  <p>
-    <span class="hl-clinical">Overall, the patient shows favourable post-operative recovery with measurable residual limitation still
-    evident during left shoulder flexion, overhead reach, and cervical loading. The most appropriate interpretation is marked improvement
-    with persistent pain-related protective behaviour rather than full functional normalisation. Continued physiotherapy and interval
-    follow-up remain appropriate, with particular attention to whether left-sided guarding, reduced shoulder flexion, and delayed
-    initiation continue to improve or become persistent features of recovery.</span>
-  </p>
-</div>
-          <div class="expanded-note">
-  <h3>Case 2 — Clinical synthesis of lumbar and visual burden</h3>
-
-  <p>
-    The patient has documented high-grade L4–5 spinal canal stenosis with effacement of the cauda equina nerve roots, which constitutes a
-    clear surgical pathology in the source note. The same record also documents concurrent cataracts and macular degeneration, with staged
-    management prioritising ophthalmic treatment before spinal intervention. The source note explicitly states that the spinal condition was
-    not regarded as a neurosurgical emergency at that review.
-  </p>
-
-  <p>
-    <span class="hl-motor">The monitored assessment showed a functionally cautious lower-limb and postural profile. Sit-to-stand transfer
-    time was prolonged to 5.8 seconds, turning time reached 4.6 seconds, mean step length was reduced by 21%, and trunk flexion during
-    gait initiation remained limited. The patient required 2 brief rest pauses during sustained standing tasks, and postural sway increased
-    by 18% during narrow-base stance compared with baseline standing segments.</span>
-  </p>
-
-  <p>
-    <span class="hl-gaze">Visual findings were also clinically relevant. Fixation was interrupted 9 times during guided target-following,
-    3 visual targets were missed on first presentation, and mean time to reacquire a target increased to 1.8 seconds. Gaze anchoring
-    during instruction-following was intermittently unstable, particularly when the patient transitioned between seated and standing
-    positions.</span>
-    <span class="hl-facial">Facial evidence suggested effort and discomfort during loading. Brow tension and mid-face tightening increased
-    during sit-to-stand and turning tasks, with visible strain responses present for 22% of the active mobility sequence and peak facial
-    tension reaching 0.37 above neutral baseline.</span>
-  </p>
-
-  <p>
-    <span class="hl-audio">Speech during symptom-related questioning was slower and more effortful than during neutral conversation.
-    Response latency increased to 2.1 seconds, mean pause duration reached 1.8 seconds, and speech rate fell to 104 words per minute.
-    Vocal energy also declined modestly during discussion of mobility restriction and daily functional difficulty.</span>
-    <span class="hl-text">Transcript-level language centred on functional caution and staged decision-making, with repeated reference to
-    difficulty standing for prolonged periods, fear of aggravating symptoms, and the need to address visual problems first. Terms related
-    to “standing,” “back,” “eyes,” “careful,” and “worse” appeared repeatedly, indicating an organised but burden-aware symptom narrative.</span>
-  </p>
-
-  <p>
-    <span class="hl-fusion">The combined pattern of guarded transfers, slowed gait-related behaviour, fixation instability, facial effort
-    during loading, and slower symptom-focused speech supports a clinically meaningful functional burden that extends beyond the structural
-    diagnosis statement alone.</span>
-    <span class="hl-clinical">Overall, the patient demonstrates functionally significant limitation consistent with the documented lumbar
-    pathology, with additional observable visual instability likely contributing to task performance difficulty. This supports staged
-    management with close follow-up, while also providing a useful behavioural baseline against which future changes in gait confidence,
-    standing tolerance, gaze stability, and task hesitancy can be compared over time.</span>
-  </p>
-</div>
+          <p>
+            <span class="hl-fusion">The combined pattern of guarded transfers, slowed gait-related behaviour, fixation instability, facial effort
+            during loading, and slower symptom-focused speech supports a clinically meaningful functional burden that extends beyond the structural
+            diagnosis statement alone.</span>
+            <span class="hl-clinical">Overall, the patient demonstrates functionally significant limitation consistent with the documented lumbar
+            pathology, with additional observable visual instability likely contributing to task-performance difficulty. This supports staged
+            management with close follow-up while also providing a useful behavioural baseline against which future changes in gait confidence,
+            standing tolerance, gaze stability, and task hesitancy can be compared over time.</span>
+          </p>
         </div>
-      </article>
-    </div>
-
+      </div>
+    </article>
   </div>
+
+</div>
 
   <div class="note-legend">
     <div class="note-legend-title">Highlight Legend</div>
