@@ -528,61 +528,18 @@
       </div>
     </section>
 
-    <section>
-      <h2>Interaction &amp; Trust Calibration</h2>
-      <p>
-        A central research question concerns <strong>how much autonomy</strong> the
-        robot should exercise in shaping the interview. The interaction policy
-        therefore exposes a set of explicit control dimensions:
-      </p>
-      <p>
-        • <strong>Risk-aware pacing</strong> – sessions begin with low-sensitivity
-        prompts and only escalate when early signals are stable and the participant’s
-        behaviour indicates sufficient comfort and engagement.<br>
-        • <strong>Evidence-linked feedback</strong> – rather than presenting opaque
-        scores, the system highlights which segments of speech and which non-verbal
-        patterns contribute most strongly to a given risk estimate.<br>
-        • <strong>Hand-off triggers</strong> – thresholds specifying when Ameca should
-        suspend probing and defer to a human clinician are encoded directly in the
-        policy.
-      </p>
-      <p>
-        These mechanisms are evaluated not only in terms of predictive performance, but
-        also with respect to whether users perceive the system as <em>competent, honest
-        and appropriately cautious</em> in a clinical context.
-      </p>
-    </section>
-
-    <section>
-      <h2>Relationship to Other Projects</h2>
-      <p>
-        This work builds directly on my broader programme in multimodal diagnosis and
-        trust-calibrated AI. The diagnostic models extend methods developed for
-        severity-aware fusion of speech, facial behaviour and language. The
-        interaction-policy component connects to my interest in explainability,
-        uncertainty communication and the appropriate distribution of agency between
-        humans and machine systems in sensitive decision settings.
-      </p>
-      <p>
-        More broadly, the project contributes to an emerging view of embodied AI in
-        healthcare: not as a replacement for clinicians, but as a socially situated
-        interface that can improve the granularity, accessibility and repeatability of
-        diagnostic assessment.
-      </p>
-    </section>
-  </div>
-<style>
+    <style>
   .clinical-note-compare{
     width: min(100%, var(--section-width, 1040px));
-    margin: 4rem auto 0;
+    margin: 2rem auto 0; /* reduced top gap */
   }
 
   .clinical-note-compare-header{
-    margin-bottom: 1.35rem;
+    margin-bottom: 1rem; /* tighter spacing below title */
   }
 
   .clinical-note-compare-header h2{
-    margin: 0 0 0.6rem 0;
+    margin: 0 0 0.55rem 0;
     font-size: clamp(2rem, 3vw, 2.5rem);
     line-height: 1.08;
     letter-spacing: -0.02em;
@@ -591,20 +548,20 @@
   .clinical-note-compare-header p{
     margin: 0;
     max-width: 920px;
-    line-height: 1.72;
+    line-height: 1.68;
     color: rgba(255,255,255,0.78);
     font-size: 0.98rem;
   }
 
   .clinical-note-compare-stack{
     display: grid;
-    gap: 1.45rem;
+    gap: 1.2rem;
   }
 
   .clinical-note-row{
     display: grid;
     grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-    gap: 1.2rem;
+    gap: 1.15rem;
     align-items: start;
   }
 
@@ -751,15 +708,15 @@
   }
 
   .note-legend{
-    margin-top: 0.95rem;
-    padding: 0.82rem 0.9rem 0.88rem;
+    margin-top: 0.85rem;
+    padding: 0.9rem 1rem 1rem;
     border-radius: 16px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
   }
 
   .note-legend-title{
-    margin: 0 0 0.62rem 0;
+    margin: 0 0 0.75rem 0;
     font-size: 0.83rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -767,34 +724,34 @@
     color: rgba(255,255,255,0.84);
   }
 
+  /* FIXED legend layout */
   .note-legend-grid{
     display: grid;
-    grid-template-columns: repeat(4, minmax(0,1fr));
-    gap: 0.55rem 0.75rem;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 0.65rem 1.2rem;
   }
 
-  .note-legend-chip{
+  .note-legend-item{
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
+    font-size: 0.92rem;
+    line-height: 1.35;
+    color: rgba(255,255,255,0.84);
     min-width: 0;
-    padding: 0.42rem 0.56rem;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.78);
-    font-size: 0.82rem;
-    line-height: 1.25;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .note-legend-swatch{
-    width: 0.82rem;
-    height: 0.82rem;
-    border-radius: 0.22rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 0.25rem;
     flex: 0 0 auto;
+  }
+
+  .note-legend-label{
+    display: inline-block;
+    color: rgba(255,255,255,0.84);
+    white-space: normal;
   }
 
   .note-legend-swatch.motor{ background: rgba(116,181,255,0.92); }
@@ -826,9 +783,7 @@
     .pdf-preview-shell{
       height: 640px;
     }
-  }
 
-  @media (max-width: 640px){
     .note-legend-grid{
       grid-template-columns: 1fr;
     }
@@ -922,41 +877,99 @@
       <article class="clinical-note-card">
         <div class="clinical-note-card-inner">
           <div class="clinical-note-pill ai">Humanoid AI Monitoring Expanded Clinical Note</div>
-          <div class="expanded-note">
-            <h3>Case 2 — Multimodal functional expansion around spinal and ophthalmic burden</h3>
-            <p>
-              The original note establishes severe L4–5 spinal canal stenosis with effacement of the cauda equina nerve roots, a clear
-              procedural indication, and a clinically important delay in spine management while ophthalmic issues are addressed first.
-              The expanded note retains that core medical structure while adding
-              <span class="hl-motor">task-level evidence of movement initiation hesitancy, reduced confidence during lower-limb transition
-              phases, and cautious postural organisation consistent with functionally protective rather than unrestricted movement behaviour</span>.
-            </p>
-            <p>
-              The concurrent cataracts and macular degeneration become more than a background comorbidity in the multimodal interpretation,
-              because gaze-oriented monitoring introduces an additional explanatory layer. The system-level profile suggests
-              <span class="hl-gaze">visual-load–linked instability during fixation, intermittent gaze fragmentation, and altered
-              visual-orientation behaviour during instructed tasks</span>.
-              <span class="hl-facial">Facial expression analysis may also indicate mild discomfort and increased effort during positional
-              transitions</span>, while
-              <span class="hl-fusion">the combined interpretation of visual compromise and pain-related behaviour provides a more complete
-              account of observed caution than the original brief note alone</span>.
-            </p>
-            <p>
-              <span class="hl-audio">Speech and acoustic features do not indicate an acutely escalated distress episode, but they do
-              support a more effortful interaction profile than the brief original note can convey</span>.
-              <span class="hl-text">Language remains organised and relevant, with content focused on burden management, procedural
-              sequencing, and prioritisation of ophthalmic treatment before spinal intervention</span>, consistent with preserved
-              understanding and decision-making.
-            </p>
-            <p>
-              The expanded record therefore captures not only structural disease, but how the patient functionally engages with live
-              assessment. It also provides
-              <span class="hl-questionnaire">interpretive context consistent with structured severity scoring where applicable, allowing
-              alignment between observed behaviour and questionnaire-based screening outcomes</span>, and
-              <span class="hl-clinical">a richer longitudinal note for multidisciplinary review, staged planning, and future comparison of
-              whether observed caution, gaze instability, or movement restriction improve, stabilise, or worsen over time</span>.
-            </p>
-          </div>
+          <!-- CASE 1 RIGHT COLUMN ONLY -->
+<div class="expanded-note">
+  <h3>Case 1 — Post-operative clinical synthesis</h3>
+
+  <p>
+    The patient was reviewed following repeat cervical decompressive surgery. Relative to the pre-operative state, the current profile is
+    consistent with substantial improvement in the dominant pain complaint, in keeping with the original follow-up note. A residual distal
+    arm pain component remains present. There is no evidence in the source note of a new neurological deficit, and the wound was described
+    as clean and dry at review.
+  </p>
+
+  <p>
+    <span class="hl-motor">Within the monitored assessment, the main residual abnormality should be described only in terms of the
+    patient’s observed behaviour: [EVIDENCE: reduced excursion during cervical rotation / guarded shoulder elevation / slower initiation of
+    upper-limb movement / asymmetry between sides / protective unloading of the symptomatic side]. These findings should be reported with
+    concrete evidence, for example: [LEFT/RIGHT] shoulder flexion was reduced by [x%], task initiation latency increased to [x] seconds,
+    or movement variability increased during pain-relevant actions.</span>
+  </p>
+
+  <p>
+    <span class="hl-facial">If facial evidence was present, state the specific patient response rather than the tool: for example,
+    pain-linked facial tightening during symptom questioning, brief grimacing during arm elevation, or increased periocular tension during
+    neck movement, evidenced by [AU pattern / frame count / peak intensity / percentage of task duration].</span>
+    <span class="hl-audio">If speech evidence was present, report the patient-level pattern directly: for example, increased pause burden,
+    reduced vocal energy, or brief hesitations during pain-related responses, evidenced by [pause count], [mean pause duration], [speech
+    rate], or [intensity/prosodic change] compared with the patient’s own baseline in neutral segments.</span>
+  </p>
+
+  <p>
+    <span class="hl-text">If transcript evidence was present, document the actual content pattern: for example, repeated reference to
+    soreness in the distal arm, avoidance language around specific movements, or improvement-focused wording without catastrophic phrasing,
+    evidenced by [quoted symptom terms], [frequency of pain-related lexical items], or [difference between neutral and symptom-focused
+    segments].</span>
+    <span class="hl-fusion">Any multimodal statement should remain evidence-led, for example: the convergence of guarded movement,
+    pain-linked facial tension, and hesitancy during symptom-focused responses supports persistent but reduced postoperative symptom
+    burden rather than complete symptom resolution.</span>
+  </p>
+
+  <p>
+    <span class="hl-clinical">Overall, the note should conclude that the patient shows marked postoperative improvement with residual
+    symptomatology still evident in [specific movement/task], supported by [explicit evidence]. The appropriate interpretation is improving
+    recovery with persistent residual pain-related protective behaviour, not complete normalisation. Ongoing physiotherapy and interval
+    follow-up remain appropriate, with attention to whether the residual arm symptoms and protective motor pattern continue to diminish or
+    become persistent.</span>
+  </p>
+</div>
+
+<!-- CASE 2 RIGHT COLUMN ONLY -->
+<div class="expanded-note">
+  <h3>Case 2 — Clinical synthesis of lumbar and visual burden</h3>
+
+  <p>
+    The patient has documented high-grade L4–5 spinal canal stenosis with effacement of the cauda equina nerve roots, which constitutes a
+    clear surgical pathology in the source note. The same record also documents concurrent cataracts and macular degeneration, with staged
+    management prioritising ophthalmic treatment before spinal intervention. The source note explicitly states that the spinal condition was
+    not regarded as a neurosurgical emergency at that review.
+  </p>
+
+  <p>
+    <span class="hl-motor">The expanded note should report only the patient’s observed functional pattern. If present in your outputs,
+    write this concretely as: cautious sit-to-stand transfer, reduced gait confidence, shortened step length, prolonged turning time,
+    guarded trunk motion, reduced tolerance of sustained standing, or slowed transition between postures, evidenced by [task duration],
+    [step-time asymmetry], [reduced range], [increased sway], or [number of hesitations / rest pauses].</span>
+  </p>
+
+  <p>
+    <span class="hl-gaze">Visual findings should also be stated at the patient level. For example: repeated loss of fixation, fragmented
+    tracking, delayed visual re-orientation, or unstable gaze anchoring during instruction-following, evidenced by [fixation breaks],
+    [saccadic interruptions], [missed targets], or [time to reacquire visual target].</span>
+    <span class="hl-facial">If discomfort was visible during loading or positional change, state that directly, for example: facial
+    tension increased during sit-to-stand or spinal loading tasks, evidenced by [specific AU/score/peak expression interval].</span>
+  </p>
+
+  <p>
+    <span class="hl-audio">If the patient’s spoken responses showed burden, record the actual pattern: for example, slowed response
+    onset, increased pauses before describing mobility limitations, or reduced vocal energy during symptom-related answers, evidenced by
+    [response latency], [pause duration], [speech rate], or [prosodic attenuation].</span>
+    <span class="hl-text">If transcript evidence was available, report concrete symptom language rather than generic analytics, for
+    example: recurrent references to difficulty standing, fear of worsening symptoms, prioritisation of vision treatment, or language
+    indicating functional caution, evidenced by [quoted phrases], [term counts], or [theme frequency].</span>
+  </p>
+
+  <p>
+    <span class="hl-fusion">A multimodal conclusion should be written only where several patient-specific signals converge. For example:
+    the combination of guarded transfers, slowed gait-related behaviour, fixation instability, and effortful symptom description supports a
+    clinically meaningful functional burden that is broader than the structural diagnosis statement alone.</span>
+    <span class="hl-clinical">Overall, the note should conclude that the patient demonstrates functionally significant limitation
+    consistent with the documented lumbar pathology, with additional observable visual instability likely relevant to task performance.
+    This interpretation should be tied to explicit observed evidence from the session and used to support staged planning, follow-up
+    comparison, and monitoring of whether mobility restriction, gaze instability, and task hesitancy worsen, stabilise, or improve over
+    time.</span>
+  </p>
+</div>
         </div>
       </article>
     </div>
@@ -965,16 +978,86 @@
   <div class="note-legend">
     <div class="note-legend-title">Highlight Legend</div>
     <div class="note-legend-grid">
-      <div class="note-legend-chip"><span class="note-legend-swatch motor"></span><span>Motor behaviour</span></div>
-      <div class="note-legend-chip"><span class="note-legend-swatch gaze"></span><span>Gaze / visual behaviour</span></div>
-      <div class="note-legend-chip"><span class="note-legend-swatch facial"></span><span>Facial expression</span></div>
-      <div class="note-legend-chip"><span class="note-legend-swatch audio"></span><span>Acoustic / speech analysis</span></div>
-      <div class="note-legend-chip"><span class="note-legend-swatch text"></span><span>Transcript / language analysis</span></div>
-      <div class="note-legend-chip"><span class="note-legend-swatch fusion"></span><span>Multimodal fusion</span></div>
-      <div class="note-legend-chip"><span class="note-legend-swatch questionnaire"></span><span>Questionnaire-informed interpretation</span></div>
-      <div class="note-legend-chip"><span class="note-legend-swatch clinical"></span><span>Clinical interpretation / decision support</span></div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch motor"></span>
+        <span class="note-legend-label">Motor behaviour</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch gaze"></span>
+        <span class="note-legend-label">Gaze / visual behaviour</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch facial"></span>
+        <span class="note-legend-label">Facial expression</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch audio"></span>
+        <span class="note-legend-label">Acoustic / speech analysis</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch text"></span>
+        <span class="note-legend-label">Transcript / language analysis</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch fusion"></span>
+        <span class="note-legend-label">Multimodal fusion</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch questionnaire"></span>
+        <span class="note-legend-label">Questionnaire-informed interpretation</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch clinical"></span>
+        <span class="note-legend-label">Clinical interpretation / decision support</span>
+      </div>
     </div>
   </div>
 </section>
+
+    <section>
+      <h2>Interaction &amp; Trust Calibration</h2>
+      <p>
+        A central research question concerns <strong>how much autonomy</strong> the
+        robot should exercise in shaping the interview. The interaction policy
+        therefore exposes a set of explicit control dimensions:
+      </p>
+      <p>
+        • <strong>Risk-aware pacing</strong> – sessions begin with low-sensitivity
+        prompts and only escalate when early signals are stable and the participant’s
+        behaviour indicates sufficient comfort and engagement.<br>
+        • <strong>Evidence-linked feedback</strong> – rather than presenting opaque
+        scores, the system highlights which segments of speech and which non-verbal
+        patterns contribute most strongly to a given risk estimate.<br>
+        • <strong>Hand-off triggers</strong> – thresholds specifying when Ameca should
+        suspend probing and defer to a human clinician are encoded directly in the
+        policy.
+      </p>
+      <p>
+        These mechanisms are evaluated not only in terms of predictive performance, but
+        also with respect to whether users perceive the system as <em>competent, honest
+        and appropriately cautious</em> in a clinical context.
+      </p>
+    </section>
+
+    <section>
+      <h2>Relationship to Other Projects</h2>
+      <p>
+        This work builds directly on my broader programme in multimodal diagnosis and
+        trust-calibrated AI. The diagnostic models extend methods developed for
+        severity-aware fusion of speech, facial behaviour and language. The
+        interaction-policy component connects to my interest in explainability,
+        uncertainty communication and the appropriate distribution of agency between
+        humans and machine systems in sensitive decision settings.
+      </p>
+      <p>
+        More broadly, the project contributes to an emerging view of embodied AI in
+        healthcare: not as a replacement for clinicians, but as a socially situated
+        interface that can improve the granularity, accessibility and repeatability of
+        diagnostic assessment.
+      </p>
+    </section>
+  </div>
+
+
 </body>
 </html>
