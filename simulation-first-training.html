@@ -282,111 +282,24 @@
       </p>
     </section>
 
-    <section>
-  <h2>Study Evidence and Reflection: Learning When to Ask</h2>
-
-  <div class="paper-study-grid">
-    <div>
-      <p>
-        The clearest empirical demonstration of the concept is presented in
-        <em>Learning When to Ask: Simulation-Trained Humanoids for Mental-Health Diagnosis</em>.
-        This study moves the platform beyond a generic virtual interview environment and
-        turns it into a controlled policy-learning substrate in which conversational timing,
-        interruption management, uncertainty handling, and multimodal diagnostic reasoning
-        can be examined quantitatively rather than described only conceptually.
-      </p>
-
-      <p>
-        Methodologically, the paper constructs a simulation cohort of <strong>276 interactive Unreal Engine 5
-        MetaHuman patients</strong> derived from interview data, each with synchronised speech,
-        facial behaviour, gaze, and head–torso motion, and each embedded in a structured
-        PHQ-8 and PCL-C assessment flow. Each episode is framed as a <strong>25-turn interview</strong>,
-        corresponding to the 8 PHQ-8 items and the 17 PCL-C items. The interaction state is
-        formulated through a <strong>20-dimensional observable state</strong>, while the controller acts
-        through a <strong>5-dimensional continuous action space</strong> governing response latency,
-        intervention timing, backchannel frequency, interruption tolerance, and immediacy-related
-        behavioural gain. This is important because the system is not only learning questionnaire
-        completion; it is learning how to regulate the social timing of diagnostic exchange.
-      </p>
-
-      <div class="metric-grid">
-        <div class="metric-card">
-          <strong>276</strong>
-          <span>interactive MetaHuman patients instantiated for simulation-scale policy learning</span>
-        </div>
-        <div class="metric-card">
-          <strong>25 turns</strong>
-          <span>per interview episode across PHQ-8 and PCL-C diagnostic flows</span>
-        </div>
-        <div class="metric-card">
-          <strong>20D / 5D</strong>
-          <span>state–action formulation for timing, waiting, backchanneling, and interruption control</span>
-        </div>
-        <div class="metric-card">
-          <strong>200k</strong>
-          <span>replay-buffer capacity with batch-based off-policy learning and counterfactual replay</span>
-        </div>
-      </div>
-
-      <p>
-        The empirical results show a more nuanced and more convincing story than a simple
-        “best model wins” narrative. All three controllers converge within a relatively narrow
-        reward band, around <strong>0.64–0.65</strong>, but the customised TD3 controller learns substantially
-        more from the same simulation budget. Relative to its own starting point, TD3 records
-        gains of <strong>+0.024 in reward</strong>, <strong>+0.085 in coverage</strong>, <strong>+0.114 in rapport</strong>, and
-        <strong>+0.051 in pace</strong>. In final values, TD3 reaches <strong>0.993 coverage</strong>, slightly above
-        CEM at 0.990 and PPO at 0.981, while also achieving the strongest final pace score
-        of <strong>0.779</strong>. CEM retains the highest final rapport value at <strong>0.711</strong>, but with almost
-        no learning gain from its initial condition, which makes it a high-start but relatively
-        static baseline rather than the strongest adaptive policy.
-      </p>
-
-      <p>
-        The decision-quality analysis is even more revealing. For the full TD3 stack, the paper
-        reports <strong>100% cut consistency</strong>, a <strong>9.9% clarification rate</strong>,
-        <strong>53.1% backchannel precision</strong>, and a <strong>1.0-second wait value</strong> in the final evaluation
-        window. These numbers matter because they show that the controller is not merely producing
-        complete interviews; it is learning when to pause, when to acknowledge, and when to continue
-        without socially disruptive behaviour. In a clinical screening context, that distinction is
-        methodologically important: a system that reaches the end of a questionnaire is not necessarily
-        a system that conducts the interaction well.
-      </p>
-
-
-      <p>
-        What makes the paper especially useful for this webpage is that it also includes the right
-        scientific restraint. The evaluation is explicitly described as <strong>simulation-only</strong>, and the
-        humanoid is framed as the <strong>transfer target</strong> rather than as a clinically validated endpoint.
-        The paper also acknowledges that the E-DAIC-derived cohort is English-centred and demographically
-        limited, and that MetaHuman patients remain approximations rather than full substitutes for
-        real human behavioural variability. This reflective positioning is not a weakness for the site;
-        it is a strength. 
-      </p>
-
-      <div class="reflect-box">
-        <strong>Why this changes the interpretation of the project.</strong>
-        The significance is not only that it can host synthetic clinical interviews.
-        The stronger claim, and the one substantiated by this paper, is that simulation can become an
-        auditable environment for learning socially disciplined diagnostic behaviour: not just what to ask,
-        but when to ask, when to wait, when to signal attention, and how to preserve clinical pacing under
-        uncertainty. That moves the project from a visual demonstration platform toward a credible experimental
-        infrastructure for embodied clinical AI.
-      </div>
-    </div>
-
-   
-
-      
-    </div>
-  </div>
-</section>
-
-  <section>
+ <section>
   <h2>Paper Preview</h2>
 
-  <div style="margin-top:14px; border:1px solid #e5e7eb; border-radius:18px; overflow:hidden; background:#fff; box-shadow:0 10px 28px rgba(15,23,42,0.08);">
-    <div style="padding:14px 16px; border-bottom:1px solid #e5e7eb; background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);">
-      <p style="margin:0; font-size:14px; color:#475569;">
+  <div style="
+    margin-top:14px;
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    background:var(--panel);
+    box-shadow:var(--shadow);
+  ">
+    <div style="
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+    ">
+      <p style="margin:0; font-size:14px; color:var(--subtle);">
         Preview of <em>Learning When to Ask: Simulation-Trained Humanoids for Mental-Health Diagnosis</em>
       </p>
     </div>
@@ -395,15 +308,17 @@
       src="2512.08952v1.pdf#toolbar=1&navpanes=0&view=FitH"
       title="Paper PDF preview"
       loading="lazy"
-      style="width:100%; height:900px; border:0; display:block; background:#fff;">
+      style="
+        width:100%;
+        height:820px;
+        border:0;
+        display:block;
+        background:#fff;
+      ">
     </iframe>
   </div>
 </section>
-    
-  </div>
 
-
-
-  
+</div>
 </body>
 </html>
