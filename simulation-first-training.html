@@ -211,6 +211,72 @@
     </section>
   </div>
 
+  <section>
+  <h2>A Concrete Study: Learning When to Ask</h2>
+
+  <p>
+    A recent study emerging from this line of work, <em>Learning When to Ask: Simulation-Trained Humanoids for Mental-Health Diagnosis</em>,
+    makes the practical value of the SimClinician framework much more explicit. Rather than treating the simulator only as a visual
+    demonstration environment, the study uses it as a structured training ground for diagnostic interaction policies, showing how a humanoid
+    can learn not just <em>what</em> to ask, but also <em>when</em> to ask, when to wait, when to backchannel, and how to reduce interruption
+    during sensitive mental-health screening exchanges. This is an important shift because clinically meaningful interaction quality depends
+    not only on questionnaire coverage, but also on timing, pacing, rapport, and the ability to manage uncertainty without producing socially
+    disruptive behaviour. :contentReference[oaicite:1]{index=1}
+  </p>
+
+  <p>
+    The study operationalises this idea through an agent-centred, simulation-first pipeline in which interview data are transformed into
+    <strong>276 interactive Unreal Engine MetaHuman patients</strong> with synchronised speech, gaze, facial behaviour, and head–torso motion,
+    coupled with structured PHQ-8 and PCL-C diagnostic flows. Within that environment, a perception–fusion–policy loop determines how the
+    agent should proceed turn by turn: when to speak, when to offer brief acknowledgement, when to avoid cutting into the user, and when to
+    probe further because the current evidence is still diagnostically ambiguous. Crucially, the paper frames these decisions under a
+    <strong>safety-aware control layer</strong>, reinforcing the idea that interaction management in mental-health settings cannot be reduced
+    to raw task completion alone. :contentReference[oaicite:2]{index=2}
+  </p>
+
+  <p>
+    This connects directly to the broader logic of SimClinician presented on this page. Earlier sections describe the platform as a
+    high-fidelity rehearsal space for counterfactual testing, multi-modal perturbation analysis, and safer progression toward embodied
+    deployment. The study gives that vision a concrete methodological form: bounded nonverbal counterfactual replay is used during training,
+    and an uncertainty-aware turn manager learns to seek clarification only when doing so is expected to reduce ambiguity in a controlled and
+    socially appropriate way. In other words, the simulator is not merely generating synthetic scenes; it is being used to learn socially
+    timed diagnostic behaviour that can later inform humanoid screening systems in the physical world. :contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4}
+  </p>
+
+  <p>
+    The reported results are also important for positioning the framework rigorously. The paper is explicit that the evaluation is
+    <strong>simulation-only</strong>, with the humanoid treated as the transfer target rather than as a fully validated clinical endpoint.
+    Within that scope, the authors compare three controllers and report that a customised <strong>TD3</strong> approach outperforms
+    <strong>PPO</strong> and <strong>CEM</strong>, achieving near-ceiling interview coverage while maintaining steadier pacing at comparable
+    reward levels. The analysis further reports negligible turn overlap, better cut timing, fewer unnecessary clarification prompts, shorter
+    waiting periods, and stable ranking patterns under modality dropout, renderer changes, and held-out patient splits. These findings matter
+    because they suggest that the platform can support not only synthetic data generation, but also principled comparative evaluation of
+    interaction policies before any higher-cost hardware studies are attempted. :contentReference[oaicite:5]{index=5}
+  </p>
+
+  <p>
+    More broadly, this study helps clarify why simulation-first training is especially compelling for mental-health and cognitive assessment.
+    Testing directly on hardware with real users is slow, expensive, and ethically restrictive, especially when iteration is required across
+    conversational timing, trust-sensitive prompting, and subtle nonverbal dynamics. By contrast, a simulation-trained pipeline allows these
+    design choices to be varied, stress-tested, and compared under controlled conditions before transfer to humanoid systems. In that sense,
+    <em>Learning When to Ask</em> does not sit beside SimClinician as a separate project; it functions as one of the clearest demonstrations
+    of the platform’s scientific purpose: using simulation to train and evaluate diagnostic agents whose behaviour is not only technically
+    competent, but also interactionally disciplined and clinically usable. :contentReference[oaicite:6]{index=6}
+  </p>
+
+  <div class="tag-row">
+    <span class="tag">Simulation-trained control</span>
+    <span class="tag">Mental-health diagnosis</span>
+    <span class="tag">Social timing</span>
+    <span class="tag">Counterfactual replay</span>
+    <span class="tag">Humanoid transfer</span>
+  </div>
+
+  <p class="small" style="margin-top:12px;">
+    Study: <em>Learning When to Ask: Simulation-Trained Humanoids for Mental-Health Diagnosis</em> (arXiv, 2025).
+  </p>
+</section>
+
   
 </body>
 </html>
