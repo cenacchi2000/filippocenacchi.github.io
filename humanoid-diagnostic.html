@@ -571,429 +571,358 @@
       </p>
     </section>
   </div>
-  <style>
-  .note-compare-section{
-    margin-top: 5rem;
-    padding: 2.5rem 0 1rem;
-    border-top: 1px solid rgba(255,255,255,0.10);
+<style>
+  .clinical-note-compare{
+    width: min(100%, var(--section-width, 1040px));
+    margin: 4rem auto 0;
   }
 
-  .note-compare-header{
-    max-width: 1050px;
-    margin: 0 auto 2rem;
+  .clinical-note-compare-header{
+    margin-bottom: 1.6rem;
   }
 
-  .note-compare-header h2{
+  .clinical-note-compare-header h2{
     margin: 0 0 0.7rem 0;
-    font-size: clamp(2rem, 3vw, 2.8rem);
-    line-height: 1.1;
+    font-size: clamp(2rem, 3vw, 2.55rem);
+    line-height: 1.08;
     letter-spacing: -0.02em;
   }
 
-  .note-compare-header p{
+  .clinical-note-compare-header p{
     margin: 0;
-    font-size: 1.04rem;
-    line-height: 1.8;
+    max-width: 920px;
+    line-height: 1.75;
     color: rgba(255,255,255,0.78);
-    max-width: 980px;
+    font-size: 1rem;
   }
 
-  .note-compare-stack{
-    max-width: 1180px;
-    margin: 0 auto;
+  .clinical-note-compare-stack{
     display: grid;
-    gap: 2.5rem;
+    gap: 1.8rem;
   }
 
-  .note-compare-row{
+  .clinical-note-row{
     display: grid;
-    grid-template-columns: minmax(0,1fr) 86px minmax(0,1fr);
-    gap: 1.25rem;
-    align-items: stretch;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    gap: 1.35rem;
+    align-items: start;
   }
 
-  .note-card{
-    position: relative;
-    background: linear-gradient(180deg, rgba(18,20,26,0.96) 0%, rgba(10,12,18,0.96) 100%);
+  .clinical-note-card{
+    background: linear-gradient(180deg, rgba(18,22,31,0.96) 0%, rgba(10,12,18,0.97) 100%);
     border: 1px solid rgba(255,255,255,0.10);
     border-radius: 22px;
     overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+    box-shadow: 0 20px 52px rgba(0,0,0,0.24);
   }
 
-  .note-card::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    background:
-      linear-gradient(to bottom, rgba(255,255,255,0.03), transparent 18%),
-      radial-gradient(circle at top right, rgba(95,160,255,0.12), transparent 28%);
+  .clinical-note-card-inner{
+    padding: 1.05rem;
   }
 
-  .note-card-inner{
-    position: relative;
-    z-index: 1;
-    padding: 1.25rem 1.35rem 1.35rem;
-  }
-
-  .note-label{
-    display:inline-flex;
-    align-items:center;
-    gap:0.55rem;
+  .clinical-note-pill{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     margin-bottom: 0.9rem;
-    padding: 0.38rem 0.72rem;
+    padding: 0.42rem 0.78rem;
     border-radius: 999px;
-    font-size: 0.78rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.82);
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.10);
-    color: rgba(255,255,255,0.78);
   }
 
-  .note-label .dot{
-    width: 0.55rem;
-    height: 0.55rem;
+  .clinical-note-pill::before{
+    content:"";
+    width: 0.62rem;
+    height: 0.62rem;
     border-radius: 50%;
-    background: #8ec5ff;
-    box-shadow: 0 0 0 0.18rem rgba(142,197,255,0.16);
+    flex: 0 0 auto;
+    background: #9ca6b8;
+    box-shadow: 0 0 0 0.2rem rgba(156,166,184,0.15);
   }
 
-  .note-label.original .dot{
-    background: #b7becd;
-    box-shadow: 0 0 0 0.18rem rgba(183,190,205,0.14);
+  .clinical-note-pill.ai::before{
+    background: #5ea7ff;
+    box-shadow: 0 0 0 0.2rem rgba(94,167,255,0.16);
   }
 
-  .note-label.generated .dot{
-    background: #62b0ff;
-    box-shadow: 0 0 0 0.18rem rgba(98,176,255,0.16);
+  .pdf-preview-shell{
+    position: relative;
+    height: 760px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #10141d;
+    border: 1px solid rgba(255,255,255,0.10);
   }
 
-  .doc-sheet{
-    background: #f5f1e8;
-    color: #151515;
-    border-radius: 16px;
-    padding: 1.1rem 1rem 1.15rem;
-    border: 1px solid rgba(0,0,0,0.12);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
-    min-height: 100%;
+  .pdf-preview-frame{
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+    background: #fff;
   }
 
-  .doc-head{
-    font-family: "Times New Roman", Georgia, serif;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    color: #232323;
-    margin-bottom: 0.9rem;
+  .pdf-redaction{
+    position: absolute;
+    border-radius: 10px;
+    background: rgba(244,244,244,0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.40);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04) inset;
+    pointer-events: none;
   }
 
-  .doc-body{
-    font-family: "Times New Roman", Georgia, serif;
-    font-size: 0.98rem;
-    line-height: 1.6;
-    color: #1a1a1a;
+  .expanded-note{
+    background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+    border-radius: 18px;
+    border: 1px solid rgba(52,96,162,0.16);
+    padding: 1.15rem 1.1rem 1.15rem;
+    color: #183252;
+    min-height: 760px;
   }
 
-  .doc-body p{
-    margin: 0 0 0.9rem 0;
-  }
-
-  .doc-body p:last-child{
-    margin-bottom: 0;
-  }
-
-  .privacy-blur{
-    display:inline-block;
-    filter: blur(4px);
-    user-select:none;
-    pointer-events:none;
-  }
-
-  .focus-block{
-    display:inline;
-    background: linear-gradient(180deg, rgba(255,229,122,0.68) 0%, rgba(255,229,122,0.48) 100%);
-    box-shadow:
-      0 0 0 2px rgba(215,178,43,0.30),
-      0 0 0 8px rgba(255,229,122,0.08);
-    border-radius: 0.3rem;
-    padding: 0.06rem 0.18rem;
-  }
-
-  .new-note{
-    background: linear-gradient(180deg, #f9fbff 0%, #edf4ff 100%);
-    color: #0d1726;
-    border-radius: 16px;
-    padding: 1.15rem 1.05rem 1.2rem;
-    border: 1px solid rgba(44,96,166,0.16);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
-    min-height: 100%;
-  }
-
-  .new-note h3{
-    margin: 0 0 0.7rem 0;
-    font-size: 1.02rem;
-    line-height: 1.35;
+  .expanded-note h3{
+    margin: 0 0 0.75rem 0;
     color: #102847;
+    font-size: 1.04rem;
+    line-height: 1.35;
   }
 
-  .new-note p{
-    margin: 0 0 0.9rem 0;
+  .expanded-note p{
+    margin: 0 0 0.92rem 0;
     font-size: 0.98rem;
-    line-height: 1.7;
+    line-height: 1.72;
     color: #183252;
   }
 
-  .new-note p:last-child{
+  .expanded-note p:last-child{
     margin-bottom: 0;
   }
 
-  .additive-highlight{
-    display:inline;
-    background: linear-gradient(180deg, rgba(111,185,255,0.30) 0%, rgba(111,185,255,0.22) 100%);
-    box-shadow:
-      0 0 0 2px rgba(84,155,224,0.24),
-      0 0 0 8px rgba(111,185,255,0.08);
-    border-radius: 0.3rem;
-    padding: 0.05rem 0.18rem;
+  .hl-behaviour{
+    background: rgba(116,181,255,0.28);
+    box-shadow: 0 0 0 2px rgba(116,181,255,0.18);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
   }
 
-  .transfer-arrow{
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  .hl-fusion{
+    background: rgba(192,153,255,0.24);
+    box-shadow: 0 0 0 2px rgba(192,153,255,0.16);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
   }
 
-  .transfer-arrow svg{
-    width: 100%;
-    height: 220px;
-    overflow: visible;
+  .hl-decision{
+    background: rgba(129,214,170,0.26);
+    box-shadow: 0 0 0 2px rgba(129,214,170,0.18);
+    border-radius: 0.28rem;
+    padding: 0.04rem 0.16rem;
   }
 
-  .transfer-arrow .arrow-path{
-    stroke: rgba(120,178,255,0.92);
-    stroke-width: 4.5;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    filter: drop-shadow(0 0 12px rgba(120,178,255,0.30));
-  }
-
-  .transfer-arrow .arrow-dot{
-    fill: rgba(255,229,122,0.96);
-    stroke: rgba(255,255,255,0.86);
-    stroke-width: 2.4;
-  }
-
-  .transfer-arrow .arrow-end{
-    fill: rgba(111,185,255,0.96);
-    stroke: rgba(255,255,255,0.86);
-    stroke-width: 2.4;
-  }
-
-  .compare-bottom-note{
-    max-width: 1180px;
-    margin: 1.25rem auto 0;
-    padding: 1rem 1.1rem;
+  .note-legend{
+    margin-top: 1.2rem;
+    padding: 1rem 1.05rem;
     border-radius: 16px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.76);
-    line-height: 1.75;
-    font-size: 0.98rem;
   }
 
+  .note-legend-title{
+    margin: 0 0 0.7rem 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.84);
+  }
+
+  .note-legend-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 0.8rem;
+  }
+
+  .note-legend-item{
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .note-legend-swatch{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.25rem;
+    margin-top: 0.18rem;
+    flex: 0 0 auto;
+  }
+
+  .note-legend-swatch.behaviour{ background: rgba(116,181,255,0.82); }
+  .note-legend-swatch.fusion{ background: rgba(192,153,255,0.78); }
+  .note-legend-swatch.decision{ background: rgba(129,214,170,0.84); }
+
   @media (max-width: 980px){
-    .note-compare-row{
+    .clinical-note-row{
       grid-template-columns: 1fr;
     }
 
-    .transfer-arrow{
-      display:none;
+    .pdf-preview-shell,
+    .expanded-note{
+      min-height: 640px;
+      height: auto;
+    }
+
+    .pdf-preview-shell{
+      height: 640px;
+    }
+
+    .note-legend-grid{
+      grid-template-columns: 1fr;
     }
   }
 </style>
 
-<section class="note-compare-section">
-  <div class="note-compare-header">
-    <h2>Original Clinical Note Preview vs Humanoid-Augmented Multimodal Note</h2>
+<section class="clinical-note-compare">
+  <div class="clinical-note-compare-header">
+    <h2>Original Clinical Notes vs Humanoid AI Monitoring Expanded Clinical Notes</h2>
     <p>
-      The left side preserves the structure and brevity of the original clinician-facing records while visually redacting
-      sensitive identifiers. The right side shows how the humanoid-supported system can generate a substantially richer note
-      by integrating guided motor performance, facial action dynamics, gaze behaviour, speech acoustics, transcript-level language
-      cues, and severity-oriented questionnaire evidence into a single clinically interpretable summary.
+      The left column displays the actual first-page PDF previews of the original clinical notes with privacy-sensitive identifiers
+      visually obscured. The right column shows the corresponding expanded notes produced by the proposed humanoid AI monitoring
+      pipeline, where highlighted additions reflect behaviourally grounded observations, cross-modal synthesis, and clinically
+      actionable interpretive detail that extends beyond the concise original documentation.
     </p>
   </div>
 
-  <div class="note-compare-stack">
+  <div class="clinical-note-compare-stack">
 
-    <!-- ROW 1 -->
-    <div class="note-compare-row">
-      <article class="note-card">
-        <div class="note-card-inner">
-          <div class="note-label original"><span class="dot"></span>Original note preview</div>
-          <div class="doc-sheet">
-            <div class="doc-head">
-              <strong><span class="privacy-blur">Mr Vipul Kapur</span></strong><br>
-              DOB <span class="privacy-blur">07/01/1962</span><br>
-              <span class="privacy-blur">Macquarie Neurosurgery &amp; Spine, Suite 201, 2 Technology Place</span><br>
-              <span class="privacy-blur">Professor / provider identifiers blurred for privacy</span>
-            </div>
-            <div class="doc-body">
-              <p>
-                Today I had the pleasure of seeing <span class="privacy-blur">the patient</span> in follow-up. The patient underwent
-                laminoforaminotomy procedures in June. Both operations were uncomplicated.
-              </p>
-              <p>
-                <span class="focus-block">After the second operation, he had an almost complete resolution of the pain he had before
-                surgery, although distally to the arm he still feels a sore sensation. He is taking much less analgesics than before
-                and is much happier than he was before the operation.</span>
-              </p>
-              <p>
-                <span class="focus-block">The incision appeared clean and dry. There are no new neurological deficits.</span>
-              </p>
-              <p>
-                At this point, there has been a reduction of pain. If neck pain worsens in the future or extends to the right side,
-                repeat MRI for possible further surgical indication. Physiotherapy is recommended.
-              </p>
-            </div>
+    <!-- CASE 1 -->
+    <div class="clinical-note-row">
+      <article class="clinical-note-card">
+        <div class="clinical-note-card-inner">
+          <div class="clinical-note-pill">Original clinical note</div>
+          <div class="pdf-preview-shell">
+            <iframe
+              class="pdf-preview-frame"
+              src="Vipul%20Kapur_Notes.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+              title="Original clinical note PDF for Case 1"
+              loading="lazy">
+            </iframe>
+
+            <!-- privacy masks for visible identifiers -->
+            <div class="pdf-redaction" style="left: 6.5%; top: 13.8%; width: 31%; height: 6.2%;"></div>
+            <div class="pdf-redaction" style="left: 58%; top: 10.3%; width: 32.5%; height: 11.5%;"></div>
+            <div class="pdf-redaction" style="left: 28%; top: 29.5%; width: 28%; height: 5.5%;"></div>
+            <div class="pdf-redaction" style="left: 28%; top: 35.2%; width: 18%; height: 4.6%;"></div>
           </div>
         </div>
       </article>
 
-      <div class="transfer-arrow" aria-hidden="true">
-        <svg viewBox="0 0 120 220">
-          <defs>
-            <marker id="arrowheadA" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-              <path d="M0,0 L12,6 L0,12 Z" fill="rgba(120,178,255,0.92)"></path>
-            </marker>
-          </defs>
-          <circle class="arrow-dot" cx="18" cy="104" r="9"></circle>
-          <path class="arrow-path" d="M27 104 C52 104, 63 104, 92 104" marker-end="url(#arrowheadA)"></path>
-          <circle class="arrow-end" cx="101" cy="104" r="9"></circle>
-        </svg>
-      </div>
-
-      <article class="note-card">
-        <div class="note-card-inner">
-          <div class="note-label generated"><span class="dot"></span>Humanoid-supported expanded note</div>
-          <div class="new-note">
-            <h3>Case 1 — Post-operative multimodal follow-up synthesis</h3>
+      <article class="clinical-note-card">
+        <div class="clinical-note-card-inner">
+          <div class="clinical-note-pill ai">Humanoid AI monitoring expanded clinical note</div>
+          <div class="expanded-note">
+            <h3>Case 1 — Post-operative multimodal recovery synthesis</h3>
             <p>
-              The patient presents following repeat cervical decompressive intervention with a clinically meaningful reduction in the
-              previously dominant pain burden, consistent with the improvement described in the operative follow-up. However, the present
-              assessment does not merely confirm pain reduction: it additionally captures <span class="additive-highlight">residual distal
-              discomfort patterns, guarded upper-limb movement during terminal-range actions, and subtle protective neck–shoulder behaviour
-              that remain functionally relevant despite the overall positive post-surgical trajectory.</span>
+              The patient is reviewed following repeat cervical decompressive surgery, with the original note already indicating a major
+              reduction in pre-operative pain burden and the absence of new neurological deficits. The expanded multimodal interpretation
+              preserves that positive post-surgical trajectory, while documenting
+              <span class="hl-behaviour">residual distal discomfort expression, guarded upper-limb movement during higher-range actions,
+              and subtle protective neck–shoulder coordination patterns that remain behaviourally visible despite the overall recovery
+              trend</span>.
             </p>
             <p>
-              Across the guided motor sequence, task completion remained efficient and stable, with no overt evidence of an emergent major
-              neurological deficit during the observed interaction. Facial and gaze behaviour during symptom-relevant questioning showed
-              <span class="additive-highlight">reduced distress reactivity relative to pain-focused prompts, lower facial tension after
-              movement completion, and preserved visual engagement during instruction processing</span>, which is compatible with improved
-              comfort and reduced immediate procedural frustration.
+              During structured motor assessment, the system-derived profile is most consistent with preserved task completion efficiency
+              rather than overt deterioration. At the same time, the monitored interaction suggests that pain improvement should not be
+              read as a complete functional normalisation, because
+              <span class="hl-fusion">observable movement economy, residual protective behaviour, facial tension modulation, and symptom-
+              linked gaze regulation together indicate a partially resolved but still clinically relevant recovery state</span>.
             </p>
             <p>
-              Speech-based analysis further suggested a more regulated response profile than would be expected in a highly aggravated pain
-              state: pauses were not excessively prolonged, volume remained coherent, and the spectral profile did not show strong agitation-
-              dominated escalation during the follow-up narrative. Transcript-level analysis was concordant with this pattern, showing
-              <span class="additive-highlight">language organised around improvement, relief, and recovery rather than helplessness,
-              escalation, or catastrophic framing.</span>
+              Acoustic and transcript-level evidence further refine this interpretation. Relative to a highly aggravated pain presentation,
+              the interaction shows a more regulated speech pattern, with coherent pacing and limited escalation markers. Language use is
+              correspondingly less dominated by distress framing and more oriented toward improvement and follow-up. This supports
+              <span class="hl-behaviour">a lower immediate affective burden during review, alongside preserved engagement with instruction
+              and questioning</span>.
             </p>
             <p>
-              In integrated clinical terms, the multimodal system supports the original conclusion that recovery is progressing favourably,
-              while extending it with more operational detail: improvement is present, but not complete; residual soreness remains
-              behaviourally observable; cervical and upper-limb movements should continue to be monitored longitudinally; and future review
-              should specifically examine whether this residual protective behaviour resolves or becomes a persistent compensatory pattern
-              during daily activity.
+              From a decision-support perspective, the note is therefore expanded beyond the original brief follow-up wording by explicitly
+              distinguishing between global symptom improvement and residual movement-linked burden. The integrated summary suggests
+              <span class="hl-decision">ongoing longitudinal monitoring of upper-limb and cervical protective patterns, targeted review of
+              whether residual soreness remains stable or becomes compensatory, and continued interpretation of recovery in relation to both
+              pain report and observed functional behaviour rather than symptom text alone</span>.
             </p>
           </div>
         </div>
       </article>
     </div>
 
-    <!-- ROW 2 -->
-    <div class="note-compare-row">
-      <article class="note-card">
-        <div class="note-card-inner">
-          <div class="note-label original"><span class="dot"></span>Original note preview</div>
-          <div class="doc-sheet">
-            <div class="doc-head">
-              <strong><span class="privacy-blur">Mrs Ewa Bozena Zabielski</span></strong><br>
-              DOB <span class="privacy-blur">04/02/1960</span><br>
-              <span class="privacy-blur">Address, provider, and clinic identifiers blurred for privacy</span><br>
-              Clinical report / case conference preview
-            </div>
-            <div class="doc-body">
-              <p>
-                The patient was reviewed today. Imaging demonstrates
-                <span class="focus-block">high-grade spinal canal stenosis at L4–5 with effacement of the cauda equina nerve roots.</span>
-              </p>
-              <p>
-                <span class="focus-block">This is clearly a surgical indication</span>, and arrangements will be made for neurosurgical
-                review once the patient is ready.
-              </p>
-              <p>
-                <span class="focus-block">The patient has also been diagnosed with cataracts and macular degeneration, requiring further
-                intervention, and wishes to address the eyes before dealing with the spine.</span>
-              </p>
-              <p>
-                Given that the spine is not currently a neurosurgical emergency, review is planned again in two months.
-              </p>
-            </div>
+    <!-- CASE 2 -->
+    <div class="clinical-note-row">
+      <article class="clinical-note-card">
+        <div class="clinical-note-card-inner">
+          <div class="clinical-note-pill">Original clinical note</div>
+          <div class="pdf-preview-shell">
+            <iframe
+              class="pdf-preview-frame"
+              src="Ewa%20Zabielski_Notes.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+              title="Original clinical note PDF for Case 2"
+              loading="lazy">
+            </iframe>
+
+            <!-- privacy masks for visible identifiers -->
+            <div class="pdf-redaction" style="left: 13%; top: 5.3%; width: 36%; height: 4.2%;"></div>
+            <div class="pdf-redaction" style="left: 13%; top: 9.7%; width: 17%; height: 3.7%;"></div>
+            <div class="pdf-redaction" style="left: 50%; top: 6.2%; width: 34%; height: 8.6%;"></div>
+            <div class="pdf-redaction" style="left: 13%; top: 19.1%; width: 27%; height: 8.4%;"></div>
+            <div class="pdf-redaction" style="left: 13%; top: 27.3%; width: 41%; height: 7.6%;"></div>
           </div>
         </div>
       </article>
 
-      <div class="transfer-arrow" aria-hidden="true">
-        <svg viewBox="0 0 120 220">
-          <defs>
-            <marker id="arrowheadB" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-              <path d="M0,0 L12,6 L0,12 Z" fill="rgba(120,178,255,0.92)"></path>
-            </marker>
-          </defs>
-          <circle class="arrow-dot" cx="18" cy="110" r="9"></circle>
-          <path class="arrow-path" d="M27 110 C52 110, 63 110, 92 110" marker-end="url(#arrowheadB)"></path>
-          <circle class="arrow-end" cx="101" cy="110" r="9"></circle>
-        </svg>
-      </div>
-
-      <article class="note-card">
-        <div class="note-card-inner">
-          <div class="note-label generated"><span class="dot"></span>Humanoid-supported expanded note</div>
-          <div class="new-note">
-            <h3>Case 2 — Integrated multimodal note with ophthalmic and functional context</h3>
+      <article class="clinical-note-card">
+        <div class="clinical-note-card-inner">
+          <div class="clinical-note-pill ai">Humanoid AI monitoring expanded clinical note</div>
+          <div class="expanded-note">
+            <h3>Case 2 — Multimodal functional expansion around spinal and ophthalmic burden</h3>
             <p>
-              The patient’s structural spinal pathology remains the dominant medical concern, with severe L4–5 canal narrowing and cauda
-              equina crowding already establishing a strong procedural indication. The multimodal assessment, however, adds several layers
-              that are not explicit in the short original note. During guided tasks, the system identified
-              <span class="additive-highlight">movement initiation hesitancy, reduced confidence during lower-limb transition phases, and
-              functionally cautious postural behaviour consistent with symptom-aware adaptation rather than spontaneous unrestricted
-              movement.</span>
+              The original note establishes severe L4–5 spinal canal stenosis with effacement of the cauda equina nerve roots, a clear
+              procedural indication, and a clinically important delay in spine management while ophthalmic issues are addressed first.
+              The expanded note retains that core medical structure while adding
+              <span class="hl-behaviour">task-level evidence of movement initiation hesitancy, reduced confidence during lower-limb
+              transition phases, and cautious postural organisation consistent with functionally protective rather than unrestricted
+              movement behaviour</span>.
             </p>
             <p>
-              The presence of cataracts and macular degeneration is also clinically relevant beyond a background mention, because gaze and
-              visual-orientation analysis suggested <span class="additive-highlight">visual-load–related instability during target fixation,
-              intermittent gaze fragmentation, and altered interaction pacing when instructions required sustained visual anchoring.</span>
-              These features matter for both interpretation and care planning, since some apparent behavioural slowing may be jointly shaped
-              by spinal discomfort and visual compromise rather than by a single isolated source.
+              The concurrent cataracts and macular degeneration become more than a background comorbidity in the multimodal interpretation,
+              because gaze-oriented monitoring introduces an additional explanatory layer. The system-level profile suggests
+              <span class="hl-fusion">visual-load–linked instability during fixation, intermittent gaze fragmentation, and interaction-speed
+              adjustments that may reflect the combined effect of visual compromise and physical discomfort rather than a single isolated
+              source of slowing</span>.
             </p>
             <p>
-              Acoustic and transcript-level analysis did not indicate an acutely escalated distress state, but they did suggest a more
-              effortful interaction profile than a purely routine review would imply. Speech carried a mildly constrained tempo with
-              strategically placed pauses, while language content remained focused on procedural sequencing, medical prioritisation, and
-              current burden management rather than disorganised or emotionally diffuse reporting. The combined profile therefore supports
-              <span class="additive-highlight">a patient who is clinically stable enough for staged planning, yet functionally affected in a
-              way that deserves explicit documentation because it may shape surgery timing, rehabilitation burden, and real-world mobility
-              confidence.</span>
+              Speech and transcript analysis do not support an acutely escalated distress episode, but they do support a more effortful
+              clinical interaction than the brief original note can convey. The patient’s verbal pattern remains organised and relevant,
+              while the broader monitored profile indicates
+              <span class="hl-behaviour">behavioural caution, preserved but measured engagement, and a pacing style that aligns with active
+              burden management rather than unaffected routine presentation</span>.
             </p>
             <p>
-              Relative to the original note, the humanoid-supported summary is more informative because it not only records that surgery is
-              indicated and delayed while ophthalmic care proceeds, but also documents the observable behavioural consequences of that
-              decision pathway. It captures how spinal impairment, visual limitation, and task execution interact during live assessment,
-              thereby producing a clinically richer record that can better support follow-up comparison, prioritisation, and multidisciplinary
-              discussion.
+              Clinically, this produces a richer longitudinal record than the concise original case conference. The added value is not the
+              replacement of structural diagnosis, but the explicit recording of how structural disease, visual limitation, and observed
+              functional performance co-occur during live assessment. That yields
+              <span class="hl-decision">a more informative follow-up document for staged planning, prioritisation, multidisciplinary review,
+              and future comparison of whether observed caution, gaze instability, or movement restriction improve, stabilise, or worsen
+              over time</span>.
             </p>
           </div>
         </div>
@@ -1001,11 +930,22 @@
     </div>
   </div>
 
-  <div class="compare-bottom-note">
-    In each pair, the left panel preserves the concise original clinical record with privacy-sensitive identifiers visually obscured,
-    while the right panel illustrates the type of more comprehensive note that becomes possible when standard documentation is augmented
-    by humanoid-led multimodal evidence. The resulting note can reflect not only what was explicitly said or written, but also how the
-    patient moved, looked, paused, reacted, compensated, and performed across structured motor and conversational tasks.
+  <div class="note-legend">
+    <div class="note-legend-title">Highlight legend</div>
+    <div class="note-legend-grid">
+      <div class="note-legend-item">
+        <span class="note-legend-swatch behaviour"></span>
+        <span>Blue highlighting marks added observations derived from monitored behavioural evidence such as motor execution, gaze behaviour, facial response, or speech patterning.</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch fusion"></span>
+        <span>Purple highlighting marks added cross-modal synthesis where multiple evidence streams are interpreted together rather than in isolation.</span>
+      </div>
+      <div class="note-legend-item">
+        <span class="note-legend-swatch decision"></span>
+        <span>Green highlighting marks added clinical interpretation and decision-support detail that extends the original concise note into a more longitudinally useful record.</span>
+      </div>
+    </div>
   </div>
 </section>
 </body>
