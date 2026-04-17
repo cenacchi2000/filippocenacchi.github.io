@@ -35,7 +35,7 @@
     a:hover{text-decoration:underline}
 
     .container{
-      max-width:1200px;          /* wider so the demo has room */
+      max-width:1200px;
       margin:0 auto;
       padding:24px 16px 40px;
     }
@@ -156,7 +156,55 @@
       color:var(--subtle);
     }
 
-    /* --- LIVE DEMO STYLES (CENTERED) --- */
+    .case-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:18px;
+      margin-top:16px;
+    }
+    .case-card{
+      border:1px solid var(--border);
+      border-radius:18px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 6px 18px rgba(15,23,42,0.08);
+    }
+    .case-card img{
+      width:100%;
+      display:block;
+      aspect-ratio:16/10;
+      object-fit:cover;
+      background:#000;
+    }
+    .case-card .card-body{
+      padding:14px 14px 16px;
+    }
+    .case-card h3{
+      margin:0 0 6px;
+      font-size:16px;
+    }
+    .case-card p{
+      margin:0;
+      font-size:14px;
+      color:var(--subtle);
+    }
+    .case-card.wide{
+      grid-column:1 / -1;
+    }
+    .case-card.wide img{
+      aspect-ratio:16/8;
+      object-fit:cover;
+      object-position:center;
+    }
+    .privacy-note{
+      margin-top:14px;
+      font-size:13px;
+      color:var(--subtle);
+    }
+    @media(max-width:850px){
+      .case-grid{grid-template-columns:1fr;}
+      .case-card.wide{grid-column:auto;}
+    }
 
     .demo-section{
       margin-top:32px;
@@ -228,8 +276,7 @@
         </p>
       </div>
       <figure class="hero-media">
-        <!-- use whichever image you want here; I keep your original filename -->
-        <img src="ameca.png" alt="Ameca humanoid robot used for diagnostic conversations">
+        <img src="patient-assessment-1.jpeg" alt="Patient interacting with a humanoid diagnostic interface during assessment">
       </figure>
     </div>
 
@@ -289,7 +336,68 @@
         </div>
       </div>
     </section>
-      <!-- CENTERED LIVE DEMO -->
+
+    <section>
+      <h2>Assessment Examples</h2>
+      <p>
+        The examples below show real prototype sessions in which patients are assessed through
+        the humanoid interface, alongside a computer-vision example of motor-function evaluation
+        used to support post-surgical recovery tracking and functional monitoring.
+      </p>
+
+      <div class="case-grid">
+        <article class="case-card">
+          <img src="patient-assessment-1.jpeg" alt="Patient speaking into a handheld microphone while being assessed through the humanoid interface">
+          <div class="card-body">
+            <h3>Patient assessment session 1</h3>
+            <p>
+              A conversational screening interaction in which the patient responds to structured
+              questions through the humanoid interface while the system logs speech timing and
+              behavioural cues.
+            </p>
+          </div>
+        </article>
+
+        <article class="case-card">
+          <img src="patient-assessment-2.jpeg" alt="Patient seated in front of a humanoid diagnostic agent during an assessment session">
+          <div class="card-body">
+            <h3>Patient assessment session 2</h3>
+            <p>
+              A second example of the embodied interview setup, illustrating the face-to-face
+              interaction style used to make assessment sessions feel more natural and engaging.
+            </p>
+          </div>
+        </article>
+
+        <article class="case-card">
+          <img src="patient-assessment-3.jpeg" alt="Patient undergoing a spoken assessment through the humanoid diagnostic interface">
+          <div class="card-body">
+            <h3>Patient assessment session 3</h3>
+            <p>
+              Another deployment snapshot showing the platform used with a different participant,
+              highlighting the adaptability of the setup across individuals and screening contexts.
+            </p>
+          </div>
+        </article>
+
+        <article class="case-card wide">
+          <img src="motor-evaluation-example.jpeg" alt="Computer-vision dashboard displaying motor evaluation metrics for a patient">
+          <div class="card-body">
+            <h3>Motor evaluation example after surgery</h3>
+            <p>
+              Example computer-vision dashboard for motor assessment, showing a structured
+              movement task and live pose-based feedback that can be used to quantify strength,
+              endurance, symmetry and recovery progression after surgery.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <p class="privacy-note">
+        Patient images are shown with visible facial redaction to preserve privacy in presentation materials.
+      </p>
+    </section>
+
     <section class="demo-section">
       <h2>Interactive Dashboard (Live Demo)</h2>
       <p class="live-demo-intro">
@@ -299,14 +407,14 @@
       </p>
 
       <div class="demo-frame-wrap">
-  <iframe
-    src="https://filo-cena-simclinician.hf.space"
-    title="SimClinician dashboard demo"
-    loading="lazy"
-    allow="fullscreen"
-    style="width:100%; height:820px; border:0;"
-  ></iframe>
-</div>
+        <iframe
+          src="https://filo-cena-simclinician.hf.space"
+          title="SimClinician dashboard demo"
+          loading="lazy"
+          allow="fullscreen"
+          style="width:100%; height:820px; border:0;"
+        ></iframe>
+      </div>
 
       <div class="demo-footer">
         <span>Best experienced on desktop or laptop (full-screen view).</span>
@@ -374,9 +482,6 @@
         tools.
       </p>
     </section>
-
-  
-
   </div>
 </body>
 </html>
