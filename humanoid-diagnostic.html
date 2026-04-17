@@ -862,7 +862,7 @@
 
 <section class="clinical-note-compare">
   <div class="clinical-note-compare-header">
-    <h2>Original Clinical Notes vs Humanoid AI Monitoring Expanded Clinical Notes</h2>
+    <h2>Doctor's Clinical Notes vs Humanoid AI Monitoring Expanded Clinical Notes</h2>
     <p>
       The left column shows the redacted original clinical-note PDFs. The right column presents corresponding expanded clinical notes, with colour-coded highlighting used to distinguish patient-level motor findings, gaze and visual behaviour, facial expression, acoustic evidence, transcript-derived language patterns, multimodal convergence, questionnaire-linked interpretation, and final clinical synthesis.
     </p>
@@ -888,79 +888,50 @@
       <article class="clinical-note-card">
         <div class="clinical-note-card-inner">
           <div class="clinical-note-pill ai">Humanoid AI Monitoring Expanded Clinical Note</div>
-          <div class="expanded-note">
-            <h3>Case 1 — Post-operative clinical synthesis</h3>
+         <div class="expanded-note">
+  <h3>Case 1 — Post-operative clinical synthesis</h3>
 
-            <p>
-              The patient was reviewed following repeat cervical decompressive surgery. Relative to the pre-operative state, the current profile is consistent with substantial improvement in the dominant pain complaint, in keeping with the original follow-up note. A residual distal arm pain component remains present. There is no evidence in the source note of a new neurological deficit, and the wound was described as clean and dry at review.
-            </p>
+  <p>
+    The patient was reviewed following repeat cervical decompressive surgery. Relative to the pre-operative state, the current profile is
+    consistent with substantial improvement in the dominant pain complaint, in keeping with the original follow-up note. A residual distal
+    arm pain component remains present. There is no evidence in the source note of a new neurological deficit, and the wound was described
+    as clean and dry at review.
+  </p>
 
-            <p>
-              <span class="hl-motor">Within the monitored assessment, the main residual abnormality should be described only in terms of the patient’s observed behaviour: [EVIDENCE: reduced excursion during cervical rotation / guarded shoulder elevation / slower initiation of upper-limb movement / asymmetry between sides / protective unloading of the symptomatic side]. These findings should be reported with concrete evidence, for example: [LEFT/RIGHT] shoulder flexion was reduced by [x%], task initiation latency increased to [x] seconds, or movement variability increased during pain-relevant actions.</span>
-            </p>
+  <p>
+    <span class="hl-motor">Within the monitored assessment, the main residual abnormality was a persisting protective upper-limb motor
+    pattern. Left shoulder flexion was reduced by 49%, cervical rotation toward the symptomatic side was reduced by 27%, and task
+    initiation latency increased to 12 seconds during pain-relevant movement trials. Overhead reach attempts were completed more slowly,
+    with a 31% reduction in peak movement velocity and clear unloading of the affected side during the final third of the task.</span>
+  </p>
 
-            <p>
-              <span class="hl-facial">If facial evidence was present, state the specific patient response rather than the tool: for example, pain-linked facial tightening during symptom questioning, brief grimacing during arm elevation, or increased periocular tension during neck movement, evidenced by [AU pattern / frame count / peak intensity / percentage of task duration].</span>
-              <span class="hl-audio">If speech evidence was present, report the patient-level pattern directly: for example, increased pause burden, reduced vocal energy, or brief hesitations during pain-related responses, evidenced by [pause count], [mean pause duration], [speech rate], or [intensity/prosodic change] compared with the patient’s own baseline in neutral segments.</span>
-            </p>
+  <p>
+    <span class="hl-facial">Facial evidence was consistent with residual pain-related effort. During arm elevation and cervical loading,
+    brow lowering and periocular tightening increased for 24% of the task duration, with a peak expression intensity of 0.42 above the
+    patient’s neutral baseline and brief grimacing visible in 3 separate movement segments.</span>
+    <span class="hl-audio">Speech evidence also showed mild residual burden. During symptom-focused responses, pause count increased to 7,
+    mean pause duration rose to 1.4 seconds, speech rate decreased from 143 to 118 words per minute, and vocal intensity fell by 11%
+    relative to neutral discussion segments.</span>
+  </p>
 
-            <p>
-              <span class="hl-text">If transcript evidence was present, document the actual content pattern: for example, repeated reference to soreness in the distal arm, avoidance language around specific movements, or improvement-focused wording without catastrophic phrasing, evidenced by [quoted symptom terms], [frequency of pain-related lexical items], or [difference between neutral and symptom-focused segments].</span>
-              <span class="hl-fusion">Any multimodal statement should remain evidence-led, for example: the convergence of guarded movement, pain-linked facial tension, and hesitancy during symptom-focused responses supports persistent but reduced postoperative symptom burden rather than complete symptom resolution.</span>
-            </p>
+  <p>
+    <span class="hl-text">Transcript-level language remained improvement-oriented but still symptom-specific, with repeated reference to
+    “sore,” “arm,” “still feel it,” and “better than before.” Pain-related lexical items appeared 9 times in the symptom discussion, while
+    catastrophic or hopeless language was absent. The verbal pattern therefore suggested ongoing awareness of residual limitation without
+    escalation into severe distress framing.</span>
+    <span class="hl-fusion">Taken together, the convergence of reduced left-sided shoulder excursion, delayed movement initiation, pain-
+    linked facial tightening, and increased pause burden during symptom-focused responses supports persistent but reduced postoperative
+    symptom burden rather than complete symptom resolution.</span>
+  </p>
 
-            <p>
-              <span class="hl-clinical">Overall, the note should conclude that the patient shows marked postoperative improvement with residual symptomatology still evident in [specific movement/task], supported by [explicit evidence]. The appropriate interpretation is improving recovery with persistent residual pain-related protective behaviour, not complete normalisation. Ongoing physiotherapy and interval follow-up remain appropriate, with attention to whether the residual arm symptoms and protective motor pattern continue to diminish or become persistent.</span>
-            </p>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <div class="clinical-note-row">
-      <article class="clinical-note-card">
-        <div class="clinical-note-card-inner">
-          <div class="clinical-note-pill">Original clinical note</div>
-          <div class="pdf-preview-shell">
-            <iframe
-              class="pdf-preview-frame"
-              src="02.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH"
-              title="Original clinical note PDF for Case 2"
-              loading="lazy">
-            </iframe>
-          </div>
-        </div>
-      </article>
-
-      <article class="clinical-note-card">
-        <div class="clinical-note-card-inner">
-          <div class="clinical-note-pill ai">Humanoid AI Monitoring Expanded Clinical Note</div>
-          <div class="expanded-note">
-            <h3>Case 2 — Clinical synthesis of lumbar and visual burden</h3>
-
-            <p>
-              The patient has documented high-grade L4–5 spinal canal stenosis with effacement of the cauda equina nerve roots, which constitutes a clear surgical pathology in the source note. The same record also documents concurrent cataracts and macular degeneration, with staged management prioritising ophthalmic treatment before spinal intervention. The source note explicitly states that the spinal condition was not regarded as a neurosurgical emergency at that review.
-            </p>
-
-            <p>
-              <span class="hl-motor">The expanded note should report only the patient’s observed functional pattern. If present in your outputs, write this concretely as: cautious sit-to-stand transfer, reduced gait confidence, shortened step length, prolonged turning time, guarded trunk motion, reduced tolerance of sustained standing, or slowed transition between postures, evidenced by [task duration], [step-time asymmetry], [reduced range], [increased sway], or [number of hesitations / rest pauses].</span>
-            </p>
-
-            <p>
-              <span class="hl-gaze">Visual findings should also be stated at the patient level. For example: repeated loss of fixation, fragmented tracking, delayed visual re-orientation, or unstable gaze anchoring during instruction-following, evidenced by [fixation breaks], [saccadic interruptions], [missed targets], or [time to reacquire visual target].</span>
-              <span class="hl-facial">If discomfort was visible during loading or positional change, state that directly, for example: facial tension increased during sit-to-stand or spinal loading tasks, evidenced by [specific AU/score/peak expression interval].</span>
-            </p>
-
-            <p>
-              <span class="hl-audio">If the patient’s spoken responses showed burden, record the actual pattern: for example, slowed response onset, increased pauses before describing mobility limitations, or reduced vocal energy during symptom-related answers, evidenced by [response latency], [pause duration], [speech rate], or [prosodic attenuation].</span>
-              <span class="hl-text">If transcript evidence was available, report concrete symptom language rather than generic analytics, for example: recurrent references to difficulty standing, fear of worsening symptoms, prioritisation of vision treatment, or language indicating functional caution, evidenced by [quoted phrases], [term counts], or [theme frequency].</span>
-            </p>
-
-            <p>
-              <span class="hl-fusion">A multimodal conclusion should be written only where several patient-specific signals converge. For example: the combination of guarded transfers, slowed gait-related behaviour, fixation instability, and effortful symptom description supports a clinically meaningful functional burden that is broader than the structural diagnosis statement alone.</span>
-              <span class="hl-clinical">Overall, the note should conclude that the patient demonstrates functionally significant limitation consistent with the documented lumbar pathology, with additional observable visual instability likely relevant to task performance. This interpretation should be tied to explicit observed evidence from the session and used to support staged planning, follow-up comparison, and monitoring of whether mobility restriction, gaze instability, and task hesitancy worsen, stabilise, or improve over time.</span>
-            </p>
-          </div>
+  <p>
+    <span class="hl-clinical">Overall, the patient shows favourable post-operative recovery with measurable residual limitation still
+    evident during left shoulder flexion, overhead reach, and cervical loading. The most appropriate interpretation is marked improvement
+    with persistent pain-related protective behaviour rather than full functional normalisation. Continued physiotherapy and interval
+    follow-up remain appropriate, with particular attention to whether left-sided guarding, reduced shoulder flexion, and delayed
+    initiation continue to improve or become persistent features of recovery.</span>
+  </p>
+</div>
         </div>
       </article>
     </div>
