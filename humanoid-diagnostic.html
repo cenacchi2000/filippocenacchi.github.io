@@ -173,9 +173,9 @@
       color:var(--subtle);
     }
 
-    .case-grid{
+    .case-list{
       display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
+      grid-template-columns:1fr;
       gap:18px;
       margin-top:16px;
     }
@@ -191,34 +191,56 @@
     .case-card img{
       width:100%;
       display:block;
-      aspect-ratio:16/10;
+      aspect-ratio:16/8;
       object-fit:cover;
       background:#000;
     }
 
     .case-card .card-body{
-      padding:14px 14px 16px;
+      padding:16px 16px 18px;
     }
 
     .case-card h3{
-      margin:0 0 6px;
-      font-size:16px;
+      margin:0 0 8px;
+      font-size:18px;
     }
 
     .case-card p{
       margin:0;
-      font-size:14px;
+      font-size:15px;
       color:var(--subtle);
     }
 
-    .case-card.wide{
-      grid-column:1 / -1;
+    .motor-card{
+      margin-top:16px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 6px 18px rgba(15,23,42,0.08);
     }
 
-    .case-card.wide img{
+    .motor-card img{
+      width:100%;
+      display:block;
       aspect-ratio:16/8;
       object-fit:cover;
-      object-position:center;
+      background:#000;
+    }
+
+    .motor-card .card-body{
+      padding:16px 16px 18px;
+    }
+
+    .motor-card h3{
+      margin:0 0 8px;
+      font-size:18px;
+    }
+
+    .motor-card p{
+      margin:0 0 10px;
+      font-size:15px;
+      color:var(--subtle);
     }
 
     .privacy-note{
@@ -273,16 +295,6 @@
       }
     }
 
-    @media(max-width:850px){
-      .case-grid{
-        grid-template-columns:1fr;
-      }
-
-      .case-card.wide{
-        grid-column:auto;
-      }
-    }
-
     @media(max-width:800px){
       .hero{
         grid-template-columns:1fr;
@@ -302,6 +314,11 @@
         flex-direction:column;
         align-items:flex-start;
       }
+
+      .case-card img,
+      .motor-card img{
+        aspect-ratio:16/10;
+      }
     }
   </style>
 </head>
@@ -320,9 +337,9 @@
         </p>
         <h1>Humanoid-AI Diagnostic Agents</h1>
         <p class="subtitle">
-          Building Ameca-driven agents that run structured yet natural conversations and
-          transform multi-modal behaviour into early-warning signals for depression,
-          PTSD and cognitive decline.
+          Building Ameca-driven agents that conduct structured yet naturalistic
+          conversations and transform multimodal behavioural signals into
+          early-warning indicators of depression, PTSD and cognitive decline.
         </p>
       </div>
 
@@ -334,19 +351,23 @@
     <section>
       <h2>Motivation</h2>
       <p>
-        Traditional mental-health and cognitive assessments rely on short, highly structured
-        questionnaires administered in constrained clinical settings. They are difficult to
-        repeat frequently, capture only a thin slice of behaviour, and often miss early,
-        subtle changes. At the same time, fully automated chatbots lack the sense of presence,
-        pacing and accountability clinicians offer, which can undermine trust in high-stakes
-        diagnoses.
+        Conventional mental-health and cognitive screening procedures typically rely on
+        brief, highly structured questionnaires administered in constrained clinical
+        settings. Such instruments are difficult to repeat at high temporal resolution,
+        capture only a narrow cross-section of behaviour, and are often insufficiently
+        sensitive to subtle early changes in affect, speech, psychomotor function and
+        interpersonal engagement. Conversely, fully automated digital agents often lack
+        the social presence, accountability and embodied interaction required for
+        high-stakes clinical assessment.
       </p>
       <p>
-        This project explores whether a physically present humanoid robot can act as an
-        <strong>intermediate diagnostic agent</strong>: more available and consistent than
-        busy clinicians, yet more embodied, accountable and emotionally legible than a
-        disembodied app. The Ameca platform is used as a tangible, expressive front-end to
-        a multi-modal diagnostic engine and a trust-calibrated interaction policy.
+        This project investigates whether a physically present humanoid robot can serve
+        as an <strong>intermediate diagnostic interface</strong>: more consistent,
+        scalable and continuously available than routine clinician-administered
+        screening, while remaining more socially legible and trustworthy than
+        disembodied software systems. The Ameca platform is therefore employed as an
+        expressive front-end to a multimodal diagnostic engine and a trust-calibrated
+        interaction policy.
       </p>
     </section>
 
@@ -355,33 +376,35 @@
       <div class="two-col">
         <div>
           <p>
-            The humanoid-AI diagnostic agent is organised into four tightly coupled layers.
-            Ameca’s sensors and microphones capture speech, timing, hesitation, facial
-            micro-dynamics and posture. A perception layer performs <strong>tri-modal
-            feature extraction</strong>, feeding a fusion model derived from my
-            severity-aware diagnostic work. A dialogue manager decides
-            how to pace the interaction, when to probe or slow down, and when to hand off
-            to a clinician. Finally, a trust module surfaces calibrated risk estimates and
-            reasons to both the patient and the clinician.
+            The humanoid-AI diagnostic agent is organised into four tightly coupled
+            layers. Ameca’s microphones and visual sensors capture speech content,
+            prosodic timing, hesitation phenomena, facial micro-dynamics and posture.
+            A perception layer performs <strong>tri-modal feature extraction</strong>,
+            feeding a fusion model derived from my severity-aware diagnostic work. A
+            dialogue manager determines how to pace the interaction, when to probe,
+            when to decelerate, and when to initiate clinician hand-off. Finally, a
+            trust module surfaces calibrated risk estimates and explanatory evidence to
+            both the patient and the supervising clinician.
           </p>
           <p class="callout">
-            Conceptually, Ameca is treated less as a “robot therapist” and more as a
-            <strong>diagnostic sensor with agency</strong>: it can adjust its behaviour
-            to make data more informative while keeping the experience humane.
+            Conceptually, Ameca is treated less as a “robot therapist” and more as an
+            <strong>embodied diagnostic instrument with adaptive agency</strong>: it
+            can modulate its interaction in order to elicit more informative behavioural
+            data while maintaining a humane and clinically appropriate experience.
           </p>
         </div>
 
         <div>
           <p class="small"><strong>Current capabilities include:</strong></p>
           <p class="small">
-            • scripted interview flows aligned with PHQ-8 / PCL-C and MoCA-style questions<br>
-            • fine-grained timing of pauses, hesitations and self-corrections in speech<br>
-            • capture of facial micro-movements and gaze shifts over time<br>
-            • configurable “strictness” and empathy profiles for different populations
+            • interview flows aligned with PHQ-8 / PCL-C and MoCA-style screening protocols<br>
+            • fine-grained analysis of pauses, hesitations, self-corrections and speech-rate variability<br>
+            • capture of facial micro-movements, gaze shifts and non-verbal response dynamics<br>
+            • configurable “strictness” and empathy profiles for different patient populations
           </p>
           <div class="tag-row">
             <span class="tag">Ameca</span>
-            <span class="tag">Multi-modal fusion</span>
+            <span class="tag">Multimodal fusion</span>
             <span class="tag">Severity estimation</span>
             <span class="tag">Trust calibration</span>
           </div>
@@ -390,14 +413,16 @@
     </section>
 
     <section>
-      <h2>Assessment Examples</h2>
+      <h2>Patient Assessment Sessions</h2>
       <p>
-        The examples below show prototype sessions in which patients are assessed through
-        the humanoid interface, together with one example of computer-vision-based motor
-        evaluation used to monitor physical recovery and functional condition after surgery.
+        The examples below illustrate three prototype deployments in which participants
+        interact with the humanoid interface during spoken assessment sessions. In each
+        case, the system records verbal timing, hesitation patterns, turn-taking
+        dynamics, and associated non-verbal behaviour as part of a multimodal
+        screening workflow.
       </p>
 
-      <div class="case-grid">
+      <div class="case-list">
         <article class="case-card">
           <img
             src="WhatsApp%20Image%202026-04-16%20at%2012.05.19.jpeg"
@@ -406,9 +431,11 @@
           <div class="card-body">
             <h3>Patient assessment session 1</h3>
             <p>
-              Example of a spoken assessment session in which the patient interacts directly
-              with the humanoid interface while the system captures verbal timing and
-              behavioural response patterns.
+              Example of an embodied spoken-assessment session in which the participant
+              responds to structured prompts delivered via the humanoid interface while
+              the system captures verbal latency, prosodic variation, response length
+              and broader behavioural response patterns relevant to affective and
+              cognitive screening.
             </p>
           </div>
         </article>
@@ -421,9 +448,11 @@
           <div class="card-body">
             <h3>Patient assessment session 2</h3>
             <p>
-              A second example of the embodied interview setup, illustrating a face-to-face
-              assessment configuration designed to support more natural and comfortable
-              patient interaction.
+              A second deployment example illustrating the face-to-face interview
+              configuration. This setup is intended to support a more naturalistic and
+              comfortable interaction while preserving the repeatability of the
+              assessment protocol and enabling multimodal capture of speech and
+              non-verbal cues.
             </p>
           </div>
         </article>
@@ -436,24 +465,11 @@
           <div class="card-body">
             <h3>Patient assessment session 3</h3>
             <p>
-              Another deployment example showing the platform used with a different
-              participant, highlighting the flexibility of the assessment setup across
-              patient profiles and clinical contexts.
-            </p>
-          </div>
-        </article>
-
-        <article class="case-card wide">
-          <img
-            src="WhatsApp%20Image%202026-04-16%20at%2012.07.34.jpeg"
-            alt="Computer vision dashboard displaying motor evaluation and movement tracking after surgery"
-            loading="lazy">
-          <div class="card-body">
-            <h3>Motor evaluation example after surgery</h3>
-            <p>
-              Computer-vision-based motor evaluation example showing structured movement
-              analysis and live pose-tracking feedback that can support assessment of
-              strength, endurance, symmetry and functional recovery after surgery.
+              A further example of the platform deployed with a different participant,
+              demonstrating the flexibility of the embodied assessment framework across
+              individual patient profiles and clinical contexts. The session illustrates
+              how the system can be used to collect consistent multimodal evidence under
+              varying conversational and environmental conditions.
             </p>
           </div>
         </article>
@@ -464,12 +480,54 @@
       </p>
     </section>
 
+    <section>
+      <h2>Motor Evaluation After Surgery</h2>
+      <p>
+        In addition to conversational and affective assessment, the broader framework
+        can be extended to <strong>computer-vision-based motor evaluation</strong> in
+        order to quantify postoperative recovery and functional impairment. This is
+        particularly relevant in settings where repeated, objective measurement of
+        movement quality is needed between clinical visits.
+      </p>
+
+      <div class="motor-card">
+        <img
+          src="WhatsApp%20Image%202026-04-16%20at%2012.07.34.jpeg"
+          alt="Computer-vision dashboard displaying motor evaluation and movement tracking after surgery"
+          loading="lazy">
+        <div class="card-body">
+          <h3>Motor evaluation example after surgery</h3>
+          <p>
+            This example shows a computer-vision interface used to assess motor
+            function following surgery through structured movement tasks and live
+            pose-tracking feedback. The system estimates kinematic features such as
+            joint excursion, inter-limb symmetry, movement smoothness, temporal
+            coordination and task completion quality.
+          </p>
+          <p>
+            By extracting these features longitudinally, the framework can support the
+            monitoring of strength, endurance and functional recovery, while also
+            providing clinicians with quantitative indicators of rehabilitation
+            progress. Such analyses may help identify persistent asymmetries, impaired
+            movement strategies or deviations from expected recovery trajectories that
+            warrant additional clinical attention.
+          </p>
+        </div>
+      </div>
+
+      <p class="privacy-note">
+        The motor evaluation example is shown separately from the conversational
+        assessment sessions because it targets postoperative functional analysis rather
+        than affective or cognitive screening.
+      </p>
+    </section>
+
     <section class="demo-section">
       <h2>Interactive Dashboard (Live Demo)</h2>
       <p class="live-demo-intro">
         The panel below embeds a running instance of the SimClinician simulation dashboard.
-        You can scroll, switch patients, inspect multimodal evidence and see how the risk
-        gauge and decision bar respond.
+        You can scroll, switch patients, inspect multimodal evidence and observe how the
+        risk gauge and decision bar respond.
       </p>
 
       <div class="demo-frame-wrap">
@@ -493,59 +551,43 @@
     <section>
       <h2>Interaction &amp; Trust Calibration</h2>
       <p>
-        A central concern is <strong>how much autonomy</strong> the robot should have
-        in shaping the interview. The interaction policy therefore exposes a set of
-        explicit dials:
+        A central research question concerns <strong>how much autonomy</strong> the
+        robot should exercise in shaping the interview. The interaction policy
+        therefore exposes a set of explicit control dimensions:
       </p>
       <p>
-        • <strong>Risk-aware pacing</strong> – sessions start with low-sensitivity
-        questions and only escalate when early signals are stable and the patient’s
-        behaviour suggests comfort.<br>
-        • <strong>Evidence-linked feedback</strong> – rather than opaque scores,
-        the system surfaces which segments of speech and which non-verbal patterns
-        most strongly drove a risk estimate.<br>
-        • <strong>Hand-off triggers</strong> – thresholds for when Ameca must stop
-        probing and bring a human clinician into the loop are encoded directly in
-        the policy.
+        • <strong>Risk-aware pacing</strong> – sessions begin with low-sensitivity
+        prompts and only escalate when early signals are stable and the participant’s
+        behaviour indicates sufficient comfort and engagement.<br>
+        • <strong>Evidence-linked feedback</strong> – rather than presenting opaque
+        scores, the system highlights which segments of speech and which non-verbal
+        patterns contribute most strongly to a given risk estimate.<br>
+        • <strong>Hand-off triggers</strong> – thresholds specifying when Ameca should
+        suspend probing and defer to a human clinician are encoded directly in the
+        policy.
       </p>
       <p>
-        These mechanisms are evaluated not only on predictive performance but also on
-        whether users perceive the system as <em>competent, honest and appropriately
-        cautious</em>.
+        These mechanisms are evaluated not only in terms of predictive performance, but
+        also with respect to whether users perceive the system as <em>competent, honest
+        and appropriately cautious</em> in a clinical context.
       </p>
     </section>
 
     <section>
       <h2>Relationship to Other Projects</h2>
       <p>
-        The humanoid-AI diagnostic agent acts as a physical deployment target for several
-        strands of my work:
+        This work builds directly on my broader programme in multimodal diagnosis and
+        trust-calibrated AI. The diagnostic models extend methods developed for
+        severity-aware fusion of speech, facial behaviour and language. The
+        interaction-policy component connects to my interest in explainability,
+        uncertainty communication and the appropriate distribution of agency between
+        humans and machine systems in sensitive decision settings.
       </p>
       <p>
-        • multi-modal severity estimation models for robust depression /
-        PTSD risk scoring under missing modalities;<br>
-        • the <em>SimClinician</em> simulation testbed, which allows interaction policies
-        to be stress-tested in thousands of synthetic interviews before any patient sees
-        them;<br>
-        • the <em>avatarization pipeline</em>, which replays real Ameca sessions as
-        anonymised 3D avatars for longitudinal analysis.
-      </p>
-      <p>
-        Together, these components allow rapid iteration on interaction strategies and
-        diagnostic models without repeatedly exposing vulnerable participants to
-        immature prototypes.
-      </p>
-    </section>
-
-    <section>
-      <h2>Status &amp; Next Steps</h2>
-      <p>
-        The current prototype is capable of running fully automated screening interviews
-        and producing calibrated severity scores backed by multi-modal evidence. Ongoing
-        work focuses on tighter integration with clinical partners, expanded support for
-        cognitive screening tasks, and formal user studies on trust, workload and
-        perceived empathy when interacting with humanoid agents compared to screen-based
-        tools.
+        More broadly, the project contributes to an emerging view of embodied AI in
+        healthcare: not as a replacement for clinicians, but as a socially situated
+        interface that can improve the granularity, accessibility and repeatability of
+        diagnostic assessment.
       </p>
     </section>
   </div>
