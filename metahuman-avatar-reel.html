@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Scan-to-MetaHuman Embodiment • Filippo Cenacchi</title>
+  <title>MetaHuman Avatar, Voice Cloning & Humanoid Synchronisation • Filippo Cenacchi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-        content="A research pipeline for reconstructing ultra-realistic digital humans from 3D scans, adapting them to MetaHuman, and synchronising personal, virtual and humanoid embodiments.">
+        content="A full pipeline for scan-based digital human reconstruction, MetaHuman adaptation, voice cloning, and synchronised embodiment across a physical humanoid, a photorealistic virtual agent, and the original human identity.">
 
   <style>
     :root{
@@ -17,7 +17,7 @@
       --brand-ink:#6d28d9;
       --border:#e5e7eb;
       --shadow:0 12px 36px rgba(15,23,42,0.10);
-      --shadow-strong:0 22px 55px rgba(15,23,42,0.16);
+      --shadow-strong:0 20px 52px rgba(15,23,42,0.16);
       --accent-soft:rgba(124,58,237,0.08);
     }
 
@@ -153,7 +153,7 @@
     }
 
     .featured-stage{
-      margin-top:16px;
+      margin-top:18px;
       border:1px solid var(--border);
       border-radius:20px;
       overflow:hidden;
@@ -257,43 +257,8 @@
       color:var(--subtle);
     }
 
-    .result-grid{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-      gap:18px;
-      margin-top:14px;
-      align-items:start;
-    }
-
-    .result-card{
-      border:1px solid var(--border);
-      border-radius:18px;
-      overflow:hidden;
-      background:#fff;
-      box-shadow:0 8px 22px rgba(15,23,42,0.06);
-    }
-
-    .result-card img{
-      width:100%;
-      display:block;
-      aspect-ratio:4/3;
-      object-fit:cover;
-      background:#000;
-    }
-
-    .result-card .body{
-      padding:14px 15px 16px;
-    }
-
-    .result-card h3{
-      margin:0 0 8px;
-      font-size:17px;
-    }
-
-    .result-card p{
-      margin:0;
-      font-size:14px;
-      color:var(--subtle);
+    .bottom-demo{
+      margin-top:10px;
     }
 
     .ethics-note{
@@ -304,7 +269,6 @@
 
     @media(max-width:980px){
       .pipeline-grid,
-      .result-grid,
       .triad-grid,
       .two-col{
         grid-template-columns:1fr;
@@ -326,29 +290,29 @@
   <div class="container">
     <header>
       <a class="back-link" href="index.html#research">← Back to research overview</a>
-      <span class="small">Filippo Cenacchi · Scan-to-MetaHuman Embodiment</span>
+      <span class="small">Filippo Cenacchi · MetaHuman Avatar, Voice & Humanoid Synchronisation</span>
     </header>
 
     <p class="pill">
       <span class="dot"></span>
-      Research Demo · 3D reconstruction, MetaHuman adaptation and synchronised embodiment
+      Research Demo · 3D reconstruction, digital human cloning and synchronised embodiment
     </p>
 
-    <h1>From Ultra-Realistic 3D Scan to MetaHuman, Voice Clone and Humanoid Embodiment</h1>
+    <h1>From 3D Scan to MetaHuman, Voice Clone and Synchronised Embodiment</h1>
     <p class="subtitle">
-      This project presents a full identity-preserving embodiment pipeline in which a real person is reconstructed from a high-detail 3D scan, translated into a photorealistic MetaHuman-compatible character, synchronised with cloned voice and animation, and finally connected across three coordinated embodiments: the physical humanoid AI embodiment, the MetaHuman agent embodiment and the original personal embodiment.
+      This work presents a full identity-preserving pipeline in which a real person is reconstructed from high-detail visual capture, translated into a highly realistic digital human, aligned with cloned voice and animation, and then connected across three coordinated embodiments: the physical humanoid embodiment, the MetaHuman agent embodiment and the original personal identity.
     </p>
 
     <section>
-      <h2>Final Demonstration</h2>
+      <h2>Featured Demo</h2>
       <p>
-        The video below is the final demonstration and is intentionally positioned first so that visitors immediately see the complete embodied result before moving through the underlying reconstruction pipeline. It shows the end state of the system in which the rendered identity, the cloned vocal stream and the embodied agent logic are brought into a single communicative loop.
+        The first video below is the original short demo reel and remains the first media element on the page. It gives an immediate overview of the visual direction, expressive quality and synchronisation concept before the reconstruction steps are unpacked in detail.
       </p>
 
       <div class="video-frame">
         <iframe
-          src="https://www.youtube.com/embed/kw-PMX5aiTg?rel=0&controls=1&modestbranding=1"
-          title="Scan-to-MetaHuman synchronized embodiment demo"
+          src="https://www.youtube.com/embed/Z5OKkYK8zjc?autoplay=1&mute=1&loop=1&playlist=Z5OKkYK8zjc&controls=1&modestbranding=1&rel=0&vq=hd1080"
+          title="MetaHuman Avatar Reel"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
           loading="lazy">
@@ -356,55 +320,55 @@
       </div>
 
       <p class="video-caption">
-        Final demonstration of the synchronised embodiment pipeline, showing how the personalised rendering, cloned voice and agent behaviour converge into a coherent digital-human presentation.
+        The original demo reel is kept at the top to introduce the overall embodiment concept before the reconstruction pipeline and the final synchronised showcase.
       </p>
 
       <figure class="featured-stage">
         <img
           src="Screenshot%202026-04-14%20102948.png"
-          alt="CEO-style stage presentation showing the final embodied character in a live demonstration setting"
+          alt="Stage presentation frame showing the embodied digital character in a live demonstration environment"
           loading="lazy">
         <figcaption>
-          Featured demonstration frame shown immediately after the video: the staged result illustrates the public-facing presentation condition, where the reconstructed and adapted identity can be deployed as a high-fidelity digital presenter or embodied AI agent in a live environment.
+          This stage presentation frame is placed directly after the first demo because it shows the public-facing deployment condition: a highly realistic digital persona functioning as a presentational and interactive embodied agent in a live environment.
         </figcaption>
       </figure>
     </section>
 
     <section>
-      <h2>Research Aim</h2>
+      <h2>Why This Matters</h2>
       <div class="two-col">
         <div>
           <p>
-            The scientific goal of this work is not merely visual realism, but the construction of a <strong>computationally aligned human embodiment stack</strong>. Starting from dense 3D capture, the pipeline progressively converts raw geometry into a semantically controllable and visually persuasive digital identity. This identity is then made operational through MetaHuman-based rigging, high-resolution material refinement, speech identity preservation and cross-platform behavioural synchronisation.
+            The core value of this pipeline is that it transforms a person from a one-off scan or one-off recording into a reusable, controllable and synchronisable digital human representation. Once that identity has been reconstructed, refined and linked to voice and behaviour, it can support much richer forms of analysis, simulation and training than static video or static medical documentation alone.
           </p>
           <p>
-            In academic terms, the contribution sits at the intersection of digital human reconstruction, animation retargeting, embodied conversational AI and human-centred telepresence. The key novelty is that the same identity can be instantiated in three synchronised conditions rather than being trapped in only one representational medium.
+            In healthcare and human-centred AI settings, this opens a powerful direction for building high-fidelity patient surrogates from real data. A digital version of the person can preserve facial structure, expressive tendencies, speaking style and interaction dynamics in a form that can be replayed, analysed, stress-tested and simulated many times without repeatedly burdening the original patient.
           </p>
         </div>
         <div>
           <div class="callout">
-            The pipeline therefore moves from <strong>capture</strong>, to <strong>cleanup</strong>, to <strong>registration</strong>, to <strong>MetaHuman adaptation</strong>, to <strong>8K-grade rendering refinement</strong>, and finally to <strong>synchronised triadic embodiment</strong>, where a real person, a MetaHuman agent and a physical humanoid AI embodiment can all be aligned around the same identity model.
+            Instead of relying only on direct exposure to real patients during early-stage training, clinicians and AI systems can rehearse on realistic, identity-grounded digital cases first. That means safer preparation, more repeatable evaluation, and the possibility of running thousands of controlled interactions before deployment in real human settings.
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>Academic Reconstruction Pipeline</h2>
+      <h2>Reconstruction and Adaptation Pipeline</h2>
       <p>
-        The reconstruction process begins with a raw 3D scan that captures identity geometry at a level sufficient for facial proportions, local asymmetries and surface idiosyncrasies to be preserved. However, raw scans are not directly deployable for animation or embodied AI. They typically contain topological noise, incomplete regions, irregular boundaries and surface inconsistencies that must be normalised before any rigged digital-human system can meaningfully use them. The images below illustrate the full transition from dense scan data to the final operational digital identity.
+        The pipeline starts from captured identity material and progressively converts it into a controllable digital human. Each step increases structure, realism and deployability. Raw shape information becomes visually interpretable facial rendering; that rendering is then aligned, refined and prepared for transfer into a high-fidelity avatar framework that supports animation, voice-driven performance and embodied interaction.
       </p>
 
       <div class="pipeline-grid">
         <article class="step-card">
           <img
-            src="timscann.png"
-            alt="Raw 3D scan bust of a person before reconstruction cleanup"
+            src="tim.png"
+            alt="Initial facial identity asset used at the beginning of the reconstruction workflow"
             loading="lazy">
           <div class="body">
             <h3>1. Raw 3D identity acquisition</h3>
             <p>
-              The first stage captures a dense geometric approximation of the subject. At this point, the scan preserves valuable craniofacial structure and broad surface morphology, but it still contains artefacts, incomplete contour regions and a representation that is unsuitable for animation, retargeting or semantic control.
+              The process begins with the source identity material that anchors the full workflow. This stage establishes the facial proportions, global structure and overall likeness that must be preserved through all later transformation steps.
             </p>
           </div>
         </article>
@@ -412,12 +376,12 @@
         <article class="step-card">
           <img
             src="Screenshot%202026-04-14%20064637.png"
-            alt="Side view of the raw mesh showing dense triangulation and geometry structure"
+            alt="Side inspection of mesh structure used for topology review and cleanup"
             loading="lazy">
           <div class="body">
-            <h3>2. Mesh inspection, topology diagnosis and geometric cleanup</h3>
+            <h3>2. Mesh inspection, topology diagnosis and cleanup</h3>
             <p>
-              The second stage focuses on structural diagnosis of the scan mesh. Dense triangulation, irregular edge flow and peripheral deformation are analysed so that geometry can be cleaned, reoriented and prepared for more stable downstream processing. This stage is essential because high realism without topological discipline leads to poor deformation and unreliable facial transfer.
+              The second stage focuses on structural inspection. Surface irregularities, dense triangulation, unstable contour regions and deformation-prone areas are examined so the identity can be stabilised before transfer into a riggable digital-human system.
             </p>
           </div>
         </article>
@@ -425,12 +389,12 @@
         <article class="step-card">
           <img
             src="Screenshot%202026-01-30%20035445.png"
-            alt="Textured frontal reconstruction showing projected appearance on the scanned identity"
+            alt="Frontal facial rendering used to validate appearance and texture continuity"
             loading="lazy">
           <div class="body">
             <h3>3. Texture projection and canonical facial rendering</h3>
             <p>
-              Once geometry becomes sufficiently stable, a canonical facial rendering can be produced by projecting appearance information back onto the reconstructed surface. This step converts the scan from a purely structural object into an identity-bearing visual asset, allowing skin detail, tonal variation and major facial characteristics to be preserved in a renderable form.
+              A controlled facial rendering is then produced so that likeness, skin response and major facial traits can be checked from a stable viewpoint. This stage is critical because it turns raw geometry into an identity-bearing render that can be validated before animation and embodiment are introduced.
             </p>
           </div>
         </article>
@@ -438,25 +402,25 @@
         <article class="step-card">
           <img
             src="timmarkers.png"
-            alt="Facial landmark overlay used for semantic registration and rig alignment"
+            alt="Facial landmark overlay used to align the reconstructed face with a controllable animation structure"
             loading="lazy">
           <div class="body">
-            <h3>4. Landmark-guided semantic registration</h3>
+            <h3>4. Landmark-guided semantic alignment</h3>
             <p>
-              Semantic facial landmarks are then aligned with the rendered face so that the subject can be mapped onto a controllable facial schema. This is the bridge between static likeness reconstruction and dynamic avatar control. Landmark-guided registration makes it possible to preserve identity while preparing the face for rig transfer, blendshape correspondence and expression-consistent retargeting.
+              Facial landmarks are overlaid to align the rendered identity with a controllable facial schema. This creates the bridge between static likeness and dynamic control, making it possible to preserve identity while preparing the face for retargeting, expression mapping and rig-consistent animation.
             </p>
           </div>
         </article>
 
         <article class="step-card">
           <img
-            src="tim.png"
-            alt="Refined facial rendering after identity transfer into a high-realism avatar pipeline"
+            src="timscann.png"
+            alt="Geometry-aligned facial and bust representation used for transfer into the high-fidelity avatar pipeline"
             loading="lazy">
           <div class="body">
             <h3>5. MetaHuman adaptation and high-fidelity material refinement</h3>
             <p>
-              After registration, the identity is adapted into a MetaHuman-compatible representation. In practical terms, this means matching the reconstructed person to a rigged digital human whose topology, facial control system and animation interfaces support real-time operation. Material refinement then pushes the asset toward highly realistic 8K-grade detail, particularly in skin response, pore-level variation, shading continuity and perceptual likeness.
+              The aligned identity is then transferred into a more operational avatar structure that supports richer realism and more stable control. This is the stage where the person becomes suitable for integration with a high-fidelity digital-human system and for later refinement toward more realistic skin, shading and deformation behaviour.
             </p>
           </div>
         </article>
@@ -464,12 +428,12 @@
         <article class="step-card">
           <img
             src="tiiiiimmm.png"
-            alt="Final highly realistic portrait rendering of the adapted MetaHuman identity"
+            alt="Final highly realistic digital human portrait after reconstruction and refinement"
             loading="lazy">
           <div class="body">
-            <h3>6. Final photorealistic embodiment output</h3>
+            <h3>6. Final photorealistic output</h3>
             <p>
-              The final stage produces a stable, visually persuasive digital person rather than a mere scan-derived face. At this point, the character is no longer only an image asset: it becomes an operational embodied interface capable of receiving voice, animation and dialogue-control signals while still maintaining strong visual continuity with the original person.
+              The endpoint is a visually persuasive digital human rather than a simple face asset. At this stage, the result is strong enough for presentation, telepresence, embodied interaction and synchronised use with conversational AI and humanoid platforms.
             </p>
           </div>
         </article>
@@ -477,94 +441,86 @@
     </section>
 
     <section>
-      <h2>Why the 2D Rendering Stage Matters</h2>
+      <h2>Why the Intermediate Rendering Stage Is So Important</h2>
       <p>
-        A crucial intermediate step in this workflow is the generation of a controlled 2D rendering from the reconstructed 3D identity. This stage may appear visually simple, but academically it is essential because it acts as the interface between raw scanned geometry and semantically interpretable facial representation. The 2D render enables identity checking, landmark placement, appearance correction, texture auditing and rig-transfer validation under a standardised viewpoint. In other words, it provides a stable observational plane from which the realism of the 3D subject can be evaluated and the adaptation to MetaHuman can be made more accurate and more reproducible.
+        One of the most important steps in the workflow is the controlled facial rendering stage between raw reconstruction and final avatar embodiment. This intermediate representation gives a stable plane for checking likeness, evaluating material continuity, correcting facial boundaries and validating whether the face will transfer well into a controllable digital-human framework.
       </p>
       <p>
-        Without this rendering stage, the transition from scan space to avatar space becomes much less controlled. With it, the workflow gains an explicit validation layer where likeness, feature alignment and material continuity can be iteratively corrected before animation and embodiment are introduced.
+        Without this stage, the jump from raw capture to fully rigged embodiment becomes much less reliable. With it, the pipeline gains a clear point where appearance, structure and control-readiness can be inspected together before the final avatar system is locked in.
       </p>
     </section>
 
     <section>
-      <h2>Synchronised Triadic Embodiment</h2>
+      <h2>Three Synchronized Embodiments</h2>
       <p>
-        The end result of the pipeline is not a single avatar, but a coordinated identity system spanning three embodiments that can interact with each other and with humans. This creates a new communicative configuration in which the same person can exist simultaneously as a physical agent, as a virtual photorealistic agent and as the original personal source identity.
+        The end result is not just a single avatar. It is a coordinated identity stack in which one person can exist simultaneously in three linked conditions that can talk to each other, mirror each other and be used for different purposes depending on the setting.
       </p>
 
       <div class="triad-grid">
         <article class="triad-card">
-          <h3>Physical AI humanoid embodiment</h3>
+          <h3>Physical humanoid embodiment</h3>
           <p>
-            In the first condition, the identity is projected into a physical humanoid platform such as Ameca. This embodiment contributes physical co-presence, spatial interaction, robotic gesture and situated engagement in the real world.
+            In the first condition, the identity can be projected into a physical humanoid platform such as Ameca. This contributes co-presence, spatial interaction, robotic gesture and real-world conversational embodiment.
           </p>
         </article>
 
         <article class="triad-card">
           <h3>MetaHuman agent embodiment</h3>
           <p>
-            In the second condition, the same identity is realised as a photorealistic MetaHuman agent. This embodiment contributes visual richness, cinematic realism, remote deployability and a controllable digital-human interface suitable for simulation, performance and telepresence.
+            In the second condition, the same identity appears as a photorealistic digital human. This contributes visual richness, remote deployment, cinematic quality and a flexible interface for simulation, presentation and telepresence.
           </p>
         </article>
 
         <article class="triad-card">
-          <h3>Personal source embodiment</h3>
+          <h3>Original personal embodiment</h3>
           <p>
-            In the third condition, the original human source remains the reference identity for visual likeness, vocal style and behavioural grounding. This embodiment anchors the other two so that synchronisation remains identity-consistent rather than becoming a generic animation transfer.
+            In the third condition, the original person remains the grounding source for likeness, voice and behavioural reference. This keeps the other embodiments anchored to a consistent identity rather than drifting into a generic animated character.
           </p>
         </article>
       </div>
 
       <p style="margin-top:14px;">
-        When these three conditions are synchronised, the system moves beyond avatar generation and becomes a form of <strong>multi-embodiment identity orchestration</strong>. The person, the MetaHuman and the humanoid agent can all be linked through shared voice, aligned dialogue logic, coordinated turn-taking and matched expressive behaviour. This is the core reason the final demo is important: it illustrates not only realism, but the possibility of identity continuity across physical and virtual communicative bodies.
+        When these three conditions are synchronised, the system becomes a form of multi-embodiment identity orchestration. The original person, the MetaHuman agent and the humanoid platform can all be aligned through shared voice characteristics, matched dialogue timing and consistent expressive behaviour.
       </p>
     </section>
 
     <section>
-      <h2>Rendered Results and Embodied Outcome</h2>
+      <h2>Why This Could Transform Patient Analysis, Monitoring and Simulation</h2>
       <p>
-        The images below summarise the visual transition from registered identity to final embodied output. Together with the stage demonstration shown earlier, they make clear that the pipeline is not only about reconstructing a face, but about constructing a reusable embodied identity that can function in presentation, interaction and humanoid AI contexts.
-      </p>
-
-      <div class="result-grid">
-        <article class="result-card">
-          <img
-            src="tim.png"
-            alt="High-fidelity frontal render of the adapted face"
-            loading="lazy">
-          <div class="body">
-            <h3>Registered high-fidelity identity</h3>
-            <p>
-              This render represents the stabilised face after reconstruction and identity transfer. It captures the phase where likeness is already strong and suitable for refinement into a controllable digital-human asset.
-            </p>
-          </div>
-        </article>
-
-        <article class="result-card">
-          <img
-            src="tiiiiimmm.png"
-            alt="Final photorealistic MetaHuman-style portrait used as embodied digital human output"
-            loading="lazy">
-          <div class="body">
-            <h3>Final embodied digital-human presentation</h3>
-            <p>
-              This final result demonstrates the photorealistic endpoint of the pipeline, where visual fidelity, skin response and subject likeness become robust enough for public demonstration, avatar telepresence and synchronised embodied AI deployment.
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>Voice Cloning and Behavioural Synchronisation</h2>
-      <p>
-        Visual embodiment alone is insufficient if the character does not sound and behave like the original identity. For that reason, the pipeline also includes voice cloning and synchronisation between rendered speech, agent timing and embodiment output. In the final demonstration, the vocal identity is preserved and aligned with the visual identity so that the audience perceives a coherent person rather than a disconnected animation layer.
+        A realistic digital clone of a patient could be extremely valuable for future analysis and monitoring workflows. Instead of only capturing isolated visits, clinicians could inspect how facial behaviour, vocal style, hesitation patterns, affective cues and interaction dynamics evolve over time in a persistent, replayable and comparable form. This would be especially useful in conditions where subtle change matters, such as mood disorders, cognitive decline, neuropsychiatric symptoms or post-intervention recovery.
       </p>
       <p>
-        When this vocal stream is synchronised with MetaHuman animation and, in parallel, with Ameca-based embodiment logic, the system produces a unified communicative agent that can be perceived across media as the same identity. This is precisely where the work becomes interesting from an HCI and embodied-AI perspective: the contribution is not only realism, but continuity of personhood cues across platforms.
+        The same idea becomes even more powerful in trial and simulation settings. Doctors could train on realistic case representations derived from real data before interacting with actual patients. They could practise conversations, diagnostic questioning, emotional handling and observational reasoning with a digital counterpart that behaves like a high-fidelity stand-in rather than a simplistic chatbot or scripted mannequin.
+      </p>
+      <p>
+        That also matters for embodied AI. Humanoid systems such as Ameca could be trained against highly realistic digital cases that reproduce facial emotion, behavioural cues, conversational timing and condition-linked patterns. Instead of using real patients repeatedly for early-stage rehearsal, one could run thousands of controlled training cycles on digital cases first, refine the embodied system, test failure modes, and only then move to carefully supervised real-world deployment.
+      </p>
+      <p>
+        In that sense, the digital clone is not just a visual novelty. It becomes a bridge between data capture, embodied simulation, doctor training, AI training and safer deployment. It allows repeated exposure, comparative testing, consistent benchmarking and structured scenario design at a scale that would be difficult, costly or ethically burdensome with constant direct reliance on real patients alone.
       </p>
       <p class="ethics-note">
-        In research and deployment contexts, this type of identity-preserving embodiment should be used with explicit consent, traceable provenance and clear disclosure of how voice, likeness and behavioural control are derived and synchronised.
+        In practice, this kind of identity-preserving patient simulation should be used with explicit consent, clear provenance, strong governance and careful restrictions on how likeness, voice and behavioural data are stored, cloned and replayed.
+      </p>
+    </section>
+
+    <section class="bottom-demo">
+      <h2>Final Synchronized Demonstration</h2>
+      <p>
+        The video below is the final end-to-end showcase and is intentionally moved to the bottom of the page, where it now acts as the culmination of the full explanation above. It demonstrates the completed synchronisation concept in which rendering, cloned voice and embodied agent logic converge into a coherent multi-form identity.
+      </p>
+
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/kw-PMX5aiTg?rel=0&controls=1&modestbranding=1"
+          title="Final synchronized embodiment demo"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+
+      <p class="video-caption">
+        Final synchronised demonstration showing how the digital human rendering, cloned voice and embodied agent behaviour can be brought together into a unified presentation.
       </p>
     </section>
   </div>
