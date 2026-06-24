@@ -577,7 +577,8 @@
     .inline-icon.mq{width:36px;height:36px;vertical-align:-8px} /* MQ logo bigger */
    
 
-/* ===== Hero globe ===== */
+
+/* ===== Real LiveTrafficFeed globe ===== */
 #globeWrap{
   display:flex;
   justify-content:center;
@@ -585,88 +586,20 @@
   position:sticky;
   top:100px;
   width:100%;
-  min-width:250px;
+  min-width:260px;
   min-height:260px;
   z-index:2;
 }
 
-#globeMount{
-  position:relative;
+#globeFrame{
   width:247px;
   height:247px;
-  min-width:247px;
-  min-height:247px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:visible;
-}
-
-/* Keep real widget above fallback if it loads */
-#globeMount img,
-#globeMount canvas,
-#globeMount svg,
-#globeMount iframe,
-#globeMount object,
-#globeMount embed{
-  position:relative;
-  z-index:5;
-}
-
-/* Local backup globe */
-.globeBackup{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
-}
-
-.backupSphere{
-  position:relative;
-  width:230px;
-  height:230px;
-  border-radius:50%;
+  border:0;
+  display:block;
+  background:transparent;
   overflow:hidden;
-  background:
-    radial-gradient(circle at 32% 24%, #ffffff 0%, #e0f2fe 24%, #38bdf8 50%, #2563eb 78%, #1e3a8a 100%);
-  box-shadow:
-    0 26px 55px rgba(37,99,235,.22),
-    inset -24px -22px 44px rgba(15,23,42,.28),
-    inset 18px 18px 34px rgba(255,255,255,.42);
-  border:1px solid rgba(37,99,235,.20);
 }
 
-.backupGrid{
-  position:absolute;
-  inset:-15%;
-  border-radius:50%;
-  background:
-    repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0 1px, transparent 1px 28px),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.26) 0 1px, transparent 1px 28px);
-  opacity:.55;
-  animation:globeDrift 8s linear infinite;
-}
-
-.backupDot{
-  position:absolute;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#e61c1c;
-  box-shadow:0 0 16px rgba(230,28,28,.75);
-}
-
-.dotA{left:67%;top:33%;}
-.dotB{left:40%;top:48%;}
-.dotC{left:55%;top:65%;}
-
-@keyframes globeDrift{
-  from{transform:translateX(0);}
-  to{transform:translateX(-56px);}
-}
 
 
     /* Grid */
@@ -1219,30 +1152,15 @@
 
 <!-- Globe, right column -->
 <div id="globeWrap">
-  <div id="globeMount" aria-label="Live visitor globe">
-
-    <!-- Backup globe: always visible if the external widget fails -->
-    <div class="globeBackup" aria-hidden="true">
-      <div class="backupSphere">
-        <span class="backupGrid"></span>
-        <span class="backupDot dotA"></span>
-        <span class="backupDot dotB"></span>
-        <span class="backupDot dotC"></span>
-      </div>
-    </div>
-
-    <!-- LiveTrafficFeed widget from your screenshot -->
-    <script 
-      type="text/javascript" 
-      src="https://cdn.livetrafficfeed.com/static/globe-widget/live.v2.js?w=247&root=1&n=e61c1c&o=e61c1c">
-    </script>
-
-    <noscript>
-      <a href="https://livetrafficfeed.com/live-globe-widget">Live Globe Widget</a>
-    </noscript>
-
-  </div>
+  <iframe
+    id="globeFrame"
+    src="globe-widget.html"
+    title="Live Globe Visitor Widget"
+    loading="eager">
+  </iframe>
 </div>
+
+
       </div>
     </section>
 
