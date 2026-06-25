@@ -578,7 +578,7 @@
    
 
 
-/* ===== 3D Globe.GL hero widget ===== */
+/* ===== 3D daylight Globe.GL widget ===== */
 #globeWrap{
   display:flex;
   justify-content:center;
@@ -586,27 +586,26 @@
   position:sticky;
   top:100px;
   width:100%;
-  min-width:280px;
-  min-height:280px;
+  min-width:310px;
+  min-height:310px;
   z-index:2;
 }
 
 #visitorGlobe{
-  width:280px;
-  height:280px;
-  min-width:280px;
-  min-height:280px;
+  width:310px;
+  height:310px;
+  min-width:310px;
+  min-height:310px;
   border-radius:50%;
-  overflow:hidden;
+  overflow:visible;
   background:transparent;
 }
 
 #visitorGlobe canvas{
   display:block;
-  width:280px !important;
-  height:280px !important;
+  width:310px !important;
+  height:310px !important;
 }
-
 
 
 
@@ -1158,10 +1157,11 @@
         </div>
 
 
-<!-- 3D Globe.GL hero widget -->
+<!-- 3D daylight Earth globe -->
 <div id="globeWrap">
-  <div id="visitorGlobe" aria-label="3D global research network globe"></div>
+  <div id="visitorGlobe" aria-label="3D daylight global activity globe"></div>
 </div>
+
 
 
       </div>
@@ -2438,61 +2438,117 @@
 </script>
 
 
+
 <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
 
 <script>
-  (function(){
-    const globeEl = document.getElementById('visitorGlobe');
-    if (!globeEl || typeof Globe !== 'function') return;
+(function(){
+  const globeEl = document.getElementById('visitorGlobe');
+  if (!globeEl || typeof Globe !== 'function') return;
 
-    const points = [
-      { lat: -33.8688, lng: 151.2093, size: 0.55, color: '#e63100', label: 'Sydney · Macquarie University' },
-      { lat: 59.3293, lng: 18.0686, size: 0.42, color: '#e63100', label: 'Stockholm · KTH' },
-      { lat: 48.8566, lng: 2.3522, size: 0.42, color: '#e63100', label: 'Paris · Paris-Saclay' },
-      { lat: 46.0664, lng: 11.1258, size: 0.38, color: '#e63100', label: 'Italy · Research network' },
-      { lat: 37.7749, lng: -122.4194, size: 0.35, color: '#e63100', label: 'Global AI ecosystem' }
-    ];
+  function rand(min, max){
+    return min + Math.random() * (max - min);
+  }
 
-    const arcs = [
-      { startLat: -33.8688, startLng: 151.2093, endLat: 59.3293, endLng: 18.0686 },
-      { startLat: -33.8688, startLng: 151.2093, endLat: 48.8566, endLng: 2.3522 },
-      { startLat: -33.8688, startLng: 151.2093, endLat: 37.7749, endLng: -122.4194 }
-    ];
+  const hotspots = [
+    { lat: -33.8688, lng: 151.2093, name: 'Sydney' },
+    { lat: 48.8566, lng: 2.3522, name: 'Paris' },
+    { lat: 59.3293, lng: 18.0686, name: 'Stockholm' },
+    { lat: 46.0664, lng: 11.1258, name: 'Italy' },
+    { lat: 37.7749, lng: -122.4194, name: 'San Francisco' },
+    { lat: 40.7128, lng: -74.0060, name: 'New York' },
+    { lat: 51.5072, lng: -0.1276, name: 'London' },
+    { lat: 35.6762, lng: 139.6503, name: 'Tokyo' },
+    { lat: 1.3521, lng: 103.8198, name: 'Singapore' }
+  ];
 
-    const world = Globe()(globeEl)
-      .width(280)
-      .height(280)
-      .backgroundColor('rgba(0,0,0,0)')
-      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-      .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
-      .showAtmosphere(true)
-      .atmosphereColor('#60a5fa')
-      .atmosphereAltitude(0.18)
-      .pointsData(points)
-      .pointLat('lat')
-      .pointLng('lng')
-      .pointAltitude(0.025)
-      .pointRadius('size')
-      .pointColor('color')
-      .pointLabel('label')
-      .arcsData(arcs)
-      .arcStartLat('startLat')
-      .arcStartLng('startLng')
-      .arcEndLat('endLat')
-      .arcEndLng('endLng')
-      .arcColor(() => ['rgba(37,99,235,0.15)', 'rgba(230,49,0,0.85)'])
-      .arcAltitude(0.22)
-      .arcStroke(0.7)
-      .arcDashLength(0.45)
-      .arcDashGap(1.2)
-      .arcDashAnimateTime(2600);
+  const spikePoints = [];
 
-    world.controls().autoRotate = true;
-    world.controls().autoRotateSpeed = 0.8;
-    world.controls().enableZoom = false;
+  hotspots.forEach(h => {
+    spikePoints.push({
+      lat: h.lat,
+      lng: h.lng,
+      altitude: 0.42,
+      radius: 0.36,
+      color: '#ff3b1f',
+      label: h.name
+    });
 
-    world.pointOfView({ lat: 15, lng: 40, altitude: 2.25 }, 0);
-  })();
+    for (let i = 0; i < 22; i++) {
+      spikePoints.push({
+        lat: h.lat + rand(-7, 7),
+        lng: h.lng + rand(-10, 10),
+        altitude: rand(0.08, 0.32),
+        radius: rand(0.06, 0.16),
+        color: Math.random() > 0.35 ? '#ffd166' : '#ff7a18',
+        label: h.name + ' activity'
+      });
+    }
+  });
+
+  for (let i = 0; i < 180; i++) {
+    spikePoints.push({
+      lat: rand(-55, 70),
+      lng: rand(-180, 180),
+      altitude: rand(0.025, 0.13),
+      radius: rand(0.025, 0.08),
+      color: Math.random() > 0.5 ? '#ffd166' : '#ff9f1c',
+      label: 'Global signal'
+    });
+  }
+
+  const arcs = hotspots
+    .filter(h => h.name !== 'Sydney')
+    .map(h => ({
+      startLat: -33.8688,
+      startLng: 151.2093,
+      endLat: h.lat,
+      endLng: h.lng
+    }));
+
+  const globe = Globe()(globeEl)
+    .width(310)
+    .height(310)
+    .backgroundColor('rgba(0,0,0,0)')
+    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+    .showAtmosphere(true)
+    .atmosphereColor('#93c5fd')
+    .atmosphereAltitude(0.16)
+
+    .pointsData(spikePoints)
+    .pointLat('lat')
+    .pointLng('lng')
+    .pointAltitude('altitude')
+    .pointRadius('radius')
+    .pointColor('color')
+    .pointLabel('label')
+    .pointsTransitionDuration(1200)
+
+    .arcsData(arcs)
+    .arcStartLat('startLat')
+    .arcStartLng('startLng')
+    .arcEndLat('endLat')
+    .arcEndLng('endLng')
+    .arcColor(() => ['rgba(255,209,102,0.25)', 'rgba(255,59,31,0.95)'])
+    .arcAltitude(0.36)
+    .arcStroke(0.8)
+    .arcDashLength(0.42)
+    .arcDashGap(1.25)
+    .arcDashInitialGap(() => Math.random())
+    .arcDashAnimateTime(2600);
+
+  globe.controls().autoRotate = true;
+  globe.controls().autoRotateSpeed = 0.75;
+  globe.controls().enableZoom = false;
+  globe.controls().enablePan = false;
+
+  globe.pointOfView({
+    lat: 15,
+    lng: 25,
+    altitude: 2.15
+  }, 0);
+})();
 </script>
 
 
