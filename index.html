@@ -1656,8 +1656,17 @@
       </div>
     </div>
 
+
+  </div>
+
+  <div class="pub-see-more-wrap">
+    <button type="button" class="pub-see-more-btn" id="pubSeeMoreBtn">
+      See full publication list
+    </button>
   </div>
 </section>
+
+
 
 
     <!-- Events (carousel) -->
@@ -1708,13 +1717,6 @@
     </div>
 
   </div>
-
-  <div class="pub-see-more-wrap">
-    <button type="button" class="pub-see-more-btn" id="pubSeeMoreBtn">
-      See full publication list
-    </button>
-  </div>
-</section>
 
 
 
@@ -2289,51 +2291,6 @@
 })();
 
 
-
-    // Mode buttons: Selected vs All
-    modeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        mode = btn.dataset.mode;
-        modeButtons.forEach(b => b.classList.toggle('active', b === btn));
-        if (mode === 'all') {
-          cards.forEach(card => card.style.display = '');
-        } else {
-          applyFilters();
-        }
-      });
-    });
-
-    // Year buttons
-    yearButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (activeYear === btn.dataset.year) {
-          activeYear = null;
-          btn.classList.remove('active');
-        } else {
-          activeYear = btn.dataset.year;
-          yearButtons.forEach(b => b.classList.toggle('active', b === btn));
-        }
-        if (mode === 'selected') applyFilters();
-      });
-    });
-
-    // Topic buttons
-    topicButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (activeTopic === btn.dataset.topic) {
-          activeTopic = null;
-          btn.classList.remove('active');
-        } else {
-          activeTopic = btn.dataset.topic;
-          topicButtons.forEach(b => b.classList.toggle('active', b === btn));
-        }
-        if (mode === 'selected') applyFilters();
-      });
-    });
-
-    // Initial state
-    applyFilters();
-  })();
 
   // Wire Cite buttons ONCE
   (function(){
