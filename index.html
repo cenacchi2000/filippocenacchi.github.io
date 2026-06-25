@@ -2306,139 +2306,124 @@
   }
   </script>
 
-<!-- PDF.js (for certificate thumbnails) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-(function(){
-  const PDFJS = window['pdfjs-dist/build/pdf'];
-  if(!PDFJS) return;
-  PDFJS.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js";
 
-  async function renderInto(canvas){
-    const url = canvas.dataset.pdf;
-    if(!url) return;
-
-    // Guard: only render when we have a real width
-    const cssWidth = Math.max( Math.floor(canvas.getBoundingClientRect().width), 1 );
-    const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap for perf
-    const targetPx = cssWidth * dpr;
-
-    try{
-      const pdf = await PDFJS.getDocument(url).promise;
-      const page = await pdf.getPage(1);
-
-      const vp1 = page.getViewport({ scale: 1 });
-      const scale = targetPx / vp1.width;
-      const vp   = page.getViewport({ scale });
-
-      // Set backing store size (for crispness), CSS size follows from rule
-      canvas.width  = Math.round(vp.width);
-      canvas.height = Math.round(vp.height);
-
-      const ctx = canvas.getContext('2d', { alpha:false });
-      const task = page.render({ canvasContext: ctx, viewport: vp, background:'#ffffff' });
-      await task.promise;
-
-      // Optional: once drawn, fix the element's CSS height to avoid relayout jitter
-      canvas.style.height = (canvas.height / dpr) + 'px';
-    }catch(err){
-      // Soft fallback
-      const link = document.createElement('a');
-      link.href = url; link.target = "_blank"; link.rel = "noopener";
-      link.className = "badge";
-      link.textContent = "Open certificate (PDF)";
-      canvas.replaceWith(link);
-      console.warn('PDF thumb render failed:', err);
-    }
-  }
-
-  function observeAndRender(canvas){
-    // Render when width becomes non-zero, and re-render on size changes
-    const ro = new ResizeObserver((entries)=>{
-      for(const entry of entries){
-        const w = Math.floor(entry.contentRect.width);
-        if(w > 1){
-          // Debounce to avoid rapid re-renders during layout
-          clearTimeout(canvas._pdfTO);
-          canvas._pdfTO = setTimeout(()=>renderInto(canvas), 80);
-        }
-      }
-    });
-    ro.observe(canvas);
-    // kickoff in case it's already laid out
-    requestAnimationFrame(()=>renderInto(canvas));
-  }
-
-  document.querySelectorAll('canvas.pdf-thumb').forEach(observeAndRender);
-})();
-</script>
-
-  
-  <script>
-  const lb = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  const closeBtn = document.getElementById('lightbox-close');
-
-  document.querySelectorAll('.card-media').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      img.src = el.getAttribute('data-full');
-      img.alt = el.querySelector('img').alt || '';
-      lb.showModal();
-    });
-  });
-  closeBtn.addEventListener('click', ()=> lb.close());
-  lb.addEventListener('click', (e)=>{ if(e.target === lb) lb.close(); });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
 
 <script>
 (function(){
-  const teaching = document.getElementById('teaching');
-  if(!teaching) return;
+  const globeEl = document.getElementById('visitorGlobe');
+  if (!globeEl || typeof Globe !== 'function') return;
 
-  const counters = teaching.querySelectorAll('[data-count]');
-  let hasRun = false;
+  const VISITOR_API = 'https://visitor-globe-api.filo-cenacchi.workers.dev';
 
-  function animateCount(el, target, duration = 1400){
-    const startTime = performance.now();
-    const start = 0;
-    const end = parseInt(target, 10) || 0;
+  function getSessionId(){
+    let id = localStorage.getItem('visitor_globe_session_id');
 
-    function step(now){
-      const progress = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-      const value = Math.round(start + (end - start) * eased);
-      el.textContent = value.toLocaleString();
+    if (!id) {
+      id = crypto.randomUUID
+        ? crypto.randomUUID()
+        : String(Date.now()) + '-' + Math.random();
 
-      if(progress < 1){
-        requestAnimationFrame(step);
-      } else {
-        el.textContent = end.toLocaleString();
-      }
+      localStorage.setItem('visitor_globe_session_id', id);
     }
 
-    requestAnimationFrame(step);
+    return id;
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting && !hasRun){
-        hasRun = true;
-        counters.forEach((el, idx) => {
-          const target = el.getAttribute('data-count');
-          setTimeout(() => animateCount(el, target), idx * 120);
-        });
-        observer.disconnect();
-      }
-    });
-  }, { threshold: 0.25 });
+  function shouldLogVisit(){
+    const last = Number(localStorage.getItem('visitor_globe_logged_at') || 0);
+    const sixHours = 6 * 60 * 60 * 1000;
+    return Date.now() - last > sixHours;
+  }
 
-  observer.observe(teaching);
+  async function logVisit(){
+    if (!shouldLogVisit()) return;
+
+    try {
+      const response = await fetch(`${VISITOR_API}/visit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: getSessionId(),
+          page: window.location.pathname
+        })
+      });
+
+      const data = await response.json();
+      console.log('Visitor globe log:', data);
+
+      if (data.ok) {
+        localStorage.setItem('visitor_globe_logged_at', String(Date.now()));
+      }
+    } catch (err) {
+      console.warn('Visitor globe logging failed:', err);
+    }
+  }
+
+  async function fetchVisitorPoints(){
+    try {
+      const response = await fetch(`${VISITOR_API}/visitors`, {
+        method: 'GET',
+        cache: 'no-store'
+      });
+
+      const data = await response.json();
+      console.log('Visitor globe points:', data);
+
+      return Array.isArray(data.points) ? data.points : [];
+    } catch (err) {
+      console.warn('Visitor globe fetch failed:', err);
+      return [];
+    }
+  }
+
+  const globe = Globe()(globeEl)
+    .width(310)
+    .height(310)
+    .backgroundColor('rgba(0,0,0,0)')
+    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+    .showAtmosphere(true)
+    .atmosphereColor('#93c5fd')
+    .atmosphereAltitude(0.16)
+
+    /* Real visitor locations only. No fake hotspots. No moving arcs. */
+    .pointsData([])
+    .pointLat('lat')
+    .pointLng('lng')
+    .pointAltitude('altitude')
+    .pointRadius('radius')
+    .pointColor('color')
+    .pointLabel('label')
+    .pointResolution(18)
+    .pointsMerge(false)
+    .pointsTransitionDuration(0);
+
+  globe.controls().autoRotate = true;
+  globe.controls().autoRotateSpeed = 0.55;
+  globe.controls().enableZoom = false;
+  globe.controls().enablePan = false;
+
+  globe.pointOfView({
+    lat: 15,
+    lng: 25,
+    altitude: 2.15
+  }, 0);
+
+  async function refreshVisitorGlobe(){
+    await logVisit();
+    const points = await fetchVisitorPoints();
+    globe.pointsData(points);
+  }
+
+  refreshVisitorGlobe();
+
+  setInterval(async () => {
+    const points = await fetchVisitorPoints();
+    globe.pointsData(points);
+  }, 60000);
 })();
 </script>
-
-
-
 
 
 </body>
