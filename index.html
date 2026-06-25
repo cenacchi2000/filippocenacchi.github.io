@@ -606,6 +606,230 @@
 }
 
 
+/* ===== Hero right column: globe + small news box ===== */
+.hero-side{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+  width:100%;
+}
+
+#globeWrap{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  position:sticky;
+  top:100px;
+  width:100%;
+  min-width:310px;
+  min-height:310px;
+  z-index:2;
+}
+
+.hero-news{
+  width:100%;
+  max-width:310px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);
+  border-radius:18px;
+  padding:16px 16px 14px;
+  box-shadow:var(--shadow);
+}
+
+.hero-news h3{
+  margin:0 0 10px;
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--text);
+}
+
+.hero-news-list{
+  display:grid;
+  gap:12px;
+}
+
+.hero-news-item{
+  padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+
+.hero-news-item:last-child{
+  padding-bottom:0;
+  border-bottom:none;
+}
+
+.hero-news-date{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  color:var(--brand-ink);
+  letter-spacing:.03em;
+  margin-bottom:4px;
+}
+
+.hero-news-text{
+  font-size:13px;
+  line-height:1.45;
+  color:var(--subtle);
+}
+
+.hero-news-text a{
+  color:var(--brand-ink);
+  font-weight:600;
+  text-decoration:none;
+}
+
+.hero-news-text a:hover{
+  text-decoration:underline;
+}
+
+.hero-news-more{
+  display:inline-block;
+  margin-top:10px;
+  font-size:12px;
+  font-weight:700;
+}
+
+
+/* ===== Hero right column: globe + small news box ===== */
+.hero-side{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+  width:100%;
+}
+
+#globeWrap{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  position:sticky;
+  top:100px;
+  width:100%;
+  min-width:310px;
+  min-height:310px;
+  z-index:2;
+}
+
+.hero-news{
+  width:100%;
+  max-width:310px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);
+  border-radius:18px;
+  padding:16px 16px 14px;
+  box-shadow:var(--shadow);
+}
+
+.hero-news h3{
+  margin:0 0 10px;
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--text);
+}
+
+.hero-news-list{
+  display:grid;
+  gap:12px;
+}
+
+.hero-news-item{
+  padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+
+.hero-news-item:last-child{
+  padding-bottom:0;
+  border-bottom:none;
+}
+
+.hero-news-date{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  color:var(--brand-ink);
+  letter-spacing:.03em;
+  margin-bottom:4px;
+}
+
+.hero-news-text{
+  font-size:13px;
+  line-height:1.45;
+  color:var(--subtle);
+}
+
+.hero-news-text a{
+  color:var(--brand-ink);
+  font-weight:600;
+  text-decoration:none;
+}
+
+.hero-news-text a:hover{
+  text-decoration:underline;
+}
+
+.hero-news-more{
+  display:inline-block;
+  margin-top:10px;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* Responsive */
+@media (max-width:1024px){
+  .hero-side{
+    grid-column:1 / -1;
+    margin-top:20px;
+  }
+
+  #globeWrap{
+    position:static;
+    top:auto;
+    min-height:auto;
+  }
+
+  .hero-news{
+    max-width:420px;
+  }
+}
+
+@media (max-width:768px){
+  .hero-news{
+    max-width:100%;
+  }
+}
+    
+/* Responsive */
+@media (max-width:1024px){
+  .hero-side{
+    grid-column:1 / -1;
+    margin-top:20px;
+  }
+
+  #globeWrap{
+    position:static;
+    top:auto;
+    min-height:auto;
+  }
+
+  .hero-news{
+    max-width:420px;
+  }
+}
+
+@media (max-width:768px){
+  .hero-news{
+    max-width:100%;
+  }
+}
 
     /* Grid */
 .research-grid{
@@ -1170,11 +1394,45 @@
         </div>
 
 
-<!-- 3D daylight Earth globe -->
-<div id="globeWrap">
-  <div id="visitorGlobe" aria-label="3D daylight global activity globe"></div>
-</div>
+<!-- Right hero column: globe + news -->
+<div class="hero-side">
 
+  <!-- 3D daylight Earth globe -->
+  <div id="globeWrap">
+    <div id="visitorGlobe" aria-label="3D daylight global activity globe"></div>
+  </div>
+
+  <!-- Small news box under the globe -->
+  <aside class="hero-news" aria-labelledby="heroNewsTitle">
+    <h3 id="heroNewsTitle">News</h3>
+
+    <div class="hero-news-list">
+      <article class="hero-news-item">
+        <span class="hero-news-date">18 Sep 2025</span>
+        <div class="hero-news-text">
+          Paper accepted at <a href="#publications">NeurIPS 2025</a>.
+        </div>
+      </article>
+
+      <article class="hero-news-item">
+        <span class="hero-news-date">31 Jul 2025</span>
+        <div class="hero-news-text">
+          Gave a talk at the Biomedical Computer Vision Group at Uniandes, Colombia.
+        </div>
+      </article>
+
+      <article class="hero-news-item">
+        <span class="hero-news-date">16 May 2025</span>
+        <div class="hero-news-text">
+          Invited speaker at the II Digital Health Colloquium at UAO, Colombia.
+        </div>
+      </article>
+    </div>
+
+    <a class="hero-news-more" href="#events">See more updates →</a>
+  </aside>
+
+</div>
 
 
       </div>
