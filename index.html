@@ -576,19 +576,6 @@
 
 
 
-/* ===== 3D daylight Globe.GL widget ===== */
-#globeWrap{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  position:sticky;
-  top:100px;
-  width:100%;
-  min-width:310px;
-  min-height:310px;
-  z-index:2;
-}
-
 #visitorGlobe{
   width:310px;
   height:310px;
@@ -606,18 +593,6 @@
 }
 
 
-/* ===== Hero right column: globe + small news box ===== */
-.hero-side{
-  position:sticky;
-  top:100px;
-  align-self:start;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:18px;
-  width:100%;
-  z-index:2;
-}
 
 #globeWrap{
   display:flex;
@@ -721,17 +696,7 @@
   width:100%;
 }
 
-#globeWrap{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  position:sticky;
-  top:100px;
-  width:100%;
-  min-width:310px;
-  min-height:310px;
-  z-index:2;
-}
+
 
 .hero-news{
   width:100%;
@@ -1324,6 +1289,66 @@
     height:46px;
   }
 }
+
+/* ===== HARD FIX: keep hero globe/news in normal page position ===== */
+.hero-side{
+  position:static !important;
+  top:auto !important;
+  align-self:start;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+  width:100%;
+  z-index:1;
+}
+
+#globeWrap{
+  position:static !important;
+  top:auto !important;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  min-width:310px;
+  min-height:310px;
+  z-index:1;
+}
+
+#visitorGlobe{
+  position:relative !important;
+  width:310px;
+  height:310px;
+  min-width:310px;
+  min-height:310px;
+  border-radius:50%;
+  overflow:visible;
+  background:transparent;
+}
+
+.hero-news{
+  position:relative !important;
+  z-index:2;
+  width:100%;
+  max-width:310px;
+}
+
+/* Mobile/tablet keeps same normal flow */
+@media (max-width:1024px){
+  .hero-side{
+    position:static !important;
+    top:auto !important;
+    grid-column:1 / -1;
+    margin-top:20px;
+  }
+
+  #globeWrap{
+    position:static !important;
+    top:auto !important;
+    min-height:auto;
+  }
+}
+
 
 
   </style>
