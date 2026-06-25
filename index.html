@@ -2437,5 +2437,65 @@
 })();
 </script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
+
+<script>
+  (function(){
+    const globeEl = document.getElementById('visitorGlobe');
+    if (!globeEl || typeof Globe !== 'function') return;
+
+    const points = [
+      { lat: -33.8688, lng: 151.2093, size: 0.55, color: '#e63100', label: 'Sydney · Macquarie University' },
+      { lat: 59.3293, lng: 18.0686, size: 0.42, color: '#e63100', label: 'Stockholm · KTH' },
+      { lat: 48.8566, lng: 2.3522, size: 0.42, color: '#e63100', label: 'Paris · Paris-Saclay' },
+      { lat: 46.0664, lng: 11.1258, size: 0.38, color: '#e63100', label: 'Italy · Research network' },
+      { lat: 37.7749, lng: -122.4194, size: 0.35, color: '#e63100', label: 'Global AI ecosystem' }
+    ];
+
+    const arcs = [
+      { startLat: -33.8688, startLng: 151.2093, endLat: 59.3293, endLng: 18.0686 },
+      { startLat: -33.8688, startLng: 151.2093, endLat: 48.8566, endLng: 2.3522 },
+      { startLat: -33.8688, startLng: 151.2093, endLat: 37.7749, endLng: -122.4194 }
+    ];
+
+    const world = Globe()(globeEl)
+      .width(280)
+      .height(280)
+      .backgroundColor('rgba(0,0,0,0)')
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+      .showAtmosphere(true)
+      .atmosphereColor('#60a5fa')
+      .atmosphereAltitude(0.18)
+      .pointsData(points)
+      .pointLat('lat')
+      .pointLng('lng')
+      .pointAltitude(0.025)
+      .pointRadius('size')
+      .pointColor('color')
+      .pointLabel('label')
+      .arcsData(arcs)
+      .arcStartLat('startLat')
+      .arcStartLng('startLng')
+      .arcEndLat('endLat')
+      .arcEndLng('endLng')
+      .arcColor(() => ['rgba(37,99,235,0.15)', 'rgba(230,49,0,0.85)'])
+      .arcAltitude(0.22)
+      .arcStroke(0.7)
+      .arcDashLength(0.45)
+      .arcDashGap(1.2)
+      .arcDashAnimateTime(2600);
+
+    world.controls().autoRotate = true;
+    world.controls().autoRotateSpeed = 0.8;
+    world.controls().enableZoom = false;
+
+    world.pointOfView({ lat: 15, lng: 40, altitude: 2.25 }, 0);
+  })();
+</script>
+
+
+
 </body>
 </html> 
