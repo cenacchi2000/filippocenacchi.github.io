@@ -476,6 +476,37 @@
   .pub-filter-btn{padding:5px 9px;font-size:12px;}
 }
 
+/* --- Publication list collapse / expand --- */
+.pub-see-more-wrap{
+  display:flex;
+  justify-content:center;
+  margin-top:22px;
+}
+
+.pub-see-more-btn{
+  border:1px solid #7c3aed;
+  background:#7c3aed;
+  color:#ffffff;
+  padding:12px 22px;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 14px 32px rgba(124,58,237,.22);
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.pub-see-more-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 38px rgba(124,58,237,.28);
+  background:#6d28d9;
+}
+
+.pub-see-more-btn.is-hidden{
+  display:none;
+}
+
+
     .nav a.link:hover{background:var(--muted);color:var(--text)}
     .btn{
       display:inline-flex;
@@ -1379,7 +1410,9 @@
     <button class="pub-filter-btn" data-topic="hci-startups">HCI &amp; Startups</button>
   </div>
 
-  <div class="list">
+
+<div class="list pub-list" id="pubList">
+
 
     <!-- L0GM paper -->
 <div class="card pub" data-year="2026" data-topics="machine-learning,multimodal,representation-learning">
@@ -1673,8 +1706,17 @@
         </div>
       </div>
     </div>
+
+  </div>
+
+  <div class="pub-see-more-wrap">
+    <button type="button" class="pub-see-more-btn" id="pubSeeMoreBtn">
+      See full publication list
+    </button>
   </div>
 </section>
+
+
 
 
     <!-- Prizes (list) -->
@@ -2121,41 +2163,132 @@
     }
   })();
 
-  // Publication filter (year + topic)
-  (function(){
-    const root = document.getElementById('pubFilters');
-    if (!root) return;
 
-    const modeButtons  = root.querySelectorAll('[data-mode]');
-    const yearButtons  = root.querySelectorAll('[data-year]');
-    const topicButtons = root.querySelectorAll('[data-topic]');
-    const cards        = document.querySelectorAll('.card.pub');
+// Publication filter + collapsed "See full list"
+(function(){
+  const root = document.getElementById('pubFilters');
+  if (!root) return;
 
-    let mode        = 'selected';
-    let activeYear  = null;
-    let activeTopic = null;
+  const modeButtons  = root.querySelectorAll('[data-mode]');
+  const yearButtons  = root.querySelectorAll('[data-year]');
+  const topicButtons = root.querySelectorAll('[data-topic]');
+  const cards        = Array.from(document.querySelectorAll('.card.pub'));
+  const seeMoreBtn   = document.getElementById('pubSeeMoreBtn');
 
-    function applyFilters(){
-      cards.forEach(card => {
-        let show = true;
+  const INITIAL_VISIBLE = 3;
 
-        if (mode === 'selected') {
-          if (activeYear && card.dataset.year !== activeYear) {
-            show = false;
-          }
-          if (activeTopic) {
-            const topics = (card.dataset.topics || '')
-              .split(',')
-              .map(s => s.trim())
-              .filter(Boolean);
-            if (!topics.includes(activeTopic)) {
-              show = false;
-            }
-          }
-        }
-        card.style.display = show ? '' : 'none';
-      });
+  let mode        = 'selected';
+  let activeYear  = null;
+  let activeTopic = null;
+  let expanded    = false;
+
+  function matchesFilters(card){
+    if (mode === 'all') return true;
+
+    if (activeYear && card.dataset.year !== activeYear) {
+      return false;
     }
+
+    if (activeTopic) {
+      const topics = (card.dataset.topics || '')
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      if (!topics.includes(activeTopic)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function applyFilters(){
+    const matchingCards = cards.filter(matchesFilters);
+
+    cards.forEach(card => {
+      card.style.display = 'none';
+    });
+
+    const visibleCards = expanded
+      ? matchingCards
+      : matchingCards.slice(0, INITIAL_VISIBLE);
+
+    visibleCards.forEach(card => {
+      card.style.display = '';
+    });
+
+    if (seeMoreBtn) {
+      const hasMore = matchingCards.length > INITIAL_VISIBLE;
+
+      seeMoreBtn.classList.toggle('is-hidden', !hasMore);
+
+      seeMoreBtn.textContent = expanded
+        ? 'Show less'
+        : `See full publication list (${matchingCards.length})`;
+    }
+  }
+
+  modeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      mode = btn.dataset.mode;
+      expanded = false;
+
+      modeButtons.forEach(b => b.classList.toggle('active', b === btn));
+      applyFilters();
+    });
+  });
+
+  yearButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      expanded = false;
+
+      if (activeYear === btn.dataset.year) {
+        activeYear = null;
+        btn.classList.remove('active');
+      } else {
+        activeYear = btn.dataset.year;
+        yearButtons.forEach(b => b.classList.toggle('active', b === btn));
+      }
+
+      applyFilters();
+    });
+  });
+
+  topicButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      expanded = false;
+
+      if (activeTopic === btn.dataset.topic) {
+        activeTopic = null;
+        btn.classList.remove('active');
+      } else {
+        activeTopic = btn.dataset.topic;
+        topicButtons.forEach(b => b.classList.toggle('active', b === btn));
+      }
+
+      applyFilters();
+    });
+  });
+
+  if (seeMoreBtn) {
+    seeMoreBtn.addEventListener('click', () => {
+      expanded = !expanded;
+      applyFilters();
+
+      if (!expanded) {
+        document.getElementById('publications')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  }
+
+  applyFilters();
+})();
+
+
 
     // Mode buttons: Selected vs All
     modeButtons.forEach(btn => {
