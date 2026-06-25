@@ -1391,6 +1391,93 @@
 }
 
 
+/* ===== FINAL HERO LAYOUT FIX: keep globe/news on the right ===== */
+.hero{
+  grid-template-columns:minmax(190px,240px) minmax(0,1fr) minmax(300px,330px) !important;
+  align-items:start !important;
+}
+
+.hero > .avatar{
+  grid-column:1 !important;
+  grid-row:1 !important;
+}
+
+.hero > div:not(.avatar):not(.hero-side){
+  grid-column:2 !important;
+  grid-row:1 !important;
+  min-width:0 !important;
+}
+
+.hero-side{
+  grid-column:3 !important;
+  grid-row:1 !important;
+  position:static !important;
+  top:auto !important;
+  align-self:start !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:22px !important;
+  width:100% !important;
+  min-width:300px !important;
+  margin-top:0 !important;
+  z-index:1 !important;
+}
+
+#globeWrap{
+  grid-column:auto !important;
+  position:static !important;
+  top:auto !important;
+  margin-top:0 !important;
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  width:100% !important;
+  min-width:310px !important;
+  min-height:310px !important;
+}
+
+.hero-news{
+  width:100% !important;
+  max-width:310px !important;
+  position:relative !important;
+  z-index:2 !important;
+}
+
+.hero-research-mini{
+  max-width:100%;
+}
+
+/* Only stack on real mobile/tablet widths */
+@media (max-width:860px){
+  .hero{
+    grid-template-columns:1fr !important;
+    text-align:center !important;
+  }
+
+  .hero > .avatar,
+  .hero > div:not(.avatar):not(.hero-side),
+  .hero-side{
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+
+  .hero-side{
+    min-width:0 !important;
+    margin-top:20px !important;
+  }
+
+  #globeWrap{
+    min-width:0 !important;
+    min-height:auto !important;
+  }
+
+  .hero-news{
+    max-width:100% !important;
+  }
+}
+
+
 
   </style>
 </head>
@@ -1435,7 +1522,43 @@
             at <a href="https://www.mq.edu.au/research" target="_blank"><strong>Macquarie University</strong></a>.
           </p>
 
-           <p> My research focuses on <strong>embodied AI for diagnostic medicine</strong>, combining <strong>humanoid robots</strong>, <strong>multimodal machine learning</strong>, and <strong>interactive mental-health assessment</strong>. I build simulation-first diagnostic systems where humanoid agents, clinical avatars, and multimodal AI support early detection of depression, PTSD, dementia, and cognitive decline. My work reframes diagnosis as an adaptive process of evidence collection, counterfactual simulation, targeted questioning, and interpretable decision support. I am supervised by Distinguished Chair Professor <a href="https://scholar.google.com.au/citations?user=cDs3DM8AAAAJ&hl=en" target="_blank">Longbing Cao</a> and Professor <a href="https://scholar.google.com.au/citations?user=p0BxAfAAAAAJ&hl=en" target="_blank">Deborah Richards</a>. </p>     <div class="hero-research-mini"> <h3>Research interests</h3> <ul> <li>Humanoid AI for cognitive and affective-health assessment</li> <li>Multimodal diagnosis from speech, facial behaviour, language, and interaction signals</li> <li>Simulation-first clinical AI with MetaHuman patients and digital twins</li> <li>Interpretable decision support for clinician-facing diagnostic workflows</li> </ul> <p> More broadly, I am interested in building AI systems that combine real-world clinical relevance, embodied interaction, scalable machine learning, and responsible human-centred deployment. </p>     <div class="kvs" aria-label="Quick links">
+        
+<div class="hero-bio">
+  <p>
+    My research focuses on <strong>embodied AI for diagnostic medicine</strong>, combining
+    <strong>humanoid robots</strong>, <strong>multimodal machine learning</strong>,
+    <strong>clinical avatars</strong>, and <strong>interactive mental-health assessment</strong>.
+    I build simulation-first diagnostic systems where humanoid agents, virtual patients,
+    and multimodal AI support earlier detection of depression, PTSD, dementia, cognitive decline,
+    and broader affective-health conditions.
+  </p>
+
+  <p>
+    My work reframes diagnosis as an adaptive process of evidence collection,
+    counterfactual simulation, targeted questioning, and interpretable decision support.
+    I am supervised by Distinguished Chair Professor
+    <a href="https://scholar.google.com.au/citations?user=cDs3DM8AAAAJ&hl=en" target="_blank">Longbing Cao</a>
+    and Professor
+    <a href="https://scholar.google.com.au/citations?user=p0BxAfAAAAAJ&hl=en" target="_blank">Deborah Richards</a>.
+  </p>
+
+  <div class="hero-research-mini">
+  <h3>Research interests</h3>
+  <ul>
+    <li>Artificial intelligence, machine learning, and data-driven decision support</li>
+    <li>Human-computer interaction, human-centred AI, and responsible technology design</li>
+    <li>Multimodal and embodied AI using speech, vision, language, and interaction signals</li>
+    <li>Applied AI for healthcare, education, software engineering, and real-world decision-making</li>
+  </ul>
+  <p>
+    More broadly, I am interested in building intelligent, human-centred systems that connect
+    advanced AI methods with practical impact across clinical, educational, organisational,
+    and societal settings.
+  </p>
+</div>
+</div>
+
+     <div class="kvs" aria-label="Quick links">
             <a class="pill" href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
               <svg class="scholar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L3 9L12 13L21 9L12 2Z" fill="#4285F4"/>
