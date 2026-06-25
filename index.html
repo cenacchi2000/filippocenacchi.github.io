@@ -576,9 +576,8 @@
     .inline-icon{width:18px;height:18px;vertical-align:-3px}
     .inline-icon.mq{width:36px;height:36px;vertical-align:-8px} /* MQ logo bigger */
    
-
-
-/* ===== Real LiveTrafficFeed globe ===== */
+```css
+/* ===== Real Revolver Maps / LiveTrafficFeed globe ===== */
 #globeWrap{
   display:flex;
   justify-content:center;
@@ -586,19 +585,30 @@
   position:sticky;
   top:100px;
   width:100%;
-  min-width:260px;
-  min-height:260px;
+  min-width:240px;
+  min-height:240px;
   z-index:2;
 }
 
-#globeFrame{
-  width:247px;
-  height:247px;
-  border:0;
-  display:block;
+#revolverWidget{
+  width:200px;
+  height:200px;
+  min-width:200px;
+  min-height:200px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:visible;
   background:transparent;
-  overflow:hidden;
 }
+
+#revolverWidget script,
+#revolverWidget noscript{
+  display:block;
+}
+```
+
+
 
 
 
@@ -1149,17 +1159,20 @@
           </div>
         </div>
 
-
-<!-- Globe, right column -->
+   
+<!-- Real LiveTrafficFeed / Revolver Maps widget -->
 <div id="globeWrap">
-  <iframe
-    id="globeFrame"
-    src="globe-widget.html"
-    title="Live Globe Visitor Widget"
-    loading="eager">
-  </iframe>
+  <div id="revolverWidget">
+    <script
+      type="text/javascript"
+      src="https://cdn.livetrafficfeed.com/static/revolver-maps/live.js?c=ffffff&cw=e63100&l=1&hi=10&he=10&root=0&st=1&s=200"
+      async="async">
+    </script>
+    <noscript>
+      <a href="https://livetrafficfeed.com/revolver-maps">Free Revolver Maps</a>
+    </noscript>
+  </div>
 </div>
-
 
       </div>
     </section>
