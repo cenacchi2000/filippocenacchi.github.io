@@ -578,7 +578,7 @@
    
 
 
-/* ===== Real LiveTrafficFeed globe ===== */
+/* ===== 3D Globe.GL hero widget ===== */
 #globeWrap{
   display:flex;
   justify-content:center;
@@ -586,19 +586,27 @@
   position:sticky;
   top:100px;
   width:100%;
-  min-width:260px;
-  min-height:260px;
+  min-width:280px;
+  min-height:280px;
   z-index:2;
 }
 
-#globeFrame{
-  width:247px;
-  height:247px;
-  border:0;
-  display:block;
-  background:transparent;
+#visitorGlobe{
+  width:280px;
+  height:280px;
+  min-width:280px;
+  min-height:280px;
+  border-radius:50%;
   overflow:hidden;
+  background:transparent;
 }
+
+#visitorGlobe canvas{
+  display:block;
+  width:280px !important;
+  height:280px !important;
+}
+
 
 
 
@@ -1150,14 +1158,9 @@
         </div>
 
 
-<!-- Globe, right column -->
+<!-- 3D Globe.GL hero widget -->
 <div id="globeWrap">
-  <iframe
-    id="globeFrame"
-    src="globe-widget.html"
-    title="Live Globe Visitor Widget"
-    loading="eager">
-  </iframe>
+  <div id="visitorGlobe" aria-label="3D global research network globe"></div>
 </div>
 
 
