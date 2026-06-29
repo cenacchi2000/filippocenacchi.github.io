@@ -50,6 +50,223 @@
       box-sizing:border-box;
     }
     .grid{display:grid;gap:18px}
+
+
+  /* ===== Teaching evidence flip card ===== */
+
+/* Remove keyword badge rows across teaching cards to save space */
+#teaching .teach-deliver{
+  display:none !important;
+}
+
+/* Make all teaching cards stretch neatly within each grid row */
+#teaching .teaching-grid{
+  align-items:stretch;
+}
+
+#teaching .teach-card{
+  height:100%;
+  box-sizing:border-box;
+}
+
+/* Whole evidence panel is grey, not only the inside */
+#teaching .teach-card--evidence{
+  padding:0 !important;
+  background:linear-gradient(180deg,#f1f5f9 0%,#e5e7eb 100%) !important;
+  border:1px solid #cbd5e1 !important;
+  box-shadow:0 10px 26px rgba(15,23,42,.10);
+  perspective:1200px;
+  min-height:300px;
+  cursor:pointer;
+}
+
+#teaching .teach-card--evidence::after{
+  display:none !important;
+}
+
+#teaching .teach-card--evidence:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 34px rgba(15,23,42,.14);
+}
+
+/* Flip mechanics */
+#teaching .teach-evidence-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  min-height:300px;
+  transform-style:preserve-3d;
+  transition:transform .55s ease;
+}
+
+#teaching .teach-card--evidence.is-flipped .teach-evidence-inner{
+  transform:rotateY(180deg);
+}
+
+#teaching .teach-evidence-face{
+  position:absolute;
+  inset:0;
+  padding:18px;
+  border-radius:22px;
+  backface-visibility:hidden;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+}
+
+#teaching .teach-evidence-front{
+  background:linear-gradient(180deg,#f8fafc 0%,#e5e7eb 100%);
+}
+
+#teaching .teach-evidence-back{
+  background:linear-gradient(180deg,#eef2f7 0%,#dbe3ee 100%);
+  transform:rotateY(180deg);
+  overflow:auto;
+}
+
+/* Front face */
+#teaching .evidence-kicker{
+  display:inline-flex;
+  width:max-content;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#334155;
+  color:#ffffff;
+  font-size:12px;
+  font-weight:850;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+#teaching .evidence-main{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  margin:14px 0 10px;
+}
+
+#teaching .evidence-main h3{
+  margin:0;
+  font-size:clamp(24px,1.8vw,30px);
+  line-height:1.05;
+  letter-spacing:-.04em;
+}
+
+#teaching .evidence-number{
+  text-align:right;
+}
+
+#teaching .evidence-number strong{
+  display:block;
+  font-size:40px;
+  line-height:.9;
+  font-weight:950;
+  letter-spacing:-.06em;
+  color:#0f172a;
+}
+
+#teaching .evidence-number span{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:#475569;
+  font-weight:750;
+}
+
+#teaching .evidence-lead{
+  margin:0 0 12px;
+  font-size:14px;
+  line-height:1.45;
+  color:#334155;
+}
+
+#teaching .evidence-data{
+  display:grid;
+  gap:7px;
+  margin-top:auto;
+}
+
+#teaching .evidence-data-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px 10px;
+  border-radius:13px;
+  background:rgba(255,255,255,.68);
+  border:1px solid rgba(148,163,184,.35);
+}
+
+#teaching .evidence-data-row strong{
+  font-size:13px;
+  color:#0f172a;
+}
+
+#teaching .evidence-data-row span{
+  font-size:12px;
+  color:#475569;
+  text-align:right;
+}
+
+#teaching .evidence-flip-note{
+  margin-top:12px;
+  font-size:12px;
+  font-weight:800;
+  color:#1e293b;
+}
+
+/* Back face */
+#teaching .teach-evidence-back h3{
+  margin:0 0 8px;
+  font-size:22px;
+  line-height:1.1;
+  letter-spacing:-.035em;
+}
+
+#teaching .evidence-detail-list{
+  display:grid;
+  gap:8px;
+  margin-top:6px;
+}
+
+#teaching .evidence-detail{
+  padding:9px 10px;
+  border-radius:13px;
+  background:rgba(255,255,255,.68);
+  border:1px solid rgba(148,163,184,.35);
+}
+
+#teaching .evidence-detail strong{
+  display:block;
+  margin-bottom:2px;
+  font-size:12px;
+  color:#0f172a;
+}
+
+#teaching .evidence-detail span{
+  display:block;
+  font-size:12px;
+  line-height:1.35;
+  color:#334155;
+}
+
+#teaching .evidence-back-note{
+  margin-top:auto;
+  padding-top:10px;
+  font-size:11px;
+  font-weight:800;
+  color:#475569;
+}
+
+/* Mobile: no awkward fixed flip height */
+@media (max-width:720px){
+  #teaching .teach-card--evidence,
+  #teaching .teach-evidence-inner{
+    min-height:360px;
+  }
+}
    
 /* ===== Teaching section: compact version ===== */
 
@@ -2938,6 +3155,104 @@
         </div>
       </article>
 
+      <article class="teach-card teach-card--evidence reveal"
+         tabindex="0"
+         role="button"
+         aria-label="Flip teaching evidence card"
+         onclick="this.classList.toggle('is-flipped')"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('is-flipped')}">
+
+  <div class="teach-evidence-inner">
+
+    <div class="teach-evidence-face teach-evidence-front">
+      <span class="evidence-kicker">Teaching evidence</span>
+
+      <div class="evidence-main">
+        <h3>Designed, delivered, supervised</h3>
+        <div class="evidence-number">
+          <strong>516</strong>
+          <span>students</span>
+        </div>
+      </div>
+
+      <p class="evidence-lead">
+        Evidence across curriculum support, lecture/workshop development,
+        technical labs, and industry-facing project delivery.
+      </p>
+
+      <div class="evidence-data">
+        <div class="evidence-data-row">
+          <strong>5 courses</strong>
+          <span>programming · security · AI · projects</span>
+        </div>
+        <div class="evidence-data-row">
+          <strong>2 project units</strong>
+          <span>COMP3850 + COMP8851</span>
+        </div>
+        <div class="evidence-data-row">
+          <strong>3 technical units</strong>
+          <span>COMP1000 · COMP3310 · COMP8410</span>
+        </div>
+      </div>
+
+      <div class="evidence-flip-note">Click for concrete design examples →</div>
+    </div>
+
+    <div class="teach-evidence-face teach-evidence-back">
+      <h3>Concrete teaching work</h3>
+
+      <div class="evidence-detail-list">
+
+        <div class="evidence-detail">
+          <strong>Curriculum and lecture development</strong>
+          <span>
+            COMP8410: developed advanced AI teaching material around modern
+            AI topics including generative models, variational methods,
+            diffusion, reinforcement learning, and humanoid modelling.
+          </span>
+        </div>
+
+        <div class="evidence-detail">
+          <strong>Labs and programming tutorials</strong>
+          <span>
+            COMP1000: supported lab/tutorial delivery for programming logic,
+            debugging practice, code structure, and beginner problem-solving.
+          </span>
+        </div>
+
+        <div class="evidence-detail">
+          <strong>Security workshops</strong>
+          <span>
+            COMP3310: delivered secure-development guidance around threat-aware
+            design, vulnerability reasoning, defensive implementation, and
+            practical software-security feedback.
+          </span>
+        </div>
+
+        <div class="evidence-detail">
+          <strong>Industry project delivery</strong>
+          <span>
+            COMP3850: guided student teams through client-style project scoping,
+            milestone delivery, stakeholder communication, presentations, and
+            rubric-aligned project feedback.
+          </span>
+        </div>
+
+        <div class="evidence-detail">
+          <strong>Master's capstone supervision</strong>
+          <span>
+            COMP8851: supported data-science project scoping, technical review,
+            report development, presentation preparation, and final deliverables.
+          </span>
+        </div>
+
+      </div>
+
+      <div class="evidence-back-note">Click again to return</div>
+    </div>
+
+  </div>
+</article>
   
       
     </div>
