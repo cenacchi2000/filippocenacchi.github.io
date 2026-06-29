@@ -315,40 +315,52 @@
 }
 
 .open-to-pill{
-  background:#2563eb !important;
+  background:linear-gradient(135deg,#6d28d9,#7c3aed) !important;
   color:#ffffff !important;
-  border-color:#2563eb !important;
+  border-color:#7c3aed !important;
   font-weight:800 !important;
-  box-shadow:0 10px 24px rgba(37,99,235,.22) !important;
+  box-shadow:0 10px 24px rgba(124,58,237,.24) !important;
   overflow:hidden;
+  justify-content:center !important;
+  gap:7px !important;
 }
 
 .open-to-pill:hover{
-  background:#1d4ed8 !important;
-  border-color:#1d4ed8 !important;
+  background:linear-gradient(135deg,#5b21b6,#6d28d9) !important;
+  border-color:#6d28d9 !important;
   text-decoration:none !important;
   transform:translateY(-1px);
 }
 
 .open-to-label{
-  opacity:.82;
+  color:#ede9fe !important;
+  opacity:1 !important;
   font-size:12px;
-  font-weight:700;
-  margin-right:4px;
+  font-weight:800;
 }
 
 .open-to-role{
   display:inline-block;
-  min-width:96px;
-  text-align:left;
+  min-width:92px;
+  text-align:center;
+  color:#ffffff !important;
+  opacity:1 !important;
+  font-weight:900;
   animation:roleFade .35s ease;
+}
+
+.open-to-suffix{
+  color:#ede9fe !important;
+  opacity:1 !important;
+  font-size:12px;
+  font-weight:800;
 }
 
 @keyframes roleFade{
   from{opacity:0; transform:translateY(6px);}
   to{opacity:1; transform:translateY(0);}
 }
-
+    
 #teaching .teach-card--comp8410{
   background:linear-gradient(180deg,#ffffff 0%,#f7f5ff 100%);
 }
@@ -1770,9 +1782,10 @@
           Academic CV
         </a>
 
-        <span class="pill open-to-pill" aria-label="Open to academic roles">
+        <span class="pill open-to-pill" aria-label="Open to academic positions">
   <span class="open-to-label">Open to</span>
   <span class="open-to-role" id="openToRole">Postdoc</span>
+  <span class="open-to-suffix">positions</span>
 </span>
       </div>
     </div>
@@ -3381,12 +3394,14 @@
   }, 60000);
 })();
 </script>
-<script>
+
+  <script>
 (function(){
   const roles = [
     'Postdoc',
     'Lecturer',
     'Research Fellow',
+    'AI Fellow'
   ];
 
   const el = document.getElementById('openToRole');
