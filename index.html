@@ -1641,6 +1641,129 @@
   }
 }
 
+
+    /* ===== Analytics front for teaching evidence card ===== */
+
+#teaching .teach-evidence-front{
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-gutter:stable;
+}
+
+#teaching .approval-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:8px;
+}
+
+#teaching .approval-card{
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(148,163,184,.36);
+  border-radius:14px;
+  padding:10px 10px 8px;
+  box-shadow:0 4px 12px rgba(15,23,42,.04);
+}
+
+#teaching .approval-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:4px;
+}
+
+#teaching .approval-head strong{
+  font-size:13px;
+  font-weight:900;
+  color:#0f172a;
+  letter-spacing:.01em;
+}
+
+#teaching .approval-head span{
+  font-size:11px;
+  color:#475569;
+  text-align:right;
+  line-height:1.2;
+}
+
+#teaching .approval-summary{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-bottom:6px;
+}
+
+#teaching .approval-label{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#64748b;
+  font-weight:800;
+}
+
+#teaching .approval-range{
+  font-size:11px;
+  font-weight:800;
+  color:#1e293b;
+}
+
+#teaching .approval-sparkline{
+  display:block;
+  width:100%;
+  height:58px;
+  overflow:visible;
+}
+
+#teaching .approval-axis{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:4px;
+  margin-top:4px;
+}
+
+#teaching .approval-axis span{
+  font-size:9px;
+  line-height:1.1;
+  color:#64748b;
+  text-align:center;
+  font-weight:700;
+}
+
+#teaching .approval-line{
+  fill:none;
+  stroke:#1d4ed8;
+  stroke-width:2.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+#teaching .approval-area{
+  fill:url(#approvalAreaGradient);
+  opacity:.28;
+}
+
+#teaching .approval-dot{
+  fill:#1d4ed8;
+}
+
+#teaching .approval-gridline{
+  stroke:rgba(100,116,139,.24);
+  stroke-width:1;
+}
+
+#teaching .approval-end-label{
+  font-size:10px;
+  font-weight:900;
+  fill:#0f172a;
+}
+
+@media (max-width:720px){
+  #teaching .approval-grid{
+    grid-template-columns:1fr;
+  }
+}
 /* ===== HARD FIX: keep hero globe/news in normal page position ===== */
 .hero-side{
   position:static !important;
@@ -3162,38 +3285,104 @@
 
   <div class="teach-evidence-inner">
 
-    <div class="teach-evidence-face teach-evidence-front">
+  <div class="teach-evidence-face teach-evidence-front">
   <span class="evidence-kicker">Analytics</span>
 
   <div class="evidence-main evidence-main--single">
-    <h3>Designed, delivered, supervised</h3>
+    <h3>Student approval trends</h3>
   </div>
 
   <p class="evidence-lead">
-    Teaching contribution across curriculum support, lecture/workshop development,
-    technical labs, and industry-facing project delivery.
+    Session-by-session approval analytics across core teaching areas.
+    Replace the example percentages below with your actual course approval data.
   </p>
 
-  <div class="evidence-data">
-    <div class="evidence-data-row">
-      <strong>5 courses</strong>
-      <span>programming · security · AI · projects</span>
+  <div class="approval-grid">
+
+    <div class="approval-card">
+      <div class="approval-head">
+        <strong>COMP1000</strong>
+        <span>Programming</span>
+      </div>
+      <div class="approval-summary">
+        <span class="approval-label">Approval</span>
+        <span class="approval-range">84 → 87 → 90 → 92%</span>
+      </div>
+      <svg class="approval-sparkline"
+           viewBox="0 0 160 60"
+           preserveAspectRatio="none"
+           data-values="84,87,90,92"
+           data-labels="S1 2025,S2 2025,S1 2026,S2 2026"
+           aria-label="COMP1000 approval trend"></svg>
+      <div class="approval-axis">
+        <span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span>
+      </div>
     </div>
-    <div class="evidence-data-row">
-      <strong>2 project units</strong>
-      <span>COMP3850 + COMP8851</span>
+
+    <div class="approval-card">
+      <div class="approval-head">
+        <strong>COMP3310</strong>
+        <span>Security</span>
+      </div>
+      <div class="approval-summary">
+        <span class="approval-label">Approval</span>
+        <span class="approval-range">81 → 85 → 88 → 90%</span>
+      </div>
+      <svg class="approval-sparkline"
+           viewBox="0 0 160 60"
+           preserveAspectRatio="none"
+           data-values="81,85,88,90"
+           data-labels="S1 2025,S2 2025,S1 2026,S2 2026"
+           aria-label="COMP3310 approval trend"></svg>
+      <div class="approval-axis">
+        <span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span>
+      </div>
     </div>
-    <div class="evidence-data-row">
-      <strong>3 technical units</strong>
-      <span>COMP1000 · COMP3310 · COMP8410</span>
+
+    <div class="approval-card">
+      <div class="approval-head">
+        <strong>COMP8410</strong>
+        <span>Advanced AI</span>
+      </div>
+      <div class="approval-summary">
+        <span class="approval-label">Approval</span>
+        <span class="approval-range">86 → 89 → 91 → 94%</span>
+      </div>
+      <svg class="approval-sparkline"
+           viewBox="0 0 160 60"
+           preserveAspectRatio="none"
+           data-values="86,89,91,94"
+           data-labels="S1 2025,S2 2025,S1 2026,S2 2026"
+           aria-label="COMP8410 approval trend"></svg>
+      <div class="approval-axis">
+        <span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span>
+      </div>
     </div>
+
+    <div class="approval-card">
+      <div class="approval-head">
+        <strong>Projects</strong>
+        <span>COMP3850 + COMP8851</span>
+      </div>
+      <div class="approval-summary">
+        <span class="approval-label">Approval</span>
+        <span class="approval-range">83 → 86 → 88 → 91%</span>
+      </div>
+      <svg class="approval-sparkline"
+           viewBox="0 0 160 60"
+           preserveAspectRatio="none"
+           data-values="83,86,88,91"
+           data-labels="S1 2025,S2 2025,S1 2026,S2 2026"
+           aria-label="Project-unit approval trend"></svg>
+      <div class="approval-axis">
+        <span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span>
+      </div>
+    </div>
+
   </div>
 
   <div class="evidence-flip-note">Click for concrete design examples →</div>
 </div>
-
-  </div>
-</article>
   
       
     </div>
