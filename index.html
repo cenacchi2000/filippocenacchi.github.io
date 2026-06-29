@@ -314,7 +314,33 @@
   color:#c2410c;
 }
 
+.open-to-pill{
+  background:linear-gradient(135deg,#0f172a,#2563eb) !important;
+  color:#ffffff !important;
+  border-color:rgba(255,255,255,.18) !important;
+  font-weight:800 !important;
+  box-shadow:0 10px 24px rgba(37,99,235,.22) !important;
+  overflow:hidden;
+}
 
+.open-to-label{
+  opacity:.78;
+  font-size:12px;
+  font-weight:700;
+  margin-right:4px;
+}
+
+.open-to-role{
+  display:inline-block;
+  min-width:92px;
+  text-align:left;
+  animation:roleFade .35s ease;
+}
+
+@keyframes roleFade{
+  from{opacity:0; transform:translateY(6px);}
+  to{opacity:1; transform:translateY(0);}
+}
 
 #teaching .teach-card--comp8410{
   background:linear-gradient(180deg,#ffffff 0%,#f7f5ff 100%);
@@ -1736,6 +1762,11 @@
           </svg>
           Academic CV
         </a>
+
+        <span class="pill open-to-pill" aria-label="Open to academic roles">
+  <span class="open-to-label">Open to</span>
+  <span class="open-to-role" id="openToRole">Postdoc</span>
+</span>
       </div>
     </div>
 
@@ -2086,7 +2117,106 @@
   </div>
 </div>
 
+<!-- FALCON-Discover paper -->
+<div class="card pub" data-year="2026" data-topics="reliable-ml,calibration,time-series,machine-learning">
+  <a href="#" target="_blank" rel="noopener">
+    <img src="falcon-discover.png"
+         alt="Framework diagram for FALCON-Discover: Discovering Concentrated False-Confidence Regions for Calibration"
+         loading="lazy"
+         style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+  </a>
 
+  <div>
+    <h3 style="margin-top:0">
+      <a href="#" target="_blank" rel="noopener">
+        FALCON-Discover: Discovering Concentrated False-Confidence Regions for Calibration
+      </a>
+    </h3>
+
+    <div class="meta">Filippo Cenacchi, Longbing Cao.</div>
+    <div class="meta">Manuscript under review, 2026.</div>
+
+    <div class="kvs">
+      <span class="badge">Under review</span>
+      <button type="button" class="badge cite-btn" data-target="bib-falcon-discover">Cite</button>
+    </div>
+
+    <pre id="bib-falcon-discover" class="bib-entry">@misc{cenacchi2026falcondiscover,
+  title  = {FALCON-Discover: Discovering Concentrated False-Confidence Regions for Calibration},
+  author = {Cenacchi, Filippo and Cao, Longbing},
+  year   = {2026},
+  note   = {Manuscript under review}
+}</pre>
+  </div>
+</div>
+
+
+<!-- Spectral Evidence Bundling paper -->
+<div class="card pub" data-year="2026" data-topics="reliable-ml,calibration,time-series,machine-learning">
+  <a href="#" target="_blank" rel="noopener">
+    <img src="spectral-evidence-bundling.png"
+         alt="Framework diagram for Beyond Output-Space Calibration: Spectral Evidence Bundling for Selective Reliability Estimation in Time-Series Classification"
+         loading="lazy"
+         style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+  </a>
+
+  <div>
+    <h3 style="margin-top:0">
+      <a href="#" target="_blank" rel="noopener">
+        Beyond Output-Space Calibration: Spectral Evidence Bundling for Selective Reliability Estimation in Time-Series Classification
+      </a>
+    </h3>
+
+    <div class="meta">Filippo Cenacchi, Longbing Cao.</div>
+    <div class="meta">Manuscript under review, 2026.</div>
+
+    <div class="kvs">
+      <span class="badge">Under review</span>
+      <button type="button" class="badge cite-btn" data-target="bib-seb-cal">Cite</button>
+    </div>
+
+    <pre id="bib-seb-cal" class="bib-entry">@misc{cenacchi2026spectralevidencebundling,
+  title  = {Beyond Output-Space Calibration: Spectral Evidence Bundling for Selective Reliability Estimation in Time-Series Classification},
+  author = {Cenacchi, Filippo and Cao, Longbing},
+  year   = {2026},
+  note   = {Manuscript under review}
+}</pre>
+  </div>
+</div>
+
+
+<!-- Counterfactual Fragility Certificates paper -->
+<div class="card pub" data-year="2026" data-topics="reliable-ml,forecasting,robustness,machine-learning">
+  <a href="#" target="_blank" rel="noopener">
+    <img src="counterfactual-fragility-certificates.png"
+         alt="Framework diagram for Counterfactual Fragility Certificates: Exposing High-Confidence Brittleness under Structured Evidence Failure"
+         loading="lazy"
+         style="width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+  </a>
+
+  <div>
+    <h3 style="margin-top:0">
+      <a href="#" target="_blank" rel="noopener">
+        Counterfactual Fragility Certificates: Exposing High-Confidence Brittleness under Structured Evidence Failure
+      </a>
+    </h3>
+
+    <div class="meta">Filippo Cenacchi, Longbing Cao.</div>
+    <div class="meta">Manuscript under review, 2026.</div>
+
+    <div class="kvs">
+      <span class="badge">Under review</span>
+      <button type="button" class="badge cite-btn" data-target="bib-cfc">Cite</button>
+    </div>
+
+    <pre id="bib-cfc" class="bib-entry">@misc{cenacchi2026counterfactualfragility,
+  title  = {Counterfactual Fragility Certificates: Exposing High-Confidence Brittleness under Structured Evidence Failure},
+  author = {Cenacchi, Filippo and Cao, Longbing},
+  year   = {2026},
+  note   = {Manuscript under review}
+}</pre>
+  </div>
+</div>
 
     <!-- L0GM paper -->
 <div class="card pub" data-year="2026" data-topics="machine-learning,multimodal,representation-learning">
@@ -3244,7 +3374,30 @@
   }, 60000);
 })();
 </script>
+<script>
+(function(){
+  const roles = [
+    'Postdoc',
+    'Lecturer',
+    'Research Fellow',
+    'AI Fellow',
+    'Teaching Fellow'
+  ];
 
+  const el = document.getElementById('openToRole');
+  if (!el) return;
+
+  let i = 0;
+
+  setInterval(() => {
+    i = (i + 1) % roles.length;
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.textContent = roles[i];
+    el.style.animation = 'roleFade .35s ease';
+  }, 1800);
+})();
+</script>
 
 </body>
 </html> 
