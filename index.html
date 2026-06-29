@@ -1757,90 +1757,155 @@
   color:#334155;
 }
 
-/* ===== Fix analytics mini-graphs overflowing right ===== */
+/* ===== Compact visible analytics plots: no right overflow ===== */
+
+#teaching .teach-evidence-face{
+  display:block !important;
+}
+
+#teaching .teach-evidence-front{
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+
+#teaching .analytics-title{
+  margin:10px 0 6px !important;
+  font-size:clamp(22px,1.55vw,27px) !important;
+  line-height:1.05 !important;
+}
+
+#teaching .analytics-note{
+  margin:0 0 10px !important;
+  font-size:12.5px !important;
+  line-height:1.3 !important;
+}
 
 #teaching .approval-grid{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr));
-  gap:10px;
-  width:100%;
-  max-width:100%;
-  box-sizing:border-box;
-  overflow:hidden;
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:9px !important;
+  width:100% !important;
+  max-width:100% !important;
+  box-sizing:border-box !important;
+  overflow:hidden !important;
 }
 
 #teaching .approval-mini{
-  min-width:0;
-  max-width:100%;
-  overflow:hidden;
-  background:rgba(255,255,255,.76);
-  border:1px solid rgba(148,163,184,.42);
-  border-radius:15px;
-  padding:10px 10px 8px;
-  box-sizing:border-box;
-  box-shadow:0 5px 13px rgba(15,23,42,.05);
+  min-width:0 !important;
+  max-width:100% !important;
+  min-height:118px !important;
+  overflow:hidden !important;
+  background:rgba(255,255,255,.78) !important;
+  border:1px solid rgba(148,163,184,.42) !important;
+  border-radius:15px !important;
+  padding:9px 9px 7px !important;
+  box-sizing:border-box !important;
+  box-shadow:0 5px 13px rgba(15,23,42,.05) !important;
 }
 
 #teaching .approval-top{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:3px;
-  margin-bottom:5px;
-  min-width:0;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:2px !important;
+  margin-bottom:4px !important;
+  min-width:0 !important;
 }
 
 #teaching .approval-top strong{
-  display:block;
-  min-width:0;
-  max-width:100%;
-  font-size:13px;
-  font-weight:900;
-  color:#0f172a;
-  line-height:1.1;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  display:block !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  font-size:12.5px !important;
+  font-weight:900 !important;
+  line-height:1.05 !important;
+  color:#0f172a !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
 }
 
 #teaching .approval-top span{
-  display:block;
-  min-width:0;
-  max-width:100%;
-  font-size:10.5px;
-  font-weight:850;
-  color:#334155;
-  line-height:1.15;
-  white-space:normal;
-  overflow-wrap:anywhere;
-  word-break:normal;
+  display:block !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  font-size:9.8px !important;
+  font-weight:850 !important;
+  color:#334155 !important;
+  line-height:1.05 !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
 }
 
 #teaching .approval-plot{
-  display:block;
-  width:100%;
-  max-width:100%;
-  height:50px;
-  overflow:visible;
-  box-sizing:border-box;
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  height:58px !important;
+  margin-top:2px !important;
+  overflow:visible !important;
+  box-sizing:border-box !important;
+}
+
+#teaching .approval-plot line{
+  stroke:rgba(100,116,139,.22) !important;
+  stroke-width:1 !important;
+}
+
+#teaching .approval-plot polyline{
+  fill:none !important;
+  stroke:#2563eb !important;
+  stroke-width:3.2 !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+  filter:drop-shadow(0 0 4px rgba(37,99,235,.36)) !important;
+}
+
+#teaching .approval-plot circle{
+  fill:#2563eb !important;
+  stroke:#ffffff !important;
+  stroke-width:1.7 !important;
+  filter:drop-shadow(0 0 3px rgba(37,99,235,.45)) !important;
 }
 
 #teaching .approval-axis{
-  display:grid;
-  grid-template-columns:repeat(4, minmax(0, 1fr));
-  gap:2px;
-  margin-top:2px;
-  min-width:0;
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:2px !important;
+  margin-top:3px !important;
+  min-width:0 !important;
 }
 
 #teaching .approval-axis span{
-  min-width:0;
-  font-size:8.5px;
-  line-height:1;
-  color:#64748b;
-  text-align:center;
-  font-weight:750;
-  white-space:nowrap;
-  overflow:hidden;
+  min-width:0 !important;
+  font-size:8px !important;
+  line-height:1 !important;
+  color:#64748b !important;
+  text-align:center !important;
+  font-weight:750 !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+}
+
+/* Keep the analytics card same size as the other teaching cards */
+#teaching .teach-card--evidence{
+  height:100% !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:hidden !important;
+}
+
+#teaching .teach-card--evidence .teach-evidence-inner{
+  height:100% !important;
+  min-height:100% !important;
+  max-height:none !important;
+}
+
+#teaching .teach-card--evidence .teach-evidence-face{
+  height:100% !important;
+  max-height:100% !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
 }
 
 #teaching .evidence-flip-note{
@@ -3414,93 +3479,99 @@
 
   <div class="teach-evidence-inner">
 
-    <!-- FRONT: analytics -->
     <div class="teach-evidence-face teach-evidence-front">
-      <span class="evidence-kicker">Analytics</span>
+  <span class="evidence-kicker">Analytics</span>
 
-      <h3 class="analytics-title">Student approval</h3>
+  <h3 class="analytics-title">Student approval</h3>
 
-      <p class="analytics-note">
-        Session-level teaching approval indicators across my units.
+  <p class="analytics-note">
+    Session-level approval trends across my teaching portfolio.
+  </p>
 
-        
-      </p>
+  <div class="approval-grid">
 
-     <div class="approval-grid">
-
-  <div class="approval-mini">
-    <div class="approval-top">
-      <strong>COMP1000</strong>
-      <span>84→89→82→91%</span>
+    <div class="approval-mini">
+      <div class="approval-top">
+        <strong>COMP1000</strong>
+        <span>84 / 89 / 82 / 91%</span>
+      </div>
+      <svg viewBox="0 0 180 76" class="approval-plot" aria-label="COMP1000 approval line plot">
+        <line x1="10" y1="62" x2="170" y2="62"></line>
+        <line x1="10" y1="18" x2="170" y2="18"></line>
+        <polyline points="12,50 65,27 118,60 168,19"></polyline>
+        <circle cx="12" cy="50" r="3"></circle>
+        <circle cx="65" cy="27" r="3"></circle>
+        <circle cx="118" cy="60" r="3"></circle>
+        <circle cx="168" cy="19" r="3"></circle>
+      </svg>
+      <div class="approval-axis">
+        <span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span>
+      </div>
     </div>
-    <svg viewBox="0 0 180 70" class="approval-plot" aria-label="COMP1000 approval line plot">
-      <line x1="10" y1="58" x2="170" y2="58"></line>
-      <line x1="10" y1="18" x2="170" y2="18"></line>
-      <polyline points="12,47 65,25 118,55 168,18"></polyline>
-      <circle cx="12" cy="47" r="3"></circle>
-      <circle cx="65" cy="25" r="3"></circle>
-      <circle cx="118" cy="55" r="3"></circle>
-      <circle cx="168" cy="18" r="3"></circle>
-    </svg>
-    <div class="approval-axis"><span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span></div>
+
+    <div class="approval-mini">
+      <div class="approval-top">
+        <strong>COMP3310</strong>
+        <span>80 / 86 / 81 / 90%</span>
+      </div>
+      <svg viewBox="0 0 180 76" class="approval-plot" aria-label="COMP3310 approval line plot">
+        <line x1="10" y1="62" x2="170" y2="62"></line>
+        <line x1="10" y1="18" x2="170" y2="18"></line>
+        <polyline points="12,62 65,34 118,57 168,22"></polyline>
+        <circle cx="12" cy="62" r="3"></circle>
+        <circle cx="65" cy="34" r="3"></circle>
+        <circle cx="118" cy="57" r="3"></circle>
+        <circle cx="168" cy="22" r="3"></circle>
+      </svg>
+      <div class="approval-axis">
+        <span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span>
+      </div>
+    </div>
+
+    <div class="approval-mini">
+      <div class="approval-top">
+        <strong>COMP8410</strong>
+        <span>88 / 83 / 94 / 89%</span>
+      </div>
+      <svg viewBox="0 0 180 76" class="approval-plot" aria-label="COMP8410 approval line plot">
+        <line x1="10" y1="62" x2="170" y2="62"></line>
+        <line x1="10" y1="18" x2="170" y2="18"></line>
+        <polyline points="12,32 65,58 118,16 168,30"></polyline>
+        <circle cx="12" cy="32" r="3"></circle>
+        <circle cx="65" cy="58" r="3"></circle>
+        <circle cx="118" cy="16" r="3"></circle>
+        <circle cx="168" cy="30" r="3"></circle>
+      </svg>
+      <div class="approval-axis">
+        <span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span>
+      </div>
+    </div>
+
+    <div class="approval-mini">
+      <div class="approval-top">
+        <strong>Projects</strong>
+        <span>82 / 90 / 85 / 92%</span>
+      </div>
+      <svg viewBox="0 0 180 76" class="approval-plot" aria-label="Project units approval line plot">
+        <line x1="10" y1="62" x2="170" y2="62"></line>
+        <line x1="10" y1="18" x2="170" y2="18"></line>
+        <polyline points="12,56 65,20 118,44 168,16"></polyline>
+        <circle cx="12" cy="56" r="3"></circle>
+        <circle cx="65" cy="20" r="3"></circle>
+        <circle cx="118" cy="44" r="3"></circle>
+        <circle cx="168" cy="16" r="3"></circle>
+      </svg>
+      <div class="approval-axis">
+        <span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span>
+      </div>
+    </div>
+
   </div>
 
-  <div class="approval-mini">
-    <div class="approval-top">
-      <strong>COMP3310</strong>
-      <span>80→86→81→90%</span>
-    </div>
-    <svg viewBox="0 0 180 70" class="approval-plot" aria-label="COMP3310 approval line plot">
-      <line x1="10" y1="58" x2="170" y2="58"></line>
-      <line x1="10" y1="18" x2="170" y2="18"></line>
-      <polyline points="12,56 65,33 118,52 168,20"></polyline>
-      <circle cx="12" cy="56" r="3"></circle>
-      <circle cx="65" cy="33" r="3"></circle>
-      <circle cx="118" cy="52" r="3"></circle>
-      <circle cx="168" cy="20" r="3"></circle>
-    </svg>
-    <div class="approval-axis"><span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span></div>
+  <div class="evidence-flip-note">
+    Click for curriculum, workshop, lab, and project-design detail →
   </div>
-
-  <div class="approval-mini">
-    <div class="approval-top">
-      <strong>COMP8410</strong>
-      <span>88→83→94→89%</span>
-    </div>
-    <svg viewBox="0 0 180 70" class="approval-plot" aria-label="COMP8410 approval line plot">
-      <line x1="10" y1="58" x2="170" y2="58"></line>
-      <line x1="10" y1="18" x2="170" y2="18"></line>
-      <polyline points="12,30 65,52 118,14 168,28"></polyline>
-      <circle cx="12" cy="30" r="3"></circle>
-      <circle cx="65" cy="52" r="3"></circle>
-      <circle cx="118" cy="14" r="3"></circle>
-      <circle cx="168" cy="28" r="3"></circle>
-    </svg>
-    <div class="approval-axis"><span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span></div>
-  </div>
-
-  <div class="approval-mini">
-    <div class="approval-top">
-      <strong>Projects</strong>
-      <span>82→90→85→92%</span>
-    </div>
-    <svg viewBox="0 0 180 70" class="approval-plot" aria-label="Project units approval line plot">
-      <line x1="10" y1="58" x2="170" y2="58"></line>
-      <line x1="10" y1="18" x2="170" y2="18"></line>
-      <polyline points="12,53 65,20 118,42 168,16"></polyline>
-      <circle cx="12" cy="53" r="3"></circle>
-      <circle cx="65" cy="20" r="3"></circle>
-      <circle cx="118" cy="42" r="3"></circle>
-      <circle cx="168" cy="16" r="3"></circle>
-    </svg>
-    <div class="approval-axis"><span>S1’25</span><span>S2’25</span><span>S1’26</span><span>S2’26</span></div>
-  </div>
-
 </div>
-
-      <div class="evidence-flip-note">Click for curriculum, workshop, lab, and project-design detail →</div>
-    </div>
-
     <!-- BACK: concrete teaching design -->
     <div class="teach-evidence-face teach-evidence-back">
       <span class="evidence-kicker">Design detail</span>
