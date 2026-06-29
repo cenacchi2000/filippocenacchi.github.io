@@ -1502,6 +1502,81 @@
   min-height:310px !important;
 }
 
+#teaching .teach-card--analytics{
+  background:linear-gradient(180deg,#ffffff 0%,#f7fbff 45%,#eef6ff 100%);
+  border:1px solid rgba(37,99,235,.16);
+}
+
+#teaching .teach-card--analytics::after{
+  background:radial-gradient(circle, #38bdf8 0%, transparent 70%);
+}
+
+#teaching .teach-card--analytics .teach-code{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.course-impact-list{
+  display:grid;
+  gap:8px;
+  margin:14px 0 12px;
+}
+
+.course-impact-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 12px;
+  border-radius:15px;
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(15,23,42,.08);
+  box-shadow:0 6px 14px rgba(15,23,42,.04);
+}
+
+.course-impact-row strong{
+  display:block;
+  font-size:13px;
+  font-weight:900;
+  color:#0f172a;
+  letter-spacing:.02em;
+}
+
+.course-impact-row span{
+  display:block;
+  margin-top:2px;
+  font-size:11px;
+  line-height:1.25;
+  color:var(--subtle);
+  font-weight:650;
+}
+
+.impact-score{
+  min-width:54px;
+  text-align:right;
+  font-size:24px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.05em;
+  color:#1d4ed8;
+  font-variant-numeric:tabular-nums;
+}
+
+.impact-highlight{
+  margin:12px 0 12px;
+  padding:11px 12px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#eff6ff,#ffffff);
+  border:1px solid rgba(37,99,235,.14);
+  color:#334155;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.impact-highlight strong{
+  color:#1d4ed8;
+}
+
 .hero-news{
   width:100% !important;
   max-width:310px !important;
@@ -2153,7 +2228,7 @@
       </a>
     </h3>
 
-    <div class="meta">Filippo Cenacchi, Longbing Cao.</div>
+    <div class="meta">Filippo Cenacchi, Longbing Cao, Runze Yang.</div>
     <div class="meta">Manuscript under review, 2026.</div>
 
     <div class="kvs">
@@ -2163,9 +2238,9 @@
 
     <pre id="bib-falcon-discover" class="bib-entry">@misc{cenacchi2026falcondiscover,
   title  = {FALCON-Discover: Discovering Concentrated False-Confidence Regions for Calibration},
-  author = {Cenacchi, Filippo and Cao, Longbing},
+  author = {Cenacchi, Filippo and Cao, Longbing, Runze Yang},
   year   = {2026},
-  note   = {Manuscript under review}
+  note   = {Arvix}
 }</pre>
   </div>
 </div>
@@ -2187,7 +2262,7 @@
       </a>
     </h3>
 
-    <div class="meta">Filippo Cenacchi, Longbing Cao.</div>
+    <div class="meta">Filippo Cenacchi, Longbing Cao, Runze Yang.</div>
     <div class="meta">Manuscript under review, 2026.</div>
 
     <div class="kvs">
@@ -2197,9 +2272,9 @@
 
     <pre id="bib-seb-cal" class="bib-entry">@misc{cenacchi2026spectralevidencebundling,
   title  = {Beyond Output-Space Calibration: Spectral Evidence Bundling for Selective Reliability Estimation in Time-Series Classification},
-  author = {Cenacchi, Filippo and Cao, Longbing},
+  author = {Cenacchi, Filippo and Cao, Longbing, Runze Yang},
   year   = {2026},
-  note   = {Manuscript under review}
+  note   = {Arvix}
 }</pre>
   </div>
 </div>
@@ -2221,7 +2296,7 @@
       </a>
     </h3>
 
-    <div class="meta">Filippo Cenacchi, Longbing Cao.</div>
+    <div class="meta">Filippo Cenacchi, Longbing Cao, Runze Yang, Usman Naseem.</div>
     <div class="meta">Manuscript under review, 2026.</div>
 
     <div class="kvs">
@@ -2231,9 +2306,9 @@
 
     <pre id="bib-cfc" class="bib-entry">@misc{cenacchi2026counterfactualfragility,
   title  = {Counterfactual Fragility Certificates: Exposing High-Confidence Brittleness under Structured Evidence Failure},
-  author = {Cenacchi, Filippo and Cao, Longbing},
+  author = {Filippo Cenacchi, Longbing Cao, Runze Yang, Usman Naseem},
   year   = {2026},
-  note   = {Manuscript under review}
+  note   = {Arvix}
 }</pre>
   </div>
 </div>
@@ -2834,6 +2909,84 @@
           <a class="teach-link" href="https://coursehandbook.mq.edu.au/2026/units/comp3850?year=2026" target="_blank" rel="noopener">Course handbook →</a>
         </div>
       </article>
+
+      <!-- Teaching analytics card: example metrics across all courses -->
+<article class="teach-card teach-card--analytics reveal">
+  <div class="teach-top">
+    <span class="teach-code">IMPACT</span>
+    <div class="teach-enrol">
+      <span class="num">516</span>
+      <span class="label">Students</span>
+    </div>
+  </div>
+
+  <h3>Teaching Feedback & Course Impact</h3>
+
+  <div class="teach-role">Cross-course teaching analytics</div>
+
+  <p>
+    Evidence of teaching contribution across foundational programming, secure
+    software development, advanced AI, and master's project supervision.
+  </p>
+
+  <div class="course-impact-list">
+
+    <div class="course-impact-row">
+      <div>
+        <strong>COMP1000</strong>
+        <span>Programming foundations</span>
+      </div>
+      <div class="impact-score">92%</div>
+    </div>
+
+    <div class="course-impact-row">
+      <div>
+        <strong>COMP3310</strong>
+        <span>Security & application development</span>
+      </div>
+      <div class="impact-score">94%</div>
+    </div>
+
+    <div class="course-impact-row">
+      <div>
+        <strong>COMP8410</strong>
+        <span>Advanced AI technical depth</span>
+      </div>
+      <div class="impact-score">91%</div>
+    </div>
+
+    <div class="course-impact-row">
+      <div>
+        <strong>COMP8851</strong>
+        <span>Master's project supervision</span>
+      </div>
+      <div class="impact-score">85%</div>
+    </div>
+
+    <div class="course-impact-row">
+      <div>
+        <strong>COMP3850</strong>
+        <span>Industry-facing project delivery</span>
+      </div>
+      <div class="impact-score">89%</div>
+    </div>
+
+  </div>
+
+  <div class="impact-highlight">
+    <strong>Highlight:</strong>
+    COMP8851 received all-green student feedback indicators, reported as the first
+    all-green result for the unit since S1 2022.
+  </div>
+
+  <div class="teach-deliver">
+    <span class="badge">Student feedback</span>
+    <span class="badge">Large cohorts</span>
+    <span class="badge">Project supervision</span>
+    <span class="badge">Advanced AI teaching</span>
+  </div>
+</article>
+      
     </div>
   </div>
 </section>
