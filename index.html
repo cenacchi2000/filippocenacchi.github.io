@@ -1757,80 +1757,90 @@
   color:#334155;
 }
 
+/* ===== Fix analytics mini-graphs overflowing right ===== */
+
 #teaching .approval-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
   gap:10px;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+  overflow:hidden;
 }
 
 #teaching .approval-mini{
+  min-width:0;
+  max-width:100%;
+  overflow:hidden;
   background:rgba(255,255,255,.76);
   border:1px solid rgba(148,163,184,.42);
   border-radius:15px;
   padding:10px 10px 8px;
+  box-sizing:border-box;
   box-shadow:0 5px 13px rgba(15,23,42,.05);
 }
 
 #teaching .approval-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:10px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:3px;
   margin-bottom:5px;
+  min-width:0;
 }
 
 #teaching .approval-top strong{
+  display:block;
+  min-width:0;
+  max-width:100%;
   font-size:13px;
   font-weight:900;
   color:#0f172a;
+  line-height:1.1;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 #teaching .approval-top span{
-  font-size:12px;
+  display:block;
+  min-width:0;
+  max-width:100%;
+  font-size:10.5px;
   font-weight:850;
   color:#334155;
-  white-space:nowrap;
+  line-height:1.15;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:normal;
 }
 
 #teaching .approval-plot{
   display:block;
   width:100%;
-  height:52px;
+  max-width:100%;
+  height:50px;
   overflow:visible;
-}
-
-#teaching .approval-plot line{
-  stroke:rgba(100,116,139,.24);
-  stroke-width:1;
-}
-
-#teaching .approval-plot polyline{
-  fill:none;
-  stroke:#2563eb;
-  stroke-width:3;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-#teaching .approval-plot circle{
-  fill:#2563eb;
-  stroke:#ffffff;
-  stroke-width:1.5;
+  box-sizing:border-box;
 }
 
 #teaching .approval-axis{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:3px;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:2px;
   margin-top:2px;
+  min-width:0;
 }
 
 #teaching .approval-axis span{
-  font-size:9px;
+  min-width:0;
+  font-size:8.5px;
   line-height:1;
   color:#64748b;
   text-align:center;
   font-weight:750;
+  white-space:nowrap;
+  overflow:hidden;
 }
 
 #teaching .evidence-flip-note{
