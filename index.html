@@ -315,16 +315,23 @@
 }
 
 .open-to-pill{
-  background:linear-gradient(135deg,#0f172a,#2563eb) !important;
+  background:#2563eb !important;
   color:#ffffff !important;
-  border-color:rgba(255,255,255,.18) !important;
+  border-color:#2563eb !important;
   font-weight:800 !important;
   box-shadow:0 10px 24px rgba(37,99,235,.22) !important;
   overflow:hidden;
 }
 
+.open-to-pill:hover{
+  background:#1d4ed8 !important;
+  border-color:#1d4ed8 !important;
+  text-decoration:none !important;
+  transform:translateY(-1px);
+}
+
 .open-to-label{
-  opacity:.78;
+  opacity:.82;
   font-size:12px;
   font-weight:700;
   margin-right:4px;
@@ -332,7 +339,7 @@
 
 .open-to-role{
   display:inline-block;
-  min-width:92px;
+  min-width:96px;
   text-align:left;
   animation:roleFade .35s ease;
 }
