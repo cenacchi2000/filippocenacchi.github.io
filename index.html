@@ -605,6 +605,33 @@
     .inline-icon.mq{width:36px;height:36px;vertical-align:-8px} /* MQ logo bigger */
    
 
+@media (min-width: 900px){
+  html{
+    overflow-x:hidden;
+  }
+
+  body{
+    zoom:75%;
+  }
+}
+
+/* Fallback for browsers that do not fully support zoom */
+@supports not (zoom: 1){
+  @media (min-width: 900px){
+    html{
+      overflow-x:hidden;
+    }
+
+    body{
+      width:133.333%;
+      transform:scale(.75);
+      transform-origin:top left;
+      overflow-x:hidden;
+    }
+  }
+}
+
+    
 .academic-cv-pill{
   background:var(--brand-ink);
   color:#ffffff;
