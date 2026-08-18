@@ -1026,6 +1026,36 @@
   padding-bottom:0;
   border-bottom:none;
 }
+    /* Featured KDD news update */
+.hero-news-item--featured{
+  padding-bottom:14px;
+}
+
+.hero-news-image{
+  display:block;
+  width:100%;
+  aspect-ratio:16 / 10;
+  margin-bottom:10px;
+  object-fit:cover;
+  object-position:center;
+  border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:0 6px 18px rgba(15,23,42,.12);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.hero-news-item--featured a:hover{
+  text-decoration:none;
+}
+
+.hero-news-item--featured a:hover .hero-news-image{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(15,23,42,.18);
+}
+
+.hero-news-item--featured strong{
+  color:var(--text);
+}
 
 .hero-news-date{
   display:block;
@@ -2509,6 +2539,35 @@
         <h3 id="heroNewsTitle">News</h3>
 
         <div class="hero-news-list">
+
+          <article class="hero-news-item hero-news-item--featured">
+  <a
+    href="https://dl.acm.org/doi/10.1145/3770855.3818659"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="View The Decision Twin paper"
+  >
+    <img
+      class="hero-news-image"
+      src="IMG_8363.jpeg"
+      alt="Filippo Cenacchi presenting The Decision Twin at ACM SIGKDD 2026 in Jeju, Korea"
+    >
+  </a>
+
+  <span class="hero-news-date">August 2026</span>
+
+  <div class="hero-news-text">
+    Presented our vision paper,
+    <a
+      href="https://dl.acm.org/doi/10.1145/3770855.3818659"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <em>The Decision Twin: Metaverse Patient Digital Twins as Executable Clinical Reality</em>
+    </a>,
+    at <strong>ACM SIGKDD 2026</strong> in Jeju, Korea.
+  </div>
+</article>
           <article class="hero-news-item">
             <span class="hero-news-date">29 Jun 2026</span>
             <div class="hero-news-text">
