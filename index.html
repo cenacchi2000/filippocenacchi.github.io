@@ -1472,12 +1472,17 @@
     .events{position:relative;overflow:hidden}
     .event-track{display:flex;gap:16px;transition:transform .6s ease}
     .event-item{
-      min-width:100%;
-      display:grid;
-      grid-template-columns:minmax(250px, 340px) 1fr;
-      gap:18px;
-      align-items:center;
-    }
+  min-width:100%;
+  display:grid;
+  grid-template-columns:minmax(250px,340px) minmax(0,720px);
+  justify-content:start;
+  gap:24px;
+  align-items:center;
+}
+
+.event-item > div{
+  max-width:720px;
+}
     .event-item img{
   width:100%;
   max-height:260px;          /* keeps event images at a reasonable height */
@@ -2196,6 +2201,68 @@
   max-width:310px !important;
   position:relative !important;
   z-index:2 !important;
+}
+    /* Compact KDD event — avoids affecting the existing slides */
+.event-item--kdd{
+  grid-template-columns:260px minmax(0,1fr);
+  gap:24px;
+  min-height:190px;
+  align-items:center;
+}
+
+.event-item--kdd img{
+  width:260px;
+  height:170px;
+  max-height:none;
+  object-fit:cover;
+  object-position:center 42%;
+  border-radius:14px;
+}
+
+.event-item--kdd .event-content{
+  max-width:760px;
+}
+
+.event-item--kdd .event-label{
+  display:inline-block;
+  margin-bottom:7px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#eff6ff;
+  color:#2563eb;
+  font-size:11px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.event-item--kdd h3{
+  margin:0 0 4px;
+  font-size:21px;
+  line-height:1.25;
+}
+
+.event-item--kdd p{
+  max-width:720px;
+  margin:9px 0 0;
+  font-size:14px;
+  line-height:1.5;
+  color:var(--subtle);
+}
+
+/* Mobile */
+@media (max-width:768px){
+  .event-item--kdd{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+
+  .event-item--kdd img{
+    width:100%;
+    height:auto;
+    aspect-ratio:16 / 9;
+  }
 }
 
 .hero-research-mini{
@@ -3255,32 +3322,30 @@
       <h2> Recent Events</h2>
       <div class="card events">
         <div class="event-track" id="eventTrack">
-          <div class="event-item">
+        <div class="event-item event-item--kdd">
   <img
     src="IMG_8363.jpeg"
     alt="Filippo Cenacchi presenting at ACM SIGKDD 2026 in Jeju, Korea"
-    style="object-position:center 42%;"
   >
 
-  <div>
-    <h3 style="margin:0 0 6px">
-      Presented “The Decision Twin” at ACM SIGKDD 2026
-    </h3>
+  <div class="event-content">
+    <span class="event-label">Conference presentation</span>
+
+    <h3>Presented at ACM SIGKDD 2026</h3>
 
     <div class="meta">
       ICC Jeju, South Korea · August 2026
     </div>
 
     <p>
-      Presented our vision paper,
+      Presented
       <a
         href="https://dl.acm.org/doi/10.1145/3770855.3818659"
         target="_blank"
         rel="noopener noreferrer"
       >
         <em>The Decision Twin: Metaverse Patient Digital Twins as Executable Clinical Reality</em>
-      </a>,
-      at KDD, a leading international conference in data mining and artificial intelligence.
+      </a>.
     </p>
   </div>
 </div>
