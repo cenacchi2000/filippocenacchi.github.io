@@ -16,6 +16,10 @@
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="headshot.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
+  <!-- Publications graph (3D force graph) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three-spritetext@1.8.2/dist/three-spritetext.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.0/dist/3d-force-graph.min.js"></script>
 
   <style>
     :root{
@@ -3312,6 +3316,474 @@
       See full publications list
     </button>
   </div>
+
+<!-- ========================================== -->
+<!-- NEW SECTION: 3D Force Graph Explorer       -->
+<!-- ========================================== -->
+<section id="publications-graph" class="section">
+  <h2>Publications Graph Explorer</h2>
+  <p class="pubgraph-intro">
+    A true three-dimensional map of this research programme, colour-grouped by domain —
+    <span style="color:#5b9bd5;font-weight:700">ML &amp; reliability</span>,
+    <span style="color:#e08a4a;font-weight:700">clinical &amp; human health AI</span>,
+    <span style="color:#5cb87a;font-weight:700">HCI &amp; software</span>, and
+    <span style="color:#a67bd1;font-weight:700">trust, ethics &amp; safety</span>.
+    Drag empty space to orbit the scene, scroll to zoom, drag a single sphere to move
+    just that node, hover to trace connections, click a paper to open it, or click a
+    topic below to isolate that thread.
+  </p>
+
+  <div class="pubgraph-wrap">
+    <div class="pubgraph-canvas" id="pubGraphCanvas"></div>
+    <div class="pubgraph-side">
+      <div class="pubgraph-search-card">
+        <div class="pg-panel-kicker">Find a collaboration match</div>
+        <p class="pubgraph-search-note">Tell us your area of expertise and the graph will pulse the topics — and papers — where it overlaps with this research programme.</p>
+        <input type="text" id="collabInput" class="pubgraph-search-input" placeholder="e.g. reinforcement learning, clinical NLP, VR ethics...">
+        <div class="pubgraph-search-actions">
+          <button type="button" id="collabBtn" class="pubgraph-search-btn">Find overlap</button>
+          <button type="button" id="collabClear" class="pubgraph-search-clear" style="display:none">Clear</button>
+        </div>
+      </div>
+      <aside class="pubgraph-panel" id="pubGraphPanel">
+        <div class="pubgraph-panel-empty">Select a paper or topic to see details.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="pubgraph-legend" id="pubGraphLegend"></div>
+
+  <style>
+    .pubgraph-intro{color:var(--subtle);font-size:15px;line-height:1.65;margin:0 0 18px;max-width:880px;}
+    .pubgraph-wrap{display:grid;grid-template-columns:1fr 320px;gap:18px;}
+    @media (max-width:900px){.pubgraph-wrap{grid-template-columns:1fr;}}
+
+    .pubgraph-canvas{position:relative;height:780px;border-radius:16px;overflow:hidden;
+      background:#0a0c14; border:1px solid #1b1f2a; box-shadow:var(--shadow);}
+    .pubgraph-canvas canvas{cursor:grab;}
+    .pubgraph-canvas canvas:active{cursor:grabbing;}
+
+    .pubgraph-side{display:flex;flex-direction:column;gap:14px;height:780px;}
+    @media (max-width:900px){.pubgraph-side{height:auto;}}
+
+    .pubgraph-search-card{border-radius:16px;border:1px solid var(--border);background:var(--panel);
+      box-shadow:var(--shadow);padding:18px;box-sizing:border-box;flex-shrink:0;}
+    .pubgraph-search-note{font-size:12.5px;color:var(--subtle);line-height:1.5;margin:6px 0 12px;}
+    .pubgraph-search-input{width:100%;box-sizing:border-box;padding:9px 11px;border-radius:8px;
+      border:1px solid var(--border);font-size:13px;font-family:inherit;margin-bottom:10px;color:var(--text);}
+    .pubgraph-search-input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand);}
+    .pubgraph-search-actions{display:flex;gap:8px;align-items:center;}
+    .pubgraph-search-btn{flex:1;padding:9px 12px;border-radius:8px;border:none;background:var(--brand-ink);
+      color:#fff;font-weight:700;font-size:13px;cursor:pointer;transition:background .15s ease;}
+    .pubgraph-search-btn:hover{background:#1e40af;}
+    .pubgraph-search-clear{padding:9px 12px;border-radius:8px;border:1px solid var(--border);
+      background:#fff;color:var(--subtle);font-size:12px;font-weight:600;cursor:pointer;}
+    .pubgraph-search-clear:hover{border-color:#94a3b8;color:var(--text);}
+
+    .pubgraph-panel{border-radius:16px;border:1px solid var(--border);background:var(--panel);
+      box-shadow:var(--shadow);padding:22px;flex:1;min-height:0;overflow:auto;box-sizing:border-box;}
+    .pg-panel-kicker{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);margin-bottom:10px;}
+    .pg-panel-title{margin:0 0 10px;font-size:17px;line-height:1.4;font-family:Georgia,'Iowan Old Style','Times New Roman',serif;color:var(--text);}
+    .pg-panel-meta{font-size:13px;color:var(--subtle);margin-bottom:4px;}
+    .pg-panel-topics{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0;}
+    .pg-chip{font-size:11px;font-weight:600;padding:4px 10px;border-radius:4px;border:1px solid;}
+    .pg-panel-link{display:inline-block;margin-top:12px;font-weight:600;font-size:13px;color:var(--brand-ink);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px;}
+    .pg-panel-link:hover{text-decoration:none;opacity:.75;}
+    .pg-panel-list{display:grid;gap:2px;margin-top:12px;border-top:1px solid var(--border);}
+    .pg-panel-list-item{font-size:13px;line-height:1.5;color:var(--text);text-decoration:none;padding:10px 2px;border-bottom:1px solid var(--border);display:block;transition:color .15s ease;}
+    .pg-panel-list-item:hover{color:var(--brand-ink);text-decoration:none;}
+    .pubgraph-panel-empty{color:var(--subtle);font-size:14px;}
+
+    .pubgraph-legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px;}
+    .pg-legend-btn{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:4px;
+      border:1px solid var(--border);background:#fff;color:var(--text);font-size:12px;font-weight:600;
+      cursor:pointer;transition:border-color .15s ease, background .15s ease;}
+    .pg-legend-btn:hover{border-color:var(--c,#94a3b8);}
+    .pg-legend-btn.active{background:var(--c,#334155);border-color:var(--c,#334155);color:#fff;}
+    .pg-dot{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block;}
+    .pg-legend-btn.active .pg-dot{background:#fff;}
+  </style>
+
+  <script>
+  (function(){
+    function initPubGraph(){
+      var container = document.getElementById('pubGraphCanvas');
+      if(!container || typeof ForceGraph3D==='undefined' || typeof THREE==='undefined') return;
+
+      var papers = [
+        {id:'p1', title:'The Decision Twin: Metaverse Patient Digital Twins as Executable Clinical Reality', shortTitle:'The Decision Twin', authors:'Cenacchi, Cao, Richards', venue:'KDD 2026', year:2026, url:'https://dl.acm.org/doi/epdf/10.1145/3770855.3818659', topics:['humanoid','mental-health','clinical-ai','digital-twin','diagnostic-ai','decision-support','ai']},
+        {id:'p2', title:'Personalized AI Coaching Technology: A Systematic Mapping Review', shortTitle:'AI Coaching Review', authors:'Vitale, Cenacchi, et al.', venue:'ACM TiiS 2026', year:2026, url:'https://dl.acm.org/doi/abs/10.1145/3820900', topics:['hci-startups','ai-coaching','hci','software-engineering','human-centred-ai','ai']},
+        {id:'p3', title:'FALCON-Discover: Discovering Concentrated False-Confidence Regions for Calibration', shortTitle:'FALCON-Discover', authors:'Cenacchi, Cao, Yang', venue:'arXiv 2026', year:2026, url:'https://arxiv.org/abs/2607.18278', topics:['reliable-ml','calibration','time-series','machine-learning','trustworthy-ai','ai']},
+        {id:'p4', title:'Beyond Output-Space Calibration: Spectral Evidence Bundling', shortTitle:'Spectral Evidence Bundling', authors:'Cenacchi, Cao, Yang', venue:'arXiv 2026', year:2026, url:'https://arxiv.org/abs/2607.18279', topics:['reliable-ml','calibration','time-series','machine-learning','trustworthy-ai','ai']},
+        {id:'p5', title:'Counterfactual Fragility Certificates', shortTitle:'Fragility Certificates', authors:'Cenacchi, Cao, Yang, Naseem', venue:'Under review 2026', year:2026, url:null, topics:['reliable-ml','forecasting','robustness','machine-learning','ai-safety','decision-support','ai']},
+        {id:'p6', title:'Sparse-by-Design Cross-Modality Prediction (L0-GM)', shortTitle:'Sparse-by-Design (L0-GM)', authors:'Cenacchi', venue:'arXiv 2026', year:2026, url:'https://arxiv.org/abs/2603.26801', topics:['machine-learning','multimodal','representation-learning','ai']},
+        {id:'p7', title:'Passive Dementia Screening via Facial Temporal Micro-Dynamics', shortTitle:'Dementia Screening', authors:'Cenacchi, Cao, McEwan, Richards', venue:'arXiv 2025', year:2025, url:'https://arxiv.org/abs/2511.13802', topics:['humanoid','mental-health','dementia','diagnostic-ai','human-centred-ai','ai']},
+        {id:'p8', title:'SimClinician: A Multimodal Simulation Testbed', shortTitle:'SimClinician', authors:'Cenacchi, Cao, Richards', venue:'arXiv 2025', year:2025, url:'https://arxiv.org/abs/2512.08953', topics:['humanoid','mental-health','simulation','diagnostic-ai','human-centred-ai','ai']},
+        {id:'p9', title:'Learning When to Ask: Simulation-Trained Humanoids for Mental-Health Diagnosis', shortTitle:'Learning When to Ask', authors:'Cenacchi, Richards, Cao', venue:'arXiv 2025', year:2025, url:'https://arxiv.org/abs/2512.08952', topics:['humanoid','mental-health','simulation','diagnostic-ai','human-centred-ai','ai']},
+        {id:'p10', title:'To Be or Not To Be: Socially Interactive Agents', shortTitle:'To Be or Not To Be', authors:'Richards, Cenacchi', venue:'ACSW 2026', year:2026, url:'https://dl.acm.org/doi/full/10.1145/3793811.3793827', topics:['humanoid','mental-health','ethical-ai','socially-interactive-agents','clinical-ai','trustworthy-ai','decision-support','human-centred-ai','ai']},
+        {id:'p11', title:'Tri-Modal Severity Fused Diagnosis across Depression and PTSD', shortTitle:'Tri-Modal Diagnosis', authors:'Cenacchi, Richards, Cao', venue:'arXiv 2025', year:2025, url:'https://arxiv.org/abs/2510.20239', topics:['humanoid','mental-health','ptsd','diagnostic-ai','human-centred-ai','ai']},
+        {id:'p12', title:'Virtual Reality and Work: Ethical and Inclusion Implications', shortTitle:'VR & Work Ethics', authors:'Bankins, Formosa, Montefiore, Richards, Cenacchi, McEwan', venue:'JSIS 2025', year:2025, url:'https://www.sciencedirect.com/science/article/pii/S0963868725000526', topics:['vr-ethics','trustworthy-ai','ai-safety','human-centred-ai','ai']},
+        {id:'p13', title:'Understanding Low-Code/No-Code Adoption in Software Startups', shortTitle:'Low-Code Adoption', authors:'Rafiq, Cenacchi, Wang', venue:'PROFES 2022', year:2022, url:'https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27', topics:['hci-startups','low-code','software-engineering','human-centred-ai','ai']}
+      ];
+
+      var topicLabels = {
+        'ai':'Artificial Intelligence','human-centred-ai':'Human-Centred AI','decision-support':'Decision Support',
+        'trustworthy-ai':'Trustworthy AI','diagnostic-ai':'Diagnostic AI','ai-safety':'AI Safety','software-engineering':'Software Engineering',
+        'humanoid':'Humanoid AI','mental-health':'Mental Health','digital-twin':'Digital Twins','clinical-ai':'Clinical AI',
+        'hci-startups':'HCI & Startups','ai-coaching':'AI Coaching','hci':'HCI',
+        'reliable-ml':'Reliable ML','calibration':'Calibration','time-series':'Time Series','machine-learning':'Machine Learning',
+        'forecasting':'Forecasting','robustness':'Robustness','multimodal':'Multimodal','representation-learning':'Representation Learning',
+        'dementia':'Dementia','simulation':'Simulation','ethical-ai':'Ethical AI','socially-interactive-agents':'Social Agents',
+        'ptsd':'PTSD','vr-ethics':'VR & Ethics','low-code':'Low-Code'
+      };
+
+      var domains = {
+        'ml':       { hue: 209, spread: 34, topics: ['ai','machine-learning','reliable-ml','calibration','time-series','forecasting','robustness','multimodal','representation-learning'] },
+        'clinical': { hue: 21,  spread: 34, topics: ['humanoid','mental-health','clinical-ai','digital-twin','diagnostic-ai','dementia','simulation','ptsd','socially-interactive-agents'] },
+        'hci':      { hue: 148, spread: 30, topics: ['hci-startups','ai-coaching','hci','software-engineering','low-code','human-centred-ai'] },
+        'trust':    { hue: 273, spread: 30, topics: ['trustworthy-ai','ai-safety','ethical-ai','vr-ethics','decision-support'] }
+      };
+      var colorMap = {};
+      Object.keys(domains).forEach(function(dk){
+        var d = domains[dk];
+        var n = d.topics.length;
+        d.topics.forEach(function(t,i){
+          var hue = d.hue + (n>1 ? (i/(n-1)-0.5)*d.spread : 0);
+          var sat = 55 + (i%3)*10;
+          var light = 46 + (i%4)*7;
+          colorMap[t] = 'hsl('+hue.toFixed(1)+','+sat+'%,'+light.toFixed(0)+'%)';
+        });
+      });
+      var topicIds = Array.from(new Set(papers.reduce(function(a,p){return a.concat(p.topics);},[])));
+      function color(t){ return colorMap[t] || '#94a3b8'; }
+
+      var keywordMap = {
+        'ai':['artificial intelligence','ai','applied ai','general ai'],
+        'machine-learning':['machine learning','ml','deep learning','neural network','neural networks','supervised learning'],
+        'reliable-ml':['reliable machine learning','reliability','model reliability','uncertainty quantification','trustworthy models'],
+        'calibration':['calibration','confidence calibration','model calibration','confidence estimation'],
+        'time-series':['time series','sequential data','temporal data','time-series forecasting'],
+        'forecasting':['forecasting','prediction','predictive modeling','predictive modelling'],
+        'robustness':['robustness','adversarial robustness','model robustness','distribution shift'],
+        'multimodal':['multimodal','multi-modal','cross-modal','sensor fusion','data fusion'],
+        'representation-learning':['representation learning','embeddings','feature learning','sparse representations'],
+        'humanoid':['humanoid robot','humanoid robotics','embodied ai','social robotics','robotics'],
+        'mental-health':['mental health','depression','anxiety','psychology','psychiatry','wellbeing','affective computing'],
+        'clinical-ai':['clinical ai','clinical decision support','medical ai','healthcare ai','digital health'],
+        'digital-twin':['digital twin','digital twins','patient digital twin'],
+        'diagnostic-ai':['diagnosis','diagnostic','medical diagnosis','screening','early detection'],
+        'dementia':['dementia','alzheimer','cognitive decline','cognitive impairment'],
+        'simulation':['simulation','simulation-based training','virtual patients','synthetic training data'],
+        'ptsd':['ptsd','post-traumatic stress','trauma','post traumatic stress disorder'],
+        'socially-interactive-agents':['socially interactive agents','conversational agents','social agents','virtual agents','embodied conversational agents'],
+        'vr-ethics':['vr','virtual reality','vr ethics','metaverse ethics','immersive technology ethics'],
+        'hci-startups':['startups','entrepreneurship','startup research','product development'],
+        'ai-coaching':['ai coaching','coaching technology','personalized coaching','behavior change','behaviour change'],
+        'hci':['human-computer interaction','human computer interaction','hci','user experience','ux research','usability'],
+        'software-engineering':['software engineering','software development','requirements engineering','agile'],
+        'low-code':['low-code','no-code','low code','no code','citizen development'],
+        'trustworthy-ai':['trustworthy ai','ai trust','responsible ai'],
+        'ai-safety':['ai safety','safety-critical ai','risk assessment','failure modes'],
+        'ethical-ai':['ethical ai','ai ethics','fairness in ai','responsible technology'],
+        'decision-support':['decision support','clinical decision support systems','decision making','triage'],
+        'human-centred-ai':['human-centred ai','human-centered ai','human-centred design','human-centered design','participatory design']
+      };
+      Object.keys(topicLabels).forEach(function(t){
+        keywordMap[t] = (keywordMap[t]||[]).concat([topicLabels[t].toLowerCase()]);
+      });
+
+      function normalizeText(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim(); }
+      function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+      function matchTopics(inputRaw){
+        var input = normalizeText(inputRaw);
+        if(!input) return [];
+        var scores = {};
+        topicIds.forEach(function(t){
+          var kws = keywordMap[t] || [];
+          var score = 0;
+          kws.forEach(function(k){ if(input.indexOf(k) !== -1){ score += k.split(' ').length; } });
+          if(score>0) scores[t]=score;
+        });
+        if(Object.keys(scores).length===0){
+          var stop = new Set(['and','the','in','of','for','with','on','a','an','to','research','work']);
+          var words = input.split(' ').filter(function(w){ return w.length>2 && !stop.has(w); });
+          topicIds.forEach(function(t){
+            var kws = keywordMap[t] || [];
+            var hit=0;
+            kws.forEach(function(k){ k.split(' ').forEach(function(kw){ if(words.indexOf(kw)!==-1) hit++; }); });
+            if(hit>0) scores[t]=hit*0.5;
+          });
+        }
+        var ranked = Object.keys(scores).sort(function(a,b){ return scores[b]-scores[a]; });
+        if(!ranked.length) return [];
+        var top = scores[ranked[0]];
+        return ranked.filter(function(t){ return scores[t] >= top*0.6; }).slice(0,4);
+      }
+
+      var nodes = [];
+      var graphLinks = [];
+      var topicDegree = {};
+      papers.forEach(function(p){ p.topics.forEach(function(t){ topicDegree[t]=(topicDegree[t]||0)+1; }); });
+
+      topicIds.forEach(function(t){
+        nodes.push({id:'t:'+t, type:'topic', key:t, label:topicLabels[t]||t, val: 4.5 + Math.sqrt(topicDegree[t])*3, color: color(t)});
+      });
+      papers.forEach(function(p){
+        nodes.push({id:p.id, type:'paper', title:p.title, shortTitle:p.shortTitle, authors:p.authors, venue:p.venue, url:p.url, topics:p.topics, primary:p.topics[0], val: 1.7 + p.topics.length*0.32, color: color(p.topics[0])});
+        p.topics.forEach(function(t){ graphLinks.push({source:p.id, target:'t:'+t}); });
+        for(var i=0;i<p.topics.length-1;i++){
+          graphLinks.push({source:'t:'+p.topics[i], target:'t:'+p.topics[i+1], weak:true});
+        }
+      });
+
+      var nodeById = {};
+      nodes.forEach(function(n){ nodeById[n.id]=n; });
+
+      var panel = document.getElementById('pubGraphPanel');
+      function showPanel(d){
+        if(!panel) return;
+        if(d.type==='paper'){
+          panel.innerHTML =
+            '<div class="pg-panel-kicker">Paper</div>' +
+            '<h3 class="pg-panel-title">'+d.title+'</h3>' +
+            '<div class="pg-panel-meta">'+d.authors+'</div>' +
+            '<div class="pg-panel-meta">'+d.venue+'</div>' +
+            '<div class="pg-panel-topics">'+d.topics.map(function(t){
+              var c=color(t);
+              return '<span class="pg-chip" style="background:'+c+'22;color:'+c+';border-color:'+c+'77">'+(topicLabels[t]||t)+'</span>';
+            }).join('')+'</div>' +
+            (d.url? '<a class="pg-panel-link" href="'+d.url+'" target="_blank" rel="noopener">Open paper →</a>' : '<div class="pg-panel-meta">Link coming soon</div>');
+        } else {
+          var related = papers.filter(function(p){ return p.topics.indexOf(d.key)!==-1; });
+          panel.innerHTML =
+            '<div class="pg-panel-kicker" style="color:'+color(d.key)+'">Topic</div>' +
+            '<h3 class="pg-panel-title">'+d.label+'</h3>' +
+            '<div class="pg-panel-meta">'+related.length+' paper'+(related.length===1?'':'s')+'</div>' +
+            '<div class="pg-panel-list">'+related.map(function(p){
+              return '<a href="'+(p.url||'#')+'" target="_blank" rel="noopener" class="pg-panel-list-item">'+p.title+'</a>';
+            }).join('')+'</div>';
+        }
+      }
+
+      var neighborMap = {};
+      nodes.forEach(function(n){ neighborMap[n.id]=new Set(); });
+      graphLinks.forEach(function(l){ neighborMap[l.source].add(l.target); neighborMap[l.target].add(l.source); });
+
+      var isolatedId = null, hoverId = null;
+      var matchedSet = null, pulsePhase = 0, pulseTimer = null;
+      function activeId(){ return isolatedId || hoverId; }
+      function isConnected(id){
+        if(matchedSet) return matchedSet.has(id);
+        var a = activeId();
+        if(!a) return true;
+        return id===a || (neighborMap[a] && neighborMap[a].has(id));
+      }
+      function parseHsl(str){
+        var m = /hsl\(([\-\d.]+),\s*([\d.]+)%,\s*([\d.]+)%\)/.exec(str||'');
+        return m ? {h:parseFloat(m[1]), s:parseFloat(m[2]), l:parseFloat(m[3])} : null;
+      }
+      function pulseColorFor(base, phase){
+        var hsl = parseHsl(base);
+        if(!hsl) return base;
+        var l = Math.min(88, hsl.l + 16 + 14*Math.sin(phase));
+        var s = Math.min(92, hsl.s + 12);
+        return 'hsl('+hsl.h.toFixed(1)+','+s.toFixed(0)+'%,'+l.toFixed(1)+'%)';
+      }
+      function stopPulse(){ if(pulseTimer){ clearInterval(pulseTimer); pulseTimer=null; } }
+      function startPulse(){
+        stopPulse();
+        pulseTimer = setInterval(function(){
+          pulsePhase += 0.35;
+          Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor());
+        }, 90);
+      }
+
+      var NODE_REL_SIZE = 4.2;
+      function sphereRadius(n){ return Math.cbrt(n.val) * NODE_REL_SIZE; }
+
+      var Graph = ForceGraph3D()(container)
+        .backgroundColor('#0a0c14')
+        .graphData({nodes:nodes, links:graphLinks})
+        .nodeId('id')
+        .nodeVal('val')
+        .nodeRelSize(NODE_REL_SIZE)
+        .nodeResolution(20)
+        .nodeOpacity(0.93)
+        .nodeColor(function(n){
+          if(matchedSet){
+            return matchedSet.has(n.id) ? pulseColorFor(n.color, pulsePhase) : 'rgba(90,96,110,0.1)';
+          }
+          return isConnected(n.id) ? n.color : 'rgba(90,96,110,0.15)';
+        })
+        .nodeLabel(function(n){ return n.type==='topic' ? n.label : n.shortTitle; })
+        .linkColor(function(l){
+          var sid = l.source.id||l.source, tid = l.target.id||l.target;
+          if(matchedSet){
+            var m = matchedSet.has(sid) && matchedSet.has(tid);
+            return m ? 'rgba(255,255,255,'+(0.3+0.25*Math.sin(pulsePhase)).toFixed(2)+')' : 'rgba(120,130,150,0.02)';
+          }
+          var on = isConnected(sid) && isConnected(tid);
+          return on ? 'rgba(150,160,180,0.4)' : 'rgba(120,130,150,0.03)';
+        })
+        .linkWidth(function(l){ return l.weak ? 0.35 : 0.55; })
+        .linkOpacity(0.85)
+        .enableNodeDrag(true)
+        .nodeThreeObjectExtend(true)
+        .nodeThreeObject(function(n){
+          var text = n.type==='topic' ? n.label : n.shortTitle;
+          var sprite = new SpriteText(text);
+          sprite.color = n.type==='topic' ? '#f1f5f9' : '#9aa4b5';
+          sprite.textHeight = n.type==='topic' ? 2.9 : 2.1;
+          sprite.fontFace = n.type==='topic'
+            ? "Georgia, 'Iowan Old Style', 'Times New Roman', serif"
+            : "system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
+          sprite.fontWeight = n.type==='topic' ? '700' : '500';
+          sprite.backgroundColor = 'rgba(10,12,20,0.55)';
+          sprite.padding = n.type==='topic' ? 1.6 : 1.1;
+          sprite.borderRadius = 2;
+          sprite.position.y = sphereRadius(n) + (n.type==='topic' ? 2.2 : 1.6);
+          return sprite;
+        })
+        .onNodeHover(function(n){
+          container.style.cursor = n ? 'pointer' : 'grab';
+          if(matchedSet || isolatedId) return;
+          hoverId = n ? n.id : null;
+          if(n) showPanel(n);
+          Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor());
+        })
+        .onNodeClick(function(n){
+          if(matchedSet){ clearMatch(); }
+          if(n.type==='paper' && n.url){ window.open(n.url,'_blank'); }
+          isolatedId = (isolatedId===n.id) ? null : n.id;
+          hoverId = null;
+          showPanel(n);
+          syncLegend();
+          Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor());
+        })
+        .onBackgroundClick(function(){
+          if(matchedSet){ clearMatch(); }
+          isolatedId = null;
+          hoverId = null;
+          syncLegend();
+          Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor());
+        });
+
+      Graph.d3Force('charge').strength(function(n){ return n.type==='topic' ? -170 : -55; }).distanceMax(500);
+      Graph.d3Force('link')
+        .distance(function(l){ return l.weak ? 70 : (l.target.type==='topic' ? 55 : 34); })
+        .strength(function(l){ return l.weak ? 0.25 : 0.55; });
+      Graph.warmupTicks(80).cooldownTicks(200);
+
+      Graph.width(container.clientWidth);
+      Graph.height(container.clientHeight);
+      window.addEventListener('resize', function(){
+        Graph.width(container.clientWidth);
+        Graph.height(container.clientHeight);
+      });
+      Graph.cameraPosition({ x: 0, y: 0, z: 600 });
+      Graph.onEngineStop(function(){ Graph.zoomToFit(600, 50); });
+
+      var legend = document.getElementById('pubGraphLegend');
+      function syncLegend(){
+        if(!legend) return;
+        legend.querySelectorAll('.pg-legend-btn').forEach(function(b){
+          b.classList.toggle('active', isolatedId==='t:'+b.dataset.topic);
+        });
+      }
+      if(legend){
+        legend.innerHTML = topicIds.map(function(t){
+          return '<button class="pg-legend-btn" data-topic="'+t+'" style="--c:'+color(t)+'"><span class="pg-dot" style="color:'+color(t)+'"></span>'+(topicLabels[t]||t)+'</button>';
+        }).join('');
+        legend.querySelectorAll('.pg-legend-btn').forEach(function(btn){
+          btn.addEventListener('click', function(){
+            if(matchedSet){ clearMatch(); }
+            var t = btn.dataset.topic, id='t:'+t;
+            isolatedId = (isolatedId===id)? null : id;
+            hoverId = null;
+            var n = nodeById[id];
+            if(n) showPanel(n);
+            syncLegend();
+            Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor());
+          });
+        });
+      }
+
+      var collabInput = document.getElementById('collabInput');
+      var collabBtn = document.getElementById('collabBtn');
+      var collabClear = document.getElementById('collabClear');
+
+      function showMatchPanel(query, matches){
+        var papersSet = new Set();
+        matches.forEach(function(t){
+          papers.forEach(function(p){ if(p.topics.indexOf(t)!==-1) papersSet.add(p); });
+        });
+        var relatedPapers = Array.from(papersSet);
+        panel.innerHTML =
+          '<div class="pg-panel-kicker">Collaboration match</div>' +
+          '<h3 class="pg-panel-title">Overlap with &ldquo;'+escapeHtml(query)+'&rdquo;</h3>' +
+          '<div class="pg-panel-topics">'+matches.map(function(t){
+            var c=color(t);
+            return '<span class="pg-chip" style="background:'+c+'22;color:'+c+';border-color:'+c+'77">'+(topicLabels[t]||t)+'</span>';
+          }).join('')+'</div>' +
+          '<div class="pg-panel-meta" style="margin-top:10px">'+relatedPapers.length+' related paper'+(relatedPapers.length===1?'':'s')+' — pulsing in the graph now.</div>' +
+          '<div class="pg-panel-list">'+relatedPapers.map(function(p){
+            return '<a href="'+(p.url||'#')+'" target="_blank" rel="noopener" class="pg-panel-list-item">'+p.title+'</a>';
+          }).join('')+'</div>';
+      }
+      function showNoMatchPanel(query){
+        panel.innerHTML =
+          '<div class="pg-panel-kicker">Collaboration match</div>' +
+          '<h3 class="pg-panel-title">No direct overlap found for &ldquo;'+escapeHtml(query)+'&rdquo;</h3>' +
+          '<div class="pg-panel-meta">Try a broader or different term, or browse the topic list below the graph to see what this programme covers.</div>';
+      }
+      function clearMatch(){
+        matchedSet = null;
+        stopPulse();
+        if(collabClear) collabClear.style.display = 'none';
+      }
+
+      function runMatch(){
+        if(!collabInput) return;
+        var val = collabInput.value;
+        var matches = matchTopics(val);
+        isolatedId = null; hoverId = null;
+        if(!matches.length){
+          clearMatch();
+          showNoMatchPanel(val);
+          Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor());
+          return;
+        }
+        var set = new Set();
+        matches.forEach(function(t){
+          var id = 't:'+t;
+          set.add(id);
+          neighborMap[id].forEach(function(x){ set.add(x); });
+        });
+        matchedSet = set;
+        pulsePhase = 0;
+        showMatchPanel(val, matches);
+        syncLegend();
+        startPulse();
+        if(collabClear) collabClear.style.display = 'inline-block';
+      }
+
+      if(collabBtn) collabBtn.addEventListener('click', runMatch);
+      if(collabInput) collabInput.addEventListener('keydown', function(ev){ if(ev.key==='Enter') runMatch(); });
+      if(collabClear) collabClear.addEventListener('click', function(){
+        clearMatch();
+        if(collabInput) collabInput.value = '';
+        panel.innerHTML = '<div class="pubgraph-panel-empty">Select a paper or topic to see details.</div>';
+        syncLegend();
+        Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor());
+      });
+    }
+
+    if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', function(){ setTimeout(initPubGraph, 0); }); }
+    else { setTimeout(initPubGraph, 0); }
+  })();
+  </script>
+   
 </section>
 
 
