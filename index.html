@@ -3652,15 +3652,15 @@
           var text = n.type==='topic' ? n.label : n.shortTitle;
           var sprite = new SpriteText(text);
           sprite.color = n.type==='topic' ? '#f1f5f9' : '#9aa4b5';
-          sprite.textHeight = n.type==='topic' ? 2.9 : 2.1;
+          sprite.textHeight = n.type==='topic' ? 3.2 : 2.4;
           sprite.fontFace = n.type==='topic'
             ? "Georgia, 'Iowan Old Style', 'Times New Roman', serif"
             : "system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
           sprite.fontWeight = n.type==='topic' ? '700' : '500';
-          sprite.backgroundColor = 'rgba(10,12,20,0.55)';
-          sprite.padding = n.type==='topic' ? 1.6 : 1.1;
+          sprite.backgroundColor = 'rgba(10,12,20,0.65)';
+          sprite.padding = n.type==='topic' ? 1.8 : 1.3;
           sprite.borderRadius = 2;
-          sprite.position.y = sphereRadius(n) + (n.type==='topic' ? 5.5 : 4.0);
+          sprite.position.y = sphereRadius(n) + (n.type==='topic' ? 6.5 : 4.8);
           return sprite;
         })
         .onNodeHover(function(n){
