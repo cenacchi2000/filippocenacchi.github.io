@@ -4337,35 +4337,30 @@
   </div>
 </section>
 
-<!-- Student Feedback -->
 <section id="student-feedback" class="section">
   <h2>Student Feedback</h2>
 
   <style>
     .feedback-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
+      grid-template-columns:1fr;
+      gap:18px;
     }
     .feedback-card{
       display:flex;
-      flex-direction:column;
-      gap:14px;
+      flex-direction:row;
+      align-items:flex-start;
+      gap:20px;
       border:1px solid var(--border);
       border-radius:18px;
       padding:20px;
       background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
       box-shadow:var(--shadow);
     }
-    .feedback-head{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
     .feedback-avatar{
-      width:56px;
-      height:56px;
-      border-radius:50%;
+      width:88px;
+      height:88px;
+      border-radius:16px;
       object-fit:cover;
       border:1px solid var(--border);
       box-shadow:var(--shadow);
@@ -4378,7 +4373,13 @@
       justify-content:center;
       font-weight:800;
       color:#475569;
-      font-size:18px;
+      font-size:22px;
+    }
+    .feedback-body{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width:0;
     }
     .feedback-name{
       font-weight:800;
@@ -4388,10 +4389,16 @@
     .feedback-role{
       font-size:12.5px;
       color:var(--subtle);
-      margin-top:2px;
+    }
+    .feedback-email{
+      font-size:12px;
+    }
+    .feedback-email a{
+      color:var(--brand-ink);
+      font-weight:600;
     }
     .feedback-quote{
-      margin:0;
+      margin:8px 0 0;
       font-size:14.5px;
       line-height:1.65;
       color:var(--text);
@@ -4410,92 +4417,80 @@
       font-weight:800;
       margin-left:2px;
     }
-    .feedback-email{
-      margin-top:2px;
-      font-size:12px;
-    }
-    .feedback-email a{
-      color:var(--brand-ink);
-      font-weight:600;
+    @media (max-width:600px){
+      .feedback-card{
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+      }
     }
   </style>
 
   <div class="card feedback-grid">
 
     <div class="feedback-card">
-      <div class="feedback-head">
-        <img class="feedback-avatar" src="chieri-ishikawa.jpg" alt="Chieri Ishikawa">
-        <div>
-          <div class="feedback-name">Chieri Ishikawa</div>
-          <div class="feedback-role">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
-          <div class="feedback-email"><a href="mailto:chieri.ishikawa@students.mq.edu.au">chieri.ishikawa@students.mq.edu.au</a></div>
-        </div>
+      <img class="feedback-avatar" src="chieri-ishikawa.jpg" alt="Chieri Ishikawa">
+      <div class="feedback-body">
+        <div class="feedback-name">Chieri Ishikawa</div>
+        <div class="feedback-role">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
+        <div class="feedback-email"><a href="mailto:chieri.ishikawa@students.mq.edu.au">chieri.ishikawa@students.mq.edu.au</a></div>
+        <p class="feedback-quote">
+          Filippo was a very supportive supervisor during my summer research internship on predicting
+          Parkinson's disease progression. He gave us a challenging and meaningful research problem using
+          the PPMI dataset, while giving us enough direction to explore the problem and make our own
+          decisions. He pointed us towards relevant prior work and modelling approaches, and often
+          suggested experiments that we would not have thought to run ourselves, such as ablation
+          experiments to understand how much the model depended on each modality. What I particularly
+          valued was that his guidance encouraged us to think beyond simply improving model performance and
+          to question what our results actually meant. I also really appreciated his feedback on how we
+          presented our work, especially his emphasis on making visualisations understandable at a glance
+          even to non-technical readers. Through his supervision, I became more confident not only
+          technically, but also in how I approach, interpret, and communicate research. I'm very grateful
+          for his support throughout the internship and would gladly work with him again.
+        </p>
       </div>
-      <p class="feedback-quote">
-        Filippo was a very supportive supervisor during my summer research internship on predicting
-        Parkinson's disease progression. He gave us a challenging and meaningful research problem using
-        the PPMI dataset, while giving us enough direction to explore the problem and make our own
-        decisions. He pointed us towards relevant prior work and modelling approaches, and often
-        suggested experiments that we would not have thought to run ourselves, such as ablation
-        experiments to understand how much the model depended on each modality. What I particularly
-        valued was that his guidance encouraged us to think beyond simply improving model performance and
-        to question what our results actually meant. I also really appreciated his feedback on how we
-        presented our work, especially his emphasis on making visualisations understandable at a glance
-        even to non-technical readers. Through his supervision, I became more confident not only
-        technically, but also in how I approach, interpret, and communicate research. I'm very grateful
-        for his support throughout the internship and would gladly work with him again.
-      </p>
     </div>
 
     <div class="feedback-card">
-      <div class="feedback-head">
-        <img class="feedback-avatar" src="tuong-vy-vu.jpg" alt="Tuong Vy Vu">
-        <div>
-          <div class="feedback-name">Tuong Vy Vu</div>
-          <div class="feedback-role">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
-          <div class="feedback-email"><a href="mailto:tuongvy.vu@students.mq.edu.au">tuongvy.vu@students.mq.edu.au</a></div>
-        </div>
+      <img class="feedback-avatar" src="tuong-vy-vu.jpg" alt="Tuong Vy Vu">
+      <div class="feedback-body">
+        <div class="feedback-name">Tuong Vy Vu</div>
+        <div class="feedback-role">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
+        <div class="feedback-email"><a href="mailto:tuongvy.vu@students.mq.edu.au">tuongvy.vu@students.mq.edu.au</a></div>
+        <p class="feedback-quote">
+          I had the opportunity to work with Filippo during Macquarie University's 2025–2026 FSE Summer
+          Research Internship, where he supervised my project on modelling Parkinson's disease severity
+          using the Parkinson's Progression Markers Initiative (PPMI) dataset. As this was my first time
+          working with a large medical dataset, Filippo's guidance was particularly valuable. He encouraged
+          us to begin with exploratory data analysis (EDA), which helped us understand the data and identify
+          the key attributes and modalities needed for our modelling task before moving on to model
+          development. He also introduced us to Transformer-based models, which were not really new but
+          that's the first time that me and my co-intern implement it, and guided us through implementing
+          them for disease severity prediction. I especially found his advice to evaluate our new models
+          using different metrics and datasets useful, as it encouraged us to think beyond simply getting a
+          model to work and instead consider how well it generalised. Overall, Filippo provided clear
+          research direction while giving us the opportunity to explore and learn independently, and his
+          guidance helped me develop both my technical skills and my understanding of the research process.
+        </p>
       </div>
-      <p class="feedback-quote">
-        I had the opportunity to work with Filippo during Macquarie University's 2025–2026 FSE Summer
-        Research Internship, where he supervised my project on modelling Parkinson's disease severity
-        using the Parkinson's Progression Markers Initiative (PPMI) dataset. As this was my first time
-        working with a large medical dataset, Filippo's guidance was particularly valuable. He encouraged
-        us to begin with exploratory data analysis (EDA), which helped us understand the data and identify
-        the key attributes and modalities needed for our modelling task before moving on to model
-        development. He also introduced us to Transformer-based models, which were not really new but
-        that's the first time that me and my co-intern implement it, and guided us through implementing
-        them for disease severity prediction. I especially found his advice to evaluate our new models
-        using different metrics and datasets useful, as it encouraged us to think beyond simply getting a
-        model to work and instead consider how well it generalised. Overall, Filippo provided clear
-        research direction while giving us the opportunity to explore and learn independently, and his
-        guidance helped me develop both my technical skills and my understanding of the research process.
-      </p>
     </div>
 
     <div class="feedback-card">
-      <div class="feedback-head">
-        <span class="feedback-avatar feedback-avatar--initials">TM</span>
-        <div>
-          <div class="feedback-name">Tuong Vy Vu &amp; Minh Duy</div>
-          <div class="feedback-role">COMP3850 · Computing Industry Project</div>
-          <div class="feedback-email">
-            <a href="mailto:tuongvy.vu@students.mq.edu.au">tuongvy.vu@students.mq.edu.au</a>
-            · <a href="mailto:minhduy.giang@students.mq.edu.au">minhduy.giang@students.mq.edu.au</a>
-          </div>
-        </div>
+      <img class="feedback-avatar" src="minh-duy-giang.jpg" alt="Minh Duy Giang">
+      <div class="feedback-body">
+        <div class="feedback-name">Minh Duy Giang</div>
+        <div class="feedback-role">COMP3850 · Computing Industry Project</div>
+        <div class="feedback-email"><a href="mailto:minhduy.giang@students.mq.edu.au">minhduy.giang@students.mq.edu.au</a></div>
+        <p class="feedback-quote">
+          Just wanted to say a genuine thank you for jumping in to help us halfway through the COMP3850
+          project, sitting down to actually help us sort out that messy Python script saved us a ton of
+          stress and really kept us on track.
+        </p>
       </div>
-      <p class="feedback-quote">
-        Just wanted to say a genuine thank you for jumping in to help us halfway through the COMP3850
-        project — sitting down to actually help us sort out that messy Python script saved us a ton of
-        stress and really kept us on track.
-      </p>
     </div>
 
   </div>
 </section>
-
-
       
    <!-- Experience -->
 <section id="experience" class="section">
