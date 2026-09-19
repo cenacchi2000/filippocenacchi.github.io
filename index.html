@@ -4341,155 +4341,432 @@
   <h2>Student Feedback</h2>
 
   <style>
-    .feedback-grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:18px;
-    }
-    .feedback-card{
-      display:flex;
-      flex-direction:row;
-      align-items:flex-start;
-      gap:20px;
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:20px;
-      background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
-      box-shadow:var(--shadow);
-    }
-    .feedback-avatar{
-      width:88px;
-      height:88px;
-      border-radius:16px;
-      object-fit:cover;
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-      flex-shrink:0;
-      background:#e2e8f0;
-    }
-    .feedback-avatar--initials{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:800;
-      color:#475569;
-      font-size:22px;
-    }
-    .feedback-body{
+    .fbgallery{
+      max-width:920px;
+      margin:0 auto;
       display:flex;
       flex-direction:column;
-      gap:6px;
-      min-width:0;
+      align-items:center;
+      gap:36px;
     }
-    .feedback-name{
+
+    .fbgallery-intro{
+      max-width:640px;
+      margin:0;
+      text-align:center;
+      font-size:14.5px;
+      line-height:1.6;
+      color:var(--subtle);
+    }
+
+    /* ---- Thumbnail row (the "gallery") ---- */
+    .fbgallery-thumbs{
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      gap:22px;
+      flex-wrap:wrap;
+      padding:6px 0 2px;
+    }
+
+    .fbgallery-thumb{
+      position:relative;
+      width:86px;
+      height:86px;
+      border-radius:50%;
+      padding:0;
+      border:3px solid transparent;
+      background:#e2e8f0;
+      cursor:default;
+      opacity:.5;
+      transform:scale(.9);
+      box-shadow:0 6px 16px rgba(15,23,42,.08);
+      transition:opacity .5s ease, transform .5s ease, border-color .5s ease, box-shadow .5s ease;
+    }
+    .fbgallery-thumb img{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      object-fit:cover;
+      display:block;
+    }
+    .fbgallery-thumb .fbgallery-thumb-name{
+      position:absolute;
+      left:50%;
+      top:calc(100% + 8px);
+      transform:translateX(-50%);
+      font-size:11px;
+      font-weight:700;
+      color:var(--subtle);
+      white-space:nowrap;
+      opacity:0;
+      transition:opacity .4s ease;
+    }
+    .fbgallery-thumb.is-active{
+      opacity:1;
+      transform:scale(1.22);
+      border-color:var(--brand-ink);
+      box-shadow:0 16px 34px rgba(37,99,235,.35);
+    }
+    .fbgallery-thumb.is-active .fbgallery-thumb-name{
+      opacity:1;
+    }
+
+    /* ---- Stage: the flipping spotlight card ---- */
+    .fbgallery-stage{
+      width:100%;
+      max-width:760px;
+      perspective:1900px;
+    }
+
+    .fbgallery-flip{
+      position:relative;
+      width:100%;
+      min-height:300px;
+      transform-style:preserve-3d;
+      transition:transform .8s cubic-bezier(.4,.15,.2,1);
+    }
+    .fbgallery-flip.is-flipped{
+      transform:rotateY(180deg);
+    }
+
+    .fbgallery-face{
+      position:absolute;
+      inset:0;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
+      border-radius:24px;
+      border:1px solid var(--border);
+      box-shadow:0 16px 40px rgba(15,23,42,.14);
+      box-sizing:border-box;
+      background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+    }
+
+    .fbgallery-face-front{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:36px 28px;
+      gap:6px;
+    }
+    .fbgallery-face-front img{
+      width:150px;
+      height:150px;
+      border-radius:50%;
+      object-fit:cover;
+      border:5px solid #fff;
+      box-shadow:0 18px 38px rgba(15,23,42,.2);
+      transition:opacity .25s ease;
+    }
+    .fbgallery-stage-name{
+      margin-top:18px;
+      font-size:21px;
+      font-weight:850;
+      color:var(--text);
+      letter-spacing:-.02em;
+    }
+    .fbgallery-stage-role{
+      font-size:13px;
+      color:var(--subtle);
+      max-width:420px;
+    }
+    .fbgallery-stage-hint{
+      margin-top:14px;
+      font-size:11.5px;
+      font-weight:800;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      color:var(--brand-ink);
+      opacity:.85;
+    }
+
+    .fbgallery-face-back{
+      transform:rotateY(180deg);
+      padding:26px 28px;
+      overflow-y:auto;
+      max-height:460px;
+    }
+
+    .fb-quote-panel{ display:none; }
+    .fb-quote-panel.is-current{ display:block; }
+
+    .fb-quote-head{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+      padding-bottom:12px;
+      border-bottom:1px solid var(--border);
+    }
+    .fb-quote-head img{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      object-fit:cover;
+      border:1px solid var(--border);
+      flex-shrink:0;
+    }
+    .fb-quote-name{
       font-weight:800;
       font-size:15px;
       color:var(--text);
     }
-    .feedback-role{
-      font-size:12.5px;
-      color:var(--subtle);
-    }
-    .feedback-email{
+    .fb-quote-role{
       font-size:12px;
+      color:var(--subtle);
+      margin-top:1px;
     }
-    .feedback-email a{
+    .fb-quote-email{
+      font-size:11.5px;
+      margin-top:2px;
+    }
+    .fb-quote-email a{
       color:var(--brand-ink);
       font-weight:600;
     }
-    .feedback-quote{
-      margin:8px 0 0;
-      font-size:14.5px;
+    .fb-quote-text{
+      margin:0;
+      font-size:14px;
       line-height:1.65;
       color:var(--text);
     }
-    .feedback-quote::before{
+    .fb-quote-text::before{
       content:"\201C";
       color:var(--brand-ink);
-      font-size:22px;
+      font-size:20px;
       font-weight:800;
       margin-right:2px;
     }
-    .feedback-quote::after{
+    .fb-quote-text::after{
       content:"\201D";
       color:var(--brand-ink);
-      font-size:22px;
+      font-size:20px;
       font-weight:800;
       margin-left:2px;
     }
-    @media (max-width:600px){
-      .feedback-card{
-        flex-direction:column;
-        align-items:center;
-        text-align:center;
-      }
+
+    @media (max-width:640px){
+      .fbgallery-thumbs{ gap:14px; }
+      .fbgallery-thumb{ width:66px; height:66px; }
+      .fbgallery-face-front img{ width:118px; height:118px; }
+      .fbgallery-face-back{ max-height:400px; padding:20px 18px; }
     }
   </style>
 
-  <div class="card feedback-grid">
+  <div class="card fbgallery">
+    <p class="fbgallery-intro">
+      A rotating look at feedback from students I've supervised and taught — click through pauses automatically,
+      each portrait stepping forward and turning over to reveal their note.
+    </p>
 
-    <div class="feedback-card">
-      <img class="feedback-avatar" src="chieri-ishikawa.jpg" alt="Chieri Ishikawa">
-      <div class="feedback-body">
-        <div class="feedback-name">Chieri Ishikawa</div>
-        <div class="feedback-role">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
-        <div class="feedback-email"><a href="mailto:chieri.ishikawa@students.mq.edu.au">chieri.ishikawa@students.mq.edu.au</a></div>
-        <p class="feedback-quote">
-          Filippo was a very supportive supervisor during my summer research internship on predicting
-          Parkinson's disease progression. He gave us a challenging and meaningful research problem using
-          the PPMI dataset, while giving us enough direction to explore the problem and make our own
-          decisions. He pointed us towards relevant prior work and modelling approaches, and often
-          suggested experiments that we would not have thought to run ourselves, such as ablation
-          experiments to understand how much the model depended on each modality. What I particularly
-          valued was that his guidance encouraged us to think beyond simply improving model performance and
-          to question what our results actually meant. I also really appreciated his feedback on how we
-          presented our work, especially his emphasis on making visualisations understandable at a glance
-          even to non-technical readers. Through his supervision, I became more confident not only
-          technically, but also in how I approach, interpret, and communicate research. I'm very grateful
-          for his support throughout the internship and would gladly work with him again.
-        </p>
-      </div>
+    <div class="fbgallery-thumbs" id="fbThumbs">
+      <button type="button" class="fbgallery-thumb" data-index="0" aria-label="Chieri Ishikawa">
+        <img src="chieri-ishikawa.jpg" alt="Chieri Ishikawa">
+        <span class="fbgallery-thumb-name">Chieri</span>
+      </button>
+      <button type="button" class="fbgallery-thumb" data-index="1" aria-label="Tuong Vy Vu">
+        <img src="tuong-vy-vu.jpg" alt="Tuong Vy Vu">
+        <span class="fbgallery-thumb-name">Tuong Vy</span>
+      </button>
+      <button type="button" class="fbgallery-thumb" data-index="2" aria-label="Minh Duy Giang">
+        <img src="minh-duy-giang.jpg" alt="Minh Duy Giang">
+        <span class="fbgallery-thumb-name">Minh Duy</span>
+      </button>
     </div>
 
-    <div class="feedback-card">
-      <img class="feedback-avatar" src="tuong-vy-vu.jpg" alt="Tuong Vy Vu">
-      <div class="feedback-body">
-        <div class="feedback-name">Tuong Vy Vu</div>
-        <div class="feedback-role">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
-        <div class="feedback-email"><a href="mailto:tuongvy.vu@students.mq.edu.au">tuongvy.vu@students.mq.edu.au</a></div>
-        <p class="feedback-quote">
-          I had the opportunity to work with Filippo during Macquarie University's 2025–2026 FSE Summer
-          Research Internship, where he supervised my project on modelling Parkinson's disease severity
-          using the Parkinson's Progression Markers Initiative (PPMI) dataset. As this was my first time
-          working with a large medical dataset, Filippo's guidance was particularly valuable. He encouraged
-          us to begin with exploratory data analysis (EDA), which helped us understand the data and identify
-          the key attributes and modalities needed for our modelling task before moving on to model
-          development. He also introduced us to Transformer-based models, which were not really new but
-          that's the first time that me and my co-intern implement it, and guided us through implementing
-          them for disease severity prediction. I especially found his advice to evaluate our new models
-          using different metrics and datasets useful, as it encouraged us to think beyond simply getting a
-          model to work and instead consider how well it generalised. Overall, Filippo provided clear
-          research direction while giving us the opportunity to explore and learn independently, and his
-          guidance helped me develop both my technical skills and my understanding of the research process.
-        </p>
+    <div class="fbgallery-stage">
+      <div class="fbgallery-flip" id="fbFlip">
+
+        <!-- FRONT: the spotlighted portrait -->
+        <div class="fbgallery-face fbgallery-face-front">
+          <img id="fbStageImg" src="chieri-ishikawa.jpg" alt="">
+          <div class="fbgallery-stage-name" id="fbStageName">Chieri Ishikawa</div>
+          <div class="fbgallery-stage-role" id="fbStageRole">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
+          <div class="fbgallery-stage-hint">turning over…</div>
+        </div>
+
+        <!-- BACK: the feedback card -->
+        <div class="fbgallery-face fbgallery-face-back">
+
+          <div class="fb-quote-panel is-current" data-index="0">
+            <div class="fb-quote-head">
+              <img src="chieri-ishikawa.jpg" alt="Chieri Ishikawa">
+              <div>
+                <div class="fb-quote-name">Chieri Ishikawa</div>
+                <div class="fb-quote-role">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
+                <div class="fb-quote-email"><a href="mailto:chieri.ishikawa@students.mq.edu.au">chieri.ishikawa@students.mq.edu.au</a></div>
+              </div>
+            </div>
+            <p class="fb-quote-text">
+              Filippo was a very supportive supervisor during my summer research internship on predicting
+              Parkinson's disease progression. He gave us a challenging and meaningful research problem using
+              the PPMI dataset, while giving us enough direction to explore the problem and make our own
+              decisions. He pointed us towards relevant prior work and modelling approaches, and often
+              suggested experiments that we would not have thought to run ourselves, such as ablation
+              experiments to understand how much the model depended on each modality. What I particularly
+              valued was that his guidance encouraged us to think beyond simply improving model performance and
+              to question what our results actually meant. I also really appreciated his feedback on how we
+              presented our work, especially his emphasis on making visualisations understandable at a glance
+              even to non-technical readers. Through his supervision, I became more confident not only
+              technically, but also in how I approach, interpret, and communicate research. I'm very grateful
+              for his support throughout the internship and would gladly work with him again.
+            </p>
+          </div>
+
+          <div class="fb-quote-panel" data-index="1">
+            <div class="fb-quote-head">
+              <img src="tuong-vy-vu.jpg" alt="Tuong Vy Vu">
+              <div>
+                <div class="fb-quote-name">Tuong Vy Vu</div>
+                <div class="fb-quote-role">Summer Research Intern · Parkinson's disease modelling (PPMI dataset)</div>
+                <div class="fb-quote-email"><a href="mailto:tuongvy.vu@students.mq.edu.au">tuongvy.vu@students.mq.edu.au</a></div>
+              </div>
+            </div>
+            <p class="fb-quote-text">
+              I had the opportunity to work with Filippo during Macquarie University's 2025–2026 FSE Summer
+              Research Internship, where he supervised my project on modelling Parkinson's disease severity
+              using the Parkinson's Progression Markers Initiative (PPMI) dataset. As this was my first time
+              working with a large medical dataset, Filippo's guidance was particularly valuable. He encouraged
+              us to begin with exploratory data analysis (EDA), which helped us understand the data and identify
+              the key attributes and modalities needed for our modelling task before moving on to model
+              development. He also introduced us to Transformer-based models, which were not really new but
+              that's the first time that me and my co-intern implement it, and guided us through implementing
+              them for disease severity prediction. I especially found his advice to evaluate our new models
+              using different metrics and datasets useful, as it encouraged us to think beyond simply getting a
+              model to work and instead consider how well it generalised. Overall, Filippo provided clear
+              research direction while giving us the opportunity to explore and learn independently, and his
+              guidance helped me develop both my technical skills and my understanding of the research process.
+            </p>
+          </div>
+
+          <div class="fb-quote-panel" data-index="2">
+            <div class="fb-quote-head">
+              <img src="minh-duy-giang.jpg" alt="Minh Duy Giang">
+              <div>
+                <div class="fb-quote-name">Minh Duy Giang</div>
+                <div class="fb-quote-role">COMP3850 · Computing Industry Project</div>
+                <div class="fb-quote-email"><a href="mailto:minhduy.giang@students.mq.edu.au">minhduy.giang@students.mq.edu.au</a></div>
+              </div>
+            </div>
+            <p class="fb-quote-text">
+              Just wanted to say a genuine thank you for jumping in to help us halfway through the COMP3850
+              project, sitting down to actually help us sort out that messy Python script saved us a ton of
+              stress and really kept us on track.
+            </p>
+          </div>
+
+        </div>
       </div>
     </div>
-
-    <div class="feedback-card">
-      <img class="feedback-avatar" src="minh-duy-giang.jpg" alt="Minh Duy Giang">
-      <div class="feedback-body">
-        <div class="feedback-name">Minh Duy Giang</div>
-        <div class="feedback-role">COMP3850 · Computing Industry Project</div>
-        <div class="feedback-email"><a href="mailto:minhduy.giang@students.mq.edu.au">minhduy.giang@students.mq.edu.au</a></div>
-        <p class="feedback-quote">
-          Just wanted to say a genuine thank you for jumping in to help us halfway through the COMP3850
-          project, sitting down to actually help us sort out that messy Python script saved us a ton of
-          stress and really kept us on track.
-        </p>
-      </div>
-    </div>
-
   </div>
+
+  <script>
+  (function(){
+    var students = [
+      {
+        img: 'chieri-ishikawa.jpg',
+        name: 'Chieri Ishikawa',
+        role: "Summer Research Intern · Parkinson's disease modelling (PPMI dataset)",
+        readMs: 11000
+      },
+      {
+        img: 'tuong-vy-vu.jpg',
+        name: 'Tuong Vy Vu',
+        role: "Summer Research Intern · Parkinson's disease modelling (PPMI dataset)",
+        readMs: 12500
+      },
+      {
+        img: 'minh-duy-giang.jpg',
+        name: 'Minh Duy Giang',
+        role: 'COMP3850 · Computing Industry Project',
+        readMs: 6000
+      }
+    ];
+
+    var thumbs   = Array.prototype.slice.call(document.querySelectorAll('#fbThumbs .fbgallery-thumb'));
+    var flip     = document.getElementById('fbFlip');
+    var stageImg = document.getElementById('fbStageImg');
+    var stageName= document.getElementById('fbStageName');
+    var stageRole= document.getElementById('fbStageRole');
+    var panels   = Array.prototype.slice.call(document.querySelectorAll('.fb-quote-panel'));
+
+    if(!thumbs.length || !flip || !stageImg) return;
+
+    var FLIP_MS = 800;      // matches the CSS transition duration
+    var PAUSE_MS = 550;     // beat before the flip starts, and before handing off to the next student
+    var current = 0;
+    var timers = [];
+    var running = true;
+
+    function clearTimers(){
+      timers.forEach(function(t){ clearTimeout(t); });
+      timers = [];
+    }
+
+    function setActiveThumb(i){
+      thumbs.forEach(function(th, idx){ th.classList.toggle('is-active', idx === i); });
+    }
+
+    function setPanel(i){
+      panels.forEach(function(p){
+        p.classList.toggle('is-current', Number(p.dataset.index) === i);
+      });
+    }
+
+    function showStudent(i){
+      var s = students[i];
+      flip.classList.remove('is-flipped');
+      stageImg.src = s.img;
+      stageImg.alt = s.name;
+      stageName.textContent = s.name;
+      stageRole.textContent = s.role;
+      setPanel(i);
+      setActiveThumb(i);
+    }
+
+    function cycle(){
+      if(!running) return;
+      showStudent(current);
+
+      timers.push(setTimeout(function(){
+        flip.classList.add('is-flipped');
+      }, PAUSE_MS));
+
+      var readMs = students[current].readMs || 9000;
+
+      timers.push(setTimeout(function(){
+        flip.classList.remove('is-flipped');
+      }, PAUSE_MS + FLIP_MS + readMs));
+
+      timers.push(setTimeout(function(){
+        current = (current + 1) % students.length;
+        cycle();
+      }, PAUSE_MS + FLIP_MS + readMs + FLIP_MS + PAUSE_MS));
+    }
+
+    function goTo(i){
+      clearTimers();
+      current = i;
+      cycle();
+    }
+
+    thumbs.forEach(function(th){
+      th.addEventListener('click', function(){
+        goTo(Number(th.dataset.index));
+      });
+    });
+
+    var wrap = document.querySelector('#student-feedback .fbgallery');
+    if(wrap){
+      wrap.addEventListener('mouseenter', function(){ running = false; clearTimers(); });
+      wrap.addEventListener('mouseleave', function(){ running = true; cycle(); });
+    }
+
+    cycle();
+  })();
+  </script>
 </section>
       
    <!-- Experience -->
