@@ -4587,7 +4587,7 @@
     }
   </style>
 
-  <div class="fbgallery">
+    <div class="fbgallery">
 
     <div class="fbgallery-thumbs" id="fbThumbs">
       <button type="button" class="fbgallery-thumb" data-index="0" aria-label="Chieri Ishikawa">
@@ -4601,6 +4601,10 @@
       <button type="button" class="fbgallery-thumb" data-index="2" aria-label="Minh Duy Giang">
         <span class="fbgallery-thumb-photo"><img src="minh-duy-giang.jpg" alt="Minh Duy Giang"></span>
         <span class="fbgallery-thumb-name">Minh Duy Giang</span>
+      </button>
+      <button type="button" class="fbgallery-thumb" data-index="3" aria-label="Snehal Silaparasetti">
+        <span class="fbgallery-thumb-photo"><img src="snehal-silaparasetti.png" alt="Snehal Silaparasetti" style="object-position:50% 30%"></span>
+        <span class="fbgallery-thumb-name">Snehal Silaparasetti</span>
       </button>
     </div>
 
@@ -4685,6 +4689,21 @@
             </p>
           </div>
 
+          <div class="fb-quote-panel" data-index="3">
+            <div class="fb-quote-head">
+              <img src="snehal-silaparasetti.png" alt="Snehal Silaparasetti" style="object-position:50% 25%">
+              <div>
+                <div class="fb-quote-name">Snehal Silaparasetti</div>
+                <div class="fb-quote-role">Student mentee · Technology guidance</div>
+              </div>
+            </div>
+            <p class="fb-quote-text">
+              Filippo's guidance doesn't just answer questions, it clears the fog. It's like having a mentor
+              who speaks fluent student: sharp, kind, and practical. He turned my laptop hunt from a headache
+              into a confident choice.
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
@@ -4693,21 +4712,10 @@
   <script>
   (function(){
     var students = [
-      {
-        img: 'chieri-ishikawa.jpg',
-        name: 'Chieri Ishikawa',
-        role: "Summer Research Intern · Parkinson's disease modelling"
-      },
-      {
-        img: 'tuong-vy-vu.jpg',
-        name: 'Tuong Vy Vu',
-        role: "Summer Research Intern · Parkinson's disease modelling"
-      },
-      {
-        img: 'minh-duy-giang.jpg',
-        name: 'Minh Duy Giang',
-        role: 'COMP3850 · Computing Industry Project'
-      }
+      { img: 'chieri-ishikawa.jpg', name: 'Chieri Ishikawa', role: "Summer Research Intern · Parkinson's disease modelling" },
+      { img: 'tuong-vy-vu.jpg', name: 'Tuong Vy Vu', role: "Summer Research Intern · Parkinson's disease modelling" },
+      { img: 'minh-duy-giang.jpg', name: 'Minh Duy Giang', role: 'COMP3850 · Computing Industry Project' },
+      { img: 'snehal-silaparasetti.png', name: 'Snehal Silaparasetti', role: 'Student mentee · Technology guidance' }
     ];
 
     var thumbs   = Array.prototype.slice.call(document.querySelectorAll('#fbThumbs .fbgallery-thumb'));
@@ -4735,7 +4743,6 @@
     function openStudent(i){
       var s = students[i];
       current = i;
-
       flip.classList.remove('is-flipped');
       stageImg.src = s.img;
       stageImg.alt = s.name;
