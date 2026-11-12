@@ -6962,7 +6962,6 @@ body{
       teal:matte('#526b57'), gold:matte('#b68a45'), paper:matte('#fff0cb')
     };
     const shade = new T.MeshStandardMaterial({color:'#ffce80',emissive:'#e49139',emissiveIntensity:.46,roughness:1});
-    const sky = new T.MeshBasicMaterial({color:'#8e9fae'});
     const mesh = (geo,material,x,y,z,parent=roomScene) => {
       const object = new T.Mesh(geo,material);
       object.position.set(x,y,z);
@@ -6992,6 +6991,26 @@ body{
     const reflectedLamp = new T.PointLight('#ffc27d',13,7,2);
     reflectedLamp.position.set(3.10,2.41,.12);
     roomScene.add(reflectedLamp);
+    const sconceX=-.90, sconceY=2.60;
+    const agedBrass=new T.MeshStandardMaterial({color:'#b98b53',metalness:.57,roughness:.36});
+    const opal=new T.MeshStandardMaterial({color:'#fff1d4',emissive:'#ffcf83',emissiveIntensity:1.22,roughness:.35});
+    const plate=mesh(new T.CylinderGeometry(.18,.18,.044,28),agedBrass,sconceX,sconceY,-1.95);
+    plate.rotation.x=Math.PI/2;
+    const sconceArm=new T.QuadraticBezierCurve3(
+      new T.Vector3(sconceX,sconceY-.095,-1.91),
+      new T.Vector3(sconceX,sconceY-.24,-1.56),
+      new T.Vector3(sconceX,sconceY+.02,-1.53)
+    );
+    mesh(new T.TubeGeometry(sconceArm,20,.022,8,false),agedBrass,0,0,0);
+    const collar=mesh(new T.CylinderGeometry(.079,.10,.065,20),agedBrass,sconceX,sconceY+.02,-1.53);
+    collar.rotation.y=.12;
+    const globe=mesh(new T.SphereGeometry(.14,24,16),opal,sconceX,sconceY+.153,-1.53);
+    globe.scale.y=1.14;
+    globe.castShadow=false;
+    const sconceGlow=new T.PointLight('#ffd9a2',15,5.5,2);
+    sconceGlow.position.set(sconceX,sconceY+.15,-1.37);
+    roomScene.add(sconceGlow);
+
 
     box(13,.15,8,materials.floor,0,-.08,0);
     box(13,5.4,.16,materials.wall,0,2.65,-2.08);
@@ -7000,11 +7019,61 @@ body{
       box(.025,.012,7.6,materials.beam,i-6,.005,0);
     }
     box(12,.17,.17,materials.beam,0,.09,-1.94);
-    box(1.74,1.86,.09,materials.beam,1.7,2.94,-1.94);
-    box(1.55,1.66,.06,sky,1.7,2.94,-1.87);
-    box(.055,1.66,.08,materials.beam,1.7,2.94,-1.76);
-    box(1.55,.055,.08,materials.beam,1.7,3.0,-1.76);
-    box(1.94,.13,.3,materials.table,1.7,1.99,-1.83);
+    const viewCanvas=document.createElement('canvas');
+    viewCanvas.width=320;
+    viewCanvas.height=350;
+    const view=viewCanvas.getContext('2d');
+    const twilight=view.createLinearGradient(0,0,0,350);
+    twilight.addColorStop(0,'#455d7c');
+    twilight.addColorStop(.57,'#8597ad');
+    twilight.addColorStop(1,'#edc29c');
+    view.fillStyle=twilight;
+    view.fillRect(0,0,320,350);
+    const glow=view.createRadialGradient(230,218,6,230,218,122);
+    glow.addColorStop(0,'#f8d6b6a8');
+    glow.addColorStop(1,'#f8d6b600');
+    view.fillStyle=glow;
+    view.fillRect(0,0,320,350);
+    for(const [baseline,color,amplitude,phase] of [[263,'#768197',24,.3],[289,'#4c5c70',20,1.7],[324,'#34454f',16,3.2]]){
+      view.fillStyle=color;
+      view.beginPath();
+      view.moveTo(0,350);
+      for(let x=0;x<=320;x+=4){
+        view.lineTo(x,baseline+Math.sin(x*.019+phase)*amplitude+Math.cos(x*.047+phase)*amplitude*.33);
+      }
+      view.lineTo(320,350);
+      view.fill();
+    }
+    view.fillStyle='#293d43';
+    for(let index=0;index<27;index++){
+      const x=(index*47)%320;
+      const height=17+(index*31)%39;
+      const base=337+(index*17)%13;
+      for(let tier=0;tier<3;tier++){
+        const top=base-height+tier*height*.22;
+        const spread=height*(.12+tier*.045);
+        view.beginPath();
+        view.moveTo(x,top);
+        view.lineTo(x-spread,top+height*.53);
+        view.lineTo(x+spread,top+height*.53);
+        view.fill();
+      }
+    }
+    const landscape = new T.CanvasTexture(viewCanvas);
+    landscape.colorSpace=T.SRGBColorSpace;
+    const windowView = new T.MeshBasicMaterial({map:landscape});
+    const paintedTrim = new T.MeshStandardMaterial({color:'#ba906c',roughness:.73});
+    box(1.91,1.97,.10,materials.beam,1.7,2.94,-1.94);
+    mesh(new T.PlaneGeometry(1.57,1.68),windowView,1.7,2.94,-1.855).castShadow=false;
+    for(const side of [-1,1]){
+      box(.092,1.82,.105,paintedTrim,1.7+side*.835,2.94,-1.79);
+      box(1.78,.092,.105,paintedTrim,1.7,2.94+side*.875,-1.79);
+      box(.028,1.68,.038,materials.beam,1.7+side*.774,2.94,-1.73);
+    }
+    box(.043,1.69,.068,paintedTrim,1.7,2.94,-1.77);
+    box(1.57,.052,.069,paintedTrim,1.7,2.94,-1.77);
+    box(1.98,.095,.33,materials.table,1.7,1.99,-1.76);
+    box(1.88,.031,.27,paintedTrim,1.7,2.043,-1.75);
     const curtainFabric = new T.MeshStandardMaterial({
       color:'#d8b68e',roughness:1,side:T.DoubleSide
     });
@@ -7151,35 +7220,41 @@ body{
     });
     canvas.addEventListener('click',event=>pickVolume(event)?.click());
 
-    const potClay = matte('#a76349');
     const soil = matte('#4c3626');
     const stemMaterial = new T.MeshStandardMaterial({color:'#526440',roughness:1});
     const leafMaterials = ['#526b37','#70824a','#87945c','#3b613f'].map(color =>
       new T.MeshStandardMaterial({color,roughness:.83,side:T.DoubleSide})
     );
-    function plant(x,z,size,variant){
+    function plant(x,z,size,variant,kind,color){
       const base=new T.Group();
       base.position.set(x,0,z);
       base.scale.setScalar(size);
       roomScene.add(base);
+      const potClay=matte(color);
       mesh(new T.CylinderGeometry(.235,.167,.32,24),potClay,0,.16,0,base);
       mesh(new T.TorusGeometry(.22,.024,8,24),potClay,0,.314,0,base).rotation.x=Math.PI/2;
       mesh(new T.CylinderGeometry(.21,.21,.015,20),soil,0,.307,0,base);
-      for(let index=0;index<7;index++){
+      const upright=kind==='snake', broad=kind==='rubber', fern=kind==='fern';
+      const stems=fern?12:upright?9:7;
+      for(let index=0;index<stems;index++){
         const angle=index*2.399+variant;
-        const spread=.17+(index%3)*.058;
-        const end=new T.Vector3(Math.cos(angle)*spread,.6+(index%4)*.12,Math.sin(angle)*spread);
+        const spread=upright?.045:broad?.10:fern?.23:.18;
+        const height=upright?.33:broad?.61+index*.102:fern?.48+(index%4)*.083:.49+(index%4)*.09;
+        const end=new T.Vector3(Math.cos(angle)*spread,height,Math.sin(angle)*spread);
         const stem=new T.QuadraticBezierCurve3(new T.Vector3(0,.30,0),new T.Vector3(end.x*.22,end.y*.73,end.z*.22),end);
         mesh(new T.TubeGeometry(stem,10,.011,5,false),stemMaterial,0,0,0,base);
-        const direction=new T.Vector3(Math.cos(angle),.40+(index%3)*.23,Math.sin(angle)).normalize();
+        const rise=upright?3.8:broad?.36:fern?.18:.56;
+        const direction=new T.Vector3(Math.cos(angle),rise,Math.sin(angle)).normalize();
         const lateral=new T.Vector3(-direction.z,0,direction.x).normalize();
         const points=[];
         const indices=[];
         for(let segment=0;segment<=8;segment++){
           const t=segment/8;
-          const middle=end.clone().addScaledVector(direction,t*(.31+index%3*.055));
-          middle.y+=Math.sin(Math.PI*t)*.094;
-          const width=.11*Math.sin(Math.PI*t);
+          const length=upright?.46+(index%4)*.075:broad?.48-index*.025:fern?.36+(index%3)*.04:.25;
+          const middle=end.clone().addScaledVector(direction,t*length);
+          middle.y+=Math.sin(Math.PI*t)*(fern?.16:upright?.016:.075);
+          const envelope=Math.sin(Math.PI*t);
+          const width=(upright?.043:broad?.144:fern?.075:.079)*envelope*(fern?.65+.35*Math.cos(t*Math.PI*16):1);
           for(const offset of [-1,0,1]){
             const vertex=middle.clone().addScaledVector(lateral,offset*width);
             if(offset===0)vertex.y+=Math.sin(Math.PI*t)*.023;
@@ -7195,12 +7270,22 @@ body{
         leaf.setIndex(indices);
         leaf.computeVertexNormals();
         mesh(leaf,leafMaterials[index%leafMaterials.length],0,0,0,base);
+        if(kind==='flowers'&&index%2===0){
+          const pink=matte('#d3a4a3');
+          const bloom=new T.SphereGeometry(.053,10,8);
+          for(let petal=0;petal<5;petal++){
+            const theta=petal*Math.PI*2/5;
+            const part=mesh(bloom,pink,end.x+Math.cos(theta)*.045,end.y+.025,end.z+Math.sin(theta)*.045,base);
+            part.scale.y=.44;
+          }
+          mesh(new T.SphereGeometry(.027,8,6),materials.gold,end.x,end.y+.043,end.z,base);
+        }
       }
     }
-    plant(-3.69,.28,1.92,1.1);
-    plant(-1.34,-1.34,1.12,.8);
-    plant(-2.26,1.13,.66,1.7);
-    plant(3.58,-1.50,.80,2.6);
+    plant(-3.17,2.16,1.48,1.1,'rubber','#925c45');
+    plant(-1.34,-1.26,1.04,.8,'fern','#806049');
+    plant(-2.13,1.01,.66,1.7,'snake','#bc9471');
+    plant(3.54,-1.41,.77,2.6,'flowers','#81625d');
 
     const cat = new T.Group();
     cat.position.set(.48,.02,1.93);
