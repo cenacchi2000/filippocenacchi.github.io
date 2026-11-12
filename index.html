@@ -7508,12 +7508,13 @@ body{
 
     const travellingBook = new T.Group();
     const flightCover = new T.MeshStandardMaterial({color:'#795239',roughness:.86});
-    box(.33,.68,.102,flightCover,0,0,0,travellingBook);
-    box(.305,.644,.078,materials.paper,.017,0,0,travellingBook);
-    for(const y of [-.25,.25])box(.27,.011,.004,materials.gold,0,y,.053,travellingBook);
+    box(.88,.037,.48,flightCover,0,0,0,travellingBook);
+    box(.85,.04,.45,materials.paper,0,.028,0,travellingBook);
+    box(.88,.018,.48,flightCover,0,.057,0,travellingBook);
+    for(const z of [-.18,.18])box(.69,.002,.008,materials.gold,0,.067,z,travellingBook);
     roomScene.add(travellingBook);
     travellingBook.visible=false;
-    const landingRotation = new T.Quaternion().setFromEuler(new T.Euler(-Math.PI/2,0,-Math.PI/2));
+    const shelfRotation = new T.Quaternion().setFromEuler(new T.Euler(Math.PI/2,Math.PI/2,0));
     const flightDuration=2450;
     let flight=null;
 
@@ -7522,14 +7523,14 @@ body{
       const progress=Math.max(0,Math.min(1,(time-flight.started)/flightDuration));
       const eased=1-Math.pow(1-progress,2.35);
       travellingBook.position.copy(flight.path.getPoint(eased));
-      travellingBook.quaternion.slerpQuaternions(flight.rotation,landingRotation,eased);
+      travellingBook.quaternion.slerpQuaternions(flight.rotation,openBook.quaternion,eased);
       travellingBook.rotateZ(Math.sin(Math.PI*progress)*.25);
       const {x,z}=travellingBook.position;
       const overTable=Math.hypot((x-1.56)/1.27,(z-1.02)/.96)<1;
       if(overTable){
         const up=new T.Vector3(0,1,0).applyQuaternion(travellingBook.quaternion.clone().invert());
-        const halfHeight=.168*Math.abs(up.x)+.342*Math.abs(up.y)+.055*Math.abs(up.z);
-        travellingBook.position.y=Math.max(travellingBook.position.y,tableSurfaceY+halfHeight+.004);
+        const clearance=.44*Math.abs(up.x)+.24*Math.abs(up.z)+(up.y>=0?.0185:.068)*Math.abs(up.y);
+        travellingBook.position.y=Math.max(travellingBook.position.y,tableSurfaceY+clearance+.0025);
       }
       if(progress===1){
         const finish=flight.finish;
@@ -7539,7 +7540,7 @@ body{
       }
     }
 
-    const point = new T.Vector3(1.42,tableSurfaceY+.059,1.02);
+    const point = openBook.position;
     const nook = scene.querySelector('.library-nook');
     function drawPages(time){
       if(!openBook.visible)return;
@@ -7657,7 +7658,7 @@ body{
         aboveTable.y+=.36;
         flight={
           started:performance.now(),
-          rotation:source.volume.getWorldQuaternion(new T.Quaternion()),
+          rotation:source.volume.getWorldQuaternion(new T.Quaternion()).multiply(shelfRotation),
           path:new T.CubicBezierCurve3(origin,lift,aboveTable,destination),
           finish
         };
