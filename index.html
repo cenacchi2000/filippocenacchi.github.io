@@ -7806,16 +7806,19 @@ body{
       const easedOpening=opening*opening*(3-2*opening);
       coverHinge.rotation.z=easedOpening*Math.PI;
       coverHinge.position.y=.057*(1-easedOpening);
-      leftPages.visible=opening>=.94;
       const pageTime=elapsed-coverOpeningDuration;
+      const pageDelay=550;
+      const pageTurnDuration=3700;
+      leftPages.visible=motion.matches||pageTime>=pageDelay+pageTurnDuration;
       const cycle=Math.max(0,pageTime)%6700;
-      const progress=(cycle-550)/3700;
-      const turning=pageTime>=0&&progress>0&&progress<1&&!motion.matches;
+      const progress=(cycle-pageDelay)/pageTurnDuration;
+      const turning=pageTime>=0&&progress>=0&&progress<1&&!motion.matches;
       spine.visible=turning;
       if(!turning)return;
       const eased=progress*progress*(3-2*progress);
       const curl=Math.sin(Math.PI*eased)*.055;
-      spine.rotation.z=.018+(Math.PI-.036)*eased;
+      spine.rotation.z=Math.PI*eased;
+      spine.position.y=.066+(.026-.066)*eased;
       for(let i=0;i<leafVertices.count;i++){
         const x=leafVertices.getX(i)/pageWidth;
         leafVertices.setY(i,curl*Math.sin(Math.PI*x*.87));
