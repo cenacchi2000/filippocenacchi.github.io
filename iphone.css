@@ -395,6 +395,17 @@
     min-height: 0;
     align-items: start;
   }
+  .portfolio-home :is(#eventTrack .event-item, .prize-card) > :is(picture, img) {
+    grid-area: 1 / 1;
+  }
+  .portfolio-home :is(#eventTrack .event-item, .prize-card) > picture {
+    display: block !important;
+    min-width: 0;
+  }
+  .portfolio-home :is(#eventTrack .event-item, .prize-card) > div {
+    grid-area: 1 / 2;
+    min-width: 0;
+  }
   .portfolio-home :is(#eventTrack .event-item, .prize-card) img {
     width: 76px;
     height: 66px;
