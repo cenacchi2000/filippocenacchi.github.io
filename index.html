@@ -1829,6 +1829,11 @@ body{
   mix-blend-mode:multiply;
 }
 
+#experience .experience-logos--genvalues{
+  width:128px;
+  justify-content:center;
+}
+
 #experience .experience-logos--blend img{
   filter:none;
 }
@@ -3467,6 +3472,15 @@ body{
 .library-page a{display:inline-block;margin-top:7px}
 .library-page small{display:block;margin-top:7px;color:#725c45}
 .library-actions{justify-content:flex-end}
+@media (max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #publications .library-actions .library-read {
+    display:inline-flex;
+    align-items:center;
+    box-sizing:border-box;
+    min-height:32px;
+    padding:4px 8px;
+  }
+}
 @media(max-width:600px){.library-scene.has-render{padding:9px;min-height:285px}}
 
 .library-table-book::before,.library-table-book::after{
@@ -6410,7 +6424,7 @@ body{
         <div>Genvalues.com (Stockholm · Hybrid)</div>
         <div class="meta">Product strategy; requirements; cross-functional delivery</div>
       </div>
-      <div class="experience-logos experience-logos--blend">
+      <div class="experience-logos experience-logos--blend experience-logos--genvalues">
         <a href="https://thehub.io/startups/airjobb" target="_blank" rel="noopener">
           <img src="https://webbjobb.io/storage/logos/genvalues-ab.png" alt="Genvalues" loading="lazy" decoding="async">
         </a>
