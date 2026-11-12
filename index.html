@@ -5058,11 +5058,54 @@ body{
           Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor());
         });
 
-      Graph.d3Force('charge').strength(function(n){ return n.type==='topic' ? -170 : -55; }).distanceMax(500);
+      function createLabelClearance(){
+        var graphNodes=[], bounds=[];
+        function force(alpha){
+          for(var i=0;i<graphNodes.length;i++){
+            var a=graphNodes[i], boxA=bounds[i];
+            a.vz-=(a.z-boxA.depth)*alpha*.036;
+            for(var j=i+1;j<graphNodes.length;j++){
+              var b=graphNodes[j], boxB=bounds[j];
+              var dx=(b.x+b.vx)-(a.x+a.vx);
+              var dy=(b.y+b.vy+boxB.centerY)-(a.y+a.vy+boxA.centerY);
+              var overlapX=boxA.halfWidth+boxB.halfWidth-Math.abs(dx);
+              var overlapY=boxA.halfHeight+boxB.halfHeight-Math.abs(dy);
+              if(overlapX<=0||overlapY<=0)continue;
+              if(overlapX<overlapY){
+                var pushX=Math.min(8,overlapX*.30)*alpha*(dx<0?-1:1);
+                a.vx-=pushX;b.vx+=pushX;
+              }else{
+                var pushY=Math.min(8,overlapY*.30)*alpha*(dy<0?-1:1);
+                a.vy-=pushY;b.vy+=pushY;
+              }
+            }
+          }
+        }
+        force.initialize=function(nodes){
+          graphNodes=nodes;
+          bounds=nodes.map(function(n,index){
+            var topic=n.type==='topic';
+            var label=topic?n.label:n.shortTitle;
+            var radius=sphereRadius(n);
+            var textHeight=topic?3.2:2.4;
+            var bottom=-radius-2;
+            var top=radius+(topic?6.5:4.8)+textHeight/2+3;
+            return {
+              halfWidth:Math.max(radius+4,(label||'').length*textHeight*.30+4),
+              halfHeight:(top-bottom)/2,
+              centerY:(top+bottom)/2,
+              depth:((index*7)%11-5)*3
+            };
+          });
+        };
+        return force;
+      }
+      Graph.d3Force('label-clearance',createLabelClearance());
+      Graph.d3Force('charge').strength(function(n){ return n.type==='topic' ? -195 : -75; }).distanceMax(500);
       Graph.d3Force('link')
-        .distance(function(l){ return l.weak ? 70 : (l.target.type==='topic' ? 55 : 34); })
+        .distance(function(l){ return l.weak ? 78 : (l.target.type==='topic' ? 62 : 44); })
         .strength(function(l){ return l.weak ? 0.25 : 0.55; });
-      Graph.warmupTicks(80).cooldownTicks(200);
+      Graph.warmupTicks(105).cooldownTicks(235);
 
       Graph.width(container.clientWidth);
       Graph.height(container.clientHeight);
