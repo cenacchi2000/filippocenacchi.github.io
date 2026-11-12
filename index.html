@@ -7543,28 +7543,36 @@ body{
     const pages = new T.Group();
     pages.rotation.y = -Math.PI / 2;
     openBook.add(pages);
+    const pageWidth = .48;
+    const pageDepth = .88;
     const coverHinge = new T.Group();
-    coverHinge.position.set(-.24,.057,0);
+    coverHinge.position.set(-pageWidth/2,.057,0);
     pages.add(coverHinge);
-    box(.48,.018,.88,cover,.24,0,0,coverHinge);
+    box(pageWidth,.018,pageDepth,cover,pageWidth/2,0,0,coverHinge);
     for(const x of [.06,.42])box(.008,.002,.69,materials.gold,x,.010,0,coverHinge);
     const coverOpeningDuration = 2200;
     const spine = new T.Group();
-    spine.position.y=.072;
+    spine.position.set(-pageWidth/2,.072,0);
     pages.add(spine);
     const ink = new T.MeshStandardMaterial({color:'#bda16f',roughness:1});
     const paperSurface = new T.MeshStandardMaterial({color:'#fff0cb',roughness:1,side:T.DoubleSide});
+    const leftPages = new T.Group();
+    leftPages.visible = false;
+    pages.add(leftPages);
     for(const side of [-1,1]){
-      box(.222,.012,.82,materials.paper,side*.112,.057,0,pages);
-      for(let line=0;line<7;line++)box(.151,.001,.006,ink,side*.112,.064,-.327+line*.095,pages);
+      const parent=side<0?leftPages:pages;
+      const x=-pageWidth/2+side*pageWidth/2;
+      const y=side<0?.019:.057;
+      box(pageWidth,.012,pageDepth,materials.paper,x,y,0,parent);
+      for(let line=0;line<7;line++)box(.33,.001,.006,ink,x,y+.007,-.327+line*.095,parent);
     }
-    const leafGeometry = new T.PlaneGeometry(.225,.82,16,1);
+    const leafGeometry = new T.PlaneGeometry(pageWidth,pageDepth,16,1);
     leafGeometry.rotateX(-Math.PI/2);
-    leafGeometry.translate(.1125,0,0);
+    leafGeometry.translate(pageWidth/2,0,0);
     const leaf = mesh(leafGeometry,paperSurface,0,0,0,spine);
     const leafVertices = leafGeometry.attributes.position;
     const leafLines=Array.from({length:7},(_,line)=>
-      box(.145,.001,.006,ink,.112,.002,-.326+line*.095,spine)
+      box(.33,.001,.006,ink,pageWidth/2,.002,-.326+line*.095,spine)
     );
     let bookStarted = 0;
 
@@ -7608,7 +7616,10 @@ body{
       if(!openBook.visible)return;
       const elapsed=Math.max(0,time-bookStarted);
       const opening=motion.matches?1:Math.min(1,elapsed/coverOpeningDuration);
-      coverHinge.rotation.z=(opening*opening*(3-2*opening))*Math.PI*.62;
+      const easedOpening=opening*opening*(3-2*opening);
+      coverHinge.rotation.z=easedOpening*Math.PI;
+      coverHinge.position.y=.057*(1-easedOpening);
+      leftPages.visible=opening>=.94;
       const pageTime=elapsed-coverOpeningDuration;
       const cycle=Math.max(0,pageTime)%6700;
       const progress=(cycle-550)/3700;
@@ -7619,7 +7630,7 @@ body{
       const curl=Math.sin(Math.PI*eased)*.055;
       spine.rotation.z=.018+(Math.PI-.036)*eased;
       for(let i=0;i<leafVertices.count;i++){
-        const x=leafVertices.getX(i)/.225;
+        const x=leafVertices.getX(i)/pageWidth;
         leafVertices.setY(i,curl*Math.sin(Math.PI*x*.87));
       }
       leafVertices.needsUpdate=true;
