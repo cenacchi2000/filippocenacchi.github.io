@@ -6652,15 +6652,19 @@ body{
     });
   })();
 
-  // smooth in-page nav
-  document.querySelectorAll('a[href^="#"]:not(.research-paper-link)').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href').slice(1);
-      const el = document.getElementById(id);
-      if (el) {
-        e.preventDefault();
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+  // Keep section headings below the sticky navigation after a jump.
+  const stickyNav = document.querySelector('.nav');
+  const navMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll('a[href^="#"]:not(.research-paper-link)').forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const section = document.getElementById(link.getAttribute('href').slice(1));
+      if (!section) return;
+      event.preventDefault();
+      const target = section.matches('section') ? section.querySelector('h2') || section : section;
+      const headerHeight = stickyNav?.getBoundingClientRect().height || 0;
+      const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerHeight - 12);
+      window.scrollTo({top, behavior:navMotion.matches ? 'instant' : 'smooth'});
     });
   });
 
