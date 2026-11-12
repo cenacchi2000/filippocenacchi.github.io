@@ -712,35 +712,6 @@
   .pub-filter-btn{padding:5px 9px;font-size:12px;}
 }
 
-/* --- Publication list collapse / expand --- */
-.pub-see-more-wrap{
-  display:flex;
-  justify-content:center;
-  margin-top:22px;
-}
-
-.pub-see-more-btn{
-  border:1px solid #7c3aed;
-  background:#7c3aed;
-  color:#ffffff;
-  padding:12px 22px;
-  border-radius:999px;
-  font-size:15px;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 14px 32px rgba(124,58,237,.22);
-  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
-}
-
-.pub-see-more-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 18px 38px rgba(124,58,237,.28);
-  background:#6d28d9;
-}
-
-.pub-see-more-btn.is-hidden{
-  display:none;
-}
 
 
     .nav a.link:hover{background:var(--muted);color:var(--text)}
@@ -3453,6 +3424,21 @@ body{
   55%{transform:perspective(80px) rotateY(-125deg) rotateZ(-8deg)}
   100%{transform:perspective(80px) rotateY(-180deg)}
 }
+#pubList{
+  box-sizing:border-box;
+  max-height:min(640px, 68vh);
+  overflow-y:auto;
+  padding:3px 8px 7px 4px;
+  scrollbar-width:thin;
+  scrollbar-color:#a795cc transparent;
+  scroll-padding-block:8px;
+}
+#pubList:focus-visible{
+  outline:2px solid var(--brand);
+  outline-offset:2px;
+  border-radius:8px;
+}
+#pubList .card.pub[data-paper-theme]{scroll-margin-top:4px}
 
   </style>
 </head>
@@ -3939,8 +3925,7 @@ body{
     <div class="publication-column">
   <!-- Filter bar -->
   <div class="pub-filters" id="pubFilters" aria-label="Filter publications by year and topic">
-    <button class="pub-filter-btn active" data-mode="selected">Show by Selected</button>
-    <button class="pub-filter-btn" data-mode="all">Show by All</button>
+    <button type="button" class="pub-filter-btn active" data-mode="all">Show all</button>
 
     <span class="pub-filter-label">Year:</span>
     <button class="pub-filter-btn" data-year="2026">2026</button>
@@ -3955,7 +3940,7 @@ body{
   </div>
 
 
-<div class="list pub-list" id="pubList">
+<div class="list pub-list" id="pubList" role="region" aria-label="Scrollable publication list" tabindex="0">
 
 
 <!-- KDD Blue Sky paper -->
@@ -4473,11 +4458,6 @@ body{
 
   </div>
 
-  <div class="pub-see-more-wrap">
-    <button type="button" class="pub-see-more-btn" id="pubSeeMoreBtn">
-      See full publications list
-    </button>
-  </div>
 
     </div>
     <aside class="pub-reading-room" id="publication-library" aria-labelledby="library-title" hidden>
@@ -6210,126 +6190,45 @@ body{
   })();
 
 
-// Publication filter + collapsed "See full list"
+// Publication filters for the scrollable list
 (function(){
   const root = document.getElementById('pubFilters');
-  if (!root) return;
+  const list = document.getElementById('pubList');
+  if (!root || !list) return;
 
-  const modeButtons  = root.querySelectorAll('[data-mode]');
-  const yearButtons  = root.querySelectorAll('[data-year]');
+  const allButton = root.querySelector('[data-mode="all"]');
+  const yearButtons = root.querySelectorAll('[data-year]');
   const topicButtons = root.querySelectorAll('[data-topic]');
-  const cards        = Array.from(document.querySelectorAll('.card.pub'));
-  const seeMoreBtn   = document.getElementById('pubSeeMoreBtn');
-
-  const INITIAL_VISIBLE = 3;
-
-  let mode        = 'selected';
-  let activeYear  = null;
+  const cards = [...list.querySelectorAll('.card.pub')];
+  let activeYear = null;
   let activeTopic = null;
-  let expanded    = false;
 
   function matchesFilters(card){
-    if (mode === 'all') return true;
-
-    if (activeYear && card.dataset.year !== activeYear) {
-      return false;
-    }
-
-    if (activeTopic) {
-      const topics = (card.dataset.topics || '')
-        .split(',')
-        .map(s => s.trim())
-        .filter(Boolean);
-
-      if (!topics.includes(activeTopic)) {
-        return false;
-      }
-    }
-
-    return true;
+    return (!activeYear || card.dataset.year === activeYear) &&
+      (!activeTopic || (card.dataset.topics || '').split(',').map(topic => topic.trim()).includes(activeTopic));
   }
 
-  function applyFilters(){
-    const matchingCards = cards.filter(matchesFilters);
-
-    cards.forEach(card => {
-      card.style.display = 'none';
-    });
-
-    const visibleCards = expanded
-      ? matchingCards
-      : matchingCards.slice(0, INITIAL_VISIBLE);
-
-    visibleCards.forEach(card => {
-      card.style.display = '';
-    });
-
-    if (seeMoreBtn) {
-      const hasMore = matchingCards.length > INITIAL_VISIBLE;
-
-      seeMoreBtn.classList.toggle('is-hidden', !hasMore);
-
-      seeMoreBtn.textContent = expanded
-        ? 'Show less'
-        : `See full publications list (${matchingCards.length})`;
-    }
+  function applyFilters({ resetScroll = true } = {}){
+    cards.forEach(card => { card.style.display = matchesFilters(card) ? '' : 'none'; });
+    yearButtons.forEach(button => button.classList.toggle('active', button.dataset.year === activeYear));
+    topicButtons.forEach(button => button.classList.toggle('active', button.dataset.topic === activeTopic));
+    allButton.classList.toggle('active', !activeYear && !activeTopic);
+    if (resetScroll) list.scrollTop = 0;
   }
 
-  modeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      mode = btn.dataset.mode;
-      expanded = false;
-
-      modeButtons.forEach(b => b.classList.toggle('active', b === btn));
-      applyFilters();
-    });
+  allButton.addEventListener('click', () => {
+    activeYear = null;
+    activeTopic = null;
+    applyFilters();
   });
-
-  yearButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      expanded = false;
-
-      if (activeYear === btn.dataset.year) {
-        activeYear = null;
-        btn.classList.remove('active');
-      } else {
-        activeYear = btn.dataset.year;
-        yearButtons.forEach(b => b.classList.toggle('active', b === btn));
-      }
-
-      applyFilters();
-    });
-  });
-
-  topicButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      expanded = false;
-
-      if (activeTopic === btn.dataset.topic) {
-        activeTopic = null;
-        btn.classList.remove('active');
-      } else {
-        activeTopic = btn.dataset.topic;
-        topicButtons.forEach(b => b.classList.toggle('active', b === btn));
-      }
-
-      applyFilters();
-    });
-  });
-
-  if (seeMoreBtn) {
-    seeMoreBtn.addEventListener('click', () => {
-      expanded = !expanded;
-      applyFilters();
-
-      if (!expanded) {
-        document.getElementById('publications')?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  }
+  yearButtons.forEach(button => button.addEventListener('click', () => {
+    activeYear = activeYear === button.dataset.year ? null : button.dataset.year;
+    applyFilters();
+  }));
+  topicButtons.forEach(button => button.addEventListener('click', () => {
+    activeTopic = activeTopic === button.dataset.topic ? null : button.dataset.topic;
+    applyFilters();
+  }));
 
   function revealPaper({ focus = false } = {}){
     const card = cards.find(paper => paper.id && `#${paper.id}` === window.location.hash);
@@ -6337,16 +6236,11 @@ body{
     if (!card) return;
 
     if (!matchesFilters(card)) {
-      mode = 'all';
       activeYear = null;
       activeTopic = null;
-      modeButtons.forEach(button => button.classList.toggle('active', button.dataset.mode === mode));
-      yearButtons.forEach(button => button.classList.remove('active'));
-      topicButtons.forEach(button => button.classList.remove('active'));
     }
 
-    expanded = true;
-    applyFilters();
+    applyFilters({ resetScroll: false });
     requestAnimationFrame(() => {
       if (focus) card.focus({ preventScroll: true });
       card.scrollIntoView({
