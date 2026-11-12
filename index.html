@@ -3603,7 +3603,7 @@ body{
 
   </style>
 
-  <link rel="stylesheet" href="iphone.css?v=8">
+  <link rel="stylesheet" href="iphone.css?v=9">
 </head>
 <body class="portfolio-home">
   <!-- Sticky Nav -->
@@ -5156,12 +5156,13 @@ body{
         Graph.width(container.clientWidth);
         Graph.height(container.clientHeight);
       });
-      Graph.cameraPosition({ x: 0, y: 0, z: 500 });
+      var phoneGraphLayout=window.matchMedia("(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse)");
+      Graph.cameraPosition({ x: 0, y: 0, z: phoneGraphLayout.matches ? 430 : 500 });
       var motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
       var viewControls=document.getElementById('pubGraphViewControls');
       var motionButton=document.getElementById('pubGraphMotion');
       var camera=Graph.camera();
-      camera.zoom=1.22;
+      camera.zoom=phoneGraphLayout.matches ? 1.28 : 1.22;
       camera.updateProjectionMatrix();
       var controls=Graph.controls();
       var axis=new THREE.Vector3(0,1,0);
@@ -5175,8 +5176,8 @@ body{
         resumeAfter=performance.now()+720;
         camera.zoom=1;
         camera.updateProjectionMatrix();
-        Graph.zoomToFit(600,38);
-        camera.zoom=1.22;
+        Graph.zoomToFit(600,phoneGraphLayout.matches ? 12 : 38);
+        camera.zoom=phoneGraphLayout.matches ? 1.28 : 1.22;
         camera.updateProjectionMatrix();
       }
       var labelPoint=new THREE.Vector3();
