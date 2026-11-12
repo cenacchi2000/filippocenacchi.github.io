@@ -1268,16 +1268,6 @@ body{
   }
 }
 
-    /* Grid */
-.research-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:24px;
-}
-@media (max-width:900px){
-  .research-grid{ grid-template-columns:1fr; }
-}
-
 /* Card */
 .card-focus{
   background:var(--panel,#fff);
@@ -1396,11 +1386,11 @@ body{
    }
    .lightbox::backdrop{ background:rgba(0,0,0,.65); }
    .lightbox img{
-    display:block; width:100%; height:auto; border-radius:14px;
+    display:block; width:100%; height:auto; max-height:86vh; object-fit:contain; border-radius:14px;
     box-shadow:0 20px 50px rgba(0,0,0,.35);
    }
    #lightbox-close{
-     position:absolute; top:-14px; right:-14px;
+     position:absolute; top:10px; right:10px;
      width:36px; height:36px; border-radius:50%;
      border:none; background:#fff; font-size:22px; line-height:1; cursor:pointer;
      box-shadow:0 8px 24px rgba(0,0,0,.22);
@@ -2996,6 +2986,100 @@ body{
   background:var(--paper-tint);
 }
 
+
+/* Curved, scroll-snapping research gallery */
+#research .research-gallery-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:14px;
+}
+#research .research-gallery-heading h2{margin:0}
+#research .research-gallery-controls{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+}
+#research .research-gallery-controls[hidden]{display:none}
+#research .research-gallery-controls :is(button,select){
+  min-height:38px;
+  border:1px solid #d7e0ef;
+  border-radius:10px;
+  background:#fff;
+  color:#18284b;
+  font:600 14px/1.2 system-ui,sans-serif;
+}
+#research .research-gallery-controls button{width:40px;cursor:pointer}
+#research .research-gallery-controls button:disabled{opacity:.4;cursor:default}
+#research .research-gallery-controls select{min-width:0;max-width:min(60vw, 305px);padding:0 9px}
+#research .research-gallery-controls button:not(:disabled):hover{background:#eaf1ff;border-color:#8ba4db}
+#research .research-stage{
+  overflow:hidden;
+  border:1px solid #233659;
+  border-radius:24px;
+  background:
+    radial-gradient(ellipse at 50% 4%, #304b79 0%, transparent 62%),
+    linear-gradient(155deg,#111c34,#080f20);
+  box-shadow:0 14px 35px #14264526;
+}
+#research .research-grid{
+  --project-width:min(66vw, 650px);
+  position:relative;
+  display:flex;
+  align-items:stretch;
+  gap:20px;
+  box-sizing:border-box;
+  width:100%;
+  overflow-x:auto;
+  padding:23px max(12px, calc((100% - var(--project-width)) / 2)) 26px;
+  scroll-snap-type:x mandatory;
+  overscroll-behavior-inline:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#687fa9 #13203a;
+}
+#research .research-grid:focus-visible{
+  outline:2px solid #a9c6ff;
+  outline-offset:-4px;
+}
+#research .card-focus{
+  display:flex;
+  flex:0 0 var(--project-width);
+  min-width:0;
+  flex-direction:column;
+  scroll-snap-align:center;
+  transform:perspective(1000px) translateY(var(--gallery-lift, 0px)) rotateY(var(--gallery-angle, 0deg)) scale(var(--gallery-scale, 1));
+  transition:none;
+  box-shadow:0 12px 26px #0004;
+}
+#research .card-media{flex:none;aspect-ratio:2 / 1}
+#research .card-media:has(iframe) .media-gradient{pointer-events:none}
+#research .card-body{flex:1}
+#research .card-body h3{font-size:clamp(17px, 2vw, 23px);letter-spacing:-.025em}
+#research .card-body p{font-size:14px}
+#research .project-strip{
+  align-self:flex-start;
+  max-width:100%;
+  margin-top:auto;
+  white-space:normal;
+}
+@media(max-width:720px){
+  #research .research-grid{
+    --project-width:min(80vw, 500px);
+    gap:12px;
+    padding-block:16px 20px;
+  }
+  #research .research-stage{border-radius:16px}
+  #research .card-body{padding:13px}
+  #research .media-chips{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  #research .card-focus{transform:none}
+  #research .card-media img{transition:none}
+}
+
   </style>
 </head>
 <body>
@@ -3308,9 +3392,17 @@ body{
 
 <!-- Research Focus -->
 <section id="research" class="section">
-  <h2>Research Focus</h2>
+  <div class="research-gallery-heading">
+    <h2 id="research-gallery-title">Research Focus</h2>
+    <div class="research-gallery-controls" hidden>
+      <select aria-label="Jump to a research project"></select>
+      <button type="button" data-gallery-step="-1" aria-label="Previous project" aria-controls="research-gallery">←</button>
+      <button type="button" data-gallery-step="1" aria-label="Next project" aria-controls="research-gallery">→</button>
+    </div>
+  </div>
 
-  <div class="research-grid">
+  <div class="research-stage">
+    <div class="research-grid" id="research-gallery" role="region" aria-labelledby="research-gallery-title" tabindex="0">
     <!-- 1. Humanoid-AI Diagnostic Agents -->
     <article class="card-focus">
       <button class="card-media" data-full="ameca.png" aria-label="Open image: Ameca">
@@ -3322,7 +3414,7 @@ body{
         <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
         <a class="project-strip project-strip--humanoid" href="humanoid-diagnostic.html">
   <span class="label">Humanoid AI</span>
-  <span>Dedicated project page →</span>
+  <span>Explore project →</span>
 </a>
 
       </div>
@@ -3344,7 +3436,7 @@ body{
         <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
         <a class="project-strip project-strip--sim" href="simulation-first-training.html">
   <span class="label">Simulation</span>
-  <span>Dedicated project page →</span>
+  <span>Explore project →</span>
 </a>
 
       </div>
@@ -3374,7 +3466,7 @@ body{
     <a class="project-strip project-strip--avatar"
        href="digital-twin.html">
       <span class="label">3D Clinical Avatar</span>
-      <span>Dedicated project page →</span>
+      <span>Explore project →</span>
     </a>
   </div>
 </article>
@@ -3396,7 +3488,7 @@ body{
         <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
         <a class="project-strip project-strip--triage" href="decision-support-triage.html">
   <span class="label">Triage AI</span>
-  <span>Dedicated project page →</span>
+  <span>Explore project →</span>
 </a>
 
       </div>
@@ -3427,7 +3519,7 @@ body{
     </p>
     <a class="project-strip project-strip--dementia" href="passive-dementia-screening.html">
       <span class="label">Dementia</span>
-      <span>Dedicated project page →</span>
+      <span>Explore project →</span>
     </a>
   </div>
 </article>
@@ -3436,7 +3528,7 @@ body{
     <article class="card-focus">
       <div class="card-media" aria-label="MetaHuman avatar reel demo">
         <iframe
-          src="https://www.youtube.com/embed/Z5OKkYK8zjc?autoplay=1&mute=1&loop=1&playlist=Z5OKkYK8zjc&controls=0&modestbranding=1&rel=0&vq=hd1080"
+          src="https://www.youtube.com/embed/Z5OKkYK8zjc?rel=0"
           title="MetaHuman Avatar Reel"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
@@ -3445,17 +3537,16 @@ body{
         <span class="media-gradient"></span>
       </div>
       <div class="card-body">
-        <h3>MetaHuman Avatar syncronized with Ameca Humanoid</h3>
+        <h3>MetaHuman Avatar Synchronised with Ameca</h3>
         <p>Demo of a MetaHuman avatar of the Ceo of Nvidia driven by Ameca real-time body signals. Showcases synchronised facial motion, gaze and pacing for simulation-first training.</p>
         <a class="project-strip project-strip--reel" href="metahuman-avatar-reel.html">
   <span class="label">Demo</span>
-  <span>Dedicated project page →</span>
+  <span>Explore project →</span>
 </a>
 
       </div>
     </article>
-  </div>
-    </article>
+    </div>
   </div>
 
   <!-- Single lightbox for image cards -->
@@ -6225,6 +6316,89 @@ body{
   controls.hidden = false;
   controls.querySelectorAll('[data-work-step]').forEach(button => {
     button.addEventListener('click', () => shuffle(Number(button.dataset.workStep)));
+  });
+})();
+</script>
+
+<script>
+(() => {
+  const track = document.getElementById('research-gallery');
+  const cards = [...track.querySelectorAll(':scope > .card-focus')];
+  const controls = document.querySelector('.research-gallery-controls');
+  const picker = controls.querySelector('select');
+  const previous = controls.querySelector('[data-gallery-step="-1"]');
+  const next = controls.querySelector('[data-gallery-step="1"]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let active = 0;
+  let frame = 0;
+
+  cards.forEach((card, index) => {
+    const title = card.querySelector('h3').textContent.trim();
+    picker.add(new Option(title, index));
+  });
+
+  function update(){
+    frame = 0;
+    const center = track.scrollLeft + track.clientWidth / 2;
+    let nearest = Infinity;
+    cards.forEach((card, index) => {
+      const distance = card.offsetLeft + card.offsetWidth / 2 - center;
+      const bend = Math.max(-1, Math.min(1, distance / card.offsetWidth));
+      card.style.setProperty('--gallery-angle', `${bend * -17}deg`);
+      card.style.setProperty('--gallery-lift', `${Math.abs(bend) * 10}px`);
+      card.style.setProperty('--gallery-scale', 1 - Math.abs(bend) * .075);
+      if (Math.abs(distance) < nearest) {
+        nearest = Math.abs(distance);
+        active = index;
+      }
+    });
+    picker.value = active;
+    previous.disabled = active === 0;
+    next.disabled = active === cards.length - 1;
+  }
+
+  function queueUpdate(){
+    if (!frame) frame = requestAnimationFrame(update);
+  }
+
+  function goTo(index){
+    const card = cards[index];
+    if (!card) return;
+    track.scrollTo({
+      left:card.offsetLeft + (card.offsetWidth - track.clientWidth) / 2,
+      behavior:reducedMotion.matches ? 'instant' : 'smooth'
+    });
+  }
+
+  if (cards.length > 1) {
+    controls.hidden = false;
+    picker.addEventListener('change', () => goTo(Number(picker.value)));
+    controls.querySelectorAll('[data-gallery-step]').forEach(button => {
+      button.addEventListener('click', () => goTo(active + Number(button.dataset.galleryStep)));
+    });
+    track.addEventListener('keydown', event => {
+      if (event.target !== track || !['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const index = {ArrowLeft:active - 1, ArrowRight:active + 1, Home:0, End:cards.length - 1};
+      goTo(index[event.key]);
+    });
+    track.addEventListener('scroll', queueUpdate, {passive:true});
+    window.addEventListener('resize', queueUpdate);
+    update();
+  }
+
+  const lightbox = document.getElementById('lightbox');
+  const image = document.getElementById('lightbox-img');
+  track.querySelectorAll('button[data-full]').forEach(button => {
+    button.addEventListener('click', () => {
+      image.src = button.dataset.full;
+      image.alt = button.querySelector('img').alt;
+      lightbox.showModal();
+    });
+  });
+  document.getElementById('lightbox-close').addEventListener('click', () => lightbox.close());
+  lightbox.addEventListener('click', event => {
+    if (event.target === lightbox) lightbox.close();
   });
 })();
 </script>
