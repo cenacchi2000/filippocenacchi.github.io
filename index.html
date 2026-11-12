@@ -7075,41 +7075,74 @@ body{
     box(1.98,.095,.33,materials.table,1.7,1.99,-1.76);
     box(1.88,.031,.27,paintedTrim,1.7,2.043,-1.75);
     const curtainFabric = new T.MeshStandardMaterial({
-      color:'#d8b68e',roughness:1,side:T.DoubleSide
+      color:'#dfc5a2',roughness:1,side:T.DoubleSide
     });
+    const curtainHem = new T.MeshStandardMaterial({color:'#ba9876',roughness:1});
     const rod = cylinder(.029,.029,2.3,materials.gold,1.7,3.94,-1.56);
     rod.rotation.z=Math.PI/2;
     for(const side of [-1,1]){
       mesh(new T.SphereGeometry(.049,12,8),materials.gold,1.7+side*1.17,3.94,-1.56);
-      const folds = new T.PlaneGeometry(1,1,32,25);
-      const points = folds.attributes.position;
-      for(let index=0;index<points.count;index++){
-        const across=points.getX(index)+.5;
-        const drop=.5-points.getY(index);
-        const gathered=Math.exp(-Math.pow((drop-.61)/.16,2));
-        const width=.56-.29*gathered+.07*drop;
-        const outer=1.7+side*(1.07+.065*drop);
-        const pleat=Math.sin(across*Math.PI*8+.22*drop);
-        const x=outer-side*width*across;
-        const y=3.92-1.98*drop+Math.sin(across*Math.PI*6)*.028*drop;
-        const z=-1.53+pleat*(.058-.025*gathered)+.08*drop;
-        points.setXYZ(index,x,y,z);
+      const gatherAt=side===-1?.59:.65;
+      const length=side===-1?2.01:1.91;
+      function drape(across,drop){
+        const gather=Math.exp(-Math.pow((drop-gatherAt)/.17,2));
+        const width=.59-.34*gather+.11*drop;
+        const edge=1.7+side*(1.105-.09*Math.sin(Math.PI*drop)+.043*drop);
+        const pleat=Math.sin(across*Math.PI*9+.53*drop+side*.2)+.27*Math.sin(across*Math.PI*17+1.12*drop);
+        return new T.Vector3(
+          edge-side*width*across,
+          3.91-length*drop+drop**5*(.051*Math.cos(across*Math.PI*4)+.022*across),
+          -1.56+pleat*(.056-.026*gather)+.10*drop+.048*Math.sin(Math.PI*drop)
+        );
       }
-      folds.computeVertexNormals();
-      mesh(folds,curtainFabric,0,0,0);
-      const tie=mesh(new T.TorusGeometry(.091,.013,7,20),materials.gold,1.7+side*.975,2.71,-1.48);
-      tie.scale.set(1.29,.51,1);
+      const fabric = new T.PlaneGeometry(1,1,36,30);
+      const points = fabric.attributes.position;
+      for(let i=0;i<points.count;i++){
+        const point=drape(points.getX(i)+.5,.5-points.getY(i));
+        points.setXYZ(i,point.x,point.y,point.z);
+      }
+      fabric.computeVertexNormals();
+      mesh(fabric,curtainFabric,0,0,0);
+      const edgePoints=Array.from({length:19},(_,i)=>drape(i/18,1));
+      const hem=new T.CatmullRomCurve3(edgePoints);
+      mesh(new T.TubeGeometry(hem,26,.009,6,false),curtainHem,0,0,0);
+      const tiePoints=Array.from({length:9},(_,i)=>{
+        const point=drape(i/8,gatherAt+(i/8-.5)*.035);
+        point.z=-1.39+.015*Math.sin(i*Math.PI/8);
+        return point;
+      });
+      mesh(new T.TubeGeometry(new T.CatmullRomCurve3(tiePoints),20,.012,6,false),curtainHem,0,0,0);
+      for(const across of [.12,.36,.60,.84]){
+        const attachment=drape(across,0);
+        const ring=mesh(new T.TorusGeometry(.042,.008,6,12),materials.gold,attachment.x,3.936,-1.56);
+        ring.rotation.y=Math.PI/2;
+      }
     }
 
-
-    box(2.38,.48,.97,materials.fabric,1.61,.42,-.92);
-    box(2.35,.89,.32,materials.fabric,1.61,.97,-1.35).rotation.x = -.12;
-    for(const x of [.74,1.61,2.48]){
-      box(.67,.53,.23,materials.cushion,x,1.05,-1.14).rotation.x = -.12;
-      box(.68,.18,.67,materials.cushion,x,.69,-.85);
+    const upholsteryGeometry=new T.SphereGeometry(1,36,24);
+    const upholsteryPoints=upholsteryGeometry.attributes.position;
+    const rounded=value=>Math.sign(value)*Math.pow(Math.abs(value),.52);
+    for(let i=0;i<upholsteryPoints.count;i++){
+      upholsteryPoints.setXYZ(i,rounded(upholsteryPoints.getX(i)),rounded(upholsteryPoints.getY(i)),rounded(upholsteryPoints.getZ(i)));
+    }
+    upholsteryGeometry.computeVertexNormals();
+    const sofaFabric=new T.MeshStandardMaterial({color:'#883f42',roughness:.98});
+    const cushionFabric=new T.MeshStandardMaterial({color:'#b66559',roughness:.98});
+    function upholstery(x,y,z,width,height,depth,material){
+      const cushion=mesh(upholsteryGeometry,material,x,y,z);
+      cushion.scale.set(width/2,height/2,depth/2);
+      return cushion;
+    }
+    upholstery(1.61,.42,-.92,2.38,.48,.98,sofaFabric);
+    upholstery(1.61,.98,-1.34,2.36,.88,.39,sofaFabric).rotation.x=-.13;
+    for(const [index,x] of [.84,1.61,2.38].entries()){
+      const back=upholstery(x,1.025,-1.115,.72,.57,.33,cushionFabric);
+      back.rotation.set(-.16,0,(index-1)*.027);
+      const seat=upholstery(x,.694,-.82,.74,.23,.70,cushionFabric);
+      seat.rotation.x=.033;
     }
     for(const x of [.45,2.77]){
-      box(.26,.46,.96,materials.fabric,x,.71,-.89);
+      upholstery(x,.72,-.89,.30,.45,.95,sofaFabric);
       for(const z of [-1.22,-.56])box(.12,.18,.12,materials.beam,x,.13,z);
     }
     const pillowGeometry = new T.SphereGeometry(1,32,24);
@@ -7425,7 +7458,8 @@ body{
     }
 
     const openBook = new T.Group();
-    openBook.position.set(1.42,.71,1.02);
+    const tableSurfaceY=.68;
+    openBook.position.set(1.42,tableSurfaceY+.021,1.02);
     openBook.rotation.y = -.22;
     openBook.visible = false;
     roomScene.add(openBook);
@@ -7458,7 +7492,7 @@ body{
     for(const y of [-.25,.25])box(.27,.011,.004,materials.gold,0,y,.053,travellingBook);
     roomScene.add(travellingBook);
     travellingBook.visible=false;
-    const landingRotation = new T.Quaternion().setFromEuler(new T.Euler(-Math.PI/2,-.16,-Math.PI/2));
+    const landingRotation = new T.Quaternion().setFromEuler(new T.Euler(-Math.PI/2,0,-Math.PI/2));
     const flightDuration=2450;
     let flight=null;
 
@@ -7469,6 +7503,13 @@ body{
       travellingBook.position.copy(flight.path.getPoint(eased));
       travellingBook.quaternion.slerpQuaternions(flight.rotation,landingRotation,eased);
       travellingBook.rotateZ(Math.sin(Math.PI*progress)*.25);
+      const {x,z}=travellingBook.position;
+      const overTable=Math.hypot((x-1.56)/1.27,(z-1.02)/.96)<1;
+      if(overTable){
+        const up=new T.Vector3(0,1,0).applyQuaternion(travellingBook.quaternion.clone().invert());
+        const halfHeight=.168*Math.abs(up.x)+.342*Math.abs(up.y)+.055*Math.abs(up.z);
+        travellingBook.position.y=Math.max(travellingBook.position.y,tableSurfaceY+halfHeight+.004);
+      }
       if(progress===1){
         const finish=flight.finish;
         flight=null;
@@ -7477,7 +7518,7 @@ body{
       }
     }
 
-    const point = new T.Vector3(1.42,.73,1.02);
+    const point = new T.Vector3(1.42,tableSurfaceY+.059,1.02);
     const nook = scene.querySelector('.library-nook');
     function drawPages(time){
       if(!openBook.visible)return;
