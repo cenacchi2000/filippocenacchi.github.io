@@ -824,9 +824,9 @@
     .avatar{
   width:100%;
   max-width:220px;   /* was full width – now a bit smaller */
-  aspect-ratio:1;
+  height:auto;
   border-radius:22px;
-  background:#ddd center/cover;
+  background:#ddd;
   border:1px solid var(--border);
   box-shadow:var(--shadow);
   margin:0 auto;     /* keeps it nicely centered in the column */
@@ -2507,7 +2507,7 @@
 
     <!-- LEFT COLUMN: photo + quick links -->
     <div id="heroLeft" class="hero-left">
-      <div class="avatar" style="background-image:url('headshot.jpg')" role="img" aria-label="Portrait of Filippo Cenacchi"></div>
+      <img class="avatar" src="headshot.jpg" width="1260" height="1882" alt="Portrait of Filippo Cenacchi">
 
       <div class="kvs hero-left-links" aria-label="Quick links">
         <a class="pill" href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
