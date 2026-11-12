@@ -3440,67 +3440,36 @@ body{
 }
 #pubList .card.pub[data-paper-theme]{scroll-margin-top:4px}
 
-/* Deep, right-facing cabinet aligned with the room's perspective. */
-.library-scene.has-render{
-  --cabinet-depth:clamp(65px, 10vw, 112px);
-  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
-  gap:15px;
-  perspective:850px;
-  perspective-origin:48% 43%;
-}
+/* WebGL cabinet with keyboard-accessible controls at the projected spines. */
+.library-scene.has-render{min-height:345px}
+.library-scene.has-render .library-render{pointer-events:auto}
+.library-scene.has-render .library-nook{grid-column:2;pointer-events:none}
 .library-scene.has-render .library-shelf{
-  align-self:center;
-  margin:8px 35px 6px 7px;
-  padding:7px 7px 9px;
-  transform:rotateY(-35deg) rotateX(5deg);
-  transform-origin:50% 76%;
-  transform-style:preserve-3d;
-  background-image:
-    linear-gradient(100deg,#160c0750,transparent 42%,#e6a46918 80%,#140c0860),
-    repeating-linear-gradient(#4c3023 0 94px,#c8925b 94px 96px,#9d6742 96px 101px,#543521 101px 107px);
-  box-shadow:inset 0 0 0 1px #d7a46c, 8px 11px 15px #241108a8;
-}
-.library-scene.has-render .library-shelf::before,
-.library-scene.has-render .library-shelf::after{
-  content:"";
-  box-sizing:border-box;
   position:absolute;
+  inset:0;
+  display:block;
+  padding:0;
+  border:0;
+  background:none;
+  box-shadow:none;
   pointer-events:none;
 }
-.library-scene.has-render .library-shelf::before{
-  top:-5px;
-  bottom:-5px;
-  right:-5px;
-  width:var(--cabinet-depth);
-  transform:rotateY(-90deg);
-  transform-origin:right center;
-  border:2px solid #65402a;
-  border-radius:5px 1px 1px 5px;
-  background:
-    repeating-linear-gradient(180deg,transparent 0 101px,#d5a16a80 101px 103px,#43271896 103px 107px),
-    repeating-linear-gradient(94deg,#5c342426 0 2px,transparent 2px 12px),
-    linear-gradient(90deg,#4c2b1e,#936040 68%,#ad784d 97%);
-  box-shadow:inset 0 0 0 3px #b17a4d55, 4px 8px 10px #25100675;
+.library-scene.has-render .library-spine{
+  position:absolute;
+  width:var(--spine-hit-width,22px);
+  height:var(--spine-hit-height,52px);
+  transform:translate(-50%,-50%);
+  padding:0;
+  border:0;
+  background:transparent;
+  color:transparent;
+  box-shadow:none;
 }
-.library-scene.has-render .library-shelf::after{
-  top:calc(-5px - var(--cabinet-depth));
-  left:-5px;
-  right:-5px;
-  height:var(--cabinet-depth);
-  transform:rotateX(90deg);
-  transform-origin:center bottom;
-  border:2px solid #764b32;
-  background:
-    repeating-linear-gradient(5deg,#57311a38 0 1px,transparent 1px 8px),
-    linear-gradient(#7d4c30,#c08b56);
+.library-scene.has-render .library-spine:focus-visible{
+  outline:2px solid #fff1a5;
+  outline-offset:1px;
 }
-.library-scene.has-render .library-spine{transform:translateZ(5px)}
-.library-scene.has-render .library-spine:hover,
-.library-scene.has-render .library-spine:focus-visible{transform:translate3d(0,-5px,12px)}
-@media(max-width:600px){
-  .library-scene.has-render{--cabinet-depth:56px;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:9px}
-  .library-scene.has-render .library-shelf{margin-inline:4px 16px;transform:rotateY(-25deg) rotateX(4deg)}
-}
+@media(max-width:600px){.library-scene.has-render{min-height:280px}}
 
   </style>
 </head>
@@ -7058,6 +7027,138 @@ body{
     cylinder(.093,.093,.012,matte('#633622'),2.12,.927,1.0);
     mesh(new T.TorusGeometry(.062,.016,8,18),ceramic,2.24,.824,1.0);
 
+
+    const cabinet = new T.Group();
+    cabinet.position.set(-2.87,0,-.61);
+    cabinet.rotation.y = 1.22;
+    roomScene.add(cabinet);
+    const walnut = matte('#69412e');
+    const edge = matte('#a37147');
+    const darkWood = matte('#48281d');
+    const rowY = [.22,1.25,2.28,3.31];
+    const cabinetWidth = 2.23;
+    const cabinetDepth = .84;
+    for (const x of [-cabinetWidth/2,cabinetWidth/2]){
+      box(.15,3.29,cabinetDepth,walnut,x,1.73,0,cabinet);
+      box(.054,3.29,.055,edge,x,1.73,.447,cabinet);
+    }
+    box(2.32,3.15,.085,darkWood,0,1.72,-.399,cabinet);
+    rowY.forEach((y,index)=>{
+      box(index===3?2.49:2.24,.13,.92,walnut,0,y,.015,cabinet);
+      box(index===3?2.49:2.24,.037,.056,edge,0,y+.025,.482,cabinet);
+    });
+    box(2.43,.18,.92,darkWood,0,.11,.015,cabinet);
+    for (const x of [-.94,.94])for(const z of [-.31,.31])box(.15,.14,.16,walnut,x,.068,z,cabinet);
+
+    const volumes = [];
+    const raycaster = new T.Raycaster();
+    const pointer = new T.Vector2();
+    const marker = new T.Vector3();
+    function spineLabel(text){
+      const label = document.createElement('canvas');
+      label.width=96;label.height=256;
+      const ctx=label.getContext('2d');
+      ctx.strokeStyle='#f3cf84';
+      ctx.lineWidth=3;
+      for(const y of [22,35,221,234]){
+        ctx.beginPath();ctx.moveTo(11,y);ctx.lineTo(85,y);ctx.stroke();
+      }
+      ctx.save();
+      ctx.translate(49,128);
+      ctx.rotate(Math.PI/2);
+      ctx.font='bold 18px Georgia';
+      ctx.fillStyle='#fff1c3';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillText(text,0,0,168);
+      ctx.restore();
+      const texture=new T.CanvasTexture(label);
+      texture.colorSpace=T.SRGBColorSpace;
+      return texture;
+    }
+
+    function positionSpines(width,height){
+      cabinet.updateMatrixWorld(true);
+      volumes.forEach(({volume,button})=>{
+        const project = (x,y) => {
+          marker.set(x,y,.17).applyMatrix4(volume.matrixWorld).project(camera);
+          return [(marker.x+1)*width/2,(1-marker.y)*height/2];
+        };
+        const center=project(0,0);
+        const top=project(0,.34);
+        const side=project(.14,0);
+        button.style.left=center[0]+'px';
+        button.style.top=center[1]+'px';
+        button.style.setProperty('--spine-hit-height',Math.max(22,Math.abs(top[1]-center[1])*2)+'px');
+        button.style.setProperty('--spine-hit-width',Math.max(10,Math.abs(side[0]-center[0])*2)+'px');
+      });
+    }
+
+    function pickVolume(event){
+      const rect=canvas.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      pointer.set((event.clientX-rect.left)/rect.width*2-1,1-(event.clientY-rect.top)/rect.height*2);
+      raycaster.setFromCamera(pointer,camera);
+      const hit=raycaster.intersectObjects(cabinet.children,true)[0];
+      return hit?.object.userData.publicationButton || null;
+    }
+    canvas.addEventListener('pointermove',event=>{
+      const button=pickVolume(event);
+      canvas.style.cursor=button?'pointer':'';
+      canvas.title=button?.title || '';
+    });
+    canvas.addEventListener('click',event=>pickVolume(event)?.click());
+
+    const cat = new T.Group();
+    cat.position.set(3.10,.02,1.36);
+    cat.rotation.y=-.43;
+    roomScene.add(cat);
+    const fur=matte('#be8353'), paleFur=matte('#f2d5a6'), stripe=matte('#805334');
+    function oval(x,y,z,sx,sy,sz,material,parent=cat){
+      const part=mesh(new T.SphereGeometry(1,14,10),material,x,y,z,parent);
+      part.scale.set(sx,sy,sz);
+      return part;
+    }
+    const catBody=oval(0,.20,0,.44,.19,.29,fur);
+    oval(-.28,.14,.16,.24,.14,.19,fur);
+    oval(-.33,.095,.30,.17,.071,.13,paleFur);
+    oval(-.35,.13,.322,.035,.025,.023,stripe);
+    const catEar=new T.ConeGeometry(.087,.20,4);
+    for(const x of [-.42,-.25]){
+      const ear=mesh(catEar,fur,x,.291,.14,cat);
+      ear.rotation.z=(x<-.3?.26:-.24);
+      const eye=mesh(new T.TorusGeometry(.039,.007,5,14,Math.PI*.85),stripe,x,.158,.303,cat);
+      eye.rotation.z=Math.PI*1.08;
+    }
+    const tailCurve=new T.CatmullRomCurve3([
+      new T.Vector3(.34,.13,-.10),new T.Vector3(.48,.10,.15),
+      new T.Vector3(.29,.09,.35),new T.Vector3(.05,.09,.39),new T.Vector3(-.11,.10,.31)
+    ]);
+    mesh(new T.TubeGeometry(tailCurve,22,.046,7,false),stripe,0,0,0,cat);
+
+    const sleepTextureCanvas=document.createElement('canvas');
+    sleepTextureCanvas.width=sleepTextureCanvas.height=64;
+    const sleepContext=sleepTextureCanvas.getContext('2d');
+    sleepContext.font='italic bold 52px Georgia';
+    sleepContext.fillStyle='#fff3c5';
+    sleepContext.fillText('z',14,47);
+    const sleepTexture=new T.CanvasTexture(sleepTextureCanvas);
+    sleepTexture.colorSpace=T.SRGBColorSpace;
+    const sleepMarks=Array.from({length:3},()=>{
+      const sprite=new T.Sprite(new T.SpriteMaterial({map:sleepTexture,transparent:true,depthWrite:false}));
+      cat.add(sprite);
+      return sprite;
+    });
+    function drawCat(time){
+      catBody.scale.y=.19+Math.sin(time*.0018)*.013;
+      sleepMarks.forEach((sprite,index)=>{
+        const phase=((time/4300+index/3)%1+1)%1;
+        sprite.position.set(-.34+phase*.27,.32+phase*.48,.26);
+        sprite.scale.setScalar(.10+phase*.13);
+        sprite.material.opacity=Math.sin(phase*Math.PI)*.66;
+      });
+    }
+
     const steamSegments = 38;
     const steamStrands = Array.from({length:3},(_,strand)=>{
       const geometry = new T.BufferGeometry();
@@ -7105,13 +7206,14 @@ body{
     function steamTick(time){
       drawSteam(time);
       drawPages(time);
+      drawCat(time);
       render();
       steamFrame=requestAnimationFrame(steamTick);
     }
     function syncSteam(){
       cancelAnimationFrame(steamFrame);
       if(steamVisible && !motion.matches)steamFrame=requestAnimationFrame(steamTick);
-      else if(steamVisible){drawSteam(0);render();}
+      else if(steamVisible){drawSteam(0);drawCat(0);render();}
     }
 
     const openBook = new T.Group();
@@ -7161,11 +7263,13 @@ body{
       const y=(1-location.y)*height/2;
       nook.style.setProperty('--table-x',(x-nook.offsetLeft)+'px');
       nook.style.setProperty('--table-y',(y-nook.offsetTop)+'px');
+      positionSpines(width,height);
       render();
     }
     scene.classList.add('has-render');
     canvas.hidden=false;
     drawSteam(0);
+    drawCat(0);
     new ResizeObserver(resize).observe(scene);
     new IntersectionObserver(([entry]) => {
       steamVisible = entry.isIntersecting;
@@ -7173,6 +7277,28 @@ body{
     }).observe(scene);
     motion.addEventListener('change',syncSteam);
     return {
+      addVolumes(buttons){
+        const columns=Math.max(5,Math.ceil(buttons.length/3));
+        const spacing=1.82/columns;
+        buttons.forEach((button,index)=>{
+          const column=index%columns;
+          const row=Math.floor(index/columns);
+          const height=.71+(index*7%15)/100;
+          const volume=new T.Group();
+          volume.position.set((column-(columns-1)/2)*spacing,rowY[row]+.065+height/2,.212);
+          cabinet.add(volume);
+          const coverColor=button.style.getPropertyValue('--book-color');
+          const coverMesh=box(spacing*.85,height,.31,matte(coverColor),0,0,0,volume);
+          const paper=box(spacing*.76,.019,.26,materials.paper,0,height/2+.008,0,volume);
+          const lettering=mesh(new T.PlaneGeometry(spacing*.77,height*.94),new T.MeshBasicMaterial({
+            map:spineLabel(button.textContent),transparent:true,depthWrite:false
+          }),0,0,.157,volume);
+          lettering.castShadow=false;
+          [coverMesh,paper,lettering].forEach(part=>part.userData.publicationButton=button);
+          volumes.push({volume,button});
+        });
+        resize();
+      },
       land(color){
         cover.color.set(color);
         bookStarted = performance.now();
@@ -7340,6 +7466,7 @@ body{
     trigger?.focus();
   });
   room.hidden = !shelf.children.length;
+  if (!room.hidden) nook3d?.addVolumes([...shelf.children]);
 })();
 </script>
 </body>
