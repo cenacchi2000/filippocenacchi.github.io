@@ -558,52 +558,47 @@
   color:#c2410c;
 }
 
-.open-to-pill{
-  background:linear-gradient(135deg,#6d28d9,#7c3aed) !important;
-  color:#ffffff !important;
-  border-color:#7c3aed !important;
-  font-weight:800 !important;
-  box-shadow:0 10px 24px rgba(124,58,237,.24) !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:6px !important;
-
-  white-space:nowrap !important;
-  flex-wrap:nowrap !important;
-  overflow:hidden !important;
-
-  font-size:13px !important;
-  line-height:1 !important;
-  padding:10px 12px !important;
+.hero-left-links .open-to-pill{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:9px 10px !important;
+  border-color:#ddd6fe;
+  background:#f5f3ff;
+  color:#4c1d95;
+  line-height:1.35;
+  white-space:normal;
+  text-decoration:none;
 }
 
-.open-to-label,
-.open-to-suffix{
-  color:#ede9fe !important;
-  opacity:1 !important;
-  font-size:12px !important;
-  font-weight:800 !important;
-  white-space:nowrap !important;
+.hero-left-links .open-to-pill:hover,
+.hero-left-links .open-to-pill:focus-visible{
+  border-color:#a78bfa;
+  background:#ede9fe;
+  color:#4c1d95;
 }
 
-.open-to-role{
-  display:inline-block !important;
-  min-width:78px !important;
-  max-width:92px !important;
-  text-align:center !important;
-  color:#ffffff !important;
-  opacity:1 !important;
-  font-size:13px !important;
-  font-weight:900 !important;
-  white-space:nowrap !important;
-  animation:roleFade .35s ease;
+.open-to-dot{
+  width:7px;
+  height:7px;
+  flex:none;
+  border-radius:50%;
+  background:#7c3aed;
 }
-    
-@keyframes roleFade{
-  from{opacity:0; transform:translateY(6px);}
-  to{opacity:1; transform:translateY(0);}
+
+.open-to-copy{
+  text-align:left;
+}
+
+.open-to-copy strong,
+.open-to-copy small{
+  display:block;
+}
+
+.open-to-copy small{
+  font-size:11px;
+  color:#5b21b6;
 }
     
 #teaching .teach-card--comp8410{
@@ -2729,11 +2724,13 @@
           Academic CV
         </a>
 
-        <span class="pill open-to-pill" aria-label="Open to academic positions">
-          <span class="open-to-label">Open to</span>
-          <span class="open-to-role" id="openToRole">Postdoc</span>
-          <span class="open-to-suffix">positions</span>
-        </span>
+        <a class="pill open-to-pill" href="#contact">
+          <span class="open-to-dot" aria-hidden="true"></span>
+          <span class="open-to-copy">
+            <strong>Open to academic roles</strong>
+            <small>Postdoc · Lecturer · Research</small>
+          </span>
+        </a>
       </div>
     </div>
 
@@ -5637,29 +5634,6 @@
 })();
 </script>
 
-  <script>
-(function(){
-  const roles = [
-    'Postdoc',
-    'Lecturer',
-    'Research',
-    'AI Fellow'
-  ];
-
-  const el = document.getElementById('openToRole');
-  if (!el) return;
-
-  let i = 0;
-
-  setInterval(() => {
-    i = (i + 1) % roles.length;
-    el.style.animation = 'none';
-    void el.offsetWidth;
-    el.textContent = roles[i];
-    el.style.animation = 'roleFade .35s ease';
-  }, 1800);
-})();
-</script>
 
 </body>
 </html> 
