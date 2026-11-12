@@ -7529,41 +7529,58 @@ body{
     motion.addEventListener('change',syncSteam);
     return {
       addVolumes(buttons){
-        const columns=Math.max(5,Math.ceil(buttons.length/3));
-        const spacing=1.82/columns;
-        const heights=[.79,.65,.88,.72,.82,.68,.86,.76,.90,.63,.84,.71,.78];
-        const widths=[.73,.89,.65,.79,.81,.77,.85,.67,.83,.72,.86,.68,.77];
-        const leans=[[.18,0,-.075,-.075,-.16],[.10,.04,0,-.11,-.19],[.15,.08,-.19]];
-        const setbacks=[.02,.067,-.012,.032,-.025,.051,-.005];
-        buttons.forEach((button,index)=>{
-          const row=Math.floor(index/columns);
-          const column=index%columns;
-          const count=Math.min(columns,buttons.length-row*columns);
-          const height=heights[index%heights.length];
-          const width=spacing*widths[index%widths.length];
-          const depth=.27+(index%4)*.016;
-          const jitter=[-.02,-.035,.008,.02,.017][column%5];
-          const center=(column-(count-1)/2)*spacing+jitter;
-          const rowOffset=[-.04,.035,-.12][row];
-          const lean=(leans[row][column] || 0)*Math.min(1,5/columns);
-          const volume=new T.Group();
-          volume.rotation.set(0,[.026,-.045,.013,0][index%4],lean);
-          volume.position.set(
-            center+rowOffset-Math.sin(lean)*height/2,
-            rowY[row]+.065+Math.cos(lean)*height/2+Math.abs(Math.sin(lean))*width/2,
-            .204-setbacks[index%setbacks.length]
-          );
-          cabinet.add(volume);
-          const coverColor=button.style.getPropertyValue('--book-color');
-          const coverMesh=box(width,height,depth,matte(coverColor),0,0,0,volume);
-          const paper=box(width*.87,.014,depth*.84,materials.paper,0,height/2+.006,0,volume);
-          const lettering=mesh(new T.PlaneGeometry(width*.90,height*.94),new T.MeshBasicMaterial({
-            map:spineLabel(button.textContent),transparent:true,depthWrite:false
-          }),0,0,depth/2+.002,volume);
-          lettering.castShadow=false;
-          [coverMesh,paper,lettering].forEach(part=>part.userData.publicationButton=button);
-          volumes.push({volume,button,width,height,depth});
-        });
+        const perRow=Math.max(5,Math.ceil(buttons.length/3));
+        const heights=[.86,.53,.76,.66,.88,.57,.81,.69,.85,.49,.73,.60,.83];
+        const thicknesses=[.28,.115,.22,.145,.31,.16,.235,.10,.27,.138,.193,.245,.13];
+        const vintage=['#a89068','#736951','#a16d58','#354c60','#626745','#a5987e','#754733','#4b696c'];
+        const gilt=matte('#c4a16e');
+        const gap=.017;
+        for(let row=0;row<3;row++){
+          const papers=buttons.slice(row*perRow,(row+1)*perRow);
+          const slots=Math.max(9,papers.length+3);
+          let paperIndex=0;
+          const editions=Array.from({length:slots},(_,slot)=>{
+            const remaining=papers.length-paperIndex;
+            const button=remaining&&(slot%2===row%2||remaining===slots-slot)?papers[paperIndex++]:null;
+            const style=(row*7+slot*5)%heights.length;
+            const lean=(slot===1?.14:slot===slots-2?-.16:slot===slots-1?-.09:0)*(row===1?-1:1);
+            return {button,style,lean,height:heights[style],rawWidth:thicknesses[style]};
+          });
+          const leanAllowance=editions.reduce((sum,item)=>sum+item.height*Math.abs(Math.sin(item.lean)),0);
+          const baseWidths=editions.reduce((sum,item)=>sum+item.rawWidth,0);
+          const span=1.99;
+          const fit=(span-gap*(slots-1)-leanAllowance)/baseWidths;
+          let cursor=-span/2;
+          editions.forEach(({button,style,lean,height,rawWidth},slot)=>{
+            const width=rawWidth*fit;
+            const depth=.22+style%5*.033;
+            const footprint=width*Math.cos(lean)+height*Math.abs(Math.sin(lean));
+            const volume=new T.Group();
+            volume.rotation.z=lean;
+            volume.position.set(
+              cursor+footprint/2,
+              rowY[row]+.065+(height*Math.cos(lean)+width*Math.abs(Math.sin(lean)))/2,
+              .173+(style%4)*.023
+            );
+            cursor+=footprint+gap;
+            cabinet.add(volume);
+            const color=button?.style.getPropertyValue('--book-color')||vintage[(row*3+slot)%vintage.length];
+            const cover=box(width,height,depth,matte(color),0,0,0,volume);
+            const paper=box(width*.85,.015,depth*.82,materials.paper,0,height/2-.006,-.013,volume);
+            if(button){
+              const lettering=mesh(new T.PlaneGeometry(width*.91,height*.94),new T.MeshBasicMaterial({
+                map:spineLabel(button.textContent),transparent:true,depthWrite:false
+              }),0,0,depth/2+.002,volume);
+              lettering.castShadow=false;
+              [cover,paper,lettering].forEach(part=>part.userData.publicationButton=button);
+              volumes.push({volume,button,width,height,depth});
+            }else{
+              for(const y of [-.37,-.30,.34]){
+                box(width*.74,.009,.004,gilt,0,height*y,depth/2+.002,volume).castShadow=false;
+              }
+            }
+          });
+        }
         resize();
       },
       fly(button,color,finish){
