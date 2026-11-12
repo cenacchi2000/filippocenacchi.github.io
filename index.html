@@ -6962,7 +6962,7 @@ body{
       teal:matte('#526b57'), gold:matte('#b68a45'), paper:matte('#fff0cb')
     };
     const shade = new T.MeshStandardMaterial({color:'#ffce80',emissive:'#e49139',emissiveIntensity:.46,roughness:1});
-    const sky = new T.MeshBasicMaterial({color:'#c2d3a0'});
+    const sky = new T.MeshBasicMaterial({color:'#8e9fae'});
     const mesh = (geo,material,x,y,z,parent=roomScene) => {
       const object = new T.Mesh(geo,material);
       object.position.set(x,y,z);
@@ -6973,17 +6973,25 @@ body{
     };
     const box = (w,h,d,m,x,y,z,parent) => mesh(new T.BoxGeometry(w,h,d),m,x,y,z,parent);
     const cylinder = (a,b,h,m,x,y,z) => mesh(new T.CylinderGeometry(a,b,h,24),m,x,y,z);
-    roomScene.add(new T.HemisphereLight('#fff1cf','#584233',2.05));
-    const sun = new T.DirectionalLight('#ffd599',3.05);
-    sun.position.set(3,6,4);
-    sun.castShadow = true;
-    Object.assign(sun.shadow.camera,{left:-7,right:7,top:6,bottom:-6});
-    sun.shadow.mapSize.set(1024,1024);
-    sun.shadow.bias = -.0004;
-    roomScene.add(sun);
-    const warm = new T.PointLight('#ffc36e',7,5);
-    warm.position.set(3.05,2.9,.35);
-    roomScene.add(warm);
+    roomScene.add(new T.HemisphereLight('#dedbc9','#493143',1.05));
+    const windowFill = new T.DirectionalLight('#d4ddf2',.66);
+    windowFill.position.set(1.7,4.3,2);
+    roomScene.add(windowFill);
+
+    const lampPool = new T.SpotLight('#ffd09a',62,8,Math.PI*.29,.72,2);
+    lampPool.position.set(3.18,2.47,.02);
+    lampPool.target.position.set(2.42,.08,.64);
+    lampPool.castShadow = true;
+    lampPool.shadow.mapSize.set(1024,1024);
+    lampPool.shadow.camera.near=.18;
+    lampPool.shadow.camera.far=8;
+    lampPool.shadow.bias=-.00045;
+    lampPool.shadow.normalBias=.022;
+    roomScene.add(lampPool,lampPool.target);
+
+    const reflectedLamp = new T.PointLight('#ffc27d',13,7,2);
+    reflectedLamp.position.set(3.10,2.41,.12);
+    roomScene.add(reflectedLamp);
 
     box(13,.15,8,materials.floor,0,-.08,0);
     box(13,5.4,.16,materials.wall,0,2.65,-2.08);
@@ -6994,13 +7002,36 @@ body{
     box(12,.17,.17,materials.beam,0,.09,-1.94);
     box(1.74,1.86,.09,materials.beam,1.7,2.94,-1.94);
     box(1.55,1.66,.06,sky,1.7,2.94,-1.87);
-    for(let i=0;i<7;i++){
-      const foliage = mesh(new T.IcosahedronGeometry(.23 + (i%3)*.09,1),matte(i%2?'#728b59':'#95a66a'),1.11+i*.19,2.32+(i%3)*.12,-1.81);
-      foliage.scale.y = 1.15;
-    }
     box(.055,1.66,.08,materials.beam,1.7,2.94,-1.76);
     box(1.55,.055,.08,materials.beam,1.7,3.0,-1.76);
     box(1.94,.13,.3,materials.table,1.7,1.99,-1.83);
+    const curtainFabric = new T.MeshStandardMaterial({
+      color:'#d8b68e',roughness:1,side:T.DoubleSide
+    });
+    const rod = cylinder(.029,.029,2.3,materials.gold,1.7,3.94,-1.56);
+    rod.rotation.z=Math.PI/2;
+    for(const side of [-1,1]){
+      mesh(new T.SphereGeometry(.049,12,8),materials.gold,1.7+side*1.17,3.94,-1.56);
+      const folds = new T.PlaneGeometry(1,1,32,25);
+      const points = folds.attributes.position;
+      for(let index=0;index<points.count;index++){
+        const across=points.getX(index)+.5;
+        const drop=.5-points.getY(index);
+        const gathered=Math.exp(-Math.pow((drop-.61)/.16,2));
+        const width=.56-.29*gathered+.07*drop;
+        const outer=1.7+side*(1.07+.065*drop);
+        const pleat=Math.sin(across*Math.PI*8+.22*drop);
+        const x=outer-side*width*across;
+        const y=3.92-1.98*drop+Math.sin(across*Math.PI*6)*.028*drop;
+        const z=-1.53+pleat*(.058-.025*gathered)+.08*drop;
+        points.setXYZ(index,x,y,z);
+      }
+      folds.computeVertexNormals();
+      mesh(folds,curtainFabric,0,0,0);
+      const tie=mesh(new T.TorusGeometry(.091,.013,7,20),materials.gold,1.7+side*.975,2.71,-1.48);
+      tie.scale.set(1.29,.51,1);
+    }
+
 
     box(2.38,.48,.97,materials.fabric,1.61,.42,-.92);
     box(2.35,.89,.32,materials.fabric,1.61,.97,-1.35).rotation.x = -.12;
@@ -7166,13 +7197,14 @@ body{
         mesh(leaf,leafMaterials[index%leafMaterials.length],0,0,0,base);
       }
     }
+    plant(-3.69,.28,1.92,1.1);
     plant(-1.34,-1.34,1.12,.8);
     plant(-2.26,1.13,.66,1.7);
     plant(3.58,-1.50,.80,2.6);
 
     const cat = new T.Group();
-    cat.position.set(3.10,.02,1.36);
-    cat.rotation.y=-.43;
+    cat.position.set(.48,.02,1.93);
+    cat.rotation.y=-.24;
     roomScene.add(cat);
     const fur = new T.MeshStandardMaterial({color:'#111319',roughness:.87});
     const softFur = new T.MeshStandardMaterial({color:'#1b1e25',roughness:.91});
