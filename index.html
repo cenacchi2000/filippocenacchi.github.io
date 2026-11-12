@@ -7534,7 +7534,7 @@ body{
     const openBook = new T.Group();
     const tableSurfaceY=.68;
     openBook.position.set(1.42,tableSurfaceY+.021,1.02);
-    openBook.rotation.y = -.22;
+    openBook.rotation.y = Math.PI / 2 - .22;
     openBook.visible = false;
     roomScene.add(openBook);
     const cover = matte('#734d38');
