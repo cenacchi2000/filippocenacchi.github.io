@@ -3418,11 +3418,13 @@ body{
   background:repeating-linear-gradient(#fbebc4 0 3px,#c6a779 3px 4px,#fbebc4 4px 5px);
 }
 .library-table-book::before{transform:rotateY(180deg)}
-.library-table-book.is-fluttering::after{animation:library-page-flutter 4s ease-in-out infinite alternate}
+.library-table-book.is-fluttering::after{animation:library-page-flutter 6.7s ease-in-out infinite}
 @keyframes library-page-flutter{
-  0%{transform:perspective(80px) rotateY(0)}
-  55%{transform:perspective(80px) rotateY(-125deg) rotateZ(-8deg)}
-  100%{transform:perspective(80px) rotateY(-180deg)}
+  0%,12%{opacity:0;transform:perspective(80px) rotateY(0)}
+  16%{opacity:1}
+  50%{transform:perspective(80px) rotateY(-100deg) rotateZ(-8deg)}
+  70%{opacity:1;transform:perspective(80px) rotateY(-180deg)}
+  76%,100%{opacity:0;transform:perspective(80px) rotateY(-180deg)}
 }
 #pubList{
   box-sizing:border-box;
@@ -7010,7 +7012,16 @@ body{
       box(.26,.46,.96,materials.fabric,x,.71,-.89);
       for(const z of [-1.22,-.56])box(.12,.18,.12,materials.beam,x,.13,z);
     }
-    box(.38,.37,.17,materials.teal,2.43,1,-.94).rotation.z = -.2;
+    const pillowGeometry = new T.SphereGeometry(1,32,24);
+    const pillowPoints = pillowGeometry.attributes.position;
+    const soften = value => Math.sign(value) * Math.pow(Math.abs(value),.68);
+    for(let i=0;i<pillowPoints.count;i++){
+      pillowPoints.setXYZ(i,soften(pillowPoints.getX(i))*.235,soften(pillowPoints.getY(i))*.195,pillowPoints.getZ(i)*.105);
+    }
+    pillowGeometry.computeVertexNormals();
+    const pillowFabric = new T.MeshStandardMaterial({color:'#516a53',roughness:1});
+    const pillow = mesh(pillowGeometry,pillowFabric,2.43,.98,-.88);
+    pillow.rotation.set(-.23,.13,-.31);
 
     cylinder(.18,.21,.08,materials.beam,3.18,.06,.02);
     cylinder(.026,.034,2.61,materials.gold,3.18,1.33,.02);
@@ -7109,32 +7120,107 @@ body{
     });
     canvas.addEventListener('click',event=>pickVolume(event)?.click());
 
+    const potClay = matte('#a76349');
+    const soil = matte('#4c3626');
+    const stemMaterial = new T.MeshStandardMaterial({color:'#526440',roughness:1});
+    const leafMaterials = ['#526b37','#70824a','#87945c','#3b613f'].map(color =>
+      new T.MeshStandardMaterial({color,roughness:.83,side:T.DoubleSide})
+    );
+    function plant(x,z,size,variant){
+      const base=new T.Group();
+      base.position.set(x,0,z);
+      base.scale.setScalar(size);
+      roomScene.add(base);
+      mesh(new T.CylinderGeometry(.235,.167,.32,24),potClay,0,.16,0,base);
+      mesh(new T.TorusGeometry(.22,.024,8,24),potClay,0,.314,0,base).rotation.x=Math.PI/2;
+      mesh(new T.CylinderGeometry(.21,.21,.015,20),soil,0,.307,0,base);
+      for(let index=0;index<7;index++){
+        const angle=index*2.399+variant;
+        const spread=.17+(index%3)*.058;
+        const end=new T.Vector3(Math.cos(angle)*spread,.6+(index%4)*.12,Math.sin(angle)*spread);
+        const stem=new T.QuadraticBezierCurve3(new T.Vector3(0,.30,0),new T.Vector3(end.x*.22,end.y*.73,end.z*.22),end);
+        mesh(new T.TubeGeometry(stem,10,.011,5,false),stemMaterial,0,0,0,base);
+        const direction=new T.Vector3(Math.cos(angle),.40+(index%3)*.23,Math.sin(angle)).normalize();
+        const lateral=new T.Vector3(-direction.z,0,direction.x).normalize();
+        const points=[];
+        const indices=[];
+        for(let segment=0;segment<=8;segment++){
+          const t=segment/8;
+          const middle=end.clone().addScaledVector(direction,t*(.31+index%3*.055));
+          middle.y+=Math.sin(Math.PI*t)*.094;
+          const width=.11*Math.sin(Math.PI*t);
+          for(const offset of [-1,0,1]){
+            const vertex=middle.clone().addScaledVector(lateral,offset*width);
+            if(offset===0)vertex.y+=Math.sin(Math.PI*t)*.023;
+            points.push(vertex.x,vertex.y,vertex.z);
+          }
+          if(segment<8){
+            const i=segment*3;
+            indices.push(i,i+3,i+1,i+1,i+3,i+4,i+1,i+4,i+2,i+2,i+4,i+5);
+          }
+        }
+        const leaf=new T.BufferGeometry();
+        leaf.setAttribute('position',new T.Float32BufferAttribute(points,3));
+        leaf.setIndex(indices);
+        leaf.computeVertexNormals();
+        mesh(leaf,leafMaterials[index%leafMaterials.length],0,0,0,base);
+      }
+    }
+    plant(-1.34,-1.34,1.12,.8);
+    plant(-2.26,1.13,.66,1.7);
+    plant(3.58,-1.50,.80,2.6);
+
     const cat = new T.Group();
     cat.position.set(3.10,.02,1.36);
     cat.rotation.y=-.43;
     roomScene.add(cat);
-    const fur=matte('#be8353'), paleFur=matte('#f2d5a6'), stripe=matte('#805334');
+    const fur = new T.MeshStandardMaterial({color:'#111319',roughness:.87});
+    const softFur = new T.MeshStandardMaterial({color:'#1b1e25',roughness:.91});
+    const noseMaterial = new T.MeshStandardMaterial({color:'#594951',roughness:.88});
+    const whiskerMaterial = new T.MeshStandardMaterial({color:'#a6a2a1',roughness:1});
+    const eyelidMaterial = new T.MeshStandardMaterial({color:'#66646a',roughness:1});
+    const smoothOval = new T.SphereGeometry(1,32,22);
     function oval(x,y,z,sx,sy,sz,material,parent=cat){
-      const part=mesh(new T.SphereGeometry(1,14,10),material,x,y,z,parent);
+      const part=mesh(smoothOval,material,x,y,z,parent);
       part.scale.set(sx,sy,sz);
       return part;
     }
-    const catBody=oval(0,.20,0,.44,.19,.29,fur);
-    oval(-.28,.14,.16,.24,.14,.19,fur);
-    oval(-.33,.095,.30,.17,.071,.13,paleFur);
-    oval(-.35,.13,.322,.035,.025,.023,stripe);
-    const catEar=new T.ConeGeometry(.087,.20,4);
-    for(const x of [-.42,-.25]){
-      const ear=mesh(catEar,fur,x,.291,.14,cat);
-      ear.rotation.z=(x<-.3?.26:-.24);
-      const eye=mesh(new T.TorusGeometry(.039,.007,5,14,Math.PI*.85),stripe,x,.158,.303,cat);
-      eye.rotation.z=Math.PI*1.08;
+    const torso = new T.Group();
+    torso.position.set(.085,.025,-.035);
+    cat.add(torso);
+    oval(.02,.20,0,.39,.185,.265,fur,torso).rotation.y=-.24;
+    oval(.235,.153,.019,.245,.15,.235,fur,torso);
+    oval(-.105,.143,.112,.225,.135,.18,softFur,torso);
+    oval(-.305,.139,.175,.181,.139,.162,fur);
+    oval(-.346,.106,.303,.114,.070,.079,softFur);
+    oval(-.357,.128,.361,.025,.018,.018,noseMaterial);
+    oval(-.204,.052,.296,.135,.047,.077,fur).rotation.y=-.35;
+    oval(-.316,.053,.315,.095,.043,.066,softFur);
+    const earShape = new T.Shape();
+    earShape.moveTo(-.075,0);
+    earShape.quadraticCurveTo(-.07,.11,-.015,.148);
+    earShape.quadraticCurveTo(.012,.16,.032,.115);
+    earShape.quadraticCurveTo(.06,.057,.075,0);
+    earShape.closePath();
+    const earGeometry = new T.ExtrudeGeometry(earShape,{
+      depth:.028,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.012,bevelThickness:.01,curveSegments:12
+    });
+    function curve(points,radius,material){
+      return mesh(new T.TubeGeometry(new T.CatmullRomCurve3(points.map(p=>new T.Vector3(...p))),20,radius,7,false),material,0,0,0,cat);
     }
-    const tailCurve=new T.CatmullRomCurve3([
-      new T.Vector3(.34,.13,-.10),new T.Vector3(.48,.10,.15),
-      new T.Vector3(.29,.09,.35),new T.Vector3(.05,.09,.39),new T.Vector3(-.11,.10,.31)
-    ]);
-    mesh(new T.TubeGeometry(tailCurve,22,.046,7,false),stripe,0,0,0,cat);
+    for(const x of [-.42,-.245]){
+      const ear=mesh(earGeometry,fur,x,.212,.155,cat);
+      ear.rotation.z=x<-.3?.27:-.25;
+      const inner=mesh(new T.ShapeGeometry(earShape),noseMaterial,0,.024,.039,ear);
+      inner.scale.set(.60,.62,1);
+      curve([[x-.035,.165,.302],[x,.152,.323],[x+.031,.163,.311]],.0046,eyelidMaterial);
+    }
+    for(const side of [-1,1])for(let index=0;index<3;index++){
+      const x=-.352+side*.062,y=.111+index*.009;
+      curve([[x,y,.343],[x+side*.044,y+.005,.367],[x+side*.096,y+.004+(index-1)*.016,.364]],.0018,whiskerMaterial);
+    }
+    curve([[.36,.15,-.085],[.48,.115,.107],[.36,.077,.289],[.17,.074,.378],[-.006,.082,.349]],.046,fur);
+    oval(-.007,.082,.349,.044,.044,.044,fur);
 
     const sleepTextureCanvas=document.createElement('canvas');
     sleepTextureCanvas.width=sleepTextureCanvas.height=64;
@@ -7144,18 +7230,19 @@ body{
     sleepContext.fillText('z',14,47);
     const sleepTexture=new T.CanvasTexture(sleepTextureCanvas);
     sleepTexture.colorSpace=T.SRGBColorSpace;
-    const sleepMarks=Array.from({length:3},()=>{
+    const sleepMarks=Array.from({length:4},()=>{
       const sprite=new T.Sprite(new T.SpriteMaterial({map:sleepTexture,transparent:true,depthWrite:false}));
       cat.add(sprite);
       return sprite;
     });
     function drawCat(time){
-      catBody.scale.y=.19+Math.sin(time*.0018)*.013;
+      const breath=(1-Math.cos(time*Math.PI*2/4700))/2;
+      torso.scale.set(1+.012*breath,1+.115*breath,1+.033*breath);
       sleepMarks.forEach((sprite,index)=>{
-        const phase=((time/4300+index/3)%1+1)%1;
-        sprite.position.set(-.34+phase*.27,.32+phase*.48,.26);
-        sprite.scale.setScalar(.10+phase*.13);
-        sprite.material.opacity=Math.sin(phase*Math.PI)*.66;
+        const phase=(time/6200+index/4)%1;
+        sprite.position.set(-.36+phase*.24+Math.sin(phase*5)*.035,.22+phase*.58,.36);
+        sprite.scale.setScalar(.073+phase*.077);
+        sprite.material.opacity=Math.sin(phase*Math.PI)*.77;
       });
     }
 
@@ -7206,6 +7293,7 @@ body{
     function steamTick(time){
       drawSteam(time);
       drawPages(time);
+      drawFlight(time);
       drawCat(time);
       render();
       steamFrame=requestAnimationFrame(steamTick);
@@ -7213,7 +7301,10 @@ body{
     function syncSteam(){
       cancelAnimationFrame(steamFrame);
       if(steamVisible && !motion.matches)steamFrame=requestAnimationFrame(steamTick);
-      else if(steamVisible){drawSteam(0);drawCat(0);render();}
+      else if(steamVisible){
+        if(flight)drawFlight(flight.started+flightDuration);
+        drawSteam(0);drawCat(0);drawPages(performance.now());render();
+      }
     }
 
     const openBook = new T.Group();
@@ -7224,28 +7315,71 @@ body{
     const cover = matte('#734d38');
     box(.88,.037,.48,cover,0,0,0,openBook);
     box(.85,.04,.45,materials.paper,0,.028,0,openBook);
-    const pagePivots = Array.from({length:7},(_,index)=>{
-      const pivot = new T.Group();
-      pivot.position.y = .052 + index * .002;
-      openBook.add(pivot);
-      box(.415,.005,.442,materials.paper,.21,0,0,pivot);
-      const ink = matte('#ba9867');
-      for(let line=0;line<5;line++)box(.25,.001,.009,ink,.215,.004,-.143+line*.065,pivot);
-      return pivot;
-    });
+    const spine = new T.Group();
+    spine.position.y=.072;
+    openBook.add(spine);
+    const ink = new T.MeshStandardMaterial({color:'#bda16f',roughness:1});
+    const paperSurface = new T.MeshStandardMaterial({color:'#fff0cb',roughness:1,side:T.DoubleSide});
+    for(const side of [-1,1]){
+      box(.412,.012,.443,materials.paper,side*.207,.057,0,openBook);
+      for(let line=0;line<7;line++)box(.28,.001,.006,ink,side*.208,.064,-.165+line*.049,openBook);
+    }
+    const leafGeometry = new T.PlaneGeometry(.416,.442,16,1);
+    leafGeometry.rotateX(-Math.PI/2);
+    leafGeometry.translate(.208,0,0);
+    const leaf = mesh(leafGeometry,paperSurface,0,0,0,spine);
+    const leafVertices = leafGeometry.attributes.position;
+    const leafLines=Array.from({length:7},(_,line)=>
+      box(.268,.001,.006,ink,.207,.002,-.163+line*.049,spine)
+    );
+    let bookStarted = 0;
+
+    const travellingBook = new T.Group();
+    const flightCover = new T.MeshStandardMaterial({color:'#795239',roughness:.86});
+    box(.33,.68,.102,flightCover,0,0,0,travellingBook);
+    box(.305,.644,.078,materials.paper,.017,0,0,travellingBook);
+    for(const y of [-.25,.25])box(.27,.011,.004,materials.gold,0,y,.053,travellingBook);
+    roomScene.add(travellingBook);
+    travellingBook.visible=false;
+    const landingRotation = new T.Quaternion().setFromEuler(new T.Euler(-Math.PI/2,-.16,-Math.PI/2));
+    const flightDuration=2450;
+    let flight=null;
+
+    function drawFlight(time){
+      if(!flight)return;
+      const progress=Math.max(0,Math.min(1,(time-flight.started)/flightDuration));
+      const eased=1-Math.pow(1-progress,2.35);
+      travellingBook.position.copy(flight.path.getPoint(eased));
+      travellingBook.quaternion.slerpQuaternions(flight.rotation,landingRotation,eased);
+      travellingBook.rotateZ(Math.sin(Math.PI*progress)*.25);
+      if(progress===1){
+        const finish=flight.finish;
+        flight=null;
+        travellingBook.visible=false;
+        finish();
+      }
+    }
 
     const point = new T.Vector3(1.42,.73,1.02);
     const nook = scene.querySelector('.library-nook');
-    let bookStarted = 0;
     function drawPages(time){
-      if (!openBook.visible) return;
-      const elapsed = time - bookStarted;
-      pagePivots.forEach((page,index)=>{
-        const phase = (elapsed - index * 570) * (Math.PI * 2 / 9600);
-        const turn = (1 - Math.cos(phase)) / 2;
-        const breeze = Math.sin(phase * 4 + index) * Math.sin(phase) * .045;
-        page.rotation.z = .04 + (Math.PI - .08) * turn + breeze;
-      });
+      if(!openBook.visible)return;
+      const elapsed=Math.max(0,time-bookStarted);
+      const cycle=elapsed%6700;
+      const progress=(cycle-950)/3700;
+      const turning=progress>0&&progress<1&&!motion.matches;
+      spine.visible=turning;
+      if(!turning)return;
+      const eased=progress*progress*(3-2*progress);
+      const curl=Math.sin(Math.PI*eased)*.055;
+      spine.rotation.z=.018+(Math.PI-.036)*eased;
+      for(let i=0;i<leafVertices.count;i++){
+        const x=leafVertices.getX(i)/.416;
+        leafVertices.setY(i,curl*Math.sin(Math.PI*x*.87));
+      }
+      leafVertices.needsUpdate=true;
+      leafGeometry.computeVertexNormals();
+      leafLines.forEach(line=>{line.position.y=.003+curl*.95;});
     }
     function render(){renderer.render(roomScene,camera);}
     function resize(){
@@ -7299,15 +7433,38 @@ body{
         });
         resize();
       },
+      fly(button,color,finish){
+        const source=volumes.find(item=>item.button===button);
+        if(!source||motion.matches)return false;
+        cabinet.updateMatrixWorld(true);
+        const origin=source.volume.getWorldPosition(new T.Vector3());
+        const destination=point.clone();
+        const lift=origin.clone().lerp(destination,.37);
+        lift.y=Math.max(origin.y+.30,1.6);
+        const aboveTable=destination.clone();
+        aboveTable.y+=.36;
+        flight={
+          started:performance.now(),
+          rotation:source.volume.getWorldQuaternion(new T.Quaternion()),
+          path:new T.CubicBezierCurve3(origin,lift,aboveTable,destination),
+          finish
+        };
+        flightCover.color.set(color);
+        travellingBook.visible=true;
+        drawFlight(flight.started);
+        render();
+        return true;
+      },
       land(color){
         cover.color.set(color);
         bookStarted = performance.now();
         openBook.visible = true;
-        pagePivots.forEach((page,index)=>page.rotation.z=index<3?Math.PI-.035:.035);
-        if (!motion.matches) drawPages(bookStarted);
+        drawPages(bookStarted);
         render();
       },
       clear(){
+        flight=null;
+        travellingBook.visible=false;
         openBook.visible = false;
         render();
       }
@@ -7363,6 +7520,7 @@ body{
     tableBook.style.setProperty('--book-color', book.color);
     tableBook.hidden = true;
     nook3d?.clear();
+    if (nook3d?.fly(book.spine,book.color,()=>land(book))) return;
     if (motion.matches || !book.spine.animate) {land(book);return;}
     const bounds = scene.getBoundingClientRect();
     const from = book.spine.getBoundingClientRect();
@@ -7380,6 +7538,7 @@ body{
     ghost.style.top = y + 'px';
     ghost.style.width = from.width / scale + 'px';
     ghost.style.height = from.height / scale + 'px';
+    ghost.style.backgroundColor=book.color;
     const dx = (to.left + to.width / 2 - from.left - from.width / 2) / scale;
     const dy = (to.top - from.top - from.height / 2) / scale;
     flying = ghost;
@@ -7387,9 +7546,10 @@ body{
     scene.append(ghost);
     ghost.animate([
       {transform:'translate(0,0) rotate(0)'},
-      {transform:`translate(${dx * .54}px,${dy * .44 - 35}px) rotate(-35deg)`,offset:.55},
+      {transform:`translate(${dx * .54}px,${dy * .44 - 35}px) rotate(-35deg)`,offset:.56},
+      {transform:`translate(${dx * .98}px,${dy - 12}px) rotate(-83deg) scale(.65)`,offset:.87},
       {transform:`translate(${dx}px,${dy}px) rotate(-90deg) scale(.55)`}
-    ], {duration:680,easing:'cubic-bezier(.3,.72,.3,1)'}).onfinish = () => {
+    ], {duration:2450,easing:'cubic-bezier(.24,.62,.22,1)'}).onfinish = () => {
       ghost.remove();
       if (flying === ghost) {
         flying = null;
