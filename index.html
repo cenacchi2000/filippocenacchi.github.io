@@ -6993,7 +6993,7 @@ body{
     roomScene.add(reflectedLamp);
     const sconceX=-.90, sconceY=2.60;
     const agedBrass=new T.MeshStandardMaterial({color:'#b98b53',metalness:.57,roughness:.36});
-    const opal=new T.MeshStandardMaterial({color:'#fff1d4',emissive:'#ffcf83',emissiveIntensity:1.22,roughness:.35});
+
     const plate=mesh(new T.CylinderGeometry(.18,.18,.044,28),agedBrass,sconceX,sconceY,-1.95);
     plate.rotation.x=Math.PI/2;
     const sconceArm=new T.QuadraticBezierCurve3(
@@ -7002,15 +7002,31 @@ body{
       new T.Vector3(sconceX,sconceY+.02,-1.53)
     );
     mesh(new T.TubeGeometry(sconceArm,20,.022,8,false),agedBrass,0,0,0);
-    const collar=mesh(new T.CylinderGeometry(.079,.10,.065,20),agedBrass,sconceX,sconceY+.02,-1.53);
-    collar.rotation.y=.12;
-    const globe=mesh(new T.SphereGeometry(.14,24,16),opal,sconceX,sconceY+.153,-1.53);
-    globe.scale.y=1.14;
-    globe.castShadow=false;
-    const sconceGlow=new T.PointLight('#ffd9a2',15,5.5,2);
-    sconceGlow.position.set(sconceX,sconceY+.15,-1.37);
+    const lampZ=-1.53;
+    mesh(new T.CylinderGeometry(.113,.087,.055,24),agedBrass,sconceX,sconceY+.035,lampZ);
+    mesh(new T.CylinderGeometry(.076,.095,.076,24),agedBrass,sconceX,sconceY+.085,lampZ);
+    const chimneyGeometry=new T.LatheGeometry(
+      [[.063,0],[.086,.044],[.092,.092],[.079,.148],[.051,.211],[.048,.282],[.054,.305]]
+        .map(([radius,y])=>new T.Vector2(radius,y)),24
+    );
+    const glass=new T.MeshPhysicalMaterial({
+      color:'#ffdfb1',roughness:.18,transparent:true,opacity:.24,side:T.DoubleSide,depthWrite:false
+    });
+    const chimney=mesh(chimneyGeometry,glass,sconceX,sconceY+.11,lampZ);
+    chimney.castShadow=false;
+    chimney.receiveShadow=false;
+    const flameRoot=new T.Group();
+    flameRoot.position.set(sconceX,sconceY+.115,lampZ);
+    roomScene.add(flameRoot);
+    const flame=mesh(new T.SphereGeometry(1,16,12),new T.MeshBasicMaterial({color:'#ffad4f'}),0,.078,0,flameRoot);
+    flame.scale.set(.026,.079,.022);
+    flame.castShadow=false;
+    const flameCore=mesh(new T.SphereGeometry(1,14,10),new T.MeshBasicMaterial({color:'#fff1a5'}),0,.058,.016,flameRoot);
+    flameCore.scale.set(.015,.056,.012);
+    flameCore.castShadow=false;
+    const sconceGlow=new T.PointLight('#ffd09a',14,5.5,2);
+    sconceGlow.position.set(sconceX,sconceY+.20,-1.37);
     roomScene.add(sconceGlow);
-
 
     box(13,.15,8,materials.floor,0,-.08,0);
     box(13,5.4,.16,materials.wall,0,2.65,-2.08);
@@ -7397,7 +7413,7 @@ body{
     }
 
     const steamSegments = 38;
-    const steamStrands = Array.from({length:3},(_,strand)=>{
+    const steamStrands = Array.from({length:4},(_,strand)=>{
       const geometry = new T.BufferGeometry();
       const positions = new Float32Array((steamSegments+1)*6);
       const fades = new Float32Array((steamSegments+1)*2);
@@ -7413,7 +7429,7 @@ body{
       geometry.setAttribute('fade',new T.BufferAttribute(fades,1));
       const material = new T.ShaderMaterial({
         transparent:true,depthWrite:false,side:T.DoubleSide,
-        uniforms:{opacity:{value:[.25,.17,.11][strand]}},
+        uniforms:{opacity:{value:[.25,.17,.11,.17][strand]}},
         vertexShader:'attribute float fade; varying float vFade; void main(){vFade=fade; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
         fragmentShader:'uniform float opacity; varying float vFade; void main(){gl_FragColor=vec4(1.0,0.96,0.87,vFade*opacity);}'
       });
@@ -7425,15 +7441,20 @@ body{
     let steamFrame = 0;
     let steamVisible = false;
     function drawSteam(time){
+      const flicker=Math.sin(time*.008)*.075+Math.sin(time*.013)*.034;
+      flameRoot.rotation.z=Math.sin(time*.004)*.12;
+      flameRoot.scale.y=1+flicker;
+      sconceGlow.intensity=14+flicker*9;
       steamStrands.forEach((ribbon,strand)=>{
         const positions = ribbon.geometry.attributes.position;
         for(let i=0;i<=steamSegments;i++){
           const progress=i/steamSegments;
-          const wave=progress*8.5-time*.0017+strand*1.8;
-          const x=2.12+progress*.36+Math.sin(wave)*progress*(.24+strand*.045);
-          const y=.941+progress*(2.22-strand*.19);
-          const z=1.0+Math.cos(wave)*progress*.24+(strand-1)*.019;
-          const halfWidth=.018+progress*.045;
+          const isLamp=strand===3;
+          const wave=progress*(isLamp?7.5:8.5)-time*(isLamp?.00115:.0017)+strand*1.8;
+          const x=isLamp?sconceX+progress*.16+Math.sin(wave)*progress*.095:2.12+progress*.36+Math.sin(wave)*progress*(.24+strand*.045);
+          const y=isLamp?sconceY+.416+progress*.68:.941+progress*(2.22-strand*.19);
+          const z=isLamp?lampZ+Math.cos(wave)*progress*.09:1.0+Math.cos(wave)*progress*.24+(strand-1)*.019;
+          const halfWidth=isLamp?.007+progress*.021:.018+progress*.045;
           positions.setXYZ(i*2,x-halfWidth,y,z);
           positions.setXYZ(i*2+1,x+halfWidth,y,z);
         }
