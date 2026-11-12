@@ -1704,6 +1704,58 @@
 }
 
 
+/* Experience logos follow the Education timeline placement. */
+#experience .timeline .item{
+  position:relative;
+}
+
+#experience .experience-logos{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+#experience .experience-logos img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:128px;
+  max-height:56px;
+  filter:drop-shadow(0 10px 26px rgba(15,23,42,.25));
+}
+
+#experience .experience-logos--pair img{
+  max-width:92px;
+}
+
+@media (min-width:769px){
+  #experience .timeline .item{
+    padding-right:176px;
+  }
+
+  #experience .timeline .item:has(.experience-logos--pair){
+    padding-right:228px;
+  }
+
+  #experience .experience-logos{
+    position:absolute;
+    top:50%;
+    right:32px;
+    transform:translateY(-50%);
+  }
+}
+
+@media (max-width:768px){
+  #experience .experience-logos{
+    justify-self:end;
+  }
+
+  #experience .experience-logos img{
+    max-height:36px;
+  }
+}
+
+
  /* ===== Teaching analytics flip card ===== */
 
 #teaching .teach-deliver{
@@ -4788,6 +4840,11 @@
         <div>Macquarie University</div>
         <div class="meta">Humanoid robots in healthcare; multimodal analysis; human-centered, ethical interactions</div>
       </div>
+      <div class="experience-logos">
+        <a href="https://www.mq.edu.au/" target="_blank" rel="noopener">
+          <img src="mq.png" alt="Macquarie University" loading="lazy" decoding="async">
+        </a>
+      </div>
     </div>
 
     <div class="item">
@@ -4799,6 +4856,11 @@
           Teaching across COMP1000, COMP2350, COMP3300, COMP3310, COMP3850, COMP8410, and COMP8851, spanning foundational programming, database design, data privacy engineering, secure applications development, industry-linked computing projects, and master's-level AI & data science capstones.
         </div>
       </div>
+      <div class="experience-logos">
+        <a href="https://www.mq.edu.au/" target="_blank" rel="noopener">
+          <img src="mq.png" alt="Macquarie University" loading="lazy" decoding="async">
+        </a>
+      </div>
     </div>
 
     <div class="item">
@@ -4806,6 +4868,11 @@
       <div class="content">
         <strong>Graduate Student Representative</strong>
         <div>Macquarie University</div>
+      </div>
+      <div class="experience-logos">
+        <a href="https://www.mq.edu.au/" target="_blank" rel="noopener">
+          <img src="mq.png" alt="Macquarie University" loading="lazy" decoding="async">
+        </a>
       </div>
     </div>
 
@@ -4816,6 +4883,11 @@
         <div>Macquarie University</div>
         <div class="meta">Managed logistics and analysis with Construction Training Centre of Queensland; usability evaluations and industry collaboration</div>
       </div>
+      <div class="experience-logos">
+        <a href="https://www.mq.edu.au/" target="_blank" rel="noopener">
+          <img src="mq.png" alt="Macquarie University" loading="lazy" decoding="async">
+        </a>
+      </div>
     </div>
 
     <div class="item">
@@ -4824,6 +4896,14 @@
         <strong>Research Assistant</strong>
         <div>Macquarie University & Meta</div>
         <div class="meta">Ethical VR research with Macquarie partnership; user-to-user communication studies</div>
+      </div>
+      <div class="experience-logos experience-logos--pair">
+        <a href="https://www.mq.edu.au/" target="_blank" rel="noopener">
+          <img src="mq.png" alt="Macquarie University" loading="lazy" decoding="async">
+        </a>
+        <a href="https://about.meta.com/" target="_blank" rel="noopener">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" loading="lazy" decoding="async">
+        </a>
       </div>
     </div>
 
@@ -4834,6 +4914,11 @@
         <div>Genvalues.com (Stockholm · Hybrid)</div>
         <div class="meta">Product strategy; requirements; cross-functional delivery</div>
       </div>
+      <div class="experience-logos">
+        <a href="https://thehub.io/startups/airjobb" target="_blank" rel="noopener">
+          <img src="https://webbjobb.io/storage/logos/genvalues-ab.png" alt="Genvalues" loading="lazy" decoding="async">
+        </a>
+      </div>
     </div>
 
     <div class="item">
@@ -4842,6 +4927,11 @@
         <strong>Associate Product Manager</strong>
         <div>IamIP (Stockholm)</div>
         <div class="meta">MVPs; requirements; sprint delivery; client pilots</div>
+      </div>
+      <div class="experience-logos">
+        <a href="https://iamip.com/" target="_blank" rel="noopener">
+          <img src="https://accounts.iamip.com/images/IamIP-logo.svg" alt="IamIP" loading="lazy" decoding="async">
+        </a>
       </div>
     </div>
 
@@ -4852,6 +4942,11 @@
         <div>Würth Phoenix (Bolzano)</div>
         <div class="meta">Low-code platforms; Dynamics 365 solutions</div>
       </div>
+      <div class="experience-logos">
+        <a href="https://www.wuerth-it.it/en/non-categorizzato/wurth-phoenix-becomes-wurth-it-italy/" target="_blank" rel="noopener">
+          <img src="https://www.wuerth-it.it/wp-content/uploads/2025/10/Logo-mit-Schutzzone.png" alt="Würth IT Italy (formerly Würth Phoenix)" loading="lazy" decoding="async">
+        </a>
+      </div>
     </div>
 
     <div class="item">
@@ -4860,6 +4955,11 @@
         <strong>VR Developer / Project Manager</strong>
         <div>Smart VR Lab (Amsterdam)</div>
         <div class="meta">VR content & platform APIs; CRM rollout; medical training product</div>
+      </div>
+      <div class="experience-logos">
+        <a href="https://www.smartvrlab.nl/" target="_blank" rel="noopener">
+          <img src="https://www.smartvrlab.nl/wp-content/uploads/elementor/thumbs/smart-vr-logo-bril-01-pl17f7553oiinn1ccm3jgl6x2dyi207wat5sqxqvuy.png" alt="Smart VR Lab" loading="lazy" decoding="async">
+        </a>
       </div>
     </div>
   </div>
