@@ -3405,7 +3405,14 @@ body{
   right:auto;bottom:auto;width:1px;height:1px;
   visibility:hidden;
 }
-.library-page{max-height:310px;overflow:auto;scrollbar-width:thin}
+.library-page{
+  box-sizing:border-box;
+  height:230px;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-gutter:stable;
+}
+.library-page:focus-visible{outline:2px solid #8c623d;outline-offset:2px}
 .library-page p{margin:0;white-space:pre-wrap}
 .library-page a{display:inline-block;margin-top:7px}
 .library-page small{display:block;margin-top:7px;color:#725c45}
@@ -3472,6 +3479,35 @@ body{
   outline-offset:1px;
 }
 @media(max-width:600px){.library-scene.has-render{min-height:280px}}
+
+.pub-scroll-controls{
+  display:flex;
+  justify-content:center;
+  min-height:36px;
+  margin-top:4px;
+}
+#pubScrollDown{
+  display:grid;
+  width:32px;
+  height:32px;
+  place-items:center;
+  padding:0;
+  border:1px solid #dacbf5;
+  border-radius:50%;
+  color:#6940af;
+  background:#f4edff;
+  font:700 17px/1 system-ui,sans-serif;
+  cursor:pointer;
+  animation:pub-scroll-hop 5.5s ease-in-out infinite;
+}
+#pubScrollDown[hidden]{display:none}
+#pubScrollDown:hover,#pubScrollDown:focus-visible{animation-play-state:paused}
+#pubScrollDown:focus-visible{outline:2px solid #6940af;outline-offset:2px}
+@keyframes pub-scroll-hop{
+  0%,74%,86%,100%{transform:translateY(0)}
+  80%{transform:translateY(4px)}
+}
+@media(prefers-reduced-motion:reduce){#pubScrollDown{animation:none}}
 
   </style>
 </head>
@@ -4492,6 +4528,9 @@ body{
   </div>
 
 
+      <div class="pub-scroll-controls">
+        <button id="pubScrollDown" type="button" aria-controls="pubList" aria-label="Scroll down through publications" title="Scroll down through publications" hidden>↓</button>
+      </div>
     </div>
     <aside class="pub-reading-room" id="publication-library" aria-labelledby="library-title" hidden>
       <header class="library-heading">
@@ -4512,7 +4551,7 @@ body{
         <button class="library-close" type="button" aria-label="Close paper preview">×</button>
         <h4 tabindex="-1"></h4>
         <p class="library-meta"></p>
-        <div class="library-page"></div>
+        <div class="library-page" role="region" aria-label="Paper abstract" tabindex="0"></div>
         <div class="library-actions">
           <a class="library-read" target="_blank" rel="noopener">Read paper ↗</a>
         </div>
@@ -6233,6 +6272,19 @@ body{
   const yearButtons = root.querySelectorAll('[data-year]');
   const topicButtons = root.querySelectorAll('[data-topic]');
   const cards = [...list.querySelectorAll('.card.pub')];
+  const scrollDown = document.getElementById('pubScrollDown');
+  function updateScrollHint(){
+    scrollDown.hidden=list.scrollHeight-list.clientHeight-list.scrollTop<3;
+  }
+  list.addEventListener('scroll',updateScrollHint,{passive:true});
+  list.addEventListener('load',updateScrollHint,true);
+  new ResizeObserver(updateScrollHint).observe(list);
+  scrollDown.addEventListener('click',()=>{
+    list.scrollBy({
+      top:list.clientHeight*.82,
+      behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'
+    });
+  });
   let activeYear = null;
   let activeTopic = null;
 
@@ -6247,6 +6299,7 @@ body{
     topicButtons.forEach(button => button.classList.toggle('active', button.dataset.topic === activeTopic));
     allButton.classList.toggle('active', !activeYear && !activeTopic);
     if (resetScroll) list.scrollTop = 0;
+    requestAnimationFrame(updateScrollHint);
   }
 
   allButton.addEventListener('click', () => {
@@ -6822,17 +6875,17 @@ body{
     "3770855.3818659",
     "Decision Twin",
     "A vision for patient digital twins that can simulate clinical decisions and their consequences. The paper explores how virtual patient models could make clinical reasoning testable before decisions are applied in practice.",
-    null,
-    null,
+    "Clinical AI is no longer bottlenecked only by model performance; it is bottlenecked by the accountable interaction loop through which clinicians and patients inspect evidence, test alternatives, and remain responsible for decisions under uncertainty. We argue that today's digital-twin systems, XR interfaces, and foundation-model copilots each address part of this loop, but they fail when deployed as separate products: predictions are not replayable across time, XR becomes descriptive visualization without executable state, and copilots are fluent without auditable grounding. We introduce the Metaverse Patient Digital Twin (MPDT) as a decision-grade clinical artifact defined by one requirement: every displayed claim or simulated scenario must be traceable to a versioned patient state, explicit assumptions, and replayable interaction logs. We specify minimal acceptance criteria, a reference loop in which stakeholders observe new evidence, update the twin state, run bounded simulations, generate explanations, commit decisions, and then log and monitor outcomes, along with a compact architecture that binds interoperability, simulation, governed interaction, and lifecycle controls. Finally, we outline workflows (risk stratification, diagnosis support, treatment rehearsal, training, cross-site coordination) and the evidence required to make MPDTs defensible: calibration over time, subgroup reliability, category-error prevention (observation vs simulation), and measurable workflow outcomes.",
+    "https://creativecommons.org/licenses/by/4.0/",
     "https://researchers.mq.edu.au/en/publications/the-decision-twin-metaverse-patient-digital-twins-as-executable-c/"
   ],
   [
     "3820900",
     "AI Coaching",
     "A systematic mapping review of personalised AI coaching. It surveys how coaching systems tailor support to individuals and how researchers evaluate those systems.",
+    "Personalised AI coaching systems are increasingly used across healthcare, education, workplace training, and sport to support behaviour change and skill development through adaptive interventions. Despite this growth, the field remains fragmented, with limited systematic understanding of how such systems are designed, implemented, and evaluated. This systematic mapping review examines how personalised AI coaching systems are conceptualised and developed, focusing on application domains, target users, AI techniques, personalisation strategies, and interface modalities. Peer-reviewed journal and conference papers in English were included if they described a coaching technology, employed AI-driven methods to select or generate coaching interventions, and implemented automatic or semi-automatic personalisation. Following PRISMA-ScR guidelines, a comprehensive search across ACM Digital Library, IEEE Xplore, PubMed, and Web of Science retrieved 2072 records, of which 42 met the inclusion criteria. Data were systematically extracted on domains, user populations, coaching scope, AI techniques for intervention selection and personalisation, user modelling, theoretical grounding, interface modalities, and evaluation methods. Quantitative charting and qualitative synthesis were used to map trends and identify gaps. Results indicate that most systems targeted lay users, predominantly in healthcare, with fewer studies in education and minimal presence in professional or workplace settings. The recent uptake of deep learning introduced greater methodological diversity and enabled expansion across application domains. Personalisation largely focused on individual-level adaptation, was seldom grounded in theory or expert input, and was less frequently evaluated than coaching outcomes, often without independent assessment. Most systems relied on graphical user interfaces, while robotic, virtual reality, and game-based interfaces remained rare. Future research should extend beyond health to underrepresented domains and user groups, advance hybrid AI approaches that balance interpretability and performance, and strengthen theory-grounded and ethically informed design. Improved reporting transparency, more rigorous evaluation of personalisation effects, and clearer pathways from research prototypes to real-world deployment are also needed.",
     null,
-    null,
-    null
+    "https://researchers.mq.edu.au/en/publications/personalised-ai-coaching-technology-a-systematic-mapping-review/"
   ],
   [
     "2607.18278",
@@ -6894,8 +6947,8 @@ body{
     "3793811.3793827",
     "Social Agents",
     "The paper examines when socially interactive agents should conform to expectations and when departing from them is appropriate.",
-    null,
-    null,
+    "Socially Interactive Agents (SIAs) seek to engage humans at a socio-emotional level to play roles typically played by other humans. In this paper, we raise the ethical concerns of SIA dependency (emotional attachment), deception (of humanness) and divulgation (of sensitive disclosures) and discrimination (unequal access or fit), where the latter may make some individuals more vulnerable to the other harms. Further, we consider how some roles, such as a coach, may require the SIA to meet the user's expectations, while other roles, such as empathy training, may need the SIA to challenge the user's expectations, revealing a dilemma that SIAs need to be discriminating, without being discriminatory. To design SIAs to avoid these harms, we offer a position paper grounded in two decades of SIA research that contributes the RESPECT framework and its operational design processes: Risk management, Empowerment, Safety, Personalisation, Empathy, Context awareness, and Technology appropriateness.",
+    "https://creativecommons.org/licenses/by/4.0/",
     "https://researchers.mq.edu.au/en/publications/to-be-or-not-to-be-respecting-when-socially-interactive-agents-sh/"
   ],
   [
@@ -6910,17 +6963,17 @@ body{
     "S0963868725000526",
     "VR & Ethics",
     "The paper examines the ethical and inclusion implications of representing people’s faces in workplace virtual reality.",
-    null,
-    null,
+    "As virtual reality (VR), and specifically facial representation in VR, extend into the workplace and beyond, it is increasingly important to consider the ethical as well as the diversity, equity, and inclusion (DEI) implications of the technology. In this study we investigate, through semi-structured expert interviews with academics, VR developers, and VR end users, the perceived ethical and DEI implications of facial tracking VR technology, with a focus on identifying these stakeholders’ views of facial (mis)representations in VR. We utilize the AI4People ethical framework as the analytical lens and identify both ethical benefits and concerns across the five dimensions of this framework (beneficence; non-maleficence; autonomy; justice; and explicability). Most of the concerns raised centered around the non-maleficence principle, privacy issues, and intersected with DEI issues, particularly through the autonomy and justice principles. The ethical benefits identified connected to the beneficence, justice, and autonomy principles. From a DEI perspective, the technology was seen as a double-edged sword leading to both opportunities and challenges for inclusion in the context of facial representation in VR. We conclude with the strategic implications of managing these tensions within organizations.",
+    "https://creativecommons.org/licenses/by-nc/4.0/",
     "https://researchers.mq.edu.au/en/publications/virtual-reality-and-work-ethical-and-inclusion-implications-of-fa/"
   ],
   [
     "978-3-031-21388-5_27",
     "Low-Code",
     "A comparative case study of low-code and no-code adoption in software startups. It examines how teams adopt these tools and what influences their use.",
+    "Low-code or no-code application development is a new jargon in the software development community. In response, large and medium-sized companies, are seen triggered to join the bandwagon. Existing research on why small and innovative companies, like software startups, apply this paradigm is limited. The current literature shows that software startups are different from established software companies in terms of their focus on innovation, market-driven context, limited resources, and uncertainty. Therefore, in this paper, we study and report our initial understanding of why software startups apply low-code or no-code. We studied two cases, in the first phase, to address the research question. Our preliminary results show that software startups apply this paradigm in an ad-hoc manner and use it for experimentation, prototyping, and idea validation. On the flip side, large companies enjoy a stable workflow of low-code or no-code development. The motivations include achieving rapid product development, fast feedback, and empowering business users. These results provide a good starting point for discussion and demand for further research. Including additional data, particularly, more cases, therefore, is our essential next step to get a deeper understanding and report final results.",
     null,
-    null,
-    null
+    "https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27"
   ]
 ];
   const palette = ['#7b3e35','#345d62','#525639','#4e577d','#75445a','#845128','#376653'];
@@ -7699,19 +7752,22 @@ body{
       source.textContent = 'View the full abstract ↗';
       page.append(source);
     }
-    if (current.license) {
+    if (current.abstract) {
       const credit = document.createElement('small');
       const source = document.createElement('a');
       source.href = current.abstractHref;
       source.target = '_blank';
       source.rel = 'noopener';
       source.textContent = 'Source';
-      const license = document.createElement('a');
-      license.href = current.license;
-      license.target = '_blank';
-      license.rel = 'noopener';
-      license.textContent = 'Creative Commons licence';
-      credit.append('Abstract by the paper authors · ',source,' · ',license);
+      credit.append('Abstract by the paper authors · ',source);
+      if(current.license){
+        const license = document.createElement('a');
+        license.href = current.license;
+        license.target = '_blank';
+        license.rel = 'noopener';
+        license.textContent = 'Creative Commons licence';
+        credit.append(' · ',license);
+      }
       page.append(credit);
     }
     page.scrollTop = 0;
