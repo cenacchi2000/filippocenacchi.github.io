@@ -8261,8 +8261,17 @@ body{
     showAbstract();
     sendToTable(book);
     const behavior=motion.matches?'instant':'smooth';
-    heading.focus({preventScroll:true});
-    heading.scrollIntoView({block:'nearest',inline:'nearest',behavior});
+    if (fromList && phoneLayout.matches) {
+      const roomTitle = room.querySelector('#library-title');
+      roomTitle.tabIndex = -1;
+      roomTitle.focus({preventScroll:true});
+      const headerHeight = stickyNav?.getBoundingClientRect().height || 0;
+      const top = window.scrollY + room.getBoundingClientRect().top - headerHeight - 8;
+      window.scrollTo({top:Math.max(0,top),behavior});
+    } else {
+      heading.focus({preventScroll:true});
+      heading.scrollIntoView({block:'nearest',inline:'nearest',behavior});
+    }
     if(!fromList){
       if(getComputedStyle(book.card).display==='none'){
         document.querySelector('#pubFilters [data-mode="all"]')?.click();
