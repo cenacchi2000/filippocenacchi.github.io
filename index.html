@@ -3410,6 +3410,50 @@ body{
 }
 @media(prefers-reduced-motion:reduce){.library-spine{transition:none}}
 
+.library-render{
+  position:absolute;inset:0;
+  width:100%;height:100%;display:block;
+  pointer-events:none;
+}
+.library-render[hidden]{display:none}
+.library-scene.has-render{
+  background:#4c3326;
+  min-height:310px;
+  padding:16px;
+}
+.library-scene.has-render .library-shelf{
+  border-color:#805033;
+  border-radius:6px;
+  background-color:#332218;
+  box-shadow:inset 0 0 0 2px #c78951,inset 8px 0 18px #170c08,7px 10px 16px #140c0780;
+}
+.library-scene.has-render .library-nook > :not(.library-table){visibility:hidden}
+.library-scene.has-render .library-table{
+  left:var(--table-x,50%);
+  top:var(--table-y,75%);
+  right:auto;bottom:auto;width:1px;height:1px;
+  visibility:hidden;
+}
+.library-page{max-height:310px;overflow:auto;scrollbar-width:thin}
+.library-page p{margin:0;white-space:pre-wrap}
+.library-page a{display:inline-block;margin-top:7px}
+.library-page small{display:block;margin-top:7px;color:#725c45}
+.library-actions{justify-content:flex-end}
+@media(max-width:600px){.library-scene.has-render{padding:9px;min-height:285px}}
+
+.library-table-book::before,.library-table-book::after{
+  position:absolute;content:"";left:50%;top:2px;width:45%;height:80%;
+  transform-origin:left center;border-radius:1px 4px 4px 1px;
+  background:repeating-linear-gradient(#fbebc4 0 3px,#c6a779 3px 4px,#fbebc4 4px 5px);
+}
+.library-table-book::before{transform:rotateY(180deg)}
+.library-table-book.is-fluttering::after{animation:library-page-flutter .58s ease-in-out 3}
+@keyframes library-page-flutter{
+  0%{transform:perspective(80px) rotateY(0)}
+  55%{transform:perspective(80px) rotateY(-125deg) rotateZ(-8deg)}
+  100%{transform:perspective(80px) rotateY(-180deg)}
+}
+
   </style>
 </head>
 <body>
@@ -4439,10 +4483,11 @@ body{
     <aside class="pub-reading-room" id="publication-library" aria-labelledby="library-title" hidden>
       <header class="library-heading">
         <h3 id="library-title">The Reading Room</h3>
-        <p>Pick a book to explore a paper.</p>
+        <p>Pick a research paper to explore.</p>
       </header>
       <div class="library-scene">
-        <div class="library-shelf" aria-label="Publication bookshelf"></div>
+        <canvas class="library-render" aria-hidden="true" hidden></canvas>
+        <div class="library-shelf" aria-label="Research publications"></div>
         <div class="library-nook" aria-hidden="true">
           <div class="library-window"></div>
           <div class="library-lamp"></div>
@@ -4456,7 +4501,6 @@ body{
         <p class="library-meta"></p>
         <div class="library-page"></div>
         <div class="library-actions">
-          <button type="button" class="library-turn">Turn to first page</button>
           <a class="library-read" target="_blank" rel="noopener">Read paper ↗</a>
         </div>
       </div>
@@ -6850,67 +6894,106 @@ body{
   [
     "3770855.3818659",
     "Decision Twin",
-    "A vision for patient digital twins that can simulate clinical decisions and their consequences. The paper explores how virtual patient models could make clinical reasoning testable before decisions are applied in practice."
+    "A vision for patient digital twins that can simulate clinical decisions and their consequences. The paper explores how virtual patient models could make clinical reasoning testable before decisions are applied in practice.",
+    null,
+    null,
+    "https://researchers.mq.edu.au/en/publications/the-decision-twin-metaverse-patient-digital-twins-as-executable-c/"
   ],
   [
     "3820900",
     "AI Coaching",
-    "A systematic mapping review of personalised AI coaching. It surveys how coaching systems tailor support to individuals and how researchers evaluate those systems."
+    "A systematic mapping review of personalised AI coaching. It surveys how coaching systems tailor support to individuals and how researchers evaluate those systems.",
+    null,
+    null,
+    null
   ],
   [
     "2607.18278",
     "FALCON",
-    "A method for finding groups of examples where a model is confidently wrong. It examines where unreliable predictions concentrate so that calibration can be evaluated more precisely."
+    "A method for finding groups of examples where a model is confidently wrong. It examines where unreliable predictions concentrate so that calibration can be evaluated more precisely.",
+    "Calibration is usually evaluated in aggregate, but the most dangerous failures are often local: predictions that remain highly confident despite being wrong. We study this failure mode as false-confidence concentration, the extent to which confident errors occupy compact, discoverable regions of prediction space. We introduce FALCON-Discover, a post-hoc, model-agnostic framework that ranks predictions using discrepancy signals from confidence, local support, neighborhood agreement, and perturbation stability. Across seven binary tabular datasets, four seeds, five-fold cross-fitting, and strong learners including XGBoost and CatBoost, we find that false-confidence concentration is recurrent but regime-dependent. At the main confidence threshold, discrepancy-based ranking substantially outperforms the strongest validation-selected calibration or trust-scoring baseline in the strongest regimes, while raw confidence recovers little dangerous-error mass. The best detector varies across datasets: learned discrepancy is strongest when multiple cues must be combined, whereas stability-centered ranking works best when local decisional fragility dominates. These results show that dangerous overconfidence is better treated as a family-level discovery problem than as a single-score calibration problem, and motivate calibration strategies that explicitly target regions where confidence, support, and stability diverge.",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://arxiv.org/abs/2607.18278"
   ],
   [
     "2607.18279",
     "Spectral Evidence",
-    "A method for estimating when time-series predictions are reliable. It combines spectral evidence to support selective prediction, where a model can defer cases it considers unreliable."
+    "A method for estimating when time-series predictions are reliable. It combines spectral evidence to support selective prediction, where a model can defer cases it considers unreliable.",
+    "Post-hoc calibration for time-series classification usually remaps output scores, but deployment decisions such as trust, abstention, and review depend on whether a confident prediction is supported by the current temporal signal. We address three time-series reliability gaps: identical confidence values can hide different temporal support, average calibration can miss false high-confidence errors, and output-space recalibration offers limited input-linked auditability. We introduce a validation-gated fixed-label reliability policy that keeps the backbone prediction unchanged while estimating whether it should be trusted. The method combines output-side cues with whole-sample spectral descriptors, including band energy, entropy, peak dominance, period support, and phase stability, to form a scalar reliability estimate and diagnostic band-level evidence. A validation gate enables spectral conditioning only when correctness ranking improves without breaching FalseConf@0.9 or AURC tolerances; otherwise it reverts to the safer output-space baseline. Across eight heterogeneous UCR/UEA datasets, eight time-series backbone families, and standard recalibrators, the unconstrained method improves fixed-label selective-reliability metrics on the matched evaluation subset, raising Corr-AURC from 0.693 to 0.779. The validation-gated policy further improves Corr-AURC to 0.786 and reduces FalseConf@0.9 to 0.094. These results suggest that reliability estimation for time-series classifiers benefits from bundling output confidence with spectral evidence, while validation gating prevents unsupported spectral conditioning.",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://arxiv.org/abs/2607.18279"
   ],
   [
     "2609.00366",
     "Fragility",
-    "The paper audits tabular classifiers by testing which failures in their input evidence change a prediction. It studies how those failures can be recorded and checked with counterfactual certificates."
+    "The paper audits tabular classifiers by testing which failures in their input evidence change a prediction. It studies how those failures can be recorded and checked with counterfactual certificates.",
+    "High test accuracy and good aggregate calibration do not show whether an individual prediction is structurally supported by its evidence. In tabular decision systems, failures often occur when a feature family becomes unavailable, delayed, noisy, stale, or low-trust while the model remains highly confident. Existing calibration, uncertainty, selective-prediction, explanation, and perturbation methods provide scalar scores or attribution maps, but not a recomputable audit object answering: under a declared evidence-failure protocol, what trajectory makes this prediction lose support? We introduce Counterfactual Fragility Certificates (CFC), a model-agnostic protocol-level audit certificate-not a formal robustness certificate-that maps each prediction into an ordered evidence-failure trajectory summarized by greedy flip budget, normalized margin-collapse area, degradation thresholds, and fragility dominance score. Across seven tabular benchmarks and strong linear, tree-based, boosting, and neural baselines, CFC-FDS identifies independently brittle high-confidence cases with 0.915 AUROC, improving over the strongest non-certificate score by +0.405. The advantage persists across perturbation, permutation-importance, group-SHAP, baseline-choice, seed-variance, budgeted-review, and naturalistic field-unavailability checks. Under a 20% review budget, CFC-FDS captures 88.9% of brittle high-confidence cases, compared with 31.8-37.4% for confidence and energy scores. We also evaluate fragility-aware regularization and brittleness-aware temperature correction as secondary uses. CFC provides a concrete reliability framework for exposing high-confidence brittleness missed by ordinary score-centric evaluation.",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://arxiv.org/abs/2609.00366"
   ],
   [
     "2603.26801",
     "Sparse Models",
-    "A cross-modality learning approach that uses L0 gates to encourage sparse representations. It studies the trade-off between retaining predictive information and using fewer active features."
+    "A cross-modality learning approach that uses L0 gates to encourage sparse representations. It studies the trade-off between retaining predictive information and using fewer active features.",
+    "Predictive systems increasingly span heterogeneous modalities such as graphs, language, and tabular records, but sparsity and efficiency remain modality-specific (graph edge or neighborhood sparsification, Transformer head or layer pruning, and separate tabular feature-selection pipelines). This fragmentation makes results hard to compare, complicates deployment, and weakens reliability analysis across end-to-end KDD pipelines. A unified sparsification primitive would make accuracy-efficiency trade-offs comparable across modalities and enable controlled reliability analysis under representation compression. We ask whether a single representation-level mechanism can yield comparable accuracy-efficiency trade-offs across modalities while preserving or improving probability calibration. We propose L0-Gated Cross-Modality Learning (L0GM), a modality-agnostic, feature-wise hard-concrete gating framework that enforces L0-style sparsity directly on learned representations. L0GM attaches hard-concrete stochastic gates to each modality's classifier-facing interface: node embeddings (GNNs), pooled sequence embeddings such as CLS (Transformers), and learned tabular embedding vectors (tabular models). This yields end-to-end trainable sparsification with an explicit control knob for the active feature fraction. To stabilize optimization and make trade-offs interpretable, we introduce an L0-annealing schedule that induces clear accuracy-sparsity Pareto frontiers. Across three public benchmarks (ogbn-products, Adult, IMDB), L0GM achieves competitive predictive performance while activating fewer representation dimensions, and it reduces Expected Calibration Error (ECE) in our evaluation. Overall, L0GM establishes a modality-agnostic, reproducible sparsification primitive that supports comparable accuracy, efficiency, and calibration trade-off analysis across heterogeneous modalities.",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://arxiv.org/abs/2603.26801"
   ],
   [
     "2511.13802",
     "Dementia",
-    "The study explores dementia screening from subtle facial movements in talking-head video. It uses patterns such as blinking, gaze and jaw movement to build a screening model."
+    "The study explores dementia screening from subtle facial movements in talking-head video. It uses patterns such as blinking, gaze and jaw movement to build a screening model.",
+    "We target passive dementia screening from short camera-facing talking head video, developing a facial temporal micro dynamics analysis for language free detection of early neuro cognitive change. This enables unscripted, in the wild video analysis at scale to capture natural facial behaviors, transferrable across devices, topics, and cultures without active intervention by clinicians or researchers during recording. Most existing resources prioritize speech or scripted interviews, limiting use outside clinics and coupling predictions to language and transcription. In contrast, we identify and analyze whether temporal facial kinematics, including blink dynamics, small mouth jaw motions, gaze variability, and subtle head adjustments, are sufficient for dementia screening without speech or text. By stabilizing facial signals, we convert these micro movements into interpretable facial microdynamic time series, smooth them, and summarize short windows into compact clip level statistics for screening. Each window is encoded by its activity mix (the relative share of motion across streams), thus the predictor analyzes the distribution of motion across streams rather than its magnitude, making per channel effects transparent. We also introduce YT DemTalk, a new dataset curated from publicly available, in the wild camera facing videos. It contains 300 clips (150 with self reported dementia, 150 controls) to test our model and offer a first benchmarking of the corpus. On YT DemTalk, ablations identify gaze lability and mouth/jaw dynamics as the most informative cues, and light weighted shallow classifiers could attain a dementia prediction performance of (AUROC) 0.953, 0.961 Average Precision (AP), 0.851 F1-score, and 0.857 accuracy.",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://arxiv.org/abs/2511.13802"
   ],
   [
     "2512.08953",
     "SimClinician",
-    "A simulation testbed for studying how psychologists and AI might collaborate during mental-health assessment. It brings together virtual patients and multimodal behaviour in repeatable scenarios."
+    "A simulation testbed for studying how psychologists and AI might collaborate during mental-health assessment. It brings together virtual patients and multimodal behaviour in repeatable scenarios.",
+    "AI based mental health diagnosis is often judged by benchmark accuracy, yet in practice its value depends on how psychologists respond whether they accept, adjust, or reject AI suggestions. Mental health makes this especially challenging: decisions are continuous and shaped by cues in tone, pauses, word choice, and nonverbal behaviors of patients. Current research rarely examines how AI diagnosis interface design influences these choices, leaving little basis for reliable testing before live studies. We present SimClinician, an interactive simulation platform, to transform patient data into psychologist AI collaborative diagnosis. Contributions include: (1) a dashboard integrating audio, text, and gaze-expression patterns; (2) an avatar module rendering de-identified dynamics for analysis; (3) a decision layer that maps AI outputs to multimodal evidence, letting psychologists review AI reasoning, and enter a diagnosis. Tested on the E-DAIC corpus (276 clinical interviews, expanded to 480,000 simulations), SimClinician shows that a confirmation step raises acceptance by 23%, keeping escalations below 9%, and maintaining smooth interaction flow.",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://arxiv.org/abs/2512.08953"
   ],
   [
     "2512.08952",
     "When to Ask",
-    "The paper explores how a humanoid interviewer can learn when to ask, wait or respond during a mental-health interview. Simulated patients provide a way to train and test those interaction decisions."
+    "The paper explores how a humanoid interviewer can learn when to ask, wait or respond during a mental-health interview. Simulated patients provide a way to train and test those interaction decisions.",
+    "Testing humanoid robots with users is slow, causes wear, and limits iteration and diversity. Yet screening agents must master conversational timing, prosody, backchannels, and what to attend to in faces and speech for Depression and PTSD. Most simulators omit policy learning with nonverbal dynamics; many controllers chase task accuracy while underweighting trust, pacing, and rapport. We virtualise the humanoid as a conversational agent to train without hardware burden. Our agent-centred, simulation-first pipeline turns interview data into 276 Unreal Engine MetaHuman patients with synchronised speech, gaze/face, and head-torso poses, plus PHQ-8 and PCL-C flows. A perception-fusion-policy loop decides what and when to speak, when to backchannel, and how to avoid interruptions, under a safety shield. Training uses counterfactual replay (bounded nonverbal perturbations) and an uncertainty-aware turn manager that probes to reduce diagnostic ambiguity. Results are simulation-only; the humanoid is the transfer target. In comparing three controllers, a custom TD3 (Twin Delayed DDPG) outperformed PPO and CEM, achieving near-ceiling coverage with steadier pace at comparable rewards. Decision-quality analyses show negligible turn overlap, aligned cut timing, fewer clarification prompts, and shorter waits. Performance stays stable under modality dropout and a renderer swap, and rankings hold on a held-out patient split. Contributions: (1) an agent-centred simulator that turns interviews into 276 interactive patients with bounded nonverbal counterfactuals; (2) a safe learning loop that treats timing and rapport as first-class control variables; (3) a comparative study (TD3 vs PPO/CEM) with clear gains in completeness and social timing; and (4) ablations and robustness analyses explaining the gains and enabling clinician-supervised humanoid pilots.",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://arxiv.org/abs/2512.08952"
   ],
   [
     "3793811.3793827",
     "Social Agents",
-    "The paper examines when socially interactive agents should conform to expectations and when departing from them is appropriate."
+    "The paper examines when socially interactive agents should conform to expectations and when departing from them is appropriate.",
+    null,
+    null,
+    "https://researchers.mq.edu.au/en/publications/to-be-or-not-to-be-respecting-when-socially-interactive-agents-sh/"
   ],
   [
     "EDAI-Trimodal",
     "Tri-Modal AI",
-    "The study combines speech, text and facial cues to estimate symptom severity for depression and post-traumatic stress disorder."
+    "The study combines speech, text and facial cues to estimate symptom severity for depression and post-traumatic stress disorder.",
+    "Depression and post traumatic stress disorder (PTSD) often co-occur with connected symptoms, complicating automated assessment, which is often binary and disorder specific. Clinically useful diagnosis needs severity aware cross disorder estimates and decision support explanations. Our unified tri modal affective severity framework synchronizes and fuses interview text with sentence level transformer embeddings, audio with log Mel statistics with deltas, and facial signals with action units, gaze, head and pose descriptors to output graded severities for diagnosing both depression (PHQ-8; 5 classes) and PTSD (3 classes). Standardized features are fused via a calibrated late fusion classifier, yielding per disorder probabilities and feature-level attributions. This severity aware tri-modal affective fusion approach is demoed on multi disorder concurrent depression and PTSD assessment. Stratified cross validation on DAIC derived corpora outperforms unimodal/ablation baselines. The fused model matches the strongest unimodal baseline on accuracy and weighted F1, while improving decision curve utility and robustness under noisy or missing modalities. For PTSD specifically, fusion reduces regression error and improves class concordance. Errors cluster between adjacent severities; extreme classes are identified reliably. Ablations show text contributes most to depression severity, audio and facial cues are critical for PTSD, whereas attributions align with linguistic and behavioral markers. Our approach offers reproducible evaluation and clinician in the loop support for affective clinical decision making.",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://arxiv.org/abs/2510.20239"
   ],
   [
     "S0963868725000526",
     "VR & Ethics",
-    "The paper examines the ethical and inclusion implications of representing people’s faces in workplace virtual reality."
+    "The paper examines the ethical and inclusion implications of representing people’s faces in workplace virtual reality.",
+    null,
+    null,
+    "https://researchers.mq.edu.au/en/publications/virtual-reality-and-work-ethical-and-inclusion-implications-of-fa/"
   ],
   [
     "978-3-031-21388-5_27",
     "Low-Code",
-    "A comparative case study of low-code and no-code adoption in software startups. It examines how teams adopt these tools and what influences their use."
+    "A comparative case study of low-code and no-code adoption in software startups. It examines how teams adopt these tools and what influences their use.",
+    null,
+    null,
+    null
   ]
 ];
   const palette = ['#7b3e35','#345d62','#525639','#4e577d','#75445a','#845128','#376653'];
@@ -6922,37 +7005,210 @@ body{
   const heading = reader.querySelector('h4');
   const meta = reader.querySelector('.library-meta');
   const page = reader.querySelector('.library-page');
-  const turn = reader.querySelector('.library-turn');
   const read = reader.querySelector('.library-read');
   const close = reader.querySelector('.library-close');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let current = null;
   let trigger = null;
-  let firstPage = false;
   let flying = null;
-  let pageAnimation = null;
 
-  function showPage(){
-    pageAnimation?.cancel();
+
+  function createNook(){
+    const T = window.THREE;
+    const canvas = scene.querySelector('.library-render');
+    if (!T) return null;
+    let renderer;
+    try { renderer = new T.WebGLRenderer({canvas,antialias:true}); }
+    catch { return null; }
+    const roomScene = new T.Scene();
+    roomScene.background = new T.Color('#533629');
+    const camera = new T.OrthographicCamera(-5,5,3.6,-3.6,.1,40);
+    camera.position.set(4.8,4.0,9);
+    camera.lookAt(-.9,1.65,0);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1,2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = T.PCFSoftShadowMap;
+    const matte = color => new T.MeshStandardMaterial({color,roughness:.92,flatShading:true});
+    const materials = {
+      floor:matte('#8d5838'), wall:matte('#b99869'), beam:matte('#5c3523'),
+      table:matte('#a1693c'), fabric:matte('#883f42'), cushion:matte('#b66559'),
+      teal:matte('#526b57'), gold:matte('#b68a45'), paper:matte('#fff0cb')
+    };
+    const shade = new T.MeshStandardMaterial({color:'#ffce80',emissive:'#e49139',emissiveIntensity:.46,roughness:1});
+    const sky = new T.MeshBasicMaterial({color:'#c2d3a0'});
+    const mesh = (geo,material,x,y,z,parent=roomScene) => {
+      const object = new T.Mesh(geo,material);
+      object.position.set(x,y,z);
+      object.castShadow = true;
+      object.receiveShadow = true;
+      parent.add(object);
+      return object;
+    };
+    const box = (w,h,d,m,x,y,z,parent) => mesh(new T.BoxGeometry(w,h,d),m,x,y,z,parent);
+    const cylinder = (a,b,h,m,x,y,z) => mesh(new T.CylinderGeometry(a,b,h,24),m,x,y,z);
+    roomScene.add(new T.HemisphereLight('#fff1cf','#584233',2.05));
+    const sun = new T.DirectionalLight('#ffd599',3.05);
+    sun.position.set(3,6,4);
+    sun.castShadow = true;
+    Object.assign(sun.shadow.camera,{left:-7,right:7,top:6,bottom:-6});
+    sun.shadow.mapSize.set(1024,1024);
+    sun.shadow.bias = -.0004;
+    roomScene.add(sun);
+    const warm = new T.PointLight('#ffc36e',7,5);
+    warm.position.set(3.05,2.9,.35);
+    roomScene.add(warm);
+
+    box(13,.15,8,materials.floor,0,-.08,0);
+    box(13,5.4,.16,materials.wall,0,2.65,-2.08);
+    box(.16,5.4,7,materials.beam,-5.6,2.65,.2);
+    for(let i=0;i<13;i++){
+      box(.025,.012,7.6,materials.beam,i-6,.005,0);
+    }
+    box(12,.17,.17,materials.beam,0,.09,-1.94);
+    box(1.74,1.86,.09,materials.beam,1.7,2.94,-1.94);
+    box(1.55,1.66,.06,sky,1.7,2.94,-1.87);
+    for(let i=0;i<7;i++){
+      const foliage = mesh(new T.IcosahedronGeometry(.23 + (i%3)*.09,1),matte(i%2?'#728b59':'#95a66a'),1.11+i*.19,2.32+(i%3)*.12,-1.81);
+      foliage.scale.y = 1.15;
+    }
+    box(.055,1.66,.08,materials.beam,1.7,2.94,-1.76);
+    box(1.55,.055,.08,materials.beam,1.7,3.0,-1.76);
+    box(1.94,.13,.3,materials.table,1.7,1.99,-1.83);
+
+    box(2.38,.48,.97,materials.fabric,1.61,.42,-.92);
+    box(2.35,.89,.32,materials.fabric,1.61,.97,-1.35).rotation.x = -.12;
+    for(const x of [.74,1.61,2.48]){
+      box(.67,.53,.23,materials.cushion,x,1.05,-1.14).rotation.x = -.12;
+      box(.68,.18,.67,materials.cushion,x,.69,-.85);
+    }
+    for(const x of [.45,2.77]){
+      box(.26,.46,.96,materials.fabric,x,.71,-.89);
+      for(const z of [-1.22,-.56])box(.12,.18,.12,materials.beam,x,.13,z);
+    }
+    box(.38,.37,.17,materials.teal,2.43,1,-.94).rotation.z = -.2;
+
+    cylinder(.18,.21,.08,materials.beam,3.18,.06,.02);
+    cylinder(.026,.034,2.61,materials.gold,3.18,1.33,.02);
+    cylinder(.22,.47,.46,shade,3.18,2.73,.02);
+    const rug = cylinder(1.17,1.17,.018,materials.teal,1.52,.015,1.0);
+    rug.scale.x = 1.24;
+    cylinder(.96,1,.12,materials.table,1.56,.62,1.02).scale.z=.65;
+    for(const x of [.9,2.22])for(const z of [.75,1.31]){
+      box(.09,.56,.1,materials.beam,x,.3,z).rotation.z=(x<1.5?1:-1)*.14;
+    }
+    cylinder(.12,.092,.22,matte('#d8b67e'),2.12,.79,1.0);
+    cylinder(.095,.095,.012,matte('#71412b'),2.12,.907,1.0);
+
+    const openBook = new T.Group();
+    openBook.position.set(1.42,.71,1.02);
+    openBook.rotation.y = -.22;
+    openBook.visible = false;
+    roomScene.add(openBook);
+    const cover = matte('#734d38');
+    box(.88,.037,.48,cover,0,0,0,openBook);
+    box(.85,.04,.45,materials.paper,0,.028,0,openBook);
+    const pagePivots = Array.from({length:7},(_,index)=>{
+      const pivot = new T.Group();
+      pivot.position.y = .052 + index * .002;
+      openBook.add(pivot);
+      box(.415,.005,.442,materials.paper,.21,0,0,pivot);
+      const ink = matte('#ba9867');
+      for(let line=0;line<5;line++)box(.25,.001,.009,ink,.215,.004,-.143+line*.065,pivot);
+      return pivot;
+    });
+
+    const point = new T.Vector3(1.42,.73,1.02);
+    const nook = scene.querySelector('.library-nook');
+    let frame = 0;
+    function render(){renderer.render(roomScene,camera);}
+    function resize(){
+      const width=scene.clientWidth,height=scene.clientHeight;
+      if (!width || !height) return;
+      renderer.setSize(width,height,false);
+      const halfWidth=3.45*width/height;
+      camera.left=-halfWidth;camera.right=halfWidth;
+      camera.top=3.45;camera.bottom=-3.45;
+      camera.zoom=1.2;
+      camera.updateProjectionMatrix();
+      camera.updateMatrixWorld();
+      const location=point.clone().project(camera);
+      const x=(location.x+1)*width/2;
+      const y=(1-location.y)*height/2;
+      nook.style.setProperty('--table-x',(x-nook.offsetLeft)+'px');
+      nook.style.setProperty('--table-y',(y-nook.offsetTop)+'px');
+      render();
+    }
+    scene.classList.add('has-render');
+    canvas.hidden=false;
+    new ResizeObserver(resize).observe(scene);
+    return {
+      land(color){
+        cancelAnimationFrame(frame);
+        cover.color.set(color);
+        openBook.visible=true;
+        pagePivots.forEach((page,index)=>page.rotation.z=index<3?Math.PI-.035:.035);
+        if(motion.matches){render();return;}
+        const started=performance.now();
+        function flutter(now){
+          const elapsed=now-started;
+          pagePivots.forEach((page,index)=>{
+            const t=Math.max(0,Math.min(1,(elapsed-index*125)/530));
+            const eased=t*t*(3-2*t);
+            page.rotation.z=.035+(Math.PI-.07)*eased+Math.sin(t*Math.PI*6)*Math.sin(t*Math.PI)*.19;
+          });
+          render();
+          if(elapsed<1540)frame=requestAnimationFrame(flutter);
+        }
+        frame=requestAnimationFrame(flutter);
+      },
+      clear(){
+        cancelAnimationFrame(frame);
+        openBook.visible=false;
+        render();
+      }
+    };
+  }
+  const nook3d = createNook();
+  function showAbstract(){
     page.replaceChildren();
     const label = document.createElement('strong');
-    label.textContent = firstPage ? 'First-page preview' : 'Abstract at a glance';
-    page.append(label);
-    if (firstPage) {
-      const preview = document.createElement('img');
-      preview.src = current.cover;
-      preview.alt = 'First page of ' + current.title;
-      page.append(preview);
-    } else {
-      page.append(current.summary || 'Read the abstract on the paper’s publication page.');
+    label.textContent = current.abstract ? 'Full abstract' : 'Abstract overview';
+    const paragraph = document.createElement('p');
+    paragraph.textContent = current.abstract || current.summary || '';
+    page.append(label,paragraph);
+    if (!current.abstract) {
+      const source = document.createElement('a');
+      source.href = current.abstractHref;
+      source.target = '_blank';
+      source.rel = 'noopener';
+      source.textContent = 'View the full abstract ↗';
+      page.append(source);
     }
-    turn.textContent = firstPage ? 'Back to abstract' : 'Turn to first page';
-    turn.hidden = !current.cover;
-    if (!motion.matches && page.animate) {
-      pageAnimation = page.animate([
-        {transform:'perspective(600px) rotateY(-18deg)',opacity:.4},
-        {transform:'perspective(600px) rotateY(0)',opacity:1}
-      ], {duration:340,easing:'ease-out'});
+    if (current.license) {
+      const credit = document.createElement('small');
+      const source = document.createElement('a');
+      source.href = current.abstractHref;
+      source.target = '_blank';
+      source.rel = 'noopener';
+      source.textContent = 'Source';
+      const license = document.createElement('a');
+      license.href = current.license;
+      license.target = '_blank';
+      license.rel = 'noopener';
+      license.textContent = 'Creative Commons licence';
+      credit.append('Abstract by the paper authors · ',source,' · ',license);
+      page.append(credit);
+    }
+    page.scrollTop = 0;
+  }
+
+  function land(book){
+    if (nook3d) {
+      nook3d.land(book.color);
+    } else {
+      tableBook.hidden = false;
+      tableBook.classList.remove('is-fluttering');
+      if (!motion.matches) requestAnimationFrame(() => tableBook.classList.add('is-fluttering'));
     }
   }
 
@@ -6960,13 +7216,14 @@ body{
     flying?.remove();
     flying = null;
     tableBook.style.setProperty('--book-color', book.color);
-    tableBook.hidden = false;
-    if (motion.matches || !book.spine.animate) return;
+    tableBook.hidden = true;
+    nook3d?.clear();
+    if (motion.matches || !book.spine.animate) {land(book);return;}
     const bounds = scene.getBoundingClientRect();
     const from = book.spine.getBoundingClientRect();
     const to = table.getBoundingClientRect();
     const scale = bounds.width / scene.offsetWidth;
-    if (!scale) return;
+    if (!scale) {land(book);return;}
     const ghost = book.spine.cloneNode(true);
     ghost.removeAttribute('aria-pressed');
     ghost.classList.add('library-flight');
@@ -6991,7 +7248,7 @@ body{
       ghost.remove();
       if (flying === ghost) {
         flying = null;
-        tableBook.hidden = false;
+        land(book);
       }
     };
   }
@@ -7006,8 +7263,7 @@ body{
     read.href = book.href;
     read.textContent = book.readLabel + ' ↗';
     reader.hidden = false;
-    firstPage = false;
-    showPage();
+    showAbstract();
     if (fromList) room.scrollIntoView({block:'nearest',behavior:motion.matches ? 'instant' : 'smooth'});
     sendToTable(book);
     if (fromList) heading.focus({preventScroll:true});
@@ -7021,10 +7277,12 @@ body{
     const book = {
       title:title.textContent.trim(),
       summary:note?.[2],
+      abstract:note?.[3],
+      license:note?.[4],
+      abstractHref:note?.[5] || title.href,
       meta:[...card.querySelectorAll('.meta')].slice(0,2).map(item => item.textContent.trim()).join(' · '),
       href:preview?.href || title.href,
       readLabel:preview?.querySelector('span')?.textContent.trim() || 'Read paper',
-      cover:preview?.querySelector('img')?.src,
       color:palette[index % palette.length],
       spine:document.createElement('button')
     };
@@ -7043,7 +7301,7 @@ body{
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'library-card-button';
-    button.textContent = 'Preview in library';
+    button.textContent = 'Preview research';
     button.setAttribute('aria-controls','library-reader');
     button.addEventListener('click', () => open(book, button, true));
     title.closest('h3').parentElement.append(button);
@@ -7052,10 +7310,6 @@ body{
     });
   });
 
-  turn.addEventListener('click', () => {
-    firstPage = !firstPage;
-    showPage();
-  });
   close.addEventListener('click', () => {
     current?.spine.setAttribute('aria-pressed','false');
     flying?.remove();
@@ -7063,6 +7317,7 @@ body{
     current = null;
     reader.hidden = true;
     tableBook.hidden = true;
+    nook3d?.clear();
     trigger?.focus();
   });
   room.hidden = !shelf.children.length;
