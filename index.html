@@ -7672,7 +7672,7 @@ body{
             const button=remaining&&(slot%2===row%2||remaining===slots-slot)?papers[paperIndex++]:null;
             const style=(row*7+slot*5)%heights.length;
             const lean=(slot===1?.14:slot===slots-2?-.16:slot===slots-1?-.09:0)*(row===1?-1:1);
-            return {button,style,lean,height:heights[style],rawWidth:thicknesses[style]};
+            return {button,style,lean,height:heights[style]*.88,rawWidth:thicknesses[style]};
           });
           const leanAllowance=editions.reduce((sum,item)=>sum+item.height*Math.abs(Math.sin(item.lean)),0);
           const baseWidths=editions.reduce((sum,item)=>sum+item.rawWidth,0);
