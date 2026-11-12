@@ -185,7 +185,7 @@
   }
   .portfolio-home #globeWrap { min-width: 0 !important; min-height: 0 !important; }
   .portfolio-home #visitorGlobe {
-    width: min(100%, 270px) !important;
+    width: min(100%, 250px) !important;
     height: auto !important;
     min-width: 0 !important;
     min-height: 0 !important;
@@ -241,4 +241,173 @@
   body:not(.portfolio-home) :is(.hero-content, .hero-copy, .card, main, header) { overflow-wrap: break-word; }
   body:not(.portfolio-home) :is(h1, .hero-content h1) { font-size: clamp(27px, 7.5vw, 42px); line-height: 1.12; }
   body:not(.portfolio-home) :is(pre, .table-wrap) { max-width: 100%; overflow-x: auto; }
+
+  /* Phone layout: compact rows with full details available on demand. */
+  body.portfolio-home main.container { gap: 0; }
+  .portfolio-home .section { padding-block: 16px; }
+  .portfolio-home .section > h2 {
+    margin: 0 0 9px;
+    font-size: 20px;
+    line-height: 1.25;
+    letter-spacing: -.02em;
+  }
+  .portfolio-home .reveal { opacity: 1; transform: none; transition: none; }
+
+  .portfolio-home #visitorGlobe {
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+  .portfolio-home #visitorGlobe canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .portfolio-home #globeWrap { gap: 5px; }
+  .portfolio-home .visitor-ticker { width: min(100%, 250px); }
+
+  .portfolio-home .hero-news {
+    box-sizing: border-box;
+    padding: 12px !important;
+    border-radius: 12px;
+    box-shadow: none;
+    text-align: left;
+  }
+  .portfolio-home .hero-news h3 { margin-bottom: 8px; }
+  .portfolio-home .hero-news-list { gap: 7px; }
+  .portfolio-home .hero-news-item--featured {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 3px 9px;
+    align-items: start;
+  }
+  .portfolio-home .hero-news-item--featured > a { grid-row: span 2; }
+  .portfolio-home .hero-news-image {
+    width: 76px;
+    height: 66px;
+    max-height: none;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 7px;
+    box-shadow: none;
+  }
+
+  .portfolio-home :is(#education, #experience, #teaching, #talks, #leadership) .card.timeline {
+    gap: 0;
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+  .portfolio-home :is(#education, #experience, #teaching, #talks, #leadership) .timeline .item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 8px;
+    align-items: start;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    transform: none;
+  }
+  .portfolio-home :is(#education, #experience, #teaching, #talks, #leadership) .timeline .item + .item { border-top: 1px solid var(--border); }
+  .portfolio-home .timeline .item > .date {
+    grid-column: 1;
+    font-size: 11px;
+    line-height: 1.3;
+    white-space: normal;
+  }
+  .portfolio-home .timeline .item > .content {
+    grid-column: 1;
+    min-width: 0;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .portfolio-home .timeline .content > strong { font-size: 14px; }
+  .portfolio-home .timeline .item > :is(.edu-logo-link, .experience-logos) {
+    grid-area: 1 / 2 / span 2;
+    position: static;
+    width: 58px;
+    min-height: 44px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+  }
+  .portfolio-home :is(#education .edu-logo-link, #experience .experience-logos) img {
+    max-width: 56px;
+    max-height: 29px;
+    height: auto;
+    object-fit: contain;
+    filter: none;
+  }
+  .portfolio-home .phone-detail-toggle:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 8px;
+    margin: 0 0 0 -8px;
+    border: 0;
+    border-radius: 6px;
+    color: var(--brand-ink);
+    background: transparent;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .portfolio-home .phone-detail-toggle[aria-expanded="false"] + .meta { display: none; }
+
+  .portfolio-home #publications .publication-layout { gap: 9px; }
+  .portfolio-home #publications .pub-filters { gap: 4px; }
+  .portfolio-home #publications .pub-filter-btn { min-height: 36px; padding: 4px 8px; }
+  .portfolio-home #publications #pubList { gap: 0; padding: 0; }
+  .portfolio-home #publications #pubList .card.pub {
+    grid-template-columns: 43px minmax(0, 1fr) 48px;
+    gap: 7px;
+    align-items: start;
+    padding: 8px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .portfolio-home #pubList .card.pub > a:first-child { display: block; }
+  .portfolio-home #pubList .card.pub h3 { font-size: 14px; line-height: 1.3; }
+  .portfolio-home #pubList .card.pub .meta { font-size: 11px; line-height: 1.35; }
+  .portfolio-home #pubList .card.pub .kvs { gap: 4px; margin: 3px 0 0; }
+  .portfolio-home #pubList .card.pub .kvs .badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 2px 6px;
+    font-size: 11px;
+  }
+  .portfolio-home #pubList .pub-preview { width: 100%; min-width: 0; }
+  .portfolio-home #pubList .pub-preview img { width: 100%; height: auto; box-shadow: none; }
+  .portfolio-home #pubList .library-card-button { margin-top: 2px; }
+
+  .portfolio-home :is(.events, .prize-card, #certs > .card, #contact > .card) {
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+  .portfolio-home #eventTrack .event-item,
+  .portfolio-home .prize-card,
+  .portfolio-home #certs .cert-card {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 8px;
+    min-height: 0;
+    align-items: start;
+  }
+  .portfolio-home :is(#eventTrack .event-item, .prize-card) img {
+    width: 76px;
+    height: 66px;
+    object-fit: cover;
+    border-radius: 7px;
+    box-shadow: none;
+  }
+  .portfolio-home :is(#eventTrack, .prize-card, #certs) h3 { font-size: 14px; line-height: 1.3; }
+  .portfolio-home :is(#eventTrack, .prize-card, #certs) :is(p, .meta) {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .portfolio-home #eventTrack .event-label { font-size: 9px; padding: 2px 5px; }
+  .portfolio-home #certs .cert-card { padding: 8px 0; }
+  .portfolio-home #certs .cert-card .thumb { min-width: 0; }
 }
