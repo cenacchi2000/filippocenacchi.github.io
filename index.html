@@ -3571,6 +3571,21 @@ body{
   80%{transform:translateY(4px)}
 }
 @media(prefers-reduced-motion:reduce){#pubScrollDown{animation:none}}
+#pubList .card.pub.is-reading-room-selected{
+  outline:2px solid #af783f;
+  outline-offset:-2px;
+  background:#fff8eb;
+}
+.library-reader:not([hidden]){
+  box-shadow:inset 0 3px #bd8a50;
+}
+.library-reader h4:focus{
+  outline:none;
+  color:#633b22;
+  text-decoration:underline;
+  text-decoration-color:#bd8a50;
+  text-underline-offset:4px;
+}
 
   </style>
 </head>
@@ -8126,18 +8141,30 @@ body{
 
   function open(book, button, fromList){
     current?.spine.setAttribute('aria-pressed','false');
+    current?.card.classList.remove('is-reading-room-selected');
     current = book;
     trigger = button;
     book.spine.setAttribute('aria-pressed','true');
+    book.card.classList.add('is-reading-room-selected');
     heading.textContent = book.title;
     meta.textContent = book.meta;
     read.href = book.href;
     read.textContent = book.readLabel + ' ↗';
     reader.hidden = false;
     showAbstract();
-    if (fromList) room.scrollIntoView({block:'nearest',behavior:motion.matches ? 'instant' : 'smooth'});
     sendToTable(book);
-    if (fromList) heading.focus({preventScroll:true});
+    const behavior=motion.matches?'instant':'smooth';
+    heading.focus({preventScroll:true});
+    heading.scrollIntoView({block:'nearest',inline:'nearest',behavior});
+    if(!fromList){
+      if(getComputedStyle(book.card).display==='none'){
+        document.querySelector('#pubFilters [data-mode="all"]')?.click();
+      }
+      const listRect=list.getBoundingClientRect();
+      const cardRect=book.card.getBoundingClientRect();
+      const scale=listRect.height/list.offsetHeight || 1;
+      list.scrollTo({top:list.scrollTop+(cardRect.top-listRect.top)/scale-6,behavior});
+    }
   }
 
   list.querySelectorAll('.card.pub').forEach((card,index) => {
@@ -8146,6 +8173,7 @@ body{
     const preview = card.querySelector('.pub-preview');
     const note = notes.find(([key]) => title.href.includes(key));
     const book = {
+      card,
       title:title.textContent.trim(),
       summary:note?.[2],
       abstract:note?.[3],
@@ -8183,6 +8211,7 @@ body{
 
   close.addEventListener('click', () => {
     current?.spine.setAttribute('aria-pressed','false');
+    current?.card.classList.remove('is-reading-room-selected');
     flying?.remove();
     flying = null;
     current = null;
