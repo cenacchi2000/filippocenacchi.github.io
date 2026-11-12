@@ -2533,6 +2533,99 @@
 
 
 
+#globeWrap{
+  flex-direction:column;
+}
+
+.visitor-ticker{
+  box-sizing:border-box;
+  width:min(100%, 310px);
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  border:1px solid #263957;
+  border-radius:10px;
+  background:#101a2d;
+  color:#e5efff;
+  box-shadow:0 5px 16px rgba(15,23,42,.16);
+  font:600 12px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+  text-align:left;
+}
+
+.visitor-ticker[hidden],
+.visitor-ticker-toggle[hidden]{
+  display:none;
+}
+
+.visitor-ticker-viewport{
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+}
+
+.visitor-ticker-track{
+  display:flex;
+  width:max-content;
+}
+
+.visitor-ticker-track.is-rolling{
+  animation:visitor-ticker-roll var(--ticker-duration) linear infinite;
+}
+
+@keyframes visitor-ticker-roll{
+  to{transform:translateX(-50%);}
+}
+
+.visitor-ticker:hover .visitor-ticker-track,
+.visitor-ticker.is-paused .visitor-ticker-track{
+  animation-play-state:paused;
+}
+
+.visitor-ticker-list{
+  display:flex;
+  align-items:center;
+  flex:none;
+  padding:0;
+  margin:0;
+  list-style:none;
+}
+
+.visitor-ticker-list li{
+  padding:9px 12px;
+  border-inline-end:1px solid #263957;
+  white-space:nowrap;
+}
+
+.visitor-ticker-count{
+  margin-inline-start:7px;
+  color:#7de8b2;
+  font-variant-numeric:tabular-nums;
+}
+
+.visitor-ticker-toggle{
+  align-self:stretch;
+  width:34px;
+  flex:none;
+  border:0;
+  border-inline-start:1px solid #263957;
+  background:#18263d;
+  color:inherit;
+  cursor:pointer;
+}
+
+.visitor-ticker-toggle:focus-visible,
+.visitor-ticker-viewport:focus-visible{
+  outline:2px solid #93c5fd;
+  outline-offset:-2px;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .visitor-ticker-track.is-rolling{animation:none;}
+  .visitor-ticker-list[aria-hidden="true"],
+  .visitor-ticker-toggle{display:none;}
+  .visitor-ticker-viewport{overflow-x:auto;}
+}
+
   </style>
 </head>
 <body>
@@ -2679,6 +2772,12 @@
     <div id="heroSide" class="hero-side">
       <div id="globeWrap">
         <div id="visitorGlobe" aria-label="3D daylight global activity globe"></div>
+        <div id="visitorTicker" class="visitor-ticker" role="region" aria-label="Visits by location" hidden>
+          <div class="visitor-ticker-viewport" tabindex="0" aria-label="Visitor locations and counts">
+            <div class="visitor-ticker-track"></div>
+          </div>
+          <button class="visitor-ticker-toggle" type="button" aria-label="Pause visitor ticker">Ⅱ</button>
+        </div>
       </div>
 
       <aside class="hero-news" aria-labelledby="heroNewsTitle">
@@ -5423,6 +5522,56 @@
     altitude: 2.15
   }, 0);
 
+
+  const ticker = document.getElementById('visitorTicker');
+  const tickerTrack = ticker.querySelector('.visitor-ticker-track');
+  const tickerToggle = ticker.querySelector('.visitor-ticker-toggle');
+  const visitNumber = new Intl.NumberFormat('en');
+
+  tickerToggle.addEventListener('click', () => {
+    const paused = ticker.classList.toggle('is-paused');
+    tickerToggle.textContent = paused ? '▶' : 'Ⅱ';
+    tickerToggle.setAttribute('aria-label', paused ? 'Play visitor ticker' : 'Pause visitor ticker');
+  });
+
+  function renderVisitorTicker(points){
+    const totals = new Map();
+
+    for (const { city, country, count } of points) {
+      if ((!city && !country) || !Number.isFinite(count) || count < 1) continue;
+      const place = [city, country].filter(Boolean).join(', ');
+      totals.set(place, (totals.get(place) || 0) + count);
+    }
+
+    const places = [...totals].sort(([placeA, countA], [placeB, countB]) =>
+      countB - countA || placeA.localeCompare(placeB)
+    );
+    const list = document.createElement('ul');
+    list.className = 'visitor-ticker-list';
+
+    for (const [place, count] of places) {
+      const item = document.createElement('li');
+      const value = document.createElement('span');
+      value.className = 'visitor-ticker-count';
+      value.textContent = `${visitNumber.format(count)} ${count === 1 ? 'visit' : 'visits'}`;
+      item.append(place, value);
+      list.append(item);
+    }
+
+    tickerTrack.replaceChildren(list);
+    ticker.hidden = places.length === 0;
+    const rolling = list.getBoundingClientRect().width > tickerTrack.parentElement.clientWidth;
+    tickerToggle.hidden = !rolling;
+    tickerTrack.classList.toggle('is-rolling', rolling);
+
+    if (rolling) {
+      const copy = list.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      tickerTrack.append(copy);
+      tickerTrack.style.setProperty('--ticker-duration', `${list.getBoundingClientRect().width / 36}s`);
+    }
+  }
+
   async function refreshVisitorGlobe(){
     const locations = new Map();
     let savedPoints = [];
@@ -5442,13 +5591,16 @@
     }
 
     if (Array.isArray(savedPoints)) mergePoints(savedPoints);
-    globe.pointsData(Array.from(locations.values()));
+    const cachedPoints = Array.from(locations.values());
+    globe.pointsData(cachedPoints);
+    renderVisitorTicker(cachedPoints);
 
     await logVisit();
     mergePoints(await fetchVisitorPoints());
 
     const points = Array.from(locations.values());
     globe.pointsData(points);
+    renderVisitorTicker(points);
 
     try {
       localStorage.setItem(POINTS_STORAGE_KEY, JSON.stringify(points));
