@@ -3603,7 +3603,7 @@ body{
 
   </style>
 
-  <link rel="stylesheet" href="iphone.css?v=11">
+  <link rel="stylesheet" href="iphone.css?v=12">
 </head>
 <body class="portfolio-home">
   <!-- Sticky Nav -->
@@ -7049,11 +7049,23 @@ body{
   const tickerToggle = ticker.querySelector('.visitor-ticker-toggle');
   const visitNumber = new Intl.NumberFormat('en');
 
-  tickerToggle.addEventListener('click', () => {
-    const paused = ticker.classList.toggle('is-paused');
+  const tickerViewport = tickerTrack.parentElement;
+
+  function setTickerPaused(paused) {
+    if (touchViewport.matches && !paused) tickerViewport.scrollLeft = 0;
+    ticker.classList.toggle('is-paused', paused);
     tickerToggle.toggleAttribute('data-paused', paused);
     tickerToggle.setAttribute('aria-label', paused ? 'Play visitor ticker' : 'Pause visitor ticker');
+  }
+
+  tickerToggle.addEventListener('click', () => {
+    setTickerPaused(!ticker.classList.contains('is-paused'));
   });
+  tickerViewport.addEventListener('touchstart', () => {
+    if (touchViewport.matches && !tickerToggle.hidden && !ticker.classList.contains('is-paused')) {
+      setTickerPaused(true);
+    }
+  }, {passive:true});
 
   function renderVisitorTicker(points){
     const totals = new Map();

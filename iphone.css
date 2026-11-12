@@ -562,4 +562,17 @@
     font-size: 18px;
     cursor: pointer;
   }
+
+  .portfolio-home .visitor-ticker:not(.is-paused) .visitor-ticker-track.is-rolling {
+    animation-play-state: running;
+  }
+  .portfolio-home .visitor-ticker.is-paused .visitor-ticker-viewport {
+    overflow-x: auto;
+  }
+  .portfolio-home .visitor-ticker.is-paused .visitor-ticker-track.is-rolling {
+    animation: none;
+  }
+  .portfolio-home .visitor-ticker.is-paused .visitor-ticker-list[aria-hidden="true"] {
+    display: none;
+  }
 }
