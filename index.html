@@ -3492,6 +3492,19 @@ body{
   scrollbar-color:#a795cc transparent;
   scroll-padding-block:8px;
 }
+@media(min-width:1050px){
+  .publication-layout:has(.library-reader:not([hidden])) .publication-column{
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr) auto;
+    align-self:stretch;
+  }
+  .publication-layout:has(.library-reader:not([hidden])) #pubList{
+    contain:size;
+    align-content:start;
+    min-height:min(640px,68vh);
+    max-height:none;
+  }
+}
 #pubList:focus-visible{
   outline:2px solid var(--brand);
   outline-offset:2px;
