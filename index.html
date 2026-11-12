@@ -928,6 +928,51 @@
 }
 
 
+
+.hero-reviewer{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--border);
+}
+.hero-reviewer h4{
+  margin:0 0 8px;
+  font-size:14px;
+  line-height:1.4;
+}
+.hero-reviewer .reviewer-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:0;
+  list-style:none;
+}
+.hero-reviewer .reviewer-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin:0;
+  padding:4px 8px;
+  border:1px solid var(--badge-border);
+  border-radius:999px;
+  background:var(--badge-bg);
+  color:var(--badge-text);
+  font-size:12px;
+  font-weight:700;
+  line-height:1.3;
+}
+.reviewer-badge img{
+  display:block;
+  width:22px;
+  height:15px;
+  object-fit:contain;
+}
+.reviewer-badge--aistats{--badge-bg:#eff6ff;--badge-border:#bfdbfe;--badge-text:#1e40af}
+.reviewer-badge--aaai{--badge-bg:#fef2f2;--badge-border:#fecaca;--badge-text:#991b1b}
+.reviewer-badge--aamas{--badge-bg:#fffbeb;--badge-border:#fde68a;--badge-text:#92400e}
+.reviewer-badge--iclr{--badge-bg:#f5f3ff;--badge-border:#ddd6fe;--badge-text:#5b21b6}
+.reviewer-badge--www{--badge-bg:#f0fdf4;--badge-border:#bbf7d0;--badge-text:#166534}
+.reviewer-badge--cvpr{--badge-bg:#ecfeff;--badge-border:#a5f3fc;--badge-text:#155e75}
+
 .hero-mini-links{
   display:flex;
   flex-wrap:wrap;
@@ -2943,6 +2988,35 @@
             advanced AI methods with practical impact across clinical, educational, organisational,
             and societal settings.
           </p>
+          <section class="hero-reviewer" aria-labelledby="reviewer-heading">
+            <h4 id="reviewer-heading">Currently serving as reviewer for</h4>
+            <ul class="reviewer-list" role="list">
+              <li class="reviewer-badge reviewer-badge--aistats">
+                <img src="data:image/webp;base64,UklGRkwCAABXRUJQVlA4IEACAABwCgCdASosABgAPmEokEUkIqGVXAb8QAYEtgBOmUJCI2gc2jU7aLmmdRm9ADwQPhG/yaPZ3ASoJFRygRXtC8bPk7JnhzEKzw3RvR3S3i4I2kHNCdZqVP39CuG+QAD+/P4a8ibiyNtpLpGzHPOb10/9ccClVKyO0Dp5fkWkwtr2l+r+LlrgMXxOyWIFJ2gIUxcNOl/CGlRcFcecpT9acsNBToMWHe6/rk7Ot7W5L286+Z8ZxQjI3yNuvl5e+EWWEYx9thNA/2zRediRwiz+6vCPcrdwpbipFlJfyZQrsPZaFGcrYBwpJ80xIHFzSa9NQYM9QVF0HPvzdw/5Q+tSzx/BaeCc6Qv41rUjzY/GVFdopOMGufUUzM9S5s9retd/WTPHukYlqP1oF7XLugRtzas99rff+M7ze+iNqPJD5/6lgmfHP+9wuryBTo5vf/4H9eDx8jGKa1k2hmw/SvH/N/j1jXpKUysySpv5fbW+PS2nQcYdAvc6YQ7da/0gVBP5PYTyECMkdRTD0chNhdaKnp35eyG/vYL6px844JLDdk/5c7aDyzEzJvpAeOY2TIgfuuF0vmee3q7IePkPVdu/5n/hzsh+YSli2SX5mA51q1Kg+/vDeJmWzCe5OZOpp/tloaPdQXm1aGyk2JXd6FlePNzUXrMePeeS1LJxWsmkpgJxgTP3zfkBjUqbLCDgHaqAuUDnrACwL+WprCzbBgShKQjLkLSCBTAaG67rhuP/h0aPCJfzWzREs/vOTHI2obwAAAA=" alt="" width="22" height="15">
+                <span>AISTATS</span>
+              </li>
+              <li class="reviewer-badge reviewer-badge--aaai">
+                <img src="data:image/webp;base64,UklGRrQDAABXRUJQVlA4WAoAAAAQAAAAHwAAHQAAQUxQSEwCAAABkCjbtmlHe5/Yttu2bdvu95K0bdu2bdu2bdtWfM85q/1e/iAiJoAsdAx1YUpFQeHLa5BIBSaT3upPbDWmkBOIM6cC2fRJ1NgezGwlQfmuQGKpF1nNdgqkflOjVASxVQQVugcDC9IfnSSYrcDsMAUSj4rGpjzMR8IKgqq/gTZGZD4NY4oDs0VM/rsgcS3bCCVxJi0Ji4gaxGmtehV5BoVlbsIiJv99kLiSZQIkXpepX43Yog4/oOJMxV9qhYnpz+7xJfFfTFnPQGJt2qVQuJ6ls/5en/l/mGm4ofSXOnU/aoXOea4DewKI/0NQrmuQWJt2HyTO55yEH/FJnfk/mG2GKInXZZt81yqpTdGHm1qYD53NRvwvKnQbSk5NfwAGdqWdNsmTyH/+KJt/CHJbCYX7ufukKP2pVoWTmcjGliocy0XiL0zVvkDp4fnuQWJN2r3X/YStrU3u55MdiYmIyWWTVriXawiU/lKlecq78kRETVJelvsb13sPldQx/yMoLE+/D/pAQW/viheB1d7EJChsDyR2pp8BhUeFY1M08G73/jho/bkKEQnqHKdUQvPKb6AwINs54NWofkOG9p4dB2z0IaYM52BgZ9oNkLiVb4hUuOhGRJTrA/RXEzF3k1K/r17zo5JG39yPYOjLoTZ29jbFPmqJk2ko+zloLEizBQqnMo3VWuNKEAkbKvIJgNGL5n9PSHlYqM3X+KR3MYXvJMfFJ58O/KPg86SE+JSDmZqaTDHVXUvEtoyp45WtpdlkjqnuTMTk3yjabI5uFAFWUDggQgEAANAGAJ0BKiAAHgA+YSaPRSQiIRgEAEAGBLYAWI2ohgF2AegB5ZfsPI0DZxoE78BZLue2sz6LB3yFJZrGK4EOQAD+/s1rm12U8q6z7OS1uYQgty3v3YD4V8FhWa45Y7+yFfLG36W517e0T1TxX/4NaO36OXXS0//6p6Ab6175QYX5kUvXl3wfp3/pPFklfRW+aFU/2G+kezb8biEWTYxEd286UUlboN6Zjr4kXGq3MxJU/+iRfcWBFhk8x+0mx+isppeikZcnuAj6F7yBApQOmZ9E7j828ohEldSPDc52HHYQ+NU7P/PjP2+7Msdvw+JJY1naLJZT76W+2pNtj3B4piegxSEVr1TNrL4ZqzwRGIcaRlp+DvkFGQ689S8Y/xBmLsJsk/aT0ufkbBR/+GRrk6rCHyd3czeKEQTZecqWOfIAAAA=" alt="" width="22" height="15">
+                <span>AAAI</span>
+              </li>
+              <li class="reviewer-badge reviewer-badge--aamas">
+                <img src="data:image/webp;base64,UklGRvgBAABXRUJQVlA4IOwBAABQCgCdASopAB4APmEqj0UkIqEVVgBABgS2AE6ZntwfsZyz+B20v0w9wG2o8wH6o+sj5/++Abyd/pCXDeKb5v9FU0nMptfEiu7AFw7uBfuQjigT7FtFC3NpUoZAAP72NH+T2bfzFPwlfGIrzw7ouwIIVth/j2YhZP7+BOX3/tWiTz/9Vok8//R/g6/I/TDWAAJUf9aG9AnsyS2ofkl2+0nSCD3vsYPd0LnFftfj6ECJSingETgQpL8loBOBL3HpOvLZICIbeDAMfLV+FsNRzJdJYd51Vb+axFj3VLCoWbdsnsr/83oqzZfru/7GYq1nOtMVijyNNmHkyl3W63CsZev3BC6wr+P5CF/tiqJ/ykhq/wD2U/qsXmd/LivbBQeq5tbKexLnL/Ss/jsNweecDs5hTztonyK9TapT7sbkKk6yne1JdpV+hBdPxwV5l2xSlJo0f2KqkS61yS1nfWe1HazN2mOpo3SOa2XvtBrj7zPYg9sBi6YhmrdK43FSzRfsskfeL/gI4u9+faH/nlxoZtjo5Wse+CutHHha23UVc8tfSMjUcwpDOVugbiTd+tT2wmBPCxU0pdb2pf3JRXLnnES5Z2b/SyEgn19lNf8tm7gVhdMcDso69i2lFCJXkKYsjnNWeDCKYOy+Le/AAAA=" alt="" width="22" height="15">
+                <span>AAMAS</span>
+              </li>
+              <li class="reviewer-badge reviewer-badge--iclr">
+                <img src="data:image/webp;base64,UklGRmwDAABXRUJQVlA4WAoAAAAQAAAAKwAADAAAQUxQSLcBAAABkLRt2/G48q/n/b4kUzdGbdu2bdu2be9s27Ztrebo1t0ame9ZjCNiAkheoHXTCKmLERBjGRBjAExyAZFChUt02P3y3VK3baWQ3ACIkHYB3C1H9a02fq5uBJPMVzYClKxRFLKXKZAsb/GixQoZEF+ZAZsH7O/TbN7jlcUAmxl6kKK3VPVCzsb6QjDcd/46/x7mEynSvMqobSeXHm2VqL/OhsTFTOcQV/Vw85M/29bU18ke6IjCb3U05KnYuE35de2nZB/5UV95xGam7nb/jBfHGFroK9tyyQPnyqZvH6uQc2KFrhPrbe23u2m+pZrow8VMZ7f7V7wY0Ya5mzrPAB45j+PxIZhorkhCo0YjO81oUHjrz6TCuJmlR+SK7m5yVUfU1A9jxowN3tUGnfRbEZJXytmvZb9mg6q9j4/Dw+SfO4hdT9L/J1z1fnxX1Qonf7bn0t/1iHiG9IhsmlhgSZdxj3QBNiW71iuYp0CbAa3z5i/foW3r1q1LNexUsVClDm2yCDku5G2Vn5IlgrvuNUUgmy+QJ28ebw5vnjwRb/JowBvOE/b6XCQ3GLBbWgiZLiCIWGABSMYDAFZQOCCOAQAAsAcAnQEqLAANAD5hKpFGJCKhoSqoAIAMCWwAnTKDGD2AmQDeKPJVuZpsd81fqq+gB+swpjcLIOz7UThtXsSUXEixco0IAAD+90Kp8WdEda2Qx7pz0CcVG1mp8UM9TpOG2TyfP0oqjNUf3KvR9fe+D+JF/djBjgJ4x4AqoTuXmAl8b6ypXo1+FBsucjv4gEvnB0/kfPm+v2v/+KB878yUZfB//tCH+7IQdf1j8NWdqyjP818E8trxj2R/ujUHY6J18f3AHv39LV+O9p/+l7C879ZYKTNf4CJ7f/82E9W1q8NerY7UGahA0UqNbC7aNtN6rLCWkN+jyMRVTF54TN2loXVbyA1/0GL2eEbcUtraFoZWM6E9KSVxCcESm0tD5V9vM40/nAEeL/2+/v1Mudob1eY67aqQlGubpcGz2rfmsWuVkmdPcsMwoRcu+EzjfWHFkze61cJ++lfCdN+8vT7ACPjmFF18d92KFAq8y53IuOCR4T7svhO2E6r2s9KKAOGkQ+MVT7D3uoxypIOAAAA=" alt="" width="22" height="15">
+                <span>ICLR</span>
+              </li>
+              <li class="reviewer-badge reviewer-badge--www">
+                <img src="data:image/webp;base64,UklGRtIEAABXRUJQVlA4WAoAAAAQAAAAGwAAHQAAQUxQSCkCAAABkC1JtmlbPeZc59q2bdu232zbtm3btm3bOj7X9r17rzn7cp1fiIgJAABBglZzxiSBA9GOAgSRLf7yWgVoAMgUH+JJVLJHPv5oiYQF2x04tyaGNwAN7Hd+33v59ZV+qafWhvIgSJJabeE3u7tSWgVkGanFg0KN3pLoADk3KwBUmqohXsp1AaL2PbM7sG+ZBgsXpYXAS4WpUTQQrW+5XHfJ7RBvjbYHQALQJR6G2p8fc8Bb/fPRIUqWZ1AVjMvm0J5q3k4MUViWFpmfkTMjUSo0L7RE25UDsS6TW+F40FI6rBo04p8rI/ooeVyp/wlQ6U0L7SDOqVLAEWsvx4D8S1AoVanvXRBVpQmsUSD7MfJcVPmXSPKHuxq9P9MJSB58+3q+rWHP9+kAcRzHgUI5fjhoAj8vmbTkA+3aQ6fPNUbcDACgVezp5tMV3vlAksaS5NIBC7cPHjp4OJA8nIZvnrx2fS5J1xjDf78vWqTQBRrz8fUTa4yx1pJ0//5h53/2+Syt63sbyP9a17UkzY9ai+i3Lul/+fDdnQNH7l5/+oMkXePyWPQsLy3580zEz8aJYjuLv755daP92ONfSNdfHejGsFnFSoezBZJtIA2nAyg06CYXKy1O0wxAgXD2K3mfrp+bo6oAARK1SAoFARxd6D4DP9Pn576EIhDt4N+OwMEM0vrI5bGh8Ldo+QuAxmzXGr7rJlCItMYSPri5JQ+UIPIKnfrkLK2gBd4BAFZQOCCCAgAAUAwAnQEqHAAeAD5dJI1FI6IhGAYAOAXEtgBOmUJBZ2AXn9oI3HoAPMB+wGSNehL5aPsUft1NcY6jEv7waKP6APiIzfPP3sAfyH+kf7zpZvZe/ZUQrgiJiGZ9alaamKT+b2AB7reqXHDmVwAA7121ya8QrhihVP5D5QpSDn7kvbPX1oTGq8HE2sQRR6FbY52hiYPnX+/l3ckzymIxeC/upTP6714rDtly9nnt+UTFY3dPR9BPD97xwHQ6NEECfdSxJnODfnLGjn1lpXZ9q+fqS0y7U6r2oCzItFmtyhJDRFe5vICBR+kjDzm3zPt//v5w7U/1ppcWm+yiFulaqf1uj7t/x/3vjmzec3FTUT65KUYnu/1dvQ9b+F8Wwr//FdOLqEHsb/diTLKK5FgDMl/hdZam71phL3+EcBRd5Q/royK6bfLwMAlfLtFzJ5724Mwl/T0XrWSenub/84H/zS//5bUNfGFBSwSDuBIR+ZvcOmubEEQJ/4em97r+FkFXPpeP9/PnPiwbR+O/3GBb4Nlk6wmkJvBv/QnL42c58vrucIosnNOthWC2umgANodlVP4r+Xnn70z4NLlRlksw9eHSxd1OXwOk/w1VzkXhKHPjSZMoucC9nsIJ+67lvWrRv+f/+oKbL+jDjRsfX3z0oyLtZq78+dK7p37rFtzoM3gapAzn6GbpcJGPUg0BPFWZ6iFF7WRL32EmrrUMujbiwz//tL4NL2lHR1SyeWTM9TAqgAxFXy2s9xlhe5wHCTrRGyAOsQr5/S7J37TjZ9cMUQ3Ke0jalnTe9dZU1UlrDXc0dyX7/yccKL37ZXzFYPR0/aGf5yNf4Xfp/9iP08/u7tPdAAAA" alt="" width="22" height="15">
+                <span>WWW</span>
+              </li>
+              <li class="reviewer-badge reviewer-badge--cvpr">
+                <img src="data:image/webp;base64,UklGRiIEAABXRUJQVlA4WAoAAAAQAAAAKwAAFQAAQUxQSEsBAAABkGvb1rE9+zzPbxvJBdi2bduq7HS2bVap7KSz2buynTzYwYfxPVcQERMAACpFEKwgDxKKoOOpIkgYCjPJdy10UhCCBoceri1FREkUNHpfKCo5NgQKCipRQJcnJVW4TZIFaUisoOLEHa/TBts1AFrdrK2USByiRbRE0GhOvlBHuTKnQeFuzocGVCxKI6L+L0lWGvsWBzmvPxdvdedqNj6cDomotAagx16/PjUF0EAS9pMvuj3n1uN+w2Hy4mW2q5SEqFKt5x2SvD9YAGDSW8u3m+jfOd69TEN+u/W7XmpecVF+tQ7b7lvSGmvJS6MygHU09B89Sf76Rnrnf/P5oxefP7z9TZLOkqS1ZHtgqTf83zNGz8jeOM+oxnYCltKQnhF9JDrn/2fMjh2jhOjYCVgS1OKgFpgfJshfpiOwgsF2B2qOHTYiyOGjKyBsAFZQOCCwAgAA8A8AnQEqLAAWAD5hJpJGpCGhoSq4CgCADAlsALUhQX4BzO00+18dA9XAA/AH9u0hv7IetV0QHUO7xT+4fo33M/ha5i1vT9XO9H/bOMDSX42vPuzd/QP/M9wz9Tv+LwEv61g89E2aG3jF/SvJHbHksWj4infsgMpLfnrBgZ6g1Nr5pSQ+7Yzd/AD+wWri9M2n3CKH8Jh0ok10HNksSUSWf0w8I6LsQAXvnQotRiyeL5XbBTnu9c0PEYjrCn/uVCMqehBYdi42KBWopO4YTJ9z9v3OUzPrw28Kx5DnS846M93WvaZjH1oVL87wQE9agKefUjuyFIX8X0SxKmY1j2Ad9wx+Kl969LTZOAV/Q+tBGxZWEFQFe5T5tvyeZO/OqBy+H+pMDCk+muCypLm/Zijox0Xrmu56TmL7T5Omtc/75Fps/2gWgrF/BpP+Gt8hHGAPmetv5Q5jFtx/xILMfkdbjXmHd+z4gJ51meipaf2eK76jR07iiP/TVm5nhf6qA+/s6T6VkjR4TWkk7O5bopQohw49ulYL4y8f9lTgSMpxKiji/sQo9MuuGfcqUVMmHhtP6dwEnRT9n+3r4ds5k11pQ8y/URTZ3ldEP09/F9ocr4D2+cn+f/xfWgdG/vSd/KUedw5nfJ6jsuH/91/X320ZULV6Vy9/KR9oPG8AHezoyRri+8XkcXiGuy+x84R/sctvF/LVeErrysawdyN4arL87DgwDO3syUS3UYH4EBkR6xbYF1eJzHCJltIC+n/5Fd7paHr6hB0i96sRmlSUf/tMjzAfD1u6H4uZBQcb4g7SBrSMw4ttlMkt1F764/v6E4ujxj4+RG027TmL2aZYdUga6YmSdX5paf28azLfiAVK6JZj9ZZLfxwk2FkLvrwNL582afe/GroV9DmzJkL11AAAAA==" alt="" width="22" height="15">
+                <span>CVPR</span>
+              </li>
+            </ul>
+          </section>
         </div>
       </div>
     </div>
