@@ -2574,23 +2574,26 @@
 
 .selected-work{
   min-width:0;
+  margin-top:10px;
   text-align:left;
 }
 .selected-work h2{
-  text-align:center;
-  margin:5px 0 0;
-  font-size:15px;
+  margin:0;
+  color:#101b30;
+  font-size:17px;
   line-height:1.25;
-}
-.selected-work .selected-work-caption{
+  letter-spacing:-.025em;
   text-align:center;
-  margin:1px 0 10px;
-  color:var(--subtle);
+}
+.selected-work-caption{
+  margin:3px 0 12px;
+  color:#51617a;
   font-size:11px;
+  text-align:center;
 }
 .selected-work ul{
   display:grid;
-  gap:6px;
+  gap:10px;
   margin:0;
   padding:0;
   list-style:none;
@@ -2598,86 +2601,113 @@
 .selected-work-item{
   box-sizing:border-box;
   min-width:0;
-  padding:11px 12px;
+  overflow:hidden;
   border:1px solid var(--work-border);
-  border-radius:12px;
-  background:var(--work-bg);
-  line-height:1.3;
+  border-radius:15px;
+  background:#fff;
+  line-height:1.35;
 }
-.selected-work-item--kdd{--work-accent:#92400e;--work-border:#f4d4a8;--work-bg:#fff3e4}
+.selected-work-item--kdd{--work-accent:#854514;--work-border:#e8cba6;--work-bg:#fcf2e5}
 .selected-work-item--vision{--work-accent:#1e40af;--work-border:#c7d8fc;--work-bg:#edf3ff}
 .selected-work-item--reliability{--work-accent:#5b21b6;--work-border:#ddd0f7;--work-bg:#f4eeff}
 .selected-work-item--clinical{--work-accent:#115e59;--work-border:#b9e1d9;--work-bg:#e9f7f4}
+.selected-work-figure{
+  display:grid;
+  height:76px;
+  place-items:center;
+  padding:7px 12px;
+  box-sizing:border-box;
+  border-top:3px solid var(--work-accent);
+  border-bottom:1px solid var(--work-border);
+  background:var(--work-bg);
+}
+.selected-work-figure img{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0;
+  object-fit:contain;
+  mix-blend-mode:multiply;
+}
 .selected-work-item strong{
   display:block;
-  color:var(--text);
-  font:700 16px/1.13 Georgia,serif;
+  margin:12px 12px 0;
+  color:#101b30;
+  font:700 18px/1.12 Georgia,serif;
+  letter-spacing:-.025em;
+  overflow-wrap:anywhere;
 }
 .selected-work-item p{
-  margin:5px 0 7px;
-  color:var(--subtle);
+  margin:6px 12px 12px;
+  color:#485971;
   font-size:11px;
 }
 .selected-work-links{
   display:flex;
+  align-items:center;
   flex-wrap:wrap;
-  gap:6px;
+  gap:7px;
+  padding:0 12px 12px;
   font-size:11px;
   font-weight:700;
 }
 .selected-work-links a{
-  display:inline-block;
-  padding:3px 8px;
-  border:1px solid var(--work-border);
-  border-radius:999px;
-  background:rgba(255,255,255,.72);
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:0 8px;
+  border-radius:6px;
   color:var(--work-accent);
   text-decoration:none;
+}
+.selected-work-links a:first-child{
+  background:var(--work-accent);
+  color:#fff;
 }
 .selected-work-links a:hover{text-decoration:underline}
 .selected-work-controls[hidden]{display:none}
 .selected-work[data-work-shuffle] ul{
   position:relative;
   isolation:isolate;
-  padding:5px 8px 6px;
+  padding:3px 5px 7px;
 }
 .selected-work[data-work-shuffle] .selected-work-item{
   grid-area:1 / 1;
   display:flex;
   flex-direction:column;
-  box-shadow:0 5px 12px rgba(15,23,42,.09);
+  box-shadow:0 8px 20px rgba(15,23,42,.12);
 }
 .selected-work[data-work-shuffle] .selected-work-links{margin-top:auto}
 .selected-work-item[data-work-depth="0"]{z-index:4}
-.selected-work-item[data-work-depth="1"]{z-index:3;transform:translate(4px,-3px) rotate(3deg)}
-.selected-work-item[data-work-depth="2"]{z-index:2;transform:translate(-3px,3px) rotate(-3deg)}
-.selected-work-item[data-work-depth="3"]{z-index:1;transform:translate(1px,-6px) rotate(1deg)}
+.selected-work-item[data-work-depth="1"]{z-index:3;transform:translate(3px,2px) rotate(1.5deg);background:var(--work-bg)}
+.selected-work-item[data-work-depth="2"]{z-index:2;transform:translate(-3px,3px) rotate(-1.5deg);background:var(--work-bg)}
+.selected-work-item[data-work-depth="3"]{z-index:1;transform:translate(0,5px);background:var(--work-bg)}
 .selected-work-item[inert]{pointer-events:none}
 .selected-work-item[inert]:not([data-work-leaving]) > *{visibility:hidden}
 .selected-work-controls{
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:8px;
-  margin-top:3px;
+  gap:10px;
+  margin-top:7px;
 }
 .selected-work-controls button{
   display:grid;
-  width:28px;
-  height:28px;
+  width:34px;
+  height:32px;
   place-items:center;
   padding:0;
-  border:1px solid var(--border);
-  border-radius:50%;
-  background:var(--panel);
-  color:var(--text);
-  font:700 17px/1 system-ui,sans-serif;
+  border:1px solid #d5ddea;
+  border-radius:8px;
+  background:#fff;
+  color:#182842;
+  font:700 16px/1 system-ui,sans-serif;
   cursor:pointer;
 }
-.selected-work-controls button:hover{border-color:var(--brand);color:var(--brand-ink)}
+.selected-work-controls button:hover{border-color:#96a9cc;background:#edf3ff;color:#1745ad}
 .selected-work-controls output{
-  min-width:34px;
-  color:var(--subtle);
+  min-width:38px;
+  color:#51617a;
   text-align:center;
   font-size:11px;
   font-variant-numeric:tabular-nums;
@@ -3074,42 +3104,46 @@
           <p class="selected-work-caption">For busy readers</p>
           <ul role="list">
             <li class="selected-work-item selected-work-item--kdd">
+              <div class="selected-work-figure" aria-hidden="true"><img src="kdd.png" alt="" decoding="async"></div>
               <strong>The Decision Twin</strong>
               <p>KDD 2026 Blue Sky vision for clinical digital twins.</p>
               <div class="selected-work-links">
-                <a href="https://research-management.mq.edu.au/ws/portalfiles/portal/553844048/552801638.pdf" target="_blank" rel="noopener" aria-label="Paper PDF for The Decision Twin">Paper</a>
+                <a href="https://research-management.mq.edu.au/ws/portalfiles/portal/553844048/552801638.pdf" target="_blank" rel="noopener" aria-label="Paper PDF for The Decision Twin">Read paper ↗</a>
                 <a href="https://dl.acm.org/doi/10.1145/3770855.3818659" target="_blank" rel="noopener" aria-label="ACM publication page for The Decision Twin">ACM</a>
               </div>
             </li>
             <li class="selected-work-item selected-work-item--vision">
+              <div class="selected-work-figure" aria-hidden="true"><img src="passive.png" alt="" decoding="async"></div>
               <strong>Passive Dementia Screening</strong>
               <p>Screening from subtle facial motion.</p>
               <div class="selected-work-links">
-                <a href="https://arxiv.org/pdf/2511.13802" target="_blank" rel="noopener" aria-label="Paper PDF for Passive Dementia Screening">Paper</a>
+                <a href="https://arxiv.org/pdf/2511.13802" target="_blank" rel="noopener" aria-label="Paper PDF for Passive Dementia Screening">Read paper ↗</a>
                 <a href="https://github.com/cenacchi2000/dementia_3d_face_mapping" target="_blank" rel="noopener" aria-label="Code for Passive Dementia Screening">Code</a>
               </div>
             </li>
             <li class="selected-work-item selected-work-item--reliability">
+              <div class="selected-work-figure" aria-hidden="true"><img src="counterfactual-fragility-certificates.png" alt="" decoding="async"></div>
               <strong>Counterfactual Fragility Certificates</strong>
               <p>Auditing which input failures flip predictions.</p>
               <div class="selected-work-links">
-                <a href="https://arxiv.org/pdf/2609.00366" target="_blank" rel="noopener" aria-label="Paper PDF for Counterfactual Fragility Certificates">Paper</a>
+                <a href="https://arxiv.org/pdf/2609.00366" target="_blank" rel="noopener" aria-label="Paper PDF for Counterfactual Fragility Certificates">Read paper ↗</a>
                 <a href="https://github.com/cenacchi2000/Counterfactual-Fragility-Certificates" target="_blank" rel="noopener" aria-label="Code for Counterfactual Fragility Certificates">Code</a>
               </div>
             </li>
             <li class="selected-work-item selected-work-item--clinical">
+              <div class="selected-work-figure" aria-hidden="true"><img src="Diagram%20(5).png" alt="" decoding="async"></div>
               <strong>Tri-Modal Mental Health AI</strong>
               <p>Fusing speech, text and facial cues.</p>
               <div class="selected-work-links">
-                <a href="https://arxiv.org/pdf/2510.20239" target="_blank" rel="noopener" aria-label="Paper PDF for Tri-Modal Mental Health AI">Paper</a>
+                <a href="https://arxiv.org/pdf/2510.20239" target="_blank" rel="noopener" aria-label="Paper PDF for Tri-Modal Mental Health AI">Read paper ↗</a>
                 <a href="https://github.com/cenacchi2000/EDAI-Trimodal" target="_blank" rel="noopener" aria-label="Code for Tri-Modal Mental Health AI">Code</a>
               </div>
             </li>
           </ul>
           <div class="selected-work-controls" hidden>
-            <button type="button" data-work-step="-1" aria-label="Previous selected work">‹</button>
+            <button type="button" data-work-step="-1" aria-label="Previous selected work">←</button>
             <output aria-live="polite"></output>
-            <button type="button" data-work-step="1" aria-label="Next selected work">›</button>
+            <button type="button" data-work-step="1" aria-label="Next selected work">→</button>
           </div>
         </section>
       </div>
@@ -6190,7 +6224,7 @@
   const controls = deck.querySelector('.selected-work-controls');
   const position = controls.querySelector('output');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const poses = ['none', 'translate(4px,-3px) rotate(3deg)', 'translate(-3px,3px) rotate(-3deg)', 'translate(1px,-6px) rotate(1deg)'];
+  const poses = ['none', 'translate(3px,2px) rotate(1.5deg)', 'translate(-3px,3px) rotate(-1.5deg)', 'translate(0,5px)'];
   let current = 0;
   let animations = [];
 
