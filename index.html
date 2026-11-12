@@ -3001,6 +3001,49 @@
   background:var(--paper-tint);
 }
 
+/* Keep the complete publication carousel near the top of the introduction. */
+#heroMain .selected-work{
+  width:min(100%, 520px);
+  margin:14px 0 0;
+}
+#heroMain .selected-work h2,
+#heroMain .selected-work-caption{
+  text-align:left;
+}
+#heroMain .selected-work-controls{
+  margin-top:5px;
+}
+@media (min-width:721px){
+  #heroMain .selected-work-item{
+    display:grid;
+    grid-template-columns: minmax(0, 36%) minmax(0, 1fr);
+    grid-template-rows:auto 1fr auto;
+  }
+  #heroMain .selected-work-figure{
+    grid-column:1;
+    grid-row:1 / -1;
+    height:auto;
+    min-height:102px;
+    border-top:0;
+    border-bottom:0;
+    border-left:3px solid var(--work-accent);
+    border-right:1px solid var(--work-border);
+  }
+  #heroMain .selected-work-item > strong,
+  #heroMain .selected-work-item > p,
+  #heroMain .selected-work-links{
+    grid-column:2;
+  }
+  #heroMain .selected-work-item > p{
+    margin-bottom:7px;
+  }
+}
+@media (max-width:720px){
+  #heroMain .selected-work{
+    margin-inline:auto;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -3099,53 +3142,6 @@
             <small>Postdoc · Lecturer · Research</small>
           </span>
         </a>
-        <section class="selected-work" id="selected-work" aria-labelledby="selected-work-title">
-          <h2 id="selected-work-title">Selected work</h2>
-          <p class="selected-work-caption">For busy readers</p>
-          <ul role="list">
-            <li class="selected-work-item selected-work-item--kdd">
-              <div class="selected-work-figure" aria-hidden="true"><img src="kdd.png" alt="" decoding="async"></div>
-              <strong>The Decision Twin</strong>
-              <p>KDD 2026 Blue Sky vision for clinical digital twins.</p>
-              <div class="selected-work-links">
-                <a href="https://research-management.mq.edu.au/ws/portalfiles/portal/553844048/552801638.pdf" target="_blank" rel="noopener" aria-label="Paper PDF for The Decision Twin">Read paper ↗</a>
-                <a href="https://dl.acm.org/doi/10.1145/3770855.3818659" target="_blank" rel="noopener" aria-label="ACM publication page for The Decision Twin">ACM</a>
-              </div>
-            </li>
-            <li class="selected-work-item selected-work-item--vision">
-              <div class="selected-work-figure" aria-hidden="true"><img src="passive.png" alt="" decoding="async"></div>
-              <strong>Passive Dementia Screening</strong>
-              <p>Screening from subtle facial motion.</p>
-              <div class="selected-work-links">
-                <a href="https://arxiv.org/pdf/2511.13802" target="_blank" rel="noopener" aria-label="Paper PDF for Passive Dementia Screening">Read paper ↗</a>
-                <a href="https://github.com/cenacchi2000/dementia_3d_face_mapping" target="_blank" rel="noopener" aria-label="Code for Passive Dementia Screening">Code</a>
-              </div>
-            </li>
-            <li class="selected-work-item selected-work-item--reliability">
-              <div class="selected-work-figure" aria-hidden="true"><img src="counterfactual-fragility-certificates.png" alt="" decoding="async"></div>
-              <strong>Counterfactual Fragility Certificates</strong>
-              <p>Auditing which input failures flip predictions.</p>
-              <div class="selected-work-links">
-                <a href="https://arxiv.org/pdf/2609.00366" target="_blank" rel="noopener" aria-label="Paper PDF for Counterfactual Fragility Certificates">Read paper ↗</a>
-                <a href="https://github.com/cenacchi2000/Counterfactual-Fragility-Certificates" target="_blank" rel="noopener" aria-label="Code for Counterfactual Fragility Certificates">Code</a>
-              </div>
-            </li>
-            <li class="selected-work-item selected-work-item--clinical">
-              <div class="selected-work-figure" aria-hidden="true"><img src="Diagram%20(5).png" alt="" decoding="async"></div>
-              <strong>Tri-Modal Mental Health AI</strong>
-              <p>Fusing speech, text and facial cues.</p>
-              <div class="selected-work-links">
-                <a href="https://arxiv.org/pdf/2510.20239" target="_blank" rel="noopener" aria-label="Paper PDF for Tri-Modal Mental Health AI">Read paper ↗</a>
-                <a href="https://github.com/cenacchi2000/EDAI-Trimodal" target="_blank" rel="noopener" aria-label="Code for Tri-Modal Mental Health AI">Code</a>
-              </div>
-            </li>
-          </ul>
-          <div class="selected-work-controls" hidden>
-            <button type="button" data-work-step="-1" aria-label="Previous selected work">←</button>
-            <output aria-live="polite"></output>
-            <button type="button" data-work-step="1" aria-label="Next selected work">→</button>
-          </div>
-        </section>
       </div>
     </div>
 
@@ -3160,6 +3156,54 @@
         </a>
         at <a href="https://www.mq.edu.au/research" target="_blank"><strong>Macquarie University</strong></a>.
       </p>
+
+      <section class="selected-work" id="selected-work" aria-labelledby="selected-work-title">
+        <h2 id="selected-work-title">Selected work</h2>
+        <p class="selected-work-caption">For busy readers</p>
+        <ul role="list">
+          <li class="selected-work-item selected-work-item--kdd">
+            <div class="selected-work-figure" aria-hidden="true"><img src="kdd.png" alt="" decoding="async"></div>
+            <strong>The Decision Twin</strong>
+            <p>KDD 2026 Blue Sky vision for clinical digital twins.</p>
+            <div class="selected-work-links">
+              <a href="https://research-management.mq.edu.au/ws/portalfiles/portal/553844048/552801638.pdf" target="_blank" rel="noopener" aria-label="Paper PDF for The Decision Twin">Read paper ↗</a>
+              <a href="https://dl.acm.org/doi/10.1145/3770855.3818659" target="_blank" rel="noopener" aria-label="ACM publication page for The Decision Twin">ACM</a>
+            </div>
+          </li>
+          <li class="selected-work-item selected-work-item--vision">
+            <div class="selected-work-figure" aria-hidden="true"><img src="passive.png" alt="" decoding="async"></div>
+            <strong>Passive Dementia Screening</strong>
+            <p>Screening from subtle facial motion.</p>
+            <div class="selected-work-links">
+              <a href="https://arxiv.org/pdf/2511.13802" target="_blank" rel="noopener" aria-label="Paper PDF for Passive Dementia Screening">Read paper ↗</a>
+              <a href="https://github.com/cenacchi2000/dementia_3d_face_mapping" target="_blank" rel="noopener" aria-label="Code for Passive Dementia Screening">Code</a>
+            </div>
+          </li>
+          <li class="selected-work-item selected-work-item--reliability">
+            <div class="selected-work-figure" aria-hidden="true"><img src="counterfactual-fragility-certificates.png" alt="" decoding="async"></div>
+            <strong>Counterfactual Fragility Certificates</strong>
+            <p>Auditing which input failures flip predictions.</p>
+            <div class="selected-work-links">
+              <a href="https://arxiv.org/pdf/2609.00366" target="_blank" rel="noopener" aria-label="Paper PDF for Counterfactual Fragility Certificates">Read paper ↗</a>
+              <a href="https://github.com/cenacchi2000/Counterfactual-Fragility-Certificates" target="_blank" rel="noopener" aria-label="Code for Counterfactual Fragility Certificates">Code</a>
+            </div>
+          </li>
+          <li class="selected-work-item selected-work-item--clinical">
+            <div class="selected-work-figure" aria-hidden="true"><img src="Diagram%20(5).png" alt="" decoding="async"></div>
+            <strong>Tri-Modal Mental Health AI</strong>
+            <p>Fusing speech, text and facial cues.</p>
+            <div class="selected-work-links">
+              <a href="https://arxiv.org/pdf/2510.20239" target="_blank" rel="noopener" aria-label="Paper PDF for Tri-Modal Mental Health AI">Read paper ↗</a>
+              <a href="https://github.com/cenacchi2000/EDAI-Trimodal" target="_blank" rel="noopener" aria-label="Code for Tri-Modal Mental Health AI">Code</a>
+            </div>
+          </li>
+        </ul>
+        <div class="selected-work-controls" hidden>
+          <button type="button" data-work-step="-1" aria-label="Previous selected work">←</button>
+          <output aria-live="polite"></output>
+          <button type="button" data-work-step="1" aria-label="Next selected work">→</button>
+        </div>
+      </section>
 
       <div class="hero-bio">
         <p>
