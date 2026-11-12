@@ -7121,18 +7121,18 @@ body{
 
     function positionSpines(width,height){
       cabinet.updateMatrixWorld(true);
-      volumes.forEach(({volume,button})=>{
-        const project = (x,y) => {
-          marker.set(x,y,.17).applyMatrix4(volume.matrixWorld).project(camera);
-          return [(marker.x+1)*width/2,(1-marker.y)*height/2];
-        };
-        const center=project(0,0);
-        const top=project(0,.34);
-        const side=project(.14,0);
-        button.style.left=center[0]+'px';
-        button.style.top=center[1]+'px';
-        button.style.setProperty('--spine-hit-height',Math.max(22,Math.abs(top[1]-center[1])*2)+'px');
-        button.style.setProperty('--spine-hit-width',Math.max(10,Math.abs(side[0]-center[0])*2)+'px');
+      volumes.forEach(({volume,button,width:spineWidth,height:spineHeight,depth})=>{
+        const corners=[];
+        for(const x of [-spineWidth/2,spineWidth/2])for(const y of [-spineHeight/2,spineHeight/2]){
+          marker.set(x,y,depth/2).applyMatrix4(volume.matrixWorld).project(camera);
+          corners.push([(marker.x+1)*width/2,(1-marker.y)*height/2]);
+        }
+        const xs=corners.map(([x])=>x),ys=corners.map(([,y])=>y);
+        const left=Math.min(...xs),right=Math.max(...xs),top=Math.min(...ys),bottom=Math.max(...ys);
+        button.style.left=(left+right)/2+'px';
+        button.style.top=(top+bottom)/2+'px';
+        button.style.setProperty('--spine-hit-height',Math.max(22,bottom-top)+'px');
+        button.style.setProperty('--spine-hit-width',Math.max(10,right-left)+'px');
       });
     }
 
@@ -7446,22 +7446,38 @@ body{
       addVolumes(buttons){
         const columns=Math.max(5,Math.ceil(buttons.length/3));
         const spacing=1.82/columns;
+        const heights=[.79,.65,.88,.72,.82,.68,.86,.76,.90,.63,.84,.71,.78];
+        const widths=[.73,.89,.65,.79,.81,.77,.85,.67,.83,.72,.86,.68,.77];
+        const leans=[[.18,0,-.075,-.075,-.16],[.10,.04,0,-.11,-.19],[.15,.08,-.19]];
+        const setbacks=[.02,.067,-.012,.032,-.025,.051,-.005];
         buttons.forEach((button,index)=>{
-          const column=index%columns;
           const row=Math.floor(index/columns);
-          const height=.71+(index*7%15)/100;
+          const column=index%columns;
+          const count=Math.min(columns,buttons.length-row*columns);
+          const height=heights[index%heights.length];
+          const width=spacing*widths[index%widths.length];
+          const depth=.27+(index%4)*.016;
+          const jitter=[-.02,-.035,.008,.02,.017][column%5];
+          const center=(column-(count-1)/2)*spacing+jitter;
+          const rowOffset=[-.04,.035,-.12][row];
+          const lean=(leans[row][column] || 0)*Math.min(1,5/columns);
           const volume=new T.Group();
-          volume.position.set((column-(columns-1)/2)*spacing,rowY[row]+.065+height/2,.212);
+          volume.rotation.set(0,[.026,-.045,.013,0][index%4],lean);
+          volume.position.set(
+            center+rowOffset-Math.sin(lean)*height/2,
+            rowY[row]+.065+Math.cos(lean)*height/2+Math.abs(Math.sin(lean))*width/2,
+            .204-setbacks[index%setbacks.length]
+          );
           cabinet.add(volume);
           const coverColor=button.style.getPropertyValue('--book-color');
-          const coverMesh=box(spacing*.85,height,.31,matte(coverColor),0,0,0,volume);
-          const paper=box(spacing*.76,.019,.26,materials.paper,0,height/2+.008,0,volume);
-          const lettering=mesh(new T.PlaneGeometry(spacing*.77,height*.94),new T.MeshBasicMaterial({
+          const coverMesh=box(width,height,depth,matte(coverColor),0,0,0,volume);
+          const paper=box(width*.87,.014,depth*.84,materials.paper,0,height/2+.006,0,volume);
+          const lettering=mesh(new T.PlaneGeometry(width*.90,height*.94),new T.MeshBasicMaterial({
             map:spineLabel(button.textContent),transparent:true,depthWrite:false
-          }),0,0,.157,volume);
+          }),0,0,depth/2+.002,volume);
           lettering.castShadow=false;
           [coverMesh,paper,lettering].forEach(part=>part.userData.publicationButton=button);
-          volumes.push({volume,button});
+          volumes.push({volume,button,width,height,depth});
         });
         resize();
       },
