@@ -5230,6 +5230,7 @@
   if (!globeEl || typeof Globe !== 'function') return;
 
   const VISITOR_API = 'https://visitor-globe-api.filo-cenacchi.workers.dev';
+  const POINTS_STORAGE_KEY = 'visitor_globe_points';
 
   function getSessionId(){
     let id = localStorage.getItem('visitor_globe_session_id');
@@ -5245,15 +5246,7 @@
     return id;
   }
 
-  function shouldLogVisit(){
-    const last = Number(localStorage.getItem('visitor_globe_logged_at') || 0);
-    const sixHours = 6 * 60 * 60 * 1000;
-    return Date.now() - last > sixHours;
-  }
-
   async function logVisit(){
-    if (!shouldLogVisit()) return;
-
     try {
       const response = await fetch(`${VISITOR_API}/visit`, {
         method: 'POST',
@@ -5267,9 +5260,6 @@
       const data = await response.json();
       console.log('Visitor globe log:', data);
 
-      if (data.ok) {
-        localStorage.setItem('visitor_globe_logged_at', String(Date.now()));
-      }
     } catch (err) {
       console.warn('Visitor globe logging failed:', err);
     }
@@ -5326,17 +5316,40 @@
   }, 0);
 
   async function refreshVisitorGlobe(){
+    const locations = new Map();
+    let savedPoints = [];
+
+    try {
+      savedPoints = JSON.parse(localStorage.getItem(POINTS_STORAGE_KEY) || '[]');
+    } catch (err) {
+      console.warn('Visitor globe history could not be read:', err);
+    }
+
+    function mergePoints(points){
+      for (const point of points) {
+        if (Number.isFinite(point?.lat) && Number.isFinite(point?.lng)) {
+          locations.set(`${point.lat},${point.lng}`, point);
+        }
+      }
+    }
+
+    if (Array.isArray(savedPoints)) mergePoints(savedPoints);
+    globe.pointsData(Array.from(locations.values()));
+
     await logVisit();
-    const points = await fetchVisitorPoints();
+    mergePoints(await fetchVisitorPoints());
+
+    const points = Array.from(locations.values());
     globe.pointsData(points);
+
+    try {
+      localStorage.setItem(POINTS_STORAGE_KEY, JSON.stringify(points));
+    } catch (err) {
+      console.warn('Visitor globe history could not be saved:', err);
+    }
   }
 
   refreshVisitorGlobe();
-
-  setInterval(async () => {
-    const points = await fetchVisitorPoints();
-    globe.pointsData(points);
-  }, 60000);
 })();
 </script>
 
