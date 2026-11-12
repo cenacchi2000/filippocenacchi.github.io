@@ -2598,7 +2598,8 @@
 
 .visitor-ticker-count{
   margin-inline-start:7px;
-  color:#7de8b2;
+  color:#93c5fd;
+  color:color-mix(in srgb, #93c5fd, #4ade80 var(--visit-intensity, 0%));
   font-variant-numeric:tabular-nums;
 }
 
@@ -2611,6 +2612,24 @@
   background:#18263d;
   color:inherit;
   cursor:pointer;
+}
+
+.visitor-ticker-toggle::before{
+  content:"";
+  display:block;
+  box-sizing:border-box;
+  width:10px;
+  height:12px;
+  margin:auto;
+  border-inline:3px solid currentColor;
+}
+
+.visitor-ticker-toggle[data-paused]::before{
+  width:0;
+  height:0;
+  border:6px solid transparent;
+  border-right:0;
+  border-left:9px solid currentColor;
 }
 
 .visitor-ticker-toggle:focus-visible,
@@ -2776,7 +2795,7 @@
           <div class="visitor-ticker-viewport" tabindex="0" aria-label="Visitor locations and counts">
             <div class="visitor-ticker-track"></div>
           </div>
-          <button class="visitor-ticker-toggle" type="button" aria-label="Pause visitor ticker">Ⅱ</button>
+          <button class="visitor-ticker-toggle" type="button" aria-label="Pause visitor ticker"></button>
         </div>
       </div>
 
@@ -5530,7 +5549,7 @@
 
   tickerToggle.addEventListener('click', () => {
     const paused = ticker.classList.toggle('is-paused');
-    tickerToggle.textContent = paused ? '▶' : 'Ⅱ';
+    tickerToggle.toggleAttribute('data-paused', paused);
     tickerToggle.setAttribute('aria-label', paused ? 'Play visitor ticker' : 'Pause visitor ticker');
   });
 
@@ -5548,11 +5567,16 @@
     );
     const list = document.createElement('ul');
     list.className = 'visitor-ticker-list';
+    const highestCount = places[0]?.[1] || 1;
+    const lowestCount = places.at(-1)?.[1] || 1;
+    const countRange = Math.log(highestCount / lowestCount);
 
     for (const [place, count] of places) {
       const item = document.createElement('li');
       const value = document.createElement('span');
       value.className = 'visitor-ticker-count';
+      const intensity = countRange > 0 ? Math.log(count / lowestCount) / countRange : 0;
+      value.style.setProperty('--visit-intensity', `${intensity * 100}%`);
       value.textContent = `${visitNumber.format(count)} ${count === 1 ? 'visit' : 'visits'}`;
       item.append(place, value);
       list.append(item);
