@@ -2570,6 +2570,55 @@
   max-width:220px !important;
 }
 
+
+.selected-work{
+  min-width:0;
+  text-align:left;
+}
+.selected-work h2{
+  margin:4px 0 6px;
+  font-size:15px;
+  line-height:1.25;
+}
+.selected-work ul{
+  display:grid;
+  gap:5px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.selected-work-item{
+  padding:6px 8px;
+  border:1px solid var(--border);
+  border-left:3px solid var(--work-accent);
+  border-radius:8px;
+  background:var(--panel);
+  line-height:1.25;
+}
+.selected-work-item--vision{--work-accent:#2563eb}
+.selected-work-item--reliability{--work-accent:#7c3aed}
+.selected-work-item--clinical{--work-accent:#0f766e}
+.selected-work-item strong{
+  display:block;
+  font-size:12px;
+}
+.selected-work-item p{
+  margin:2px 0 4px;
+  color:var(--subtle);
+  font-size:11px;
+}
+.selected-work-links{
+  display:flex;
+  gap:10px;
+  font-size:11px;
+  font-weight:700;
+}
+.selected-work-links a{
+  color:var(--brand-ink);
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+
 .hero-left-links .pill{
   width:100% !important;
   box-sizing:border-box !important;
@@ -2956,6 +3005,35 @@
             <small>Postdoc · Lecturer · Research</small>
           </span>
         </a>
+        <section class="selected-work" id="selected-work" aria-labelledby="selected-work-title">
+          <h2 id="selected-work-title">Selected work</h2>
+          <ul role="list">
+            <li class="selected-work-item selected-work-item--vision">
+              <strong>Passive Dementia Screening</strong>
+              <p>Screening from subtle facial motion.</p>
+              <div class="selected-work-links">
+                <a href="https://arxiv.org/pdf/2511.13802" target="_blank" rel="noopener" aria-label="Paper PDF for Passive Dementia Screening">Paper</a>
+                <a href="https://github.com/cenacchi2000/dementia_3d_face_mapping" target="_blank" rel="noopener" aria-label="Code for Passive Dementia Screening">Code</a>
+              </div>
+            </li>
+            <li class="selected-work-item selected-work-item--reliability">
+              <strong>Counterfactual Fragility Certificates</strong>
+              <p>Auditing which input failures flip predictions.</p>
+              <div class="selected-work-links">
+                <a href="https://arxiv.org/pdf/2609.00366" target="_blank" rel="noopener" aria-label="Paper PDF for Counterfactual Fragility Certificates">Paper</a>
+                <a href="https://github.com/cenacchi2000/Counterfactual-Fragility-Certificates" target="_blank" rel="noopener" aria-label="Code for Counterfactual Fragility Certificates">Code</a>
+              </div>
+            </li>
+            <li class="selected-work-item selected-work-item--clinical">
+              <strong>Tri-Modal Mental Health AI</strong>
+              <p>Fusing speech, text and facial cues.</p>
+              <div class="selected-work-links">
+                <a href="https://arxiv.org/pdf/2510.20239" target="_blank" rel="noopener" aria-label="Paper PDF for Tri-Modal Mental Health AI">Paper</a>
+                <a href="https://github.com/cenacchi2000/EDAI-Trimodal" target="_blank" rel="noopener" aria-label="Code for Tri-Modal Mental Health AI">Code</a>
+              </div>
+            </li>
+          </ul>
+        </section>
       </div>
     </div>
 
