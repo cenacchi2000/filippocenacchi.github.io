@@ -3588,8 +3588,10 @@ body{
 }
 
   </style>
+
+  <link rel="stylesheet" href="iphone.css">
 </head>
-<body>
+<body class="portfolio-home">
   <!-- Sticky Nav -->
   <nav class="nav">
     <div class="container inner">
@@ -6794,9 +6796,13 @@ body{
     }
   }
 
+  const touchViewport=window.matchMedia("(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 950px) and (max-height: 500px) and (hover: none) and (pointer: coarse)");
+  function globeSize(){
+    return touchViewport.matches?Math.max(1,globeEl.clientWidth):310;
+  }
   const globe = Globe()(globeEl)
-    .width(310)
-    .height(310)
+    .width(globeSize())
+    .height(globeSize())
     .backgroundColor('rgba(0,0,0,0)')
     .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
     .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
@@ -6815,6 +6821,19 @@ body{
     .pointResolution(18)
     .pointsMerge(false)
     .pointsTransitionDuration(0);
+
+  function resizeGlobe(){
+    const size=globeSize();
+    if(globe.width()!==size)globe.width(size).height(size);
+  }
+  const globeResizeObserver=new ResizeObserver(resizeGlobe);
+  function watchGlobe(){
+    if(touchViewport.matches)globeResizeObserver.observe(globeEl);
+    else globeResizeObserver.disconnect();
+    resizeGlobe();
+  }
+  touchViewport.addEventListener('change',watchGlobe);
+  watchGlobe();
 
   globe.controls().autoRotate = true;
   globe.controls().autoRotateSpeed = 0.55;
