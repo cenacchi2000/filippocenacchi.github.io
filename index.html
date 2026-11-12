@@ -3086,6 +3086,26 @@ body{
   transition:none;
   box-shadow:0 12px 26px #0004;
 }
+#research .research-grid.is-ring{
+  display:grid;
+  grid-template-columns:minmax(0, var(--project-width));
+  justify-content:center;
+  gap:0;
+  padding-inline:12px;
+  overflow:hidden;
+  touch-action:pan-y;
+  user-select:none;
+  cursor:grab;
+}
+#research .research-grid.is-ring:active{cursor:grabbing}
+#research .research-grid.is-ring .card-focus{
+  grid-area:1 / 1;
+  transform:perspective(1050px) translate3d(var(--ring-x, 0px), var(--ring-y, 0px), var(--ring-z, 0px)) rotateY(var(--ring-angle, 0deg));
+  backface-visibility:hidden;
+}
+@media(prefers-reduced-motion:reduce){
+  #research .research-grid.is-ring .card-focus{transform:none}
+}
 #research .card-media{flex:none;aspect-ratio:2 / 1}
 #research .card-media:has(iframe) .media-gradient{pointer-events:none}
 #research .card-body{flex:1}
@@ -6360,122 +6380,146 @@ body{
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (cards.length > 1) {
-    const buffer = Math.min(2, cards.length);
-    const copy = card => {
-      const clone = card.cloneNode(true);
-      clone.inert = true;
-      clone.setAttribute('aria-hidden', 'true');
-      return clone;
-    };
-    track.prepend(...cards.slice(-buffer).map(copy));
-    track.append(...cards.slice(0, buffer).map(copy));
-    const panels = [...track.querySelectorAll(':scope > .card-focus')];
-    const logicalIndex = index => (index - buffer + cards.length) % cards.length;
-    let active = buffer;
+    const turn = Math.PI * 2;
+    const step = turn / cards.length;
+    const wrap = index => ((index % cards.length) + cards.length) % cards.length;
+    let position = 0;
+    let target = 0;
+    let active = -1;
+    let radius = 0;
+    let arch = 0;
     let frame = 0;
-    let settleTimer;
+    let wheelTimer;
+    let dragging = null;
+    let suppressClick = false;
 
     cards.forEach((card, index) => {
       picker.add(new Option(card.querySelector('h3').textContent.trim(), index));
     });
 
-    function centerPanel(index, behavior){
-      const panel = panels[index];
-      track.scrollTo({
-        left:panel.offsetLeft + (panel.offsetWidth - track.clientWidth) / 2,
-        behavior
+    function render(){
+      const front = wrap(Math.round(position));
+      const flat = reducedMotion.matches;
+      cards.forEach((card, index) => {
+        const angle = (wrap(index - position + cards.length / 2) - cards.length / 2) * step;
+        const depth = 1 - Math.cos(angle);
+        const visible = flat ? index === front : Math.abs(angle) < Math.PI / 2;
+        card.style.visibility = visible ? 'visible' : 'hidden';
+        card.style.zIndex = String(Math.round(100 * (2 - depth)));
+        card.style.setProperty('--ring-x', `${Math.sin(angle) * radius}px`);
+        card.style.setProperty('--ring-y', `${depth * arch}px`);
+        card.style.setProperty('--ring-z', `${-depth * radius}px`);
+        card.style.setProperty('--ring-angle', `${angle * -180 / Math.PI}deg`);
+        if (front !== active) card.inert = index !== front;
       });
-    }
-
-    function update(){
-      frame = 0;
-      const center = track.scrollLeft + track.clientWidth / 2;
-      const stageStyle = getComputedStyle(track.parentElement);
-      const arch = parseFloat(stageStyle.getPropertyValue('--gallery-arch'));
-      const depth = parseFloat(stageStyle.getPropertyValue('--gallery-depth'));
-      let nearest = Infinity;
-
-      panels.forEach((panel, index) => {
-        const distance = panel.offsetLeft + panel.offsetWidth / 2 - center;
-        const bend = Math.max(-1, Math.min(1, distance / (track.clientWidth * .48)));
-        const falloff = bend * bend;
-        panel.style.setProperty('--gallery-angle', `${bend * -52}deg`);
-        panel.style.setProperty('--gallery-lift', `${falloff * arch}px`);
-        panel.style.setProperty('--gallery-z', `${falloff * -depth}px`);
-        panel.style.setProperty('--gallery-scale', 1 - falloff * .055);
-        panel.style.zIndex = String(Math.round((1 - Math.abs(bend)) * 20));
-        if (Math.abs(distance) < nearest) {
-          nearest = Math.abs(distance);
-          active = index;
-        }
-      });
-      picker.value = logicalIndex(active);
-    }
-
-    function settle(){
-      update();
-      const realIndex = logicalIndex(active) + buffer;
-      if (active !== realIndex) {
-        centerPanel(realIndex, 'instant');
-        update();
+      if (front !== active) {
+        active = front;
+        picker.value = front;
       }
     }
 
-    function goTo(index){
-      if (index < 0 || index >= panels.length) return;
-      centerPanel(index, reducedMotion.matches ? 'instant' : 'smooth');
+    function measure(){
+      const styles = getComputedStyle(track.parentElement);
+      arch = parseFloat(styles.getPropertyValue('--gallery-arch'));
+      radius = cards[0].offsetWidth * .86 / Math.max(.5, Math.sin(step));
+      render();
     }
 
-    function stepBy(step){
-      if (active === 0 || active === panels.length - 1) settle();
-      goTo(active + step);
+    function animate(){
+      frame = 0;
+      const delta = target - position;
+      if (Math.abs(delta) < .002) {
+        position = target;
+        if (Number.isInteger(target)) position = target = wrap(target);
+      } else {
+        position += delta * .24;
+        frame = requestAnimationFrame(animate);
+      }
+      render();
     }
 
+    function move(next){
+      target = next;
+      if (reducedMotion.matches) {
+        position = target;
+        render();
+      } else if (!frame) {
+        frame = requestAnimationFrame(animate);
+      }
+    }
+
+    function jumpTo(index){
+      const distance = wrap(index - Math.round(target) + cards.length / 2) - cards.length / 2;
+      move(Math.round(target) + distance);
+    }
+
+    track.classList.add('is-ring');
     controls.hidden = false;
-    picker.addEventListener('change', () => {
-      const target = Number(picker.value);
-      let nearest = Infinity;
-      let destination = target + buffer;
-      panels.forEach((_, index) => {
-        if (logicalIndex(index) === target && Math.abs(index - active) < nearest) {
-          nearest = Math.abs(index - active);
-          destination = index;
-        }
-      });
-      goTo(destination);
-    });
+    picker.addEventListener('change', () => jumpTo(Number(picker.value)));
     controls.querySelectorAll('[data-gallery-step]').forEach(button => {
-      button.addEventListener('click', () => stepBy(Number(button.dataset.galleryStep)));
+      button.addEventListener('click', () => move(Math.round(target) + Number(button.dataset.galleryStep)));
     });
     track.addEventListener('keydown', event => {
       if (event.target !== track || !['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
       event.preventDefault();
       if (event.key === 'Home' || event.key === 'End') {
-        goTo(event.key === 'Home' ? buffer : buffer + cards.length - 1);
+        jumpTo(event.key === 'Home' ? 0 : cards.length - 1);
       } else {
-        stepBy(event.key === 'ArrowLeft' ? -1 : 1);
+        move(Math.round(target) + (event.key === 'ArrowLeft' ? -1 : 1));
       }
     });
-    const hasScrollEnd = 'onscrollend' in track;
-    track.addEventListener('scroll', () => {
-      if (!frame) frame = requestAnimationFrame(update);
-      if (!hasScrollEnd) {
-        clearTimeout(settleTimer);
-        settleTimer = setTimeout(settle, 150);
-      }
-    }, {passive:true});
-    if (hasScrollEnd) track.addEventListener('scrollend', settle);
-    window.addEventListener('resize', () => {
-      centerPanel(logicalIndex(active) + buffer, 'instant');
-      update();
+
+    track.addEventListener('wheel', event => {
+      if (event.ctrlKey || (!event.shiftKey && Math.abs(event.deltaX) <= Math.abs(event.deltaY))) return;
+      const delta = event.deltaX || event.deltaY;
+      if (!delta) return;
+      event.preventDefault();
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? track.clientWidth : 1;
+      move(target + delta * unit / (track.clientWidth * .33));
+      clearTimeout(wheelTimer);
+      wheelTimer = setTimeout(() => move(Math.round(target)), 140);
+    }, {passive:false});
+
+    track.addEventListener('pointerdown', event => {
+      if (!event.isPrimary || event.button !== 0) return;
+      suppressClick = false;
+      if (event.target.closest('a,iframe,select')) return;
+      dragging = {id:event.pointerId, x:event.clientX, position, moved:false};
     });
-    centerPanel(buffer, 'instant');
-    update();
+    track.addEventListener('pointermove', event => {
+      if (dragging?.id !== event.pointerId) return;
+      const distance = event.clientX - dragging.x;
+      if (!dragging.moved && Math.abs(distance) < 8) return;
+      if (!dragging.moved) track.setPointerCapture(event.pointerId);
+      dragging.moved = suppressClick = true;
+      const width = track.getBoundingClientRect().width;
+      move(dragging.position - distance / (width * .33));
+    });
+    function endDrag(event){
+      if (dragging?.id !== event.pointerId) return;
+      if (dragging.moved) move(Math.round(target));
+      dragging = null;
+    }
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('pointerleave', event => {
+      if (!dragging?.moved) endDrag(event);
+    });
+    track.addEventListener('click', event => {
+      if (!suppressClick) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    track.addEventListener('dragstart', event => event.preventDefault());
+    window.addEventListener('resize', measure);
+    reducedMotion.addEventListener('change', render);
+    measure();
   }
 
   const lightbox = document.getElementById('lightbox');
   const image = document.getElementById('lightbox-img');
-  track.querySelectorAll('.card-focus:not([inert]) button[data-full]').forEach(button => {
+  track.querySelectorAll('button[data-full]').forEach(button => {
     button.addEventListener('click', () => {
       image.src = button.dataset.full;
       image.alt = button.querySelector('img').alt;
