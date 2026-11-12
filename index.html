@@ -2983,24 +2983,74 @@ body{
 }
 #research .research-gallery-heading h2{margin:0}
 #research .research-gallery-controls{
-  display:flex;
-  align-items:center;
-  gap:7px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:stretch;
+  gap:8px;
+  width:min(100%, 450px);
   min-width:0;
 }
 #research .research-gallery-controls[hidden]{display:none}
-#research .research-gallery-controls :is(button,select){
-  min-height:38px;
-  border:1px solid #d7e0ef;
-  border-radius:10px;
+#research .research-project-picker{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 10px;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+  min-height:44px;
+  box-sizing:border-box;
+  padding:8px 13px;
+  border:1px solid #cad7ed;
+  border-radius:12px;
   background:#fff;
   color:#18284b;
-  font:600 14px/1.2 system-ui,sans-serif;
+  box-shadow:0 2px 8px #17284a0e;
 }
-#research .research-gallery-controls button{width:40px;cursor:pointer}
-#research .research-gallery-controls button:disabled{opacity:.4;cursor:default}
-#research .research-gallery-controls select{min-width:0;max-width:min(60vw, 305px);padding:0 9px}
-#research .research-gallery-controls button:not(:disabled):hover{background:#eaf1ff;border-color:#8ba4db}
+#research .research-project-picker:hover{border-color:#8ba4db}
+#research .research-project-picker:focus-within{outline:2px solid #3568d4;outline-offset:2px}
+#research .research-project-picker-title{
+  font:650 14px/1.28 system-ui,sans-serif;
+  overflow-wrap:anywhere;
+}
+#research .research-project-picker-chevron{
+  width:7px;height:7px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);
+}
+#research .research-project-picker select{
+  position:absolute;inset:0;
+  width:100%;height:100%;margin:0;
+  opacity:0;
+  cursor:pointer;
+}
+#research .research-gallery-arrows{
+  display:flex;
+  align-self:stretch;
+  border:1px solid #cad7ed;
+  border-radius:12px;
+  background:#eef3fc;
+}
+#research .research-gallery-arrows button{
+  width:39px;
+  min-height:42px;
+  padding:0;
+  border:0;
+  border-radius:11px;
+  background:transparent;
+  color:#18284b;
+  font:700 17px/1 system-ui,sans-serif;
+  cursor:pointer;
+}
+#research .research-gallery-arrows button+button{border-left:1px solid #cad7ed;border-radius:0 11px 11px 0}
+#research .research-gallery-arrows button:hover{background:#dfe9fc}
+#research .research-gallery-arrows button:focus-visible{outline:2px solid #3568d4;outline-offset:2px}
+@media(max-width:480px){
+  #research .research-project-picker{gap:8px;padding-inline:10px}
+  #research .research-project-picker-title{font-size:13px}
+  #research .research-gallery-arrows button{width:34px}
+}
 #research .research-stage{
   position:relative;
   isolation:isolate;
@@ -3824,9 +3874,15 @@ body{
   <div class="research-gallery-heading">
     <h2 id="research-gallery-title">Research Focus</h2>
     <div class="research-gallery-controls" hidden>
-      <select aria-label="Jump to a research project"></select>
-      <button type="button" data-gallery-step="-1" aria-label="Previous project" aria-controls="research-gallery">←</button>
-      <button type="button" data-gallery-step="1" aria-label="Next project" aria-controls="research-gallery">→</button>
+      <div class="research-project-picker">
+        <span class="research-project-picker-title" aria-hidden="true"></span>
+        <span class="research-project-picker-chevron" aria-hidden="true"></span>
+        <select aria-label="Jump to a research project" aria-controls="research-gallery"></select>
+      </div>
+      <div class="research-gallery-arrows" role="group" aria-label="Browse projects">
+        <button type="button" data-gallery-step="-1" aria-label="Previous project" aria-controls="research-gallery">←</button>
+        <button type="button" data-gallery-step="1" aria-label="Next project" aria-controls="research-gallery">→</button>
+      </div>
     </div>
   </div>
 
@@ -6823,6 +6879,7 @@ body{
   const cards = [...track.querySelectorAll(':scope > .card-focus')];
   const controls = document.querySelector('.research-gallery-controls');
   const picker = controls.querySelector('select');
+  const pickerTitle = controls.querySelector('.research-project-picker-title');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (cards.length > 1) {
@@ -6861,6 +6918,7 @@ body{
       if (front !== active) {
         active = front;
         picker.value = front;
+        pickerTitle.textContent = picker.options[front].text;
       }
     }
 
@@ -7326,7 +7384,9 @@ body{
     }
     for(const x of [.45,2.77]){
       upholstery(x,.72,-.89,.30,.45,.95,sofaFabric);
-      for(const z of [-1.22,-.56])box(.12,.18,.12,materials.beam,x,.13,z);
+    }
+    for(const x of [.64,2.58])for(const z of [-1.24,-.61]){
+      box(.12,.37,.12,materials.beam,x,.19,z);
     }
     const pillowGeometry = new T.SphereGeometry(1,32,24);
     const pillowPoints = pillowGeometry.attributes.position;
