@@ -3231,6 +3231,185 @@ body{
   #research .card-body p{font-size:13px}
 }
 
+/* Publications reading room */
+#publications{min-width:0}
+.publication-layout{display:grid;gap:22px;align-items:start}
+.publication-column,.pub-reading-room{min-width:0}
+.pub-reading-room[hidden],.library-reader[hidden],.library-table-book[hidden]{display:none}
+@media(min-width:1050px){
+  .publication-layout:has(.pub-reading-room:not([hidden])){
+    grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  }
+}
+#pubList .card.pub{
+  grid-template-columns:minmax(64px,17%) minmax(0,1fr) 55px;
+  gap:11px;
+  padding:13px;
+}
+#pubList .card.pub > div{min-width:0}
+#pubList .card.pub h3{font-size:clamp(14px,1.22vw,17px);line-height:1.3;margin-bottom:4px}
+#pubList .card.pub .meta{font-size:12px;line-height:1.45}
+#pubList .card.pub > a:first-child{grid-column:auto}
+#pubList .pub-preview{font-size:10px}
+.library-card-button{
+  margin-top:7px;
+  padding:4px 8px;
+  border:1px solid #dac8b2;
+  border-radius:7px;
+  background:#fff7e9;
+  color:#643c25;
+  font-family:inherit;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+}
+.pub-reading-room{
+  color:#39291e;
+  background:#f7edd9;
+  border:1px solid #d8c09e;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 12px 30px #623c211f;
+  scroll-margin-top:130px;
+}
+.library-heading{
+  padding:13px 17px;
+  background:#fff5e2;
+  border-bottom:1px solid #d8c09e;
+}
+.library-heading h3{margin:0;font:700 24px/1.1 Georgia,serif}
+.library-heading p{margin:4px 0 0;font-size:12px;color:#684e3b}
+.library-scene{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+  align-items:stretch;
+  gap:12px;
+  min-height:258px;
+  padding:14px;
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,transparent 83%,#a36e45 83%,#c99462 84%),
+    radial-gradient(ellipse at 82% 16%,#ffedba,#dac4a2 58%,#c3a17d);
+}
+.library-shelf{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,28px),1fr));
+  grid-auto-rows:100px;
+  align-items:end;
+  gap:7px 3px;
+  align-content:start;
+  padding:8px 8px 10px;
+  border:5px solid #825537;
+  border-radius:7px;
+  background:repeating-linear-gradient(#4c3023 0 95px,#9d6742 95px 100px,#664128 100px 107px);
+  background-origin:content-box;
+  box-shadow:inset 0 0 0 1px #e0a96b,0 4px 7px #56331b59;
+}
+.library-spine{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:var(--book-height,90px);
+  padding:5px 2px;
+  border:1px solid #ffe0a46b;
+  border-radius:3px 5px 3px 2px;
+  background:linear-gradient(90deg,#0003,transparent 28%,#fff2 44%,transparent 75%),var(--book-color,#654039);
+  color:#fff5dc;
+  box-shadow:2px 0 3px #140c08a1;
+  font:700 10px/1.15 Georgia,serif;
+  writing-mode:vertical-rl;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .2s ease;
+}
+.library-spine:hover,.library-spine:focus-visible{transform:translateY(-5px)}
+.library-spine[aria-pressed="true"]{box-shadow:inset 0 0 0 2px #ffd47f,0 0 9px #ffd47f99}
+.library-spine:focus-visible,.library-reader :is(a,button):focus-visible{outline:2px solid #653921;outline-offset:2px}
+.library-nook{position:relative;min-width:0}
+.library-window{
+  position:absolute;top:10px;left:22%;width:58%;height:44%;
+  border:4px solid #9e6b45;border-radius:45% 45% 5px 5px;
+  background:
+    linear-gradient(90deg,transparent 47%,#a77248 47% 53%,transparent 53%),
+    linear-gradient(transparent 54%,#a77248 54% 60%,transparent 60%),
+    radial-gradient(ellipse at 72% 77%,#7d9c75 0 31%,transparent 32%),
+    linear-gradient(#a7c8b8,#fff1bc);
+  box-shadow:0 0 23px #fff6ca;
+}
+.library-lamp{
+  position:absolute;right:8%;bottom:20%;width:4px;height:50%;
+  border-radius:5px;background:#826239;
+}
+.library-lamp::before{
+  content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+  width:39px;height:28px;border-radius:42% 42% 12% 12%;
+  background:linear-gradient(#d5a461,#ffe7a1);
+  box-shadow:0 10px 25px 11px #ffec9b80;
+}
+.library-couch{
+  position:absolute;left:3%;right:15%;bottom:16%;height:27%;
+  display:flex;gap:4px;padding:10px 8px 7px;
+  border:2px solid #7e3e3b;border-radius:17px 17px 8px 8px;
+  background:#a75b58;
+  box-shadow:inset 0 -7px #844342,0 5px 0 -1px #684532;
+}
+.library-couch i{flex:1;border-radius:8px;background:linear-gradient(145deg,#cc8b78,#ac635f);border:1px solid #864947}
+.library-table{
+  position:absolute;left:13%;right:7%;bottom:7%;height:20px;
+  border:1px solid #73482c;border-radius:50%;
+  background:linear-gradient(#d8a86d,#a76b3e);
+  box-shadow:0 4px 0 #74482d,0 9px 13px #5e351a50;
+}
+.library-table-book{
+  position:absolute;left:50%;top:50%;width:48px;height:23px;
+  transform:translate(-50%,-70%) rotate(-8deg);
+  border:1px solid #694626;border-bottom:4px double #b69a6b;border-radius:2px 5px 4px 2px;
+  background:var(--book-color,#654039);
+  box-shadow:2px 3px 4px #48270f60;
+}
+.library-flight{position:absolute!important;z-index:4;pointer-events:none;transform-origin:center}
+.library-reader{
+  position:relative;
+  padding:14px 16px;
+  border-top:1px solid #d8c09e;
+  background:#fffaee;
+  overflow-wrap:anywhere;
+}
+.library-reader h4{margin:0 28px 4px 0;font:700 17px/1.24 Georgia,serif}
+.library-meta{margin:0 0 10px;color:#725c45;font-size:11px}
+.library-page{
+  min-height:75px;
+  padding:10px 12px;
+  background:#fffdf7;
+  border:1px solid #ebd9bd;
+  border-left:3px solid #cfaa78;
+  border-radius:4px 9px 9px 4px;
+  color:#483424;
+  font:13px/1.55 Georgia,serif;
+}
+.library-page strong{display:block;margin-bottom:3px}
+.library-page img{display:block;width:auto;max-width:100%;height:145px;margin:0 auto;object-fit:contain}
+.library-close{position:absolute;right:11px;top:9px}
+.library-actions{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.library-reader button,.library-read{
+  padding:5px 8px;border:1px solid #d9bb91;border-radius:7px;background:#fff2da;color:#663c25;
+  font:600 12px/1.3 system-ui,sans-serif;cursor:pointer;
+}
+.library-read{background:#71482f;color:#fff8e9}
+@media(max-width:1049px){.pub-reading-room{grid-row:1}}
+@media(max-width:600px){
+  #pubList .card.pub{grid-template-columns:minmax(0,1fr) 50px}
+  #pubList .card.pub > a:first-child{display:none}
+  .library-scene{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:7px;padding:9px}
+  .library-shelf{grid-template-columns:repeat(auto-fit,minmax(min(100%,24px),1fr))}
+}
+@media(prefers-reduced-motion:reduce){.library-spine{transition:none}}
+
   </style>
 </head>
 <body>
@@ -3712,6 +3891,8 @@ body{
  <section id="publications" class="section">
   <h2>Publications</h2>
 
+  <div class="publication-layout">
+    <div class="publication-column">
   <!-- Filter bar -->
   <div class="pub-filters" id="pubFilters" aria-label="Filter publications by year and topic">
     <button class="pub-filter-btn active" data-mode="selected">Show by Selected</button>
@@ -4252,6 +4433,34 @@ body{
     <button type="button" class="pub-see-more-btn" id="pubSeeMoreBtn">
       See full publications list
     </button>
+  </div>
+
+    </div>
+    <aside class="pub-reading-room" id="publication-library" aria-labelledby="library-title" hidden>
+      <header class="library-heading">
+        <h3 id="library-title">The Reading Room</h3>
+        <p>Pick a book to explore a paper.</p>
+      </header>
+      <div class="library-scene">
+        <div class="library-shelf" aria-label="Publication bookshelf"></div>
+        <div class="library-nook" aria-hidden="true">
+          <div class="library-window"></div>
+          <div class="library-lamp"></div>
+          <div class="library-couch"><i></i><i></i></div>
+          <div class="library-table"><span class="library-table-book" hidden></span></div>
+        </div>
+      </div>
+      <div class="library-reader" id="library-reader" hidden>
+        <button class="library-close" type="button" aria-label="Close paper preview">×</button>
+        <h4 tabindex="-1"></h4>
+        <p class="library-meta"></p>
+        <div class="library-page"></div>
+        <div class="library-actions">
+          <button type="button" class="library-turn">Turn to first page</button>
+          <a class="library-read" target="_blank" rel="noopener">Read paper ↗</a>
+        </div>
+      </div>
+    </aside>
   </div>
 
 <!-- ========================================== -->
@@ -6629,6 +6838,234 @@ body{
   lightbox.addEventListener('click', event => {
     if (event.target === lightbox) lightbox.close();
   });
+})();
+</script>
+
+<script>
+(() => {
+  const room = document.getElementById('publication-library');
+  const list = document.getElementById('pubList');
+  if (!room || !list) return;
+  const notes = [
+  [
+    "3770855.3818659",
+    "Decision Twin",
+    "A vision for patient digital twins that can simulate clinical decisions and their consequences. The paper explores how virtual patient models could make clinical reasoning testable before decisions are applied in practice."
+  ],
+  [
+    "3820900",
+    "AI Coaching",
+    "A systematic mapping review of personalised AI coaching. It surveys how coaching systems tailor support to individuals and how researchers evaluate those systems."
+  ],
+  [
+    "2607.18278",
+    "FALCON",
+    "A method for finding groups of examples where a model is confidently wrong. It examines where unreliable predictions concentrate so that calibration can be evaluated more precisely."
+  ],
+  [
+    "2607.18279",
+    "Spectral Evidence",
+    "A method for estimating when time-series predictions are reliable. It combines spectral evidence to support selective prediction, where a model can defer cases it considers unreliable."
+  ],
+  [
+    "2609.00366",
+    "Fragility",
+    "The paper audits tabular classifiers by testing which failures in their input evidence change a prediction. It studies how those failures can be recorded and checked with counterfactual certificates."
+  ],
+  [
+    "2603.26801",
+    "Sparse Models",
+    "A cross-modality learning approach that uses L0 gates to encourage sparse representations. It studies the trade-off between retaining predictive information and using fewer active features."
+  ],
+  [
+    "2511.13802",
+    "Dementia",
+    "The study explores dementia screening from subtle facial movements in talking-head video. It uses patterns such as blinking, gaze and jaw movement to build a screening model."
+  ],
+  [
+    "2512.08953",
+    "SimClinician",
+    "A simulation testbed for studying how psychologists and AI might collaborate during mental-health assessment. It brings together virtual patients and multimodal behaviour in repeatable scenarios."
+  ],
+  [
+    "2512.08952",
+    "When to Ask",
+    "The paper explores how a humanoid interviewer can learn when to ask, wait or respond during a mental-health interview. Simulated patients provide a way to train and test those interaction decisions."
+  ],
+  [
+    "3793811.3793827",
+    "Social Agents",
+    "The paper examines when socially interactive agents should conform to expectations and when departing from them is appropriate."
+  ],
+  [
+    "EDAI-Trimodal",
+    "Tri-Modal AI",
+    "The study combines speech, text and facial cues to estimate symptom severity for depression and post-traumatic stress disorder."
+  ],
+  [
+    "S0963868725000526",
+    "VR & Ethics",
+    "The paper examines the ethical and inclusion implications of representing people’s faces in workplace virtual reality."
+  ],
+  [
+    "978-3-031-21388-5_27",
+    "Low-Code",
+    "A comparative case study of low-code and no-code adoption in software startups. It examines how teams adopt these tools and what influences their use."
+  ]
+];
+  const palette = ['#7b3e35','#345d62','#525639','#4e577d','#75445a','#845128','#376653'];
+  const shelf = room.querySelector('.library-shelf');
+  const scene = room.querySelector('.library-scene');
+  const table = room.querySelector('.library-table');
+  const tableBook = room.querySelector('.library-table-book');
+  const reader = room.querySelector('.library-reader');
+  const heading = reader.querySelector('h4');
+  const meta = reader.querySelector('.library-meta');
+  const page = reader.querySelector('.library-page');
+  const turn = reader.querySelector('.library-turn');
+  const read = reader.querySelector('.library-read');
+  const close = reader.querySelector('.library-close');
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let current = null;
+  let trigger = null;
+  let firstPage = false;
+  let flying = null;
+  let pageAnimation = null;
+
+  function showPage(){
+    pageAnimation?.cancel();
+    page.replaceChildren();
+    const label = document.createElement('strong');
+    label.textContent = firstPage ? 'First-page preview' : 'Abstract at a glance';
+    page.append(label);
+    if (firstPage) {
+      const preview = document.createElement('img');
+      preview.src = current.cover;
+      preview.alt = 'First page of ' + current.title;
+      page.append(preview);
+    } else {
+      page.append(current.summary || 'Read the abstract on the paper’s publication page.');
+    }
+    turn.textContent = firstPage ? 'Back to abstract' : 'Turn to first page';
+    turn.hidden = !current.cover;
+    if (!motion.matches && page.animate) {
+      pageAnimation = page.animate([
+        {transform:'perspective(600px) rotateY(-18deg)',opacity:.4},
+        {transform:'perspective(600px) rotateY(0)',opacity:1}
+      ], {duration:340,easing:'ease-out'});
+    }
+  }
+
+  function sendToTable(book){
+    flying?.remove();
+    flying = null;
+    tableBook.style.setProperty('--book-color', book.color);
+    tableBook.hidden = false;
+    if (motion.matches || !book.spine.animate) return;
+    const bounds = scene.getBoundingClientRect();
+    const from = book.spine.getBoundingClientRect();
+    const to = table.getBoundingClientRect();
+    const scale = bounds.width / scene.offsetWidth;
+    if (!scale) return;
+    const ghost = book.spine.cloneNode(true);
+    ghost.removeAttribute('aria-pressed');
+    ghost.classList.add('library-flight');
+    ghost.inert = true;
+    ghost.setAttribute('aria-hidden','true');
+    const x = (from.left - bounds.left) / scale;
+    const y = (from.top - bounds.top) / scale;
+    ghost.style.left = x + 'px';
+    ghost.style.top = y + 'px';
+    ghost.style.width = from.width / scale + 'px';
+    ghost.style.height = from.height / scale + 'px';
+    const dx = (to.left + to.width / 2 - from.left - from.width / 2) / scale;
+    const dy = (to.top - from.top - from.height / 2) / scale;
+    flying = ghost;
+    tableBook.hidden = true;
+    scene.append(ghost);
+    ghost.animate([
+      {transform:'translate(0,0) rotate(0)'},
+      {transform:`translate(${dx * .54}px,${dy * .44 - 35}px) rotate(-35deg)`,offset:.55},
+      {transform:`translate(${dx}px,${dy}px) rotate(-90deg) scale(.55)`}
+    ], {duration:680,easing:'cubic-bezier(.3,.72,.3,1)'}).onfinish = () => {
+      ghost.remove();
+      if (flying === ghost) {
+        flying = null;
+        tableBook.hidden = false;
+      }
+    };
+  }
+
+  function open(book, button, fromList){
+    current?.spine.setAttribute('aria-pressed','false');
+    current = book;
+    trigger = button;
+    book.spine.setAttribute('aria-pressed','true');
+    heading.textContent = book.title;
+    meta.textContent = book.meta;
+    read.href = book.href;
+    read.textContent = book.readLabel + ' ↗';
+    reader.hidden = false;
+    firstPage = false;
+    showPage();
+    if (fromList) room.scrollIntoView({block:'nearest',behavior:motion.matches ? 'instant' : 'smooth'});
+    sendToTable(book);
+    if (fromList) heading.focus({preventScroll:true});
+  }
+
+  list.querySelectorAll('.card.pub').forEach((card,index) => {
+    const title = card.querySelector('h3 a');
+    if (!title) return;
+    const preview = card.querySelector('.pub-preview');
+    const note = notes.find(([key]) => title.href.includes(key));
+    const book = {
+      title:title.textContent.trim(),
+      summary:note?.[2],
+      meta:[...card.querySelectorAll('.meta')].slice(0,2).map(item => item.textContent.trim()).join(' · '),
+      href:preview?.href || title.href,
+      readLabel:preview?.querySelector('span')?.textContent.trim() || 'Read paper',
+      cover:preview?.querySelector('img')?.src,
+      color:palette[index % palette.length],
+      spine:document.createElement('button')
+    };
+    const { spine } = book;
+    spine.type = 'button';
+    spine.className = 'library-spine';
+    spine.textContent = note?.[1] || book.title.split(':')[0].slice(0,24);
+    spine.title = book.title;
+    spine.setAttribute('aria-label', book.title);
+    spine.setAttribute('aria-pressed','false');
+    spine.style.setProperty('--book-color',book.color);
+    spine.style.setProperty('--book-height', (78 + (index * 7) % 22) + 'px');
+    spine.addEventListener('click', () => open(book, spine, false));
+    shelf.append(spine);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'library-card-button';
+    button.textContent = 'Preview in library';
+    button.setAttribute('aria-controls','library-reader');
+    button.addEventListener('click', () => open(book, button, true));
+    title.closest('h3').parentElement.append(button);
+    card.addEventListener('click', event => {
+      if (!event.target.closest('a,button,pre,code')) open(book, button, true);
+    });
+  });
+
+  turn.addEventListener('click', () => {
+    firstPage = !firstPage;
+    showPage();
+  });
+  close.addEventListener('click', () => {
+    current?.spine.setAttribute('aria-pressed','false');
+    flying?.remove();
+    flying = null;
+    current = null;
+    reader.hidden = true;
+    tableBook.hidden = true;
+    trigger?.focus();
+  });
+  room.hidden = !shelf.children.length;
 })();
 </script>
 </body>
