@@ -1369,11 +1369,6 @@
   display: block;
   padding-top: 56.25%; /* 16:9 height */
 }
-/* Standard thumbnail sizing for all publications */
-.card.pub {
-  grid-template-columns: minmax(160px, 200px) 1fr; /* keep all cards consistent */
-}
-
 .card.pub a.thumb img {
   display: block;
   width: 100%;
@@ -1382,6 +1377,69 @@
   border-radius: 12px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
+}
+
+.card.pub{
+  grid-template-columns:minmax(160px, 200px) minmax(0, 1fr) 88px;
+}
+
+.pub-preview{
+  display:grid;
+  gap:4px;
+  justify-items:center;
+  text-align:center;
+  font-size:11px;
+  line-height:1.3;
+  font-weight:600;
+}
+
+.pub-preview img,
+.pub-preview-cover{
+  display:block;
+  width:100%;
+  aspect-ratio:232 / 300;
+  box-sizing:border-box;
+  border:1px solid var(--border);
+  border-radius:5px;
+  background:var(--panel);
+  box-shadow:0 3px 10px rgba(2,6,23,.09);
+}
+
+.pub-preview img{
+  height:auto;
+  object-fit:contain;
+}
+
+.pub-preview-cover{
+  display:grid;
+  place-content:center;
+  padding:8px;
+  color:var(--subtle);
+}
+
+.pub-preview:hover{
+  text-decoration:none;
+}
+
+.pub-preview:hover img,
+.pub-preview:hover .pub-preview-cover{
+  border-color:var(--brand);
+}
+
+.pub-preview:focus-visible{
+  outline:2px solid var(--brand);
+  outline-offset:3px;
+  border-radius:5px;
+}
+
+@media (max-width:600px){
+  .card.pub{
+    grid-template-columns:minmax(0, 1fr) 70px;
+  }
+
+  .card.pub > a:first-child{
+    grid-column:1 / -1;
+  }
 }
 
 /* Absolutely position children over the ratio shim */
@@ -3144,6 +3202,10 @@
   year      = {2026}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://dl.acm.org/doi/epdf/10.1145/3770855.3818659" target="_blank" rel="noopener" aria-label="Read paper for The Decision Twin: Metaverse Patient Digital Twins as Executable Clinical Reality (opens in a new tab)">
+    <span class="pub-preview-cover" aria-hidden="true">KDD 2026</span>
+    <span>Read paper</span>
+  </a>
 </div>
 
 
@@ -3179,6 +3241,10 @@
   year    = {2026}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://dl.acm.org/doi/full/10.1145/3820900" target="_blank" rel="noopener" aria-label="Open publisher page for Personalized AI Coaching Technology: A Systematic Mapping Review (opens in a new tab)">
+    <span class="pub-preview-cover" aria-hidden="true">ACM TiiS</span>
+    <span>Publisher</span>
+  </a>
 </div>
 
 <!-- FALCON-Discover paper -->
@@ -3215,6 +3281,10 @@
   url           = {https://arxiv.org/abs/2607.18278}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://arxiv.org/pdf/2607.18278" target="_blank" rel="noopener" aria-label="Read PDF for FALCON-Discover: Discovering Concentrated False-Confidence Regions for Calibration (opens in a new tab)">
+    <img src="paper-previews/2607.18278.jpg" alt="" width="232" height="300" loading="lazy" decoding="async">
+    <span>Read PDF</span>
+  </a>
 </div>
 
 
@@ -3252,6 +3322,10 @@
   url           = {https://arxiv.org/abs/2607.18279}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://arxiv.org/pdf/2607.18279" target="_blank" rel="noopener" aria-label="Read PDF for Beyond Output-Space Calibration: Spectral Evidence Bundling for Selective Reliability Estimation in Time-Series Classification (opens in a new tab)">
+    <img src="paper-previews/2607.18279.jpg" alt="" width="232" height="300" loading="lazy" decoding="async">
+    <span>Read PDF</span>
+  </a>
 </div>
 
 
@@ -3289,6 +3363,10 @@
   url    = {https://arxiv.org/abs/2609.00366}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://arxiv.org/pdf/2609.00366" target="_blank" rel="noopener" aria-label="Read PDF for Counterfactual Fragility Certificates: Exposing High-Confidence Brittleness under Structured Evidence Failure (opens in a new tab)">
+    <img src="paper-previews/2609.00366.jpg" alt="" width="232" height="300" loading="lazy" decoding="async">
+    <span>Read PDF</span>
+  </a>
 </div>
 
     <!-- L0GM paper -->
@@ -3326,6 +3404,10 @@
   url           = {https://arxiv.org/abs/2603.26801}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://arxiv.org/pdf/2603.26801" target="_blank" rel="noopener" aria-label="Read PDF for Sparse-by-Design Cross-Modality Prediction: L0-Gated Representations for Reliable and Efficient Learning (opens in a new tab)">
+    <img src="paper-previews/2603.26801.jpg" alt="" width="232" height="300" loading="lazy" decoding="async">
+    <span>Read PDF</span>
+  </a>
 </div>
 
 
@@ -3359,6 +3441,10 @@
   url           = {https://arxiv.org/abs/2511.13802}
 }</pre>
       </div>
+      <a class="pub-preview" href="https://arxiv.org/pdf/2511.13802" target="_blank" rel="noopener" aria-label="Read PDF for Passive Dementia Screening via Facial Temporal Micro-Dynamics Analysis of In-the-Wild Talking-Head Video (opens in a new tab)">
+        <img src="paper-previews/2511.13802.jpg" alt="" width="232" height="300" loading="lazy" decoding="async">
+        <span>Read PDF</span>
+      </a>
     </div>
 <!-- SimClinician paper -->
 <div class="card pub" data-year="2025" data-topics="humanoid,mental-health,simulation">
@@ -3395,6 +3481,10 @@
   url           = {https://arxiv.org/abs/2512.08953}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://arxiv.org/pdf/2512.08953" target="_blank" rel="noopener" aria-label="Read PDF for SimClinician: A Multimodal Simulation Testbed for Reliable Psychologist–AI Collaboration in Mental Health Diagnosis (opens in a new tab)">
+    <img src="paper-previews/2512.08953.jpg" alt="" width="232" height="300" loading="lazy" decoding="async">
+    <span>Read PDF</span>
+  </a>
 </div>
 
     <!-- Learning When to Ask paper -->
@@ -3432,6 +3522,10 @@
   url           = {https://arxiv.org/abs/2512.08952}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://arxiv.org/pdf/2512.08952" target="_blank" rel="noopener" aria-label="Read PDF for Learning When to Ask: Simulation-Trained Humanoids for Mental-Health Diagnosis (opens in a new tab)">
+    <img src="paper-previews/2512.08952.jpg" alt="" width="232" height="300" loading="lazy" decoding="async">
+    <span>Read PDF</span>
+  </a>
 </div>
 
 <!-- ACM ACSW 2026 paper -->
@@ -3471,6 +3565,10 @@
   url       = {https://doi.org/10.1145/3793811.3793827}
 }</pre>
   </div>
+  <a class="pub-preview" href="https://dl.acm.org/doi/full/10.1145/3793811.3793827" target="_blank" rel="noopener" aria-label="Open publisher page for To Be or Not To Be: Respecting when Socially Interactive Agents Should or Should Not Conform to Expectations (opens in a new tab)">
+    <span class="pub-preview-cover" aria-hidden="true">ACSW 2026</span>
+    <span>Publisher</span>
+  </a>
 </div>
 
     <!-- Tri-Modal paper -->
@@ -3504,6 +3602,10 @@
   url           = {https://arxiv.org/abs/2510.20239}
 }</pre>
       </div>
+      <a class="pub-preview" href="https://arxiv.org/pdf/2510.20239" target="_blank" rel="noopener" aria-label="Read PDF for Tri-Modal Severity Fused Diagnosis across Depression and Post-traumatic Stress Disorders (opens in a new tab)">
+        <img src="paper-previews/2510.20239.jpg" alt="" width="232" height="300" loading="lazy" decoding="async">
+        <span>Read PDF</span>
+      </a>
     </div>
 
     <!-- JSIS VR ethics paper -->
@@ -3538,6 +3640,10 @@
   note    = {In press}
 }</pre>
       </div>
+      <a class="pub-preview" href="https://www.sciencedirect.com/science/article/pii/S0963868725000526" target="_blank" rel="noopener" aria-label="Open publisher page for Virtual Reality and Work: Ethical and Inclusion Implications of Facial Representation in VR (opens in a new tab)">
+        <span class="pub-preview-cover" aria-hidden="true">JSIS 2025</span>
+        <span>Publisher</span>
+      </a>
     </div>
 
     <!-- Springer low-code/no-code chapter -->
@@ -3571,6 +3677,10 @@
   doi       = {10.1007/978-3-031-21388-5_27}
 }</pre>
       </div>
+      <a class="pub-preview" href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener" aria-label="Open publisher page for Understanding Low-Code/No-Code Adoption in Software Startups (opens in a new tab)">
+        <span class="pub-preview-cover" aria-hidden="true">PROFES 2022</span>
+        <span>Publisher</span>
+      </a>
     </div>
 
 
