@@ -3603,7 +3603,7 @@ body{
 
   </style>
 
-  <link rel="stylesheet" href="iphone.css?v=10">
+  <link rel="stylesheet" href="iphone.css?v=11">
 </head>
 <body class="portfolio-home">
   <!-- Sticky Nav -->
@@ -6809,24 +6809,61 @@ body{
   (function(){
     const track = document.getElementById('eventTrack');
     if (!track || track.children.length < 2) return;
+    const slides = [...track.children];
+    const controls = document.createElement('div');
+    controls.className = 'event-phone-controls';
+    controls.hidden = true;
+    controls.innerHTML = '<button type="button" aria-label="Previous event" aria-controls="eventTrack">←</button><output aria-label="Event position"></output><button type="button" aria-label="Next event" aria-controls="eventTrack">→</button>';
+    track.after(controls);
+    const [previous, next] = controls.querySelectorAll('button');
+    const position = controls.querySelector('output');
     let desktopIndex = 0;
+    let phoneIndex = 0;
     let resumeAt = 0;
-    track.addEventListener('touchstart', () => {
+    let touchStart = null;
+
+    function showPhoneEvent(step = 0) {
+      phoneIndex = (phoneIndex + step + slides.length) % slides.length;
+      slides.forEach((slide, index) => slide.classList.toggle('is-current-event', index === phoneIndex));
+      position.value = (phoneIndex + 1) + ' / ' + slides.length;
+    }
+    function updateMode() {
+      controls.hidden = !phoneLayout.matches;
+      track.classList.toggle('is-phone-carousel', phoneLayout.matches);
+      if (phoneLayout.matches) {
+        track.scrollLeft = 0;
+        showPhoneEvent();
+      }
+    }
+    function stepPhone(step) {
       resumeAt = performance.now() + 8000;
+      showPhoneEvent(step);
+    }
+    previous.addEventListener('click', () => stepPhone(-1));
+    next.addEventListener('click', () => stepPhone(1));
+    track.addEventListener('touchstart', event => {
+      touchStart = phoneLayout.matches && event.touches.length === 1 ? event.touches[0] : null;
     }, {passive:true});
+    track.addEventListener('touchend', event => {
+      if (!touchStart) return;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - touchStart.clientX;
+      const dy = touch.clientY - touchStart.clientY;
+      touchStart = null;
+      if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy)) stepPhone(dx < 0 ? 1 : -1);
+    }, {passive:true});
+    track.addEventListener('touchcancel', () => { touchStart = null; });
+    phoneLayout.addEventListener('change', updateMode);
+    updateMode();
 
     setInterval(() => {
       if (phoneLayout.matches) {
-        if (navMotion.matches || performance.now() < resumeAt || track.contains(document.activeElement)) return;
-        const slides = [...track.children];
-        const start = slides[0].getBoundingClientRect().left;
-        const offsets = slides.map(slide => slide.getBoundingClientRect().left - start);
-        const closest = offsets.reduce((best, offset, index) =>
-          Math.abs(offset - track.scrollLeft) < Math.abs(offsets[best] - track.scrollLeft) ? index : best, 0);
-        track.scrollTo({left:offsets[(closest + 1) % slides.length],behavior:'smooth'});
+        if (!navMotion.matches && performance.now() >= resumeAt && !track.contains(document.activeElement)) {
+          showPhoneEvent(1);
+        }
         return;
       }
-      desktopIndex = (desktopIndex + 1) % track.children.length;
+      desktopIndex = (desktopIndex + 1) % slides.length;
       track.style.transform = 'translateX(-' + (desktopIndex * 100) + '%)';
     }, 5000);
   })();
