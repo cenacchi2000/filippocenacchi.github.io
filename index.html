@@ -7543,6 +7543,12 @@ body{
     const pages = new T.Group();
     pages.rotation.y = -Math.PI / 2;
     openBook.add(pages);
+    const coverHinge = new T.Group();
+    coverHinge.position.set(-.24,.057,0);
+    pages.add(coverHinge);
+    box(.48,.018,.88,cover,.24,0,0,coverHinge);
+    for(const x of [.06,.42])box(.008,.002,.69,materials.gold,x,.010,0,coverHinge);
+    const coverOpeningDuration = 2200;
     const spine = new T.Group();
     spine.position.y=.072;
     pages.add(spine);
@@ -7601,9 +7607,12 @@ body{
     function drawPages(time){
       if(!openBook.visible)return;
       const elapsed=Math.max(0,time-bookStarted);
-      const cycle=elapsed%6700;
-      const progress=(cycle-950)/3700;
-      const turning=progress>0&&progress<1&&!motion.matches;
+      const opening=motion.matches?1:Math.min(1,elapsed/coverOpeningDuration);
+      coverHinge.rotation.z=(opening*opening*(3-2*opening))*Math.PI*.62;
+      const pageTime=elapsed-coverOpeningDuration;
+      const cycle=Math.max(0,pageTime)%6700;
+      const progress=(cycle-550)/3700;
+      const turning=pageTime>=0&&progress>0&&progress<1&&!motion.matches;
       spine.visible=turning;
       if(!turning)return;
       const eased=progress*progress*(3-2*progress);
