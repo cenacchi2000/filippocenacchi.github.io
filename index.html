@@ -5001,11 +5001,13 @@ body{
         Graph.width(container.clientWidth);
         Graph.height(container.clientHeight);
       });
-      Graph.cameraPosition({ x: 0, y: 0, z: 600 });
+      Graph.cameraPosition({ x: 0, y: 0, z: 500 });
       var motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
       var viewControls=document.getElementById('pubGraphViewControls');
       var motionButton=document.getElementById('pubGraphMotion');
       var camera=Graph.camera();
+      camera.zoom=1.22;
+      camera.updateProjectionMatrix();
       var controls=Graph.controls();
       var axis=new THREE.Vector3(0,1,0);
       var offset=new THREE.Vector3();
@@ -5016,7 +5018,11 @@ body{
       var frame=0,lastTime=0,phase=0,angle=0,resumeAfter=0;
       function fitGraph(){
         resumeAfter=performance.now()+720;
-        Graph.zoomToFit(600,50);
+        camera.zoom=1;
+        camera.updateProjectionMatrix();
+        Graph.zoomToFit(600,38);
+        camera.zoom=1.22;
+        camera.updateProjectionMatrix();
       }
       function tick(time){
         frame=0;
