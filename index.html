@@ -2435,6 +2435,31 @@
   font-size:13px !important;
 }
 
+.hero-left-links .profile-metric-link{
+  display:grid;
+  grid-template-columns:18px minmax(0,1fr) auto;
+  gap:7px;
+  align-items:center;
+  text-align:left !important;
+}
+
+.profile-metric{
+  display:grid;
+  justify-items:end;
+  color:var(--brand-ink);
+  line-height:1.15;
+  font-variant-numeric:tabular-nums;
+}
+
+.profile-metric strong{
+  font-size:14px;
+}
+
+.profile-metric small{
+  font-size:10px;
+  color:var(--text);
+}
+
 .hero-left-links #sydneyPill{
   white-space:normal !important;
 }
@@ -2680,20 +2705,23 @@
       <img class="avatar" src="headshot.jpg" width="1260" height="1882" alt="Portrait of Filippo Cenacchi">
 
       <div class="kvs hero-left-links" aria-label="Quick links">
-        <a class="pill" href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar">
+        <a class="pill profile-metric-link" href="https://scholar.google.com.au/citations?user=jkBG6hcAAAAJ&hl=en" target="_blank" rel="noopener" title="Google Scholar citations checked 12 November 2026">
           <svg class="scholar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2L3 9L12 13L21 9L12 2Z" fill="#4285F4"/>
             <path d="M12 13L3 9V15.5C3 17.5 7 20 12 22C17 20 21 17.5 21 15.5V9L12 13Z" fill="#4285F4" opacity="0.7"/>
           </svg>
-          Google Scholar
+          <span>Google Scholar</span>
+          <span class="profile-metric"><strong>34</strong><small>citations</small></span>
         </a>
 
         <a class="pill" href="https://github.com/cenacchi2000" target="_blank" rel="noopener" title="GitHub">
           <img class="inline-icon" alt="" src="https://github.githubassets.com/favicons/favicon.svg"> GitHub
         </a>
 
-        <a class="pill" href="https://www.linkedin.com/in/filippo-cenacchi-526b88170/" target="_blank" rel="noopener" title="LinkedIn">
-          <span class="li-icon" aria-hidden="true"></span> LinkedIn
+        <a class="pill profile-metric-link" href="https://www.linkedin.com/in/filippo-cenacchi/" target="_blank" rel="noopener" title="LinkedIn followers checked 12 November 2026">
+          <span class="li-icon" aria-hidden="true"></span>
+          <span>LinkedIn</span>
+          <span class="profile-metric"><strong>20,071</strong><small>followers</small></span>
         </a>
 
         <a class="pill" href="#contact">
