@@ -3132,6 +3132,105 @@ body{
   #research .card-media img{transition:none}
 }
 
+#research .card-focus{
+  --project-accent:#4338ca;
+  --project-tint:#eeedff;
+  border:1px solid #d9e2f1;
+  border-radius:20px;
+  background:#fbfcff;
+  box-shadow:0 20px 38px #03081770;
+}
+#research .card-focus:has(.project-strip--sim){--project-accent:#106c56;--project-tint:#e4f6ef}
+#research .card-focus:has(.project-strip--avatar){--project-accent:#a03e35;--project-tint:#fff0ea}
+#research .card-focus:has(.project-strip--triage){--project-accent:#0a6586;--project-tint:#e5f5fc}
+#research .card-focus:has(.project-strip--dementia){--project-accent:#6737a4;--project-tint:#f2e9ff}
+#research .card-focus:has(.project-strip--reel){--project-accent:#a02e70;--project-tint:#fceaf5}
+#research .card-media{
+  background:#0b1427;
+  border-bottom:3px solid var(--project-accent);
+}
+#research button.card-media::after{
+  content:"⤢";
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  display:grid;
+  width:33px;
+  height:33px;
+  place-items:center;
+  border:1px solid #ffffff66;
+  border-radius:10px;
+  background:#0b1427c9;
+  color:#fff;
+  font:600 20px/1 system-ui,sans-serif;
+  pointer-events:none;
+}
+#research .card-body{
+  gap:7px;
+  padding:17px 22px 15px;
+  background:linear-gradient(145deg,var(--project-tint),#fbfcff 52%);
+}
+#research .research-project-category{
+  align-self:flex-start;
+  color:var(--project-accent);
+  font-size:11px;
+  font-weight:750;
+  letter-spacing:.085em;
+  text-transform:uppercase;
+}
+#research .card-body h3{
+  margin:0;
+  color:#111d33;
+  font-size:clamp(19px,2.25vw,27px);
+  line-height:1.14;
+  letter-spacing:-.035em;
+}
+#research .card-body p{
+  margin:0 0 5px;
+  color:#36465e;
+  font-size:14px;
+  line-height:1.5;
+}
+#research .project-strip{
+  align-self:stretch;
+  justify-content:space-between;
+  min-height:35px;
+  padding:7px 0 0;
+  border-top:1px solid #cbd6e7;
+  border-radius:0;
+  background:none;
+  box-shadow:none;
+  color:var(--project-accent);
+  font-size:13px;
+  font-weight:750;
+}
+#research .project-strip:hover{
+  transform:none;
+  text-decoration:underline;
+}
+#research .research-project-arrow{
+  display:grid;
+  width:29px;
+  height:29px;
+  flex:none;
+  place-items:center;
+  border-radius:50%;
+  background:var(--project-tint);
+  font-size:16px;
+}
+#research .project-strip:hover .research-project-arrow{
+  background:var(--project-accent);
+  color:#fff;
+}
+#research :is(.project-strip,.card-media):focus-visible{
+  outline:2px solid var(--project-accent);
+  outline-offset:-3px;
+}
+@media(max-width:720px){
+  #research .card-body{padding:13px 14px 11px}
+  #research .card-body p{font-size:13px}
+}
+
   </style>
 </head>
 <body>
@@ -3462,11 +3561,11 @@ body{
         <span class="media-gradient"></span>
       </button>
       <div class="card-body">
+        <span class="research-project-category">Humanoid AI</span>
         <h3>Humanoid-AI Diagnostic Agents</h3>
         <p>Designing conversational <strong>humanoid agents</strong> (e.g., Ameca) that sense and fuse facial, vocal, and linguistic cues to support early detection of <strong>depression</strong>, <strong>PTSD</strong>, and cognitive decline. Emphasis on <strong>trust calibration</strong>, safety, and clinician-style pacing.</p>
         <a class="project-strip project-strip--humanoid" href="humanoid-diagnostic.html">
-  <span class="label">Humanoid AI</span>
-  <span>Explore project →</span>
+      <span>Explore project</span><span class="research-project-arrow" aria-hidden="true">↗</span>
 </a>
 
       </div>
@@ -3484,11 +3583,11 @@ body{
         </span>
       </button>
       <div class="card-body">
+        <span class="research-project-category">Simulation</span>
         <h3>Simulation-First Training</h3>
         <p><strong>SimClinician</strong>: a simulation testbed with <em>MetaHuman</em> patients, synchronized speech/face/gaze and PHQ-8 / PCL-C flows. Enables counterfactual replay, nonverbal perturbations, and uncertainty-aware turn management.</p>
         <a class="project-strip project-strip--sim" href="simulation-first-training.html">
-  <span class="label">Simulation</span>
-  <span>Explore project →</span>
+      <span>Explore project</span><span class="research-project-arrow" aria-hidden="true">↗</span>
 </a>
 
       </div>
@@ -3509,6 +3608,7 @@ body{
     </span>
   </button>
   <div class="card-body">
+    <span class="research-project-category">3D Clinical Avatar</span>
     <h3>LLM-Guided Clinical Avatar</h3>
     <p>
       A multi-scale <strong>digital twin prototype</strong> that links a 3D anatomical avatar,
@@ -3517,8 +3617,7 @@ body{
     </p>
     <a class="project-strip project-strip--avatar"
        href="digital-twin.html">
-      <span class="label">3D Clinical Avatar</span>
-      <span>Explore project →</span>
+      <span>Explore project</span><span class="research-project-arrow" aria-hidden="true">↗</span>
     </a>
   </div>
 </article>
@@ -3536,11 +3635,11 @@ body{
         </span>
       </button>
       <div class="card-body">
+        <span class="research-project-category">Triage AI</span>
         <h3>Decision Support &amp; Triage</h3>
         <p>Interactive <strong>triage wizards</strong> and <strong>RL-inspired probing</strong> layered over E-DAIC and DAIC-WOZ to select targeted questions that maximize diagnostic clarity while exposing <strong>confidence</strong> and <strong>evidence</strong>.</p>
         <a class="project-strip project-strip--triage" href="decision-support-triage.html">
-  <span class="label">Triage AI</span>
-  <span>Explore project →</span>
+      <span>Explore project</span><span class="research-project-arrow" aria-hidden="true">↗</span>
 </a>
 
       </div>
@@ -3563,6 +3662,7 @@ body{
     </span>
   </button>
   <div class="card-body">
+    <span class="research-project-category">Dementia</span>
     <h3>Passive Dementia Screening</h3>
     <p>
       Language-free <strong>facial micro-dynamics</strong> pipeline for early dementia screening from
@@ -3570,8 +3670,7 @@ body{
       risk score.
     </p>
     <a class="project-strip project-strip--dementia" href="passive-dementia-screening.html">
-      <span class="label">Dementia</span>
-      <span>Explore project →</span>
+      <span>Explore project</span><span class="research-project-arrow" aria-hidden="true">↗</span>
     </a>
   </div>
 </article>
@@ -3589,11 +3688,11 @@ body{
         <span class="media-gradient"></span>
       </div>
       <div class="card-body">
+        <span class="research-project-category">Demo</span>
         <h3>MetaHuman Avatar Synchronised with Ameca</h3>
         <p>Demo of a MetaHuman avatar of the Ceo of Nvidia driven by Ameca real-time body signals. Showcases synchronised facial motion, gaze and pacing for simulation-first training.</p>
         <a class="project-strip project-strip--reel" href="metahuman-avatar-reel.html">
-  <span class="label">Demo</span>
-  <span>Explore project →</span>
+      <span>Explore project</span><span class="research-project-arrow" aria-hidden="true">↗</span>
 </a>
 
       </div>
