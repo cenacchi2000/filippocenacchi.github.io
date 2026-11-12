@@ -4576,7 +4576,13 @@ body{
   </p>
 
   <div class="pubgraph-wrap">
-    <div class="pubgraph-canvas" id="pubGraphCanvas"></div>
+    <div class="pubgraph-stage">
+      <div class="pubgraph-canvas" id="pubGraphCanvas"></div>
+      <div class="pubgraph-view-controls" id="pubGraphViewControls" hidden>
+        <button type="button" id="pubGraphMotion" aria-pressed="true">Pause rotation</button>
+        <button type="button" id="pubGraphReset">Reset view</button>
+      </div>
+    </div>
     <div class="pubgraph-side">
       <div class="pubgraph-search-card">
         <div class="pg-panel-kicker">Find a collaboration match</div>
@@ -4644,6 +4650,38 @@ body{
     .pg-legend-btn.active{background:var(--c,#334155);border-color:var(--c,#334155);color:#fff;}
     .pg-dot{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block;}
     .pg-legend-btn.active .pg-dot{background:#fff;}
+
+    .pubgraph-wrap{--graph-height:clamp(530px,68vh,740px);grid-template-columns:minmax(0,1fr) minmax(235px,310px);}
+    .pubgraph-stage{min-width:0;position:relative;}
+    .pubgraph-canvas{
+      height:var(--graph-height);
+      border-color:#263554;
+      border-radius:20px;
+      background:#0a1122;
+      box-shadow:0 16px 45px #14223e30;
+    }
+    .pubgraph-side{height:var(--graph-height);}
+    .pubgraph-view-controls{
+      position:absolute;top:12px;right:12px;z-index:2;
+      display:flex;gap:6px;
+    }
+    .pubgraph-view-controls[hidden]{display:none}
+    .pubgraph-view-controls button{
+      border:1px solid #587098;
+      border-radius:8px;
+      background:#152543e8;
+      color:#edf5ff;
+      padding:6px 9px;
+      font:600 11px/1.3 system-ui,sans-serif;
+      cursor:pointer;
+    }
+    .pubgraph-view-controls button:hover{background:#284365}
+    .pubgraph-view-controls button:focus-visible{outline:2px solid #a9c8ff;outline-offset:2px}
+    .pubgraph-panel{border-color:#dce5f3;background:linear-gradient(155deg,#f5f8ff,#fff 56%)}
+    @media(max-width:900px){
+      .pubgraph-wrap{--graph-height:clamp(370px,60vh,560px);grid-template-columns:minmax(0,1fr)}
+      .pubgraph-side{height:auto}
+    }
   </style>
 
   <script>
@@ -4859,8 +4897,20 @@ body{
       var NODE_REL_SIZE = 4.2;
       function sphereRadius(n){ return Math.cbrt(n.val) * NODE_REL_SIZE; }
 
+      var haloCanvas=document.createElement('canvas');
+      haloCanvas.width=haloCanvas.height=64;
+      var haloContext=haloCanvas.getContext('2d');
+      var haloGradient=haloContext.createRadialGradient(32,32,4,32,32,32);
+      haloGradient.addColorStop(0,'rgba(255,255,255,.95)');
+      haloGradient.addColorStop(.36,'rgba(255,255,255,.52)');
+      haloGradient.addColorStop(1,'rgba(255,255,255,0)');
+      haloContext.fillStyle=haloGradient;
+      haloContext.fillRect(0,0,64,64);
+      var haloTexture=new THREE.CanvasTexture(haloCanvas);
+      var halos=new Map();
+
       var Graph = ForceGraph3D()(container)
-        .backgroundColor('#0a0c14')
+        .backgroundColor('#0a1122')
         .graphData({nodes:nodes, links:graphLinks})
         .nodeId('id')
         .nodeVal('val')
@@ -4868,6 +4918,11 @@ body{
         .nodeResolution(20)
         .nodeOpacity(0.93)
         .nodeColor(function(n){
+          var halo=halos.get(n.id);
+          if(halo){
+            var highlighted=matchedSet?matchedSet.has(n.id):isConnected(n.id);
+            halo.material.opacity=highlighted?(n.type==='topic'?.38:.26):.025;
+          }
           if(matchedSet){
             return matchedSet.has(n.id) ? pulseColorFor(n.color, pulsePhase) : 'rgba(90,96,110,0.1)';
           }
@@ -4881,7 +4936,7 @@ body{
             return m ? 'rgba(255,255,255,'+(0.3+0.25*Math.sin(pulsePhase)).toFixed(2)+')' : 'rgba(120,130,150,0.02)';
           }
           var on = isConnected(sid) && isConnected(tid);
-          return on ? 'rgba(150,160,180,0.4)' : 'rgba(120,130,150,0.03)';
+          return on ? (l.weak?'#42516e':'#728db9') : '#20283a';
         })
         .linkWidth(function(l){ return l.weak ? 0.35 : 0.55; })
         .linkOpacity(0.85)
@@ -4900,7 +4955,15 @@ body{
           sprite.padding = n.type==='topic' ? 1.8 : 1.3;
           sprite.borderRadius = 2;
           sprite.position.y = sphereRadius(n) + (n.type==='topic' ? 6.5 : 4.8);
-          return sprite;
+          var group=new THREE.Group();
+          var halo=new THREE.Sprite(new THREE.SpriteMaterial({
+            map:haloTexture,color:n.color,transparent:true,opacity:n.type==='topic'?.38:.26,
+            blending:THREE.AdditiveBlending,depthWrite:false
+          }));
+          halo.scale.setScalar(sphereRadius(n)*3.7);
+          group.add(halo,sprite);
+          halos.set(n.id,halo);
+          return group;
         })
         .onNodeHover(function(n){
           container.style.cursor = n ? 'pointer' : 'grab';
@@ -4939,7 +5002,52 @@ body{
         Graph.height(container.clientHeight);
       });
       Graph.cameraPosition({ x: 0, y: 0, z: 600 });
-      Graph.onEngineStop(function(){ Graph.zoomToFit(600, 50); });
+      var motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
+      var viewControls=document.getElementById('pubGraphViewControls');
+      var motionButton=document.getElementById('pubGraphMotion');
+      var camera=Graph.camera();
+      var controls=Graph.controls();
+      var axis=new THREE.Vector3(0,1,0);
+      var offset=new THREE.Vector3();
+      var rotating=!motionPreference.matches;
+      var visible=false;
+      var hovering=false;
+      var interacting=false;
+      var frame=0,lastTime=0,phase=0,angle=0,resumeAfter=0;
+      function fitGraph(){
+        resumeAfter=performance.now()+720;
+        Graph.zoomToFit(600,50);
+      }
+      function tick(time){
+        frame=0;
+        if(!visible||!rotating||hovering||interacting){lastTime=0;return;}
+        if(lastTime&&time>=resumeAfter){
+          phase+=Math.min(40,time-lastTime)*.00017;
+          var nextAngle=Math.sin(phase)*.135;
+          offset.copy(camera.position).sub(controls.target).applyAxisAngle(axis,nextAngle-angle);
+          camera.position.copy(controls.target).add(offset);
+          camera.lookAt(controls.target);
+          angle=nextAngle;
+        }
+        lastTime=time;
+        frame=requestAnimationFrame(tick);
+      }
+      function syncMotion(){
+        motionButton.setAttribute('aria-pressed',String(rotating));
+        motionButton.textContent=rotating?'Pause rotation':'Resume rotation';
+        if(!frame&&visible&&rotating&&!hovering&&!interacting)frame=requestAnimationFrame(tick);
+      }
+      container.addEventListener('pointerenter',function(){hovering=true;});
+      container.addEventListener('pointerleave',function(){hovering=false;syncMotion();});
+      controls.addEventListener('start',function(){interacting=true;});
+      controls.addEventListener('end',function(){interacting=false;resumeAfter=performance.now()+450;syncMotion();});
+      motionButton.addEventListener('click',function(){rotating=!rotating;syncMotion();});
+      document.getElementById('pubGraphReset').addEventListener('click',fitGraph);
+      motionPreference.addEventListener('change',function(event){rotating=!event.matches;syncMotion();});
+      new IntersectionObserver(function(entries){visible=entries[0].isIntersecting;syncMotion();}).observe(container);
+      viewControls.hidden=false;
+      Graph.onEngineStop(fitGraph);
+      syncMotion();
 
       var legend = document.getElementById('pubGraphLegend');
       function syncLegend(){
