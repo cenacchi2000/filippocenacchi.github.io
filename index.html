@@ -3000,7 +3000,7 @@ body{
 #research{min-width:0;max-width:100%}
 #research .research-stage{
   --gallery-arch:54px;
-  --gallery-depth:105px;
+  --gallery-depth:185px;
 }
 #research .research-gallery-heading{
   display:flex;
@@ -3058,7 +3058,7 @@ body{
   pointer-events:none;
 }
 #research .research-grid{
-  --project-width:min(66vw, 650px);
+  --project-width:min(63vw, 610px);
   position:relative;
   display:flex;
   align-items:stretch;
@@ -3069,9 +3069,9 @@ body{
   padding:24px max(12px, calc((100% - var(--project-width)) / 2)) calc(32px + var(--gallery-arch));
   scroll-snap-type:x mandatory;
   overscroll-behavior-inline:contain;
-  scrollbar-width:thin;
-  scrollbar-color:#687fa9 #13203a;
+  scrollbar-width:none;
 }
+#research .research-grid::-webkit-scrollbar{display:none}
 #research .research-grid:focus-visible{
   outline:2px solid #a9c6ff;
   outline-offset:-4px;
@@ -3082,7 +3082,7 @@ body{
   min-width:0;
   flex-direction:column;
   scroll-snap-align:center;
-  transform:perspective(1000px) translate3d(0, var(--gallery-lift, 0px), var(--gallery-z, 0px)) rotateY(var(--gallery-angle, 0deg)) scale(var(--gallery-scale, 1));
+  transform:perspective(850px) translate3d(0, var(--gallery-lift, 0px), var(--gallery-z, 0px)) rotateY(var(--gallery-angle, 0deg)) scale(var(--gallery-scale, 1));
   transition:none;
   box-shadow:0 12px 26px #0004;
 }
@@ -3103,7 +3103,7 @@ body{
     gap:12px;
     padding-block:18px calc(23px + var(--gallery-arch));
   }
-  #research .research-stage{--gallery-arch:22px;--gallery-depth:55px}
+  #research .research-stage{--gallery-arch:22px;--gallery-depth:85px}
   #research .card-body{padding:13px}
   #research .media-chips{display:none}
 }
@@ -6357,75 +6357,125 @@ body{
   const cards = [...track.querySelectorAll(':scope > .card-focus')];
   const controls = document.querySelector('.research-gallery-controls');
   const picker = controls.querySelector('select');
-  const previous = controls.querySelector('[data-gallery-step="-1"]');
-  const next = controls.querySelector('[data-gallery-step="1"]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let active = 0;
-  let frame = 0;
-
-  cards.forEach((card, index) => {
-    const title = card.querySelector('h3').textContent.trim();
-    picker.add(new Option(title, index));
-  });
-
-  function update(){
-    frame = 0;
-    const center = track.scrollLeft + track.clientWidth / 2;
-    const stageStyle = getComputedStyle(track.parentElement);
-    const arch = parseFloat(stageStyle.getPropertyValue('--gallery-arch'));
-    const depth = parseFloat(stageStyle.getPropertyValue('--gallery-depth'));
-    let nearest = Infinity;
-    cards.forEach((card, index) => {
-      const distance = card.offsetLeft + card.offsetWidth / 2 - center;
-      const bend = Math.max(-1, Math.min(1, distance / (track.clientWidth / 2)));
-      const falloff = bend * bend;
-      card.style.setProperty('--gallery-angle', `${bend * -35}deg`);
-      card.style.setProperty('--gallery-lift', `${falloff * arch}px`);
-      card.style.setProperty('--gallery-z', `${falloff * -depth}px`);
-      card.style.setProperty('--gallery-scale', 1 - falloff * .055);
-      if (Math.abs(distance) < nearest) {
-        nearest = Math.abs(distance);
-        active = index;
-      }
-    });
-    picker.value = active;
-    previous.disabled = active === 0;
-    next.disabled = active === cards.length - 1;
-  }
-
-  function queueUpdate(){
-    if (!frame) frame = requestAnimationFrame(update);
-  }
-
-  function goTo(index){
-    const card = cards[index];
-    if (!card) return;
-    track.scrollTo({
-      left:card.offsetLeft + (card.offsetWidth - track.clientWidth) / 2,
-      behavior:reducedMotion.matches ? 'instant' : 'smooth'
-    });
-  }
 
   if (cards.length > 1) {
+    const buffer = Math.min(2, cards.length);
+    const copy = card => {
+      const clone = card.cloneNode(true);
+      clone.inert = true;
+      clone.setAttribute('aria-hidden', 'true');
+      return clone;
+    };
+    track.prepend(...cards.slice(-buffer).map(copy));
+    track.append(...cards.slice(0, buffer).map(copy));
+    const panels = [...track.querySelectorAll(':scope > .card-focus')];
+    const logicalIndex = index => (index - buffer + cards.length) % cards.length;
+    let active = buffer;
+    let frame = 0;
+    let settleTimer;
+
+    cards.forEach((card, index) => {
+      picker.add(new Option(card.querySelector('h3').textContent.trim(), index));
+    });
+
+    function centerPanel(index, behavior){
+      const panel = panels[index];
+      track.scrollTo({
+        left:panel.offsetLeft + (panel.offsetWidth - track.clientWidth) / 2,
+        behavior
+      });
+    }
+
+    function update(){
+      frame = 0;
+      const center = track.scrollLeft + track.clientWidth / 2;
+      const stageStyle = getComputedStyle(track.parentElement);
+      const arch = parseFloat(stageStyle.getPropertyValue('--gallery-arch'));
+      const depth = parseFloat(stageStyle.getPropertyValue('--gallery-depth'));
+      let nearest = Infinity;
+
+      panels.forEach((panel, index) => {
+        const distance = panel.offsetLeft + panel.offsetWidth / 2 - center;
+        const bend = Math.max(-1, Math.min(1, distance / (track.clientWidth * .48)));
+        const falloff = bend * bend;
+        panel.style.setProperty('--gallery-angle', `${bend * -52}deg`);
+        panel.style.setProperty('--gallery-lift', `${falloff * arch}px`);
+        panel.style.setProperty('--gallery-z', `${falloff * -depth}px`);
+        panel.style.setProperty('--gallery-scale', 1 - falloff * .055);
+        panel.style.zIndex = String(Math.round((1 - Math.abs(bend)) * 20));
+        if (Math.abs(distance) < nearest) {
+          nearest = Math.abs(distance);
+          active = index;
+        }
+      });
+      picker.value = logicalIndex(active);
+    }
+
+    function settle(){
+      update();
+      const realIndex = logicalIndex(active) + buffer;
+      if (active !== realIndex) {
+        centerPanel(realIndex, 'instant');
+        update();
+      }
+    }
+
+    function goTo(index){
+      if (index < 0 || index >= panels.length) return;
+      centerPanel(index, reducedMotion.matches ? 'instant' : 'smooth');
+    }
+
+    function stepBy(step){
+      if (active === 0 || active === panels.length - 1) settle();
+      goTo(active + step);
+    }
+
     controls.hidden = false;
-    picker.addEventListener('change', () => goTo(Number(picker.value)));
+    picker.addEventListener('change', () => {
+      const target = Number(picker.value);
+      let nearest = Infinity;
+      let destination = target + buffer;
+      panels.forEach((_, index) => {
+        if (logicalIndex(index) === target && Math.abs(index - active) < nearest) {
+          nearest = Math.abs(index - active);
+          destination = index;
+        }
+      });
+      goTo(destination);
+    });
     controls.querySelectorAll('[data-gallery-step]').forEach(button => {
-      button.addEventListener('click', () => goTo(active + Number(button.dataset.galleryStep)));
+      button.addEventListener('click', () => stepBy(Number(button.dataset.galleryStep)));
     });
     track.addEventListener('keydown', event => {
       if (event.target !== track || !['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
       event.preventDefault();
-      const index = {ArrowLeft:active - 1, ArrowRight:active + 1, Home:0, End:cards.length - 1};
-      goTo(index[event.key]);
+      if (event.key === 'Home' || event.key === 'End') {
+        goTo(event.key === 'Home' ? buffer : buffer + cards.length - 1);
+      } else {
+        stepBy(event.key === 'ArrowLeft' ? -1 : 1);
+      }
     });
-    track.addEventListener('scroll', queueUpdate, {passive:true});
-    window.addEventListener('resize', queueUpdate);
+    const hasScrollEnd = 'onscrollend' in track;
+    track.addEventListener('scroll', () => {
+      if (!frame) frame = requestAnimationFrame(update);
+      if (!hasScrollEnd) {
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(settle, 150);
+      }
+    }, {passive:true});
+    if (hasScrollEnd) track.addEventListener('scrollend', settle);
+    window.addEventListener('resize', () => {
+      centerPanel(logicalIndex(active) + buffer, 'instant');
+      update();
+    });
+    centerPanel(buffer, 'instant');
     update();
   }
 
   const lightbox = document.getElementById('lightbox');
   const image = document.getElementById('lightbox-img');
-  track.querySelectorAll('button[data-full]').forEach(button => {
+  track.querySelectorAll('.card-focus:not([inert]) button[data-full]').forEach(button => {
     button.addEventListener('click', () => {
       image.src = button.dataset.full;
       image.alt = button.querySelector('img').alt;
