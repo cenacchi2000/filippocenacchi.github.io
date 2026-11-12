@@ -3603,7 +3603,7 @@ body{
 
   </style>
 
-  <link rel="stylesheet" href="iphone.css?v=4">
+  <link rel="stylesheet" href="iphone.css?v=5">
 </head>
 <body class="portfolio-home">
   <!-- Sticky Nav -->
@@ -6722,26 +6722,42 @@ body{
     });
   }
 
-  const phoneDetails = [...document.querySelectorAll(
-    ':is(#education, #experience, #teaching, #talks, #leadership) .timeline .content > .meta:last-child'
-  )].filter(detail => detail.textContent.trim()).map((detail, index) => {
+  const phoneDetails = [];
+  let phoneDetailId = 0;
+  function addPhoneDetails(parts, title) {
+    if (!parts.length) return;
+    for (const part of parts) {
+      part.id ||= 'phone-entry-detail-' + (++phoneDetailId);
+      part.classList.add('phone-entry-detail');
+    }
     const button = document.createElement('button');
-    const title = detail.parentElement.querySelector('strong')?.textContent.trim();
-    detail.id ||= 'phone-entry-detail-' + (index + 1);
     button.type = 'button';
     button.className = 'phone-detail-toggle';
     button.hidden = true;
     button.textContent = 'Details +';
     button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-controls', detail.id);
+    button.setAttribute('aria-controls', parts.map(part => part.id).join(' '));
     if (title) button.setAttribute('aria-label', 'Details for ' + title);
     button.addEventListener('click', () => {
       const expanded = button.getAttribute('aria-expanded') === 'true';
       button.setAttribute('aria-expanded', String(!expanded));
       button.textContent = expanded ? 'Details +' : 'Details −';
     });
-    detail.before(button);
-    return button;
+    parts[0].before(button);
+    phoneDetails.push(button);
+  }
+  document.querySelectorAll(':is(#education, #experience, #teaching, #talks, #leadership) .timeline .content > .meta:last-child').forEach(detail => {
+    if (detail.textContent.trim()) {
+      addPhoneDetails([detail], detail.parentElement.querySelector('strong')?.textContent.trim());
+    }
+  });
+  document.querySelectorAll('#leadership .leadership-item').forEach(item => {
+    addPhoneDetails([...item.querySelectorAll(':scope > p, :scope > div:not(.leadership-header) > p')],
+      item.querySelector('h3')?.textContent.trim());
+  });
+  document.querySelectorAll('#teaching .teach-card:not(.teach-card--evidence)').forEach(unit => {
+    addPhoneDetails([...unit.querySelectorAll(':scope > :is(.teach-role, p, .teach-link-row)')],
+      unit.querySelector('.teach-code')?.textContent.trim());
   });
 
   function updatePhoneLayout() {
