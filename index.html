@@ -3589,7 +3589,7 @@ body{
 
   </style>
 
-  <link rel="stylesheet" href="iphone.css">
+  <link rel="stylesheet" href="iphone.css?v=2">
 </head>
 <body class="portfolio-home">
   <!-- Sticky Nav -->
@@ -3599,6 +3599,9 @@ body{
         <span class="pill">Ph.D</span>
         <strong>Filippo&nbsp;Cenacchi</strong>
       </div>
+      <button id="section-menu-toggle" class="section-menu-toggle" type="button" aria-controls="section-menu" aria-haspopup="dialog" aria-expanded="false" hidden>
+        <span aria-hidden="true">☰</span> Sections
+      </button>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <a class="link" href="#research">Research Focus</a>
         <a class="link" href="#publications">Publications</a>
@@ -3614,6 +3617,13 @@ body{
       </div>
     </div>
   </nav>
+  <dialog id="section-menu" class="section-menu" aria-labelledby="section-menu-title">
+    <div class="section-menu-header">
+      <strong id="section-menu-title">Sections</strong>
+      <form method="dialog"><button type="submit" aria-label="Close sections" autofocus>×</button></form>
+    </div>
+    <nav aria-label="Portfolio sections"></nav>
+  </dialog>
   <div id="progress" style="height:3px;flex:1;background:linear-gradient(90deg,var(--brand) 0%,var(--brand) 0%,transparent 0%);border-radius:2px"></div>
 
   <main class="container grid">
@@ -6507,7 +6517,16 @@ body{
 <section id="cv" class="section">
   <h2>Curriculum Vitae</h2>
   <div class="card">
-    <iframe src="cv_filippo_cenacchi.pdf#view=FitH" width="100%" height="920" style="border:1px solid var(--border);border-radius:14px"></iframe>
+    <template id="cv-phone-pages">
+      <div class="cv-phone-pages">
+        <a class="pill" href="cv_filippo_cenacchi.pdf" target="_blank" rel="noopener">Open full CV (PDF) ↗</a>
+        <img src="assets/cv/mobile-page-1.webp" width="900" height="1272" loading="lazy" decoding="async" alt="Curriculum vitae, page 1 of 4">
+        <img src="assets/cv/mobile-page-2.webp" width="900" height="1272" loading="lazy" decoding="async" alt="Curriculum vitae, page 2 of 4">
+        <img src="assets/cv/mobile-page-3.webp" width="900" height="1272" loading="lazy" decoding="async" alt="Curriculum vitae, page 3 of 4">
+        <img src="assets/cv/mobile-page-4.webp" width="900" height="1272" loading="lazy" decoding="async" alt="Curriculum vitae, page 4 of 4">
+      </div>
+    </template>
+    <iframe title="Curriculum vitae PDF" src="cv_filippo_cenacchi.pdf#view=FitH" width="100%" height="920" style="border:1px solid var(--border);border-radius:14px"></iframe>
     <p class="meta">If the PDF does not display, <a href="cv_filippo_cenacchi.pdf" target="_blank" rel="noopener">open it in a new tab</a>.</p>
   </div>
 </section>
@@ -6655,6 +6674,52 @@ body{
   // Keep section headings below the sticky navigation after a jump.
   const stickyNav = document.querySelector('.nav');
   const navMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const phoneLayout = window.matchMedia('(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse)');
+  const sectionMenu = document.getElementById('section-menu');
+  const sectionMenuToggle = document.getElementById('section-menu-toggle');
+  const cvPageTemplate = document.getElementById('cv-phone-pages');
+
+  if (typeof sectionMenu.showModal === 'function') {
+    const menuNav = sectionMenu.querySelector('nav');
+    const sectionLabels = new Map(
+      [...stickyNav.querySelectorAll('a.link')].map(link => [link.hash, link.textContent])
+    );
+    document.querySelectorAll('main section.section[id]').forEach(section => {
+      const heading = section.querySelector('h2, h1');
+      if (!heading) return;
+      const link = document.createElement('a');
+      link.href = '#' + section.id;
+      link.textContent = sectionLabels.get(link.hash) || (section.id === 'about' ? 'About' : heading.textContent.trim());
+      menuNav.append(link);
+    });
+    sectionMenuToggle.hidden = false;
+    sectionMenuToggle.addEventListener('click', () => {
+      sectionMenu.showModal();
+      sectionMenuToggle.setAttribute('aria-expanded', 'true');
+    });
+    sectionMenu.addEventListener('close', () => {
+      sectionMenuToggle.setAttribute('aria-expanded', 'false');
+    });
+    sectionMenu.addEventListener('click', event => {
+      if (event.target !== sectionMenu) return;
+      const bounds = sectionMenu.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right ||
+          event.clientY < bounds.top || event.clientY > bounds.bottom) sectionMenu.close();
+    });
+  }
+
+  function updatePhoneLayout() {
+    if (!phoneLayout.matches) {
+      if (sectionMenu.open) sectionMenu.close();
+      return;
+    }
+    if (!cvPageTemplate.nextElementSibling.matches('.cv-phone-pages')) {
+      cvPageTemplate.after(cvPageTemplate.content.cloneNode(true));
+    }
+  }
+  phoneLayout.addEventListener('change', updatePhoneLayout);
+  updatePhoneLayout();
+
   document.querySelectorAll('a[href^="#"]:not(.research-paper-link)').forEach(link => {
     link.addEventListener('click', event => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -6662,6 +6727,11 @@ body{
       if (!section) return;
       event.preventDefault();
       const target = section.matches('section') ? section.querySelector('h2') || section : section;
+      if (sectionMenu.contains(link)) {
+        sectionMenu.close();
+        if (!target.hasAttribute('tabindex')) target.tabIndex = -1;
+        target.focus({preventScroll: true});
+      }
       const headerHeight = stickyNav?.getBoundingClientRect().height || 0;
       const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerHeight - 12);
       window.scrollTo({top, behavior:navMotion.matches ? 'instant' : 'smooth'});
