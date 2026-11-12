@@ -2669,6 +2669,53 @@
   .visitor-ticker-viewport{overflow-x:auto;}
 }
 
+
+[data-paper-theme="ml"]{
+  --paper-accent:#4338ca;
+  --paper-tint:#eef2ff;
+}
+
+[data-paper-theme="clinical"]{
+  --paper-accent:#0f766e;
+  --paper-tint:#ecfdf5;
+}
+
+[data-paper-theme="hci"]{
+  --paper-accent:#9d174d;
+  --paper-tint:#fdf2f8;
+}
+
+[data-paper-theme="multimodal"]{
+  --paper-accent:#9a3412;
+  --paper-tint:#fff7ed;
+}
+
+.hero-research-mini .research-paper-link{
+  color:var(--paper-accent);
+  background:var(--paper-tint);
+  border-radius:4px;
+  padding:1px 3px;
+  font-weight:600;
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:3px;
+}
+
+.hero-research-mini .research-paper-link:hover{
+  text-decoration-thickness:2px;
+}
+
+.card.pub[data-paper-theme]{
+  scroll-margin-top:170px;
+}
+
+.card.pub[data-paper-theme]:target,
+.card.pub.is-paper-highlighted{
+  outline:2px solid var(--paper-accent);
+  outline-offset:3px;
+  background:var(--paper-tint);
+}
+
   </style>
 </head>
 <body>
@@ -2805,10 +2852,10 @@
           <h3>Research interests</h3>
 
           <ul>
-            <li>Artificial intelligence, machine learning, and data-driven decision support</li>
-            <li>Human-computer interaction, human-centred AI, and responsible technology design</li>
-            <li>Multimodal and embodied AI using speech, vision, language, and interaction signals</li>
-            <li>Applied AI for healthcare, education, software engineering, and real-world decision-making</li>
+            <li>Artificial intelligence, <a class="research-paper-link" data-paper-theme="ml" href="#paper-falcon-discover">machine learning</a>, and <a class="research-paper-link" data-paper-theme="clinical" href="#paper-decision-twin">data-driven decision support</a></li>
+            <li><a class="research-paper-link" data-paper-theme="hci" href="#paper-ai-coaching">Human-computer interaction</a>, human-centred AI, and <a class="research-paper-link" data-paper-theme="hci" href="#paper-vr-ethics">responsible technology design</a></li>
+            <li><a class="research-paper-link" data-paper-theme="multimodal" href="#paper-trimodal-severity">Multimodal</a> and <a class="research-paper-link" data-paper-theme="multimodal" href="#paper-learning-when-to-ask">embodied AI</a> using speech, vision, language, and interaction signals</li>
+            <li>Applied AI for <a class="research-paper-link" data-paper-theme="clinical" href="#paper-dementia-screening">healthcare</a>, education, <a class="research-paper-link" data-paper-theme="ml" href="#paper-low-code-adoption">software engineering</a>, and real-world decision-making</li>
           </ul>
 
           <p>
@@ -3061,7 +3108,7 @@
 
 
 <!-- KDD Blue Sky paper -->
-<div class="card pub" data-year="2026" data-topics="humanoid,mental-health,digital-twin,clinical-ai">
+<div class="card pub" id="paper-decision-twin" tabindex="-1" data-paper-theme="clinical" data-year="2026" data-topics="humanoid,mental-health,digital-twin,clinical-ai">
   <a href="https://dl.acm.org/doi/epdf/10.1145/3770855.3818659" target="_blank" rel="noopener">
     <img src="kdd.png"
          alt="Framework diagram for The Decision Twin: Metaverse Patient Digital Twins as Executable Clinical Reality"
@@ -3096,7 +3143,7 @@
 
   
 <!-- ACM TiiS AI Coaching paper -->
-<div class="card pub" data-year="2026" data-topics="hci-startups,ai-coaching,hci">
+<div class="card pub" id="paper-ai-coaching" tabindex="-1" data-paper-theme="hci" data-year="2026" data-topics="hci-startups,ai-coaching,hci">
   <a href="https://dl.acm.org/doi/abs/10.1145/3820900" target="_blank" rel="noopener">
     <img src="coaching.png"
          alt="Figure from Personalized AI Coaching Technology: A Systematic Mapping Review"
@@ -3129,7 +3176,7 @@
 </div>
 
 <!-- FALCON-Discover paper -->
-<div class="card pub" data-year="2026" data-topics="reliable-ml,calibration,time-series,machine-learning">
+<div class="card pub" id="paper-falcon-discover" tabindex="-1" data-paper-theme="ml" data-year="2026" data-topics="reliable-ml,calibration,time-series,machine-learning">
   <a href="https://arxiv.org/abs/2607.18278" target="_blank" rel="noopener">
     <img src="falcon-discover.png"
          alt="Framework diagram for FALCON-Discover: Discovering Concentrated False-Confidence Regions for Calibration"
@@ -3277,7 +3324,7 @@
 
 
     <!-- Passive Dementia Screening paper -->
-    <div class="card pub" data-year="2025" data-topics="humanoid,mental-health,dementia">
+    <div class="card pub" id="paper-dementia-screening" tabindex="-1" data-paper-theme="clinical" data-year="2025" data-topics="humanoid,mental-health,dementia">
       <a href="https://arxiv.org/abs/2511.13802" target="_blank" rel="noopener">
         <img src="passive.png"
              alt="Architecture diagram for Passive Dementia Screening via Facial Temporal Micro-Dynamics"
@@ -3345,7 +3392,7 @@
 </div>
 
     <!-- Learning When to Ask paper -->
-<div class="card pub" data-year="2025" data-topics="humanoid,mental-health,simulation">
+<div class="card pub" id="paper-learning-when-to-ask" tabindex="-1" data-paper-theme="multimodal" data-year="2025" data-topics="humanoid,mental-health,simulation">
   <a href="https://arxiv.org/abs/2512.08952" target="_blank" rel="noopener">
     <img src="learning-when-to-ask.png"
          alt="Architecture diagram for Learning When to Ask: Simulation-Trained Humanoids for Mental-Health Diagnosis"
@@ -3421,7 +3468,7 @@
 </div>
 
     <!-- Tri-Modal paper -->
-    <div class="card pub" data-year="2025" data-topics="humanoid,mental-health,ptsd">
+    <div class="card pub" id="paper-trimodal-severity" tabindex="-1" data-paper-theme="multimodal" data-year="2025" data-topics="humanoid,mental-health,ptsd">
       <a href="https://cenacchi2000.github.io/EDAI-Trimodal/" target="_blank" rel="noopener">
         <img src="Diagram%20(5).png"
              alt="Architecture diagram for Tri-Modal Severity Fused Diagnosis"
@@ -3454,7 +3501,7 @@
     </div>
 
     <!-- JSIS VR ethics paper -->
-    <div class="card pub" data-year="2025" data-topics="vr-ethics">
+    <div class="card pub" id="paper-vr-ethics" tabindex="-1" data-paper-theme="hci" data-year="2025" data-topics="vr-ethics">
       <a class="thumb" href="fig1.png" target="_blank" rel="noopener">
         <img src="fig1.png" loading="lazy" alt="Figure 1 from the JSIS article">
       </a>
@@ -3488,7 +3535,7 @@
     </div>
 
     <!-- Springer low-code/no-code chapter -->
-    <div class="card pub" data-year="2022" data-topics="hci-startups,low-code">
+    <div class="card pub" id="paper-low-code-adoption" tabindex="-1" data-paper-theme="ml" data-year="2022" data-topics="hci-startups,low-code">
       <a href="https://link.springer.com/chapter/10.1007/978-3-031-21388-5_27" target="_blank" rel="noopener">
         <img src="lcad_ncad.png"
              alt="Diagram from the Springer chapter on low-code/no-code adoption"
@@ -5340,7 +5387,44 @@
     });
   }
 
+  function revealPaper({ focus = false } = {}){
+    const card = cards.find(paper => paper.id && `#${paper.id}` === window.location.hash);
+    cards.forEach(paper => paper.classList.toggle('is-paper-highlighted', paper === card));
+    if (!card) return;
+
+    if (!matchesFilters(card)) {
+      mode = 'all';
+      activeYear = null;
+      activeTopic = null;
+      modeButtons.forEach(button => button.classList.toggle('active', button.dataset.mode === mode));
+      yearButtons.forEach(button => button.classList.remove('active'));
+      topicButtons.forEach(button => button.classList.remove('active'));
+    }
+
+    expanded = true;
+    applyFilters();
+    requestAnimationFrame(() => {
+      if (focus) card.focus({ preventScroll: true });
+      card.scrollIntoView({
+        behavior: focus && !window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant',
+        block: 'start'
+      });
+    });
+  }
+
+  document.querySelectorAll('.research-paper-link').forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const hash = link.getAttribute('href');
+      if (window.location.hash !== hash) history.pushState(null, '', hash);
+      revealPaper({ focus: true });
+    });
+  });
+
+  window.addEventListener('hashchange', () => revealPaper());
   applyFilters();
+  revealPaper();
 })();
 
 
@@ -5361,7 +5445,7 @@
   })();
 
   // smooth in-page nav
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
+  document.querySelectorAll('a[href^="#"]:not(.research-paper-link)').forEach(a => {
     a.addEventListener('click', e => {
       const id = a.getAttribute('href').slice(1);
       const el = document.getElementById(id);
