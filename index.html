@@ -4977,6 +4977,7 @@ body{
       haloContext.fillRect(0,0,64,64);
       var haloTexture=new THREE.CanvasTexture(haloCanvas);
       var halos=new Map();
+      var graphLabels=new Map();
 
       var Graph = ForceGraph3D()(container)
         .backgroundColor('#0a1122')
@@ -5032,6 +5033,7 @@ body{
           halo.scale.setScalar(sphereRadius(n)*3.7);
           group.add(halo,sprite);
           halos.set(n.id,halo);
+          graphLabels.set(n.id,{node:n,sprite:sprite});
           return group;
         })
         .onNodeHover(function(n){
@@ -5072,10 +5074,10 @@ body{
               var overlapY=boxA.halfHeight+boxB.halfHeight-Math.abs(dy);
               if(overlapX<=0||overlapY<=0)continue;
               if(overlapX<overlapY){
-                var pushX=Math.min(8,overlapX*.30)*alpha*(dx<0?-1:1);
+                var pushX=Math.min(12,overlapX*.48)*alpha*(dx<0?-1:1);
                 a.vx-=pushX;b.vx+=pushX;
               }else{
-                var pushY=Math.min(8,overlapY*.30)*alpha*(dy<0?-1:1);
+                var pushY=Math.min(12,overlapY*.48)*alpha*(dy<0?-1:1);
                 a.vy-=pushY;b.vy+=pushY;
               }
             }
@@ -5091,8 +5093,8 @@ body{
             var bottom=-radius-2;
             var top=radius+(topic?6.5:4.8)+textHeight/2+3;
             return {
-              halfWidth:Math.max(radius+4,(label||'').length*textHeight*.30+4),
-              halfHeight:(top-bottom)/2,
+              halfWidth:Math.max(radius+9,(label||'').length*textHeight*.34+8),
+              halfHeight:(top-bottom)/2+5,
               centerY:(top+bottom)/2,
               depth:((index*7)%11-5)*3
             };
@@ -5103,7 +5105,7 @@ body{
       Graph.d3Force('label-clearance',createLabelClearance());
       Graph.d3Force('charge').strength(function(n){ return n.type==='topic' ? -195 : -75; }).distanceMax(500);
       Graph.d3Force('link')
-        .distance(function(l){ return l.weak ? 78 : (l.target.type==='topic' ? 62 : 44); })
+        .distance(function(l){ return l.weak ? 91 : (l.target.type==='topic' ? 72 : 51); })
         .strength(function(l){ return l.weak ? 0.25 : 0.55; });
       Graph.warmupTicks(105).cooldownTicks(235);
 
@@ -5136,10 +5138,45 @@ body{
         camera.zoom=1.22;
         camera.updateProjectionMatrix();
       }
+      var labelPoint=new THREE.Vector3();
+      var lastLabelCheck=0;
+      function arrangeLabels(){
+        var width=container.clientWidth,height=container.clientHeight;
+        if(!width||!height)return;
+        camera.updateMatrixWorld();
+        var entries=Array.from(graphLabels.values());
+        function priority(entry){
+          var n=entry.node;
+          if(n.id===hoverId||n.id===isolatedId)return 3;
+          if(matchedSet&&matchedSet.has(n.id))return 2;
+          return n.type==='topic'?1:0;
+        }
+        entries.sort(function(a,b){return priority(b)-priority(a)||b.node.val-a.node.val;});
+        var occupied=[];
+        entries.forEach(function(entry){
+          var sprite=entry.sprite,n=entry.node;
+          var relevant=matchedSet?matchedSet.has(n.id):isConnected(n.id);
+          sprite.getWorldPosition(labelPoint);
+          var depth=-labelPoint.applyMatrix4(camera.matrixWorldInverse).z;
+          labelPoint.applyMatrix4(camera.projectionMatrix);
+          if(!relevant||depth<=0||Math.abs(labelPoint.z)>1){sprite.visible=false;return;}
+          var x=(labelPoint.x+1)*width/2,y=(1-labelPoint.y)*height/2;
+          var factor=camera.projectionMatrix.elements[5]*height/(2*depth);
+          var halfW=sprite.scale.x*factor/2+5,halfH=sprite.scale.y*factor/2+4;
+          var box={left:x-halfW,right:x+halfW,top:y-halfH,bottom:y+halfH};
+          var fits=box.left>=0&&box.top>=0&&box.right<=width&&box.bottom<=height;
+          var overlaps=occupied.some(function(other){
+            return box.left<other.right&&box.right>other.left&&box.top<other.bottom&&box.bottom>other.top;
+          });
+          sprite.visible=fits&&!overlaps;
+          if(sprite.visible)occupied.push(box);
+        });
+      }
       function tick(time){
         frame=0;
-        if(!visible||!rotating||hovering||interacting){lastTime=0;return;}
-        if(lastTime&&time>=resumeAfter){
+        if(!visible){lastTime=0;return;}
+        var canRotate=rotating&&!hovering&&!interacting;
+        if(canRotate&&lastTime&&time>=resumeAfter){
           phase+=Math.min(40,time-lastTime)*.00017;
           var nextAngle=Math.sin(phase)*.135;
           offset.copy(camera.position).sub(controls.target).applyAxisAngle(axis,nextAngle-angle);
@@ -5147,13 +5184,17 @@ body{
           camera.lookAt(controls.target);
           angle=nextAngle;
         }
-        lastTime=time;
+        lastTime=canRotate?time:0;
+        if(time-lastLabelCheck>=65){
+          lastLabelCheck=time;
+          arrangeLabels();
+        }
         frame=requestAnimationFrame(tick);
       }
       function syncMotion(){
         motionButton.setAttribute('aria-pressed',String(rotating));
         motionButton.textContent=rotating?'Pause rotation':'Resume rotation';
-        if(!frame&&visible&&rotating&&!hovering&&!interacting)frame=requestAnimationFrame(tick);
+        if(!frame&&visible)frame=requestAnimationFrame(tick);
       }
       container.addEventListener('pointerenter',function(){hovering=true;});
       container.addEventListener('pointerleave',function(){hovering=false;syncMotion();});
