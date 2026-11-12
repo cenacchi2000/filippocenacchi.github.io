@@ -6806,14 +6806,28 @@ body{
   });
 
   // events carousel
-  (function(){ 
-    const track = document.getElementById('eventTrack'); 
-    if (!track) return;
-    let i = 0; 
-    const N = track.children.length;
+  (function(){
+    const track = document.getElementById('eventTrack');
+    if (!track || track.children.length < 2) return;
+    let desktopIndex = 0;
+    let resumeAt = 0;
+    track.addEventListener('touchstart', () => {
+      resumeAt = performance.now() + 8000;
+    }, {passive:true});
+
     setInterval(() => {
-      i = (i + 1) % N;
-      track.style.transform = `translateX(-${i*100}%)`;
+      if (phoneLayout.matches) {
+        if (navMotion.matches || performance.now() < resumeAt || track.contains(document.activeElement)) return;
+        const slides = [...track.children];
+        const start = slides[0].getBoundingClientRect().left;
+        const offsets = slides.map(slide => slide.getBoundingClientRect().left - start);
+        const closest = offsets.reduce((best, offset, index) =>
+          Math.abs(offset - track.scrollLeft) < Math.abs(offsets[best] - track.scrollLeft) ? index : best, 0);
+        track.scrollTo({left:offsets[(closest + 1) % slides.length],behavior:'smooth'});
+        return;
+      }
+      desktopIndex = (desktopIndex + 1) % track.children.length;
+      track.style.transform = 'translateX(-' + (desktopIndex * 100) + '%)';
     }, 5000);
   })();
 
