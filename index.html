@@ -2750,10 +2750,6 @@ body{
   color:var(--text);
 }
 
-.hero-left-links #sydneyPill{
-  white-space:normal !important;
-}
-
 .hero-left-links .academic-cv-pill{
   background:var(--brand-ink) !important;
   color:#ffffff !important;
@@ -3072,11 +3068,6 @@ body{
           </svg>
           Email
         </a>
-
-        <span class="pill" id="sydneyPill">
-          <img src="house.png" class="inline-icon" alt="Sydney Opera House">
-          <span id="sydTime">Sydney --:--</span> · <span id="sydTemp">--°C</span> <span id="sydIcon"></span>
-        </span>
 
         <a class="pill academic-cv-pill" href="#cv">
           <svg class="inline-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
@@ -5963,43 +5954,6 @@ body{
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => rev.observe(el));
 
-  // Sydney time + weather
-  async function loadSydney(){
-    try{
-      const tz = 'Australia/Sydney';
-      const now = new Date();
-      const time = now.toLocaleTimeString('en-AU',{
-        hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz
-      });
-      const timeEl = document.getElementById('sydTime');
-      if (timeEl) timeEl.textContent = `Sydney ${time}`;
-
-      const lat = -33.8688, lon = 151.2093;
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
-      const res = await fetch(url);
-      const data = await res.json();
-      const t = Math.round(data.current.temperature_2m);
-      const w = (data.current.weather_code || 0);
-      const emoji = (c => {
-        if ([0].includes(c)) return '☀️';
-        if ([1,2,3].includes(c)) return '⛅️';
-        if ([45,48].includes(c)) return '🌫️';
-        if ([51,53,55,61,63,65,80,81,82].includes(c)) return '🌧️';
-        if ([71,73,75,85,86].includes(c)) return '❄️';
-        if ([95,96,99].includes(c)) return '⛈️';
-        return '🌤️';
-      })(w);
-
-      const tempEl = document.getElementById('sydTemp');
-      const iconEl = document.getElementById('sydIcon');
-      if (tempEl) tempEl.textContent = `${t}°C`;
-      if (iconEl) iconEl.textContent = emoji;
-    }catch(e){
-      // silent fallback
-    }
-  }
-  loadSydney();
-  setInterval(loadSydney, 60 * 1000);
 </script>
 
   <!-- JSON-LD -->
