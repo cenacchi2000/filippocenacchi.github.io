@@ -320,7 +320,7 @@
     line-height: 1.4;
   }
   .portfolio-home .timeline .content > strong { font-size: 14px; }
-  .portfolio-home .timeline .item > :is(.edu-logo-link, .experience-logos) {
+  .portfolio-home :is(#education, #experience) .timeline .item > :is(.edu-logo-link, .experience-logos) {
     grid-area: 1 / 2 / span 2;
     position: static;
     width: 58px;
@@ -395,12 +395,8 @@
     min-height: 0;
     align-items: start;
   }
-  .portfolio-home :is(#eventTrack .event-item, .prize-card) > :is(picture, img) {
+  .portfolio-home :is(#eventTrack .event-item, .prize-card) > img {
     grid-area: 1 / 1;
-  }
-  .portfolio-home :is(#eventTrack .event-item, .prize-card) > picture {
-    display: block !important;
-    min-width: 0;
   }
   .portfolio-home :is(#eventTrack .event-item, .prize-card) > div {
     grid-area: 1 / 2;

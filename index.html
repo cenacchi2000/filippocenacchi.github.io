@@ -3603,7 +3603,7 @@ body{
 
   </style>
 
-  <link rel="stylesheet" href="iphone.css?v=5">
+  <link rel="stylesheet" href="iphone.css?v=7">
 </head>
 <body class="portfolio-home">
   <!-- Sticky Nav -->
@@ -3887,7 +3887,7 @@ body{
 
           <article class="hero-news-item hero-news-item--featured">
             <a href="https://dl.acm.org/doi/10.1145/3770855.3818659" target="_blank" rel="noopener noreferrer" aria-label="View The Decision Twin paper">
-              <picture style="display:contents"><source media="(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse)" srcset="assets/mobile/sigkdd-jeju.webp"><img class="hero-news-image" src="IMG_8363.jpeg" alt="Filippo Cenacchi presenting The Decision Twin at ACM SIGKDD 2026 in Jeju, Korea"></picture>
+              <img class="hero-news-image" src="IMG_8363.jpeg" alt="Filippo Cenacchi presenting The Decision Twin at ACM SIGKDD 2026 in Jeju, Korea">
             </a>
             <span class="hero-news-date">12th August 2026</span>
             <div class="hero-news-text">
@@ -5360,10 +5360,10 @@ body{
       <div class="card events">
         <div class="event-track" id="eventTrack">
         <div class="event-item event-item--kdd">
-  <picture style="display:contents"><source media="(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse)" srcset="assets/mobile/sigkdd-jeju.webp"><img
+  <img
     src="IMG_8363.jpeg"
     alt="Filippo Cenacchi presenting at ACM SIGKDD 2026 in Jeju, Korea"
-  ></picture>
+  >
 
   <div class="event-content">
     <span class="event-label">Conference presentation</span>
@@ -5395,7 +5395,7 @@ body{
             </div>
           </div>
           <div class="event-item">
-            <picture style="display:contents"><source media="(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse)" srcset="assets/mobile/faculty-3mt.webp"><img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT"></picture>
+            <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
             <div>
               <h3 style="margin:0 0 6px">Winner of the Faculty of Science & Engineering 3MT (2nd Runner Upper)</h3>
               <div class="meta">Macquarie University · 2025</div>
@@ -5403,7 +5403,7 @@ body{
             </div>
           </div>
           <div class="event-item">
-            <picture style="display:contents"><source media="(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse)" srcset="assets/mobile/university-3mt.webp"><img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT"></picture>
+            <img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT">
             <div>
               <h3 style="margin:0 0 6px">Winner of the Macquarie University 3MT (2nd Runner Upper)</h3>
               <div class="meta">Macquarie University · 2025</div>
@@ -5446,7 +5446,7 @@ body{
           </div>
         </div>
         <div class="card prize-card">
-          <picture style="display:contents"><source media="(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse)" srcset="assets/mobile/faculty-3mt.webp"><img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT"></picture>
+          <img src="3MT FSE Faculty Final-44.jpg" alt="Runner-up - Faculty of Science and Engineering 3MT">
           <div>
             <h3 style="margin:0 0 6px">Winner of the Faculty of Science & Engineering 3MT (2nd Runner Upper)</h3>
             <div class="meta">Macquarie University 3MT · 2025</div>
@@ -5454,7 +5454,7 @@ body{
           </div>
         </div>
         <div class="card prize-card">
-          <picture style="display:contents"><source media="(max-width: 767px) and (hover: none) and (pointer: coarse), (max-width: 1024px) and (max-height: 500px) and (hover: none) and (pointer: coarse)" srcset="assets/mobile/university-3mt.webp"><img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT"></picture>
+          <img src="2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg" alt="Finalist - University 3MT">
           <div>
             <h3 style="margin:0 0 6px">Winner of the Macquarie University 3MT (2nd Runner Upper)</h3>
             <div class="meta">Macquarie University 3MT · 2025</div>
@@ -6760,7 +6760,20 @@ body{
       unit.querySelector('.teach-code')?.textContent.trim());
   });
 
+  const phonePhotos = new Map([
+    ["IMG_8363.jpeg", "assets/mobile/sigkdd-jeju.webp"],
+    ["3MT FSE Faculty Final-44.jpg", "assets/mobile/faculty-3mt.webp"],
+    ["2025.09.04_3 Minute Thesis_TASK1289859_Kyisoe Han_30.jpg", "assets/mobile/university-3mt.webp"]
+  ]);
+  const responsivePhotos = [...document.querySelectorAll('.hero-news img, #eventTrack img, #awards img')]
+    .map(img => ({img, original: img.getAttribute('src')}))
+    .filter(({original}) => phonePhotos.has(original));
+
   function updatePhoneLayout() {
+    for (const {img, original} of responsivePhotos) {
+      const source = phoneLayout.matches ? phonePhotos.get(original) : original;
+      if (img.getAttribute('src') !== source) img.setAttribute('src', source);
+    }
     for (const button of phoneDetails) button.hidden = !phoneLayout.matches;
     if (!phoneLayout.matches) {
       if (sectionMenu.open) sectionMenu.close();
