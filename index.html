@@ -7540,22 +7540,25 @@ body{
     const cover = matte('#734d38');
     box(.88,.037,.48,cover,0,0,0,openBook);
     box(.85,.04,.45,materials.paper,0,.028,0,openBook);
+    const pages = new T.Group();
+    pages.rotation.y = -Math.PI / 2;
+    openBook.add(pages);
     const spine = new T.Group();
     spine.position.y=.072;
-    openBook.add(spine);
+    pages.add(spine);
     const ink = new T.MeshStandardMaterial({color:'#bda16f',roughness:1});
     const paperSurface = new T.MeshStandardMaterial({color:'#fff0cb',roughness:1,side:T.DoubleSide});
     for(const side of [-1,1]){
-      box(.412,.012,.443,materials.paper,side*.207,.057,0,openBook);
-      for(let line=0;line<7;line++)box(.28,.001,.006,ink,side*.208,.064,-.165+line*.049,openBook);
+      box(.222,.012,.82,materials.paper,side*.112,.057,0,pages);
+      for(let line=0;line<7;line++)box(.151,.001,.006,ink,side*.112,.064,-.327+line*.095,pages);
     }
-    const leafGeometry = new T.PlaneGeometry(.416,.442,16,1);
+    const leafGeometry = new T.PlaneGeometry(.225,.82,16,1);
     leafGeometry.rotateX(-Math.PI/2);
-    leafGeometry.translate(.208,0,0);
+    leafGeometry.translate(.1125,0,0);
     const leaf = mesh(leafGeometry,paperSurface,0,0,0,spine);
     const leafVertices = leafGeometry.attributes.position;
     const leafLines=Array.from({length:7},(_,line)=>
-      box(.268,.001,.006,ink,.207,.002,-.163+line*.049,spine)
+      box(.145,.001,.006,ink,.112,.002,-.326+line*.095,spine)
     );
     let bookStarted = 0;
 
@@ -7607,7 +7610,7 @@ body{
       const curl=Math.sin(Math.PI*eased)*.055;
       spine.rotation.z=.018+(Math.PI-.036)*eased;
       for(let i=0;i<leafVertices.count;i++){
-        const x=leafVertices.getX(i)/.416;
+        const x=leafVertices.getX(i)/.225;
         leafVertices.setY(i,curl*Math.sin(Math.PI*x*.87));
       }
       leafVertices.needsUpdate=true;
