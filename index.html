@@ -3418,7 +3418,7 @@ body{
   background:repeating-linear-gradient(#fbebc4 0 3px,#c6a779 3px 4px,#fbebc4 4px 5px);
 }
 .library-table-book::before{transform:rotateY(180deg)}
-.library-table-book.is-fluttering::after{animation:library-page-flutter .58s ease-in-out 3}
+.library-table-book.is-fluttering::after{animation:library-page-flutter 4s ease-in-out infinite alternate}
 @keyframes library-page-flutter{
   0%{transform:perspective(80px) rotateY(0)}
   55%{transform:perspective(80px) rotateY(-125deg) rotateZ(-8deg)}
@@ -3439,6 +3439,50 @@ body{
   border-radius:8px;
 }
 #pubList .card.pub[data-paper-theme]{scroll-margin-top:4px}
+
+/* Angle the interactive shelf into the rendered room. */
+.library-scene.has-render{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:15px;
+  perspective:850px;
+}
+.library-scene.has-render .library-shelf{
+  align-self:center;
+  padding:7px 7px 9px;
+  transform:rotateY(-13deg) rotateX(3deg);
+  transform-origin:50% 85%;
+  transform-style:preserve-3d;
+  background-image:
+    linear-gradient(100deg,#160c0750,transparent 42%,#e6a46918 80%,#140c0860),
+    repeating-linear-gradient(#4c3023 0 94px,#c8925b 94px 96px,#9d6742 96px 101px,#543521 101px 107px);
+  box-shadow:inset 0 0 0 1px #d7a46c, 8px 11px 15px #241108a8;
+}
+.library-scene.has-render .library-shelf::before,
+.library-scene.has-render .library-shelf::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  background:linear-gradient(90deg,#3b2118,#946041 85%,#59351e);
+}
+.library-scene.has-render .library-shelf::before{
+  top:-5px;bottom:-5px;left:-26px;width:22px;
+  transform:rotateY(-90deg);
+  transform-origin:right;
+  border:1px solid #6a412c;
+}
+.library-scene.has-render .library-shelf::after{
+  top:-22px;left:-5px;right:-5px;height:18px;
+  transform:rotateX(90deg);
+  transform-origin:bottom;
+  border:1px solid #845638;
+}
+.library-scene.has-render .library-spine{transform:translateZ(5px)}
+.library-scene.has-render .library-spine:hover,
+.library-scene.has-render .library-spine:focus-visible{transform:translate3d(0,-5px,12px)}
+@media(max-width:600px){
+  .library-scene.has-render{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:9px}
+  .library-scene.has-render .library-shelf{transform:rotateY(-8deg) rotateX(2deg)}
+}
 
   </style>
 </head>
@@ -6990,8 +7034,67 @@ body{
     for(const x of [.9,2.22])for(const z of [.75,1.31]){
       box(.09,.56,.1,materials.beam,x,.3,z).rotation.z=(x<1.5?1:-1)*.14;
     }
-    cylinder(.12,.092,.22,matte('#d8b67e'),2.12,.79,1.0);
-    cylinder(.095,.095,.012,matte('#71412b'),2.12,.907,1.0);
+    const ceramic = matte('#e1bc85');
+    cylinder(.18,.15,.027,ceramic,2.12,.696,1.0);
+    cylinder(.12,.092,.22,ceramic,2.12,.81,1.0);
+    cylinder(.093,.093,.012,matte('#633622'),2.12,.927,1.0);
+    mesh(new T.TorusGeometry(.062,.016,8,18),ceramic,2.24,.824,1.0);
+
+    const steamSegments = 38;
+    const steamStrands = Array.from({length:3},(_,strand)=>{
+      const geometry = new T.BufferGeometry();
+      const positions = new Float32Array((steamSegments+1)*6);
+      const fades = new Float32Array((steamSegments+1)*2);
+      const indices = [];
+      for(let i=0;i<=steamSegments;i++){
+        const progress = i/steamSegments;
+        fades[i*2] = fades[i*2+1] = Math.sin(Math.PI*progress) ** .75;
+        const j=i*2;
+        if(i<steamSegments)indices.push(j,j+1,j+2,j+1,j+3,j+2);
+      }
+      geometry.setIndex(indices);
+      geometry.setAttribute('position',new T.BufferAttribute(positions,3).setUsage(T.DynamicDrawUsage));
+      geometry.setAttribute('fade',new T.BufferAttribute(fades,1));
+      const material = new T.ShaderMaterial({
+        transparent:true,depthWrite:false,side:T.DoubleSide,
+        uniforms:{opacity:{value:[.25,.17,.11][strand]}},
+        vertexShader:'attribute float fade; varying float vFade; void main(){vFade=fade; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
+        fragmentShader:'uniform float opacity; varying float vFade; void main(){gl_FragColor=vec4(1.0,0.96,0.87,vFade*opacity);}'
+      });
+      const ribbon = new T.Mesh(geometry,material);
+      ribbon.frustumCulled=false;
+      roomScene.add(ribbon);
+      return ribbon;
+    });
+    let steamFrame = 0;
+    let steamVisible = false;
+    function drawSteam(time){
+      steamStrands.forEach((ribbon,strand)=>{
+        const positions = ribbon.geometry.attributes.position;
+        for(let i=0;i<=steamSegments;i++){
+          const progress=i/steamSegments;
+          const wave=progress*8.5-time*.0017+strand*1.8;
+          const x=2.12+progress*.36+Math.sin(wave)*progress*(.24+strand*.045);
+          const y=.941+progress*(2.22-strand*.19);
+          const z=1.0+Math.cos(wave)*progress*.24+(strand-1)*.019;
+          const halfWidth=.018+progress*.045;
+          positions.setXYZ(i*2,x-halfWidth,y,z);
+          positions.setXYZ(i*2+1,x+halfWidth,y,z);
+        }
+        positions.needsUpdate=true;
+      });
+    }
+    function steamTick(time){
+      drawSteam(time);
+      drawPages(time);
+      render();
+      steamFrame=requestAnimationFrame(steamTick);
+    }
+    function syncSteam(){
+      cancelAnimationFrame(steamFrame);
+      if(steamVisible && !motion.matches)steamFrame=requestAnimationFrame(steamTick);
+      else if(steamVisible){drawSteam(0);render();}
+    }
 
     const openBook = new T.Group();
     openBook.position.set(1.42,.71,1.02);
@@ -7013,7 +7116,17 @@ body{
 
     const point = new T.Vector3(1.42,.73,1.02);
     const nook = scene.querySelector('.library-nook');
-    let frame = 0;
+    let bookStarted = 0;
+    function drawPages(time){
+      if (!openBook.visible) return;
+      const elapsed = time - bookStarted;
+      pagePivots.forEach((page,index)=>{
+        const phase = (elapsed - index * 570) * (Math.PI * 2 / 9600);
+        const turn = (1 - Math.cos(phase)) / 2;
+        const breeze = Math.sin(phase * 4 + index) * Math.sin(phase) * .045;
+        page.rotation.z = .04 + (Math.PI - .08) * turn + breeze;
+      });
+    }
     function render(){renderer.render(roomScene,camera);}
     function resize(){
       const width=scene.clientWidth,height=scene.clientHeight;
@@ -7022,7 +7135,7 @@ body{
       const halfWidth=3.45*width/height;
       camera.left=-halfWidth;camera.right=halfWidth;
       camera.top=3.45;camera.bottom=-3.45;
-      camera.zoom=1.2;
+      camera.zoom=Math.min(1.2,1.06*width/height);
       camera.updateProjectionMatrix();
       camera.updateMatrixWorld();
       const location=point.clone().project(camera);
@@ -7034,30 +7147,24 @@ body{
     }
     scene.classList.add('has-render');
     canvas.hidden=false;
+    drawSteam(0);
     new ResizeObserver(resize).observe(scene);
+    new IntersectionObserver(([entry]) => {
+      steamVisible = entry.isIntersecting;
+      syncSteam();
+    }).observe(scene);
+    motion.addEventListener('change',syncSteam);
     return {
       land(color){
-        cancelAnimationFrame(frame);
         cover.color.set(color);
-        openBook.visible=true;
+        bookStarted = performance.now();
+        openBook.visible = true;
         pagePivots.forEach((page,index)=>page.rotation.z=index<3?Math.PI-.035:.035);
-        if(motion.matches){render();return;}
-        const started=performance.now();
-        function flutter(now){
-          const elapsed=now-started;
-          pagePivots.forEach((page,index)=>{
-            const t=Math.max(0,Math.min(1,(elapsed-index*125)/530));
-            const eased=t*t*(3-2*t);
-            page.rotation.z=.035+(Math.PI-.07)*eased+Math.sin(t*Math.PI*6)*Math.sin(t*Math.PI)*.19;
-          });
-          render();
-          if(elapsed<1540)frame=requestAnimationFrame(flutter);
-        }
-        frame=requestAnimationFrame(flutter);
+        if (!motion.matches) drawPages(bookStarted);
+        render();
       },
       clear(){
-        cancelAnimationFrame(frame);
-        openBook.visible=false;
+        openBook.visible = false;
         render();
       }
     };
