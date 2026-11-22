@@ -8461,5 +8461,23 @@ body{
   if (!room.hidden) nook3d?.addVolumes([...shelf.children]);
 })();
 </script>
+<script>
+(async function refreshProfileMetrics() {
+  try {
+    const response = await fetch('https://raw.githubusercontent.com/cenacchi2000/filippocenacchi.github.io/main/profile-metrics.json');
+    if (!response.ok) return;
+    const metrics = await response.json();
+    for (const link of document.querySelectorAll('.profile-metric-link')) {
+      const label = link.querySelector('.profile-metric small').textContent.trim();
+      const metric = metrics[label];
+      if (!metric || !Number.isSafeInteger(metric.count) || metric.count < 0) continue;
+      link.querySelector('.profile-metric strong').textContent = metric.count.toLocaleString('en-AU');
+      link.title = link.title.replace(/updated .+$/, 'updated ' + metric.date);
+    }
+  } catch {
+    // The HTML contains verified counts for offline visitors.
+  }
+})();
+</script>
 </body>
 </html> 
