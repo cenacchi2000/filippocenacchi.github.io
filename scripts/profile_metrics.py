@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
@@ -129,10 +130,11 @@ def refresh(path=Path("profile-metrics.json")):
             lines.append(f"| {label} | Verified: {count:,} ({source}) |")
         except Exception as exc:
             # Do not log response bodies or tokens.
-            print(f"::warning::{label}: update unavailable ({type(exc).__name__}); retained verified value")
+            detail = f"HTTP {exc.code}" if isinstance(exc, HTTPError) else type(exc).__name__
+            print(f"::warning::{label}: update unavailable ({detail}); retained verified value")
             lines.append(f"| {label} | Unavailable; retained last verified count and date |")
     content = json.dumps(metrics, indent=2) + "\n"
-    if content != path.read_text():
+    if successes and content != path.read_text():
         path.write_text(content)
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
@@ -142,4 +144,5 @@ def refresh(path=Path("profile-metrics.json")):
 
 
 if __name__ == "__main__":
-    raise SystemExit(0 if refresh() else 1)
+    if not refresh():
+        print("::warning::No fresh metrics verified; existing counts and dates retained.")
